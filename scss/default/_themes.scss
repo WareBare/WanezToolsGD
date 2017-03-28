@@ -1,0 +1,26 @@
+// Created by WareBare on 10/23/2016.
+
+$border-000: #000000;
+
+$backgroundColor-000: #202020;
+$backgroundColor-001: #404040;
+$backgroundColor-002: #606060;
+
+$backgroundColor-003: #401F0C;
+$backgroundColor-004: #57371B;
+$backgroundColor-005: #67472B;
+
+$fontColor-000: #AFAFAF;
+$fontColor-001: #B5A58A;
+$fontColor-001b: #C5B58B;
+
+$gradientBTN-000: linear-gradient($backgroundColor-000, $backgroundColor-001);
+$gradientBTN-000b: linear-gradient($backgroundColor-001, $backgroundColor-000);
+$gradientBTN-000c: linear-gradient($backgroundColor-001, $backgroundColor-002);
+$gradientBTN-001: linear-gradient($backgroundColor-003,$backgroundColor-003, $backgroundColor-004);
+$gradientBTN-001b: linear-gradient($backgroundColor-004,$backgroundColor-003, $backgroundColor-003);
+$gradientBTN-001c: linear-gradient($backgroundColor-003,$backgroundColor-004, $backgroundColor-005);
+
+@if $theme != gd01{
+
+}

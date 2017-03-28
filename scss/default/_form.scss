@@ -1,0 +1,60 @@
+// Created by WareBare on 10/24/2016.
+
+form{
+    text-align: center;
+    fieldset{
+        text-align: left;
+        display: inline-block;
+        border-width: 1px;
+        margin:10px 5px 5px 5px;
+        padding:5px;
+        vertical-align: top;
+        legend{
+            font-size: 1.5em;
+            border-width: 1px;
+            margin-top:-19px;
+            margin-left:5px;
+            padding: 0 5px 0 5px;
+        }
+    }
+    label{
+        display: inline-block;
+        span{
+            border-top-width: 1px;
+            border-right-width: 1px;
+            border-left-width: 1px;
+            padding: 2px 5px 2px 5px;
+            margin-left: -2px;
+        }
+        margin: 5px 0 5px 0;
+    }
+    input,select,option,textarea{
+        margin: 2px 0 0 0;
+        display: block;
+        width: 150px;
+        &:invalid{
+            background-color: #AF8080;
+        }
+        &[wzType="TextLong"]{
+            width: 300px;
+        }
+        &[wzType="ListArea"]{
+            width: 300px;
+            height:100px;
+        }
+    }
+    ul{
+        position: absolute;
+        list-style: none;
+        margin: -10px 0 0 0;
+        li{}
+    }
+    input[type="submit"],input[type="reset"]{
+        display: inline-block;
+        margin: 2px;
+        width: 100px;
+        &:HOVER{
+            background-color: #A0F0A0;
+        }
+    }
+}

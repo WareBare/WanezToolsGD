@@ -1,0 +1,462 @@
+// Created by WareBare on 10/24/2016.
+
+
+*{
+    border: solid $border-000 0;
+    padding: 2px;
+    -webkit-user-select: none;
+    //-webkit-app-region: drag;
+}
+html{
+    padding: 0;
+    background-color: $backgroundColor-000;
+    color: $fontColor-000;
+}
+
+#app{
+    display: block;
+    text-align: left;
+    border-width: 1px;
+    div{
+        padding: 2px 5px 2px 5px;
+    }
+}
+.contentBoxRI{
+    display:inline-block;
+    vertical-align: top;
+    border-width: 1px;
+    padding: 3px 5px 3px 5px;
+    margin: 5px;
+}
+
+#app_Header{
+    border-width: 1px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    text-align:center;
+    div{
+        display:inline-block;
+        &.left{
+            //border-width: 1px;
+            float:left;
+            width: 450px;
+            text-align: left;
+            padding: 0;
+            span{
+                position: relative;
+                text-indent: 30px;
+                text-align: left;
+                height: 26px;
+                background-color: #767676;
+                display: inline-block;
+                border-width: 1px;
+
+                cursor: pointer;
+
+                margin-left: 0;
+                padding: 10px 10px 10px 30px;
+                color: $fontColor-001;
+                font-size: 18px;
+                line-height: 27px;
+                &:AFTER{
+                    content: "";
+                    position: absolute;
+                    width: 0;
+                    height: 0;
+                    border-top: 23px solid transparent;
+                    border-left: 30px solid #000000;
+                    border-bottom: 23px solid transparent;
+                    margin: -10px 90px 0 10px;
+                    z-index: 100;
+                }
+            }
+            span.headerCMS_0{
+                background-color: $backgroundColor-003;
+                &:AFTER{
+                    border-left-color: $backgroundColor-003;
+                }
+            }
+            span.headerCMS_1{
+                background-color: $backgroundColor-004;
+                &:AFTER{
+                    border-left-color: $backgroundColor-004;
+                }
+            }
+            span.headerCMS_2{
+                background-color: $backgroundColor-005;
+                &:AFTER{
+                    border-left-color: $backgroundColor-005;
+                }
+            }
+        }
+        &.center{
+            //border-width: 1px;
+            img{
+                cursor: pointer;
+                margin: 0 3px 0 3px;
+                &:hover{
+                    background-color: #00A000;
+                }
+            }
+        }
+        &.right{
+            border-width: 1px;
+            float:right;
+            width: 100px;
+        }
+    }
+}
+#app_Nav{
+    position: absolute;
+    top: 55px;
+    left: 0;
+    bottom: 25px;
+    border-width: 1px;
+    width: 200px;
+    .navInActive{}
+    .navActive{
+        background-color: #555599;
+    }
+    .navItem{
+        border-width: 1px;
+        margin: 2px 0 2px 0;
+    }
+    ul{
+        margin: 0 0 0 10px;
+        list-style: none;
+        li{
+            border-width: 1px;
+            cursor: pointer;
+            padding: 0;
+            ul{
+                margin-left: 10px;
+            }
+        }
+        &:HOVER >li{
+            display: block;
+        }
+    }
+    span{
+        display: block;
+        cursor: pointer;
+        padding: 2px 5px 2px 5px;
+        &:HOVER{
+            background-color: #A0A0FF;
+            color: #000000;
+        }
+    }
+}
+#installUpdate{
+    display: inline-block;
+    border-width: 1px;
+    width: 100px;
+    padding: 5px;
+    //cursor: pointer;
+    &.available{
+        color: #0F5F0F;
+    }
+    &.downloading{
+        color: #AF5F5F;
+    }
+}
+#app_Body{
+    position: absolute;
+    top: 55px;
+    right: 0;
+    bottom: 25px;
+    left: 205px;
+    padding: 0;
+}
+#app_Content{
+    position: absolute;
+    top:0;
+    left:0;
+    right: 0;
+    bottom: 205px;
+
+    border-width: 1px;
+    //box-shadow: inset 0 1px 0 0 red;
+    //box-shadow: inset 0px 2px 10px 1px rgba(128,128,128,2);
+
+    overflow: auto;
+}
+#app_SideBar{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border-width: 1px;
+    min-width: 300px;
+    min-height: 200px;
+
+    overflow: auto;
+    .areaTop,.areaBottom{
+        border-width: 1px;
+        vertical-align: top;
+        overflow: auto;
+    }
+}
+@media (max-width: 1100px){
+    #app_SideBar{
+        max-height: 200px;
+        .areaTop,.areaBottom{
+            display: inline-block;
+            width: 270px;
+            height: 190px;
+        }
+        .areaTop{
+            //float: left;
+            margin-right:2px;
+        }
+        .areaBottom{
+            //float: right;
+            margin-left:2px;
+        }
+    }
+}
+@media (min-width: 1100px) {
+    #app_Content{
+        position: absolute;
+        top:0;
+        right: 305px;
+        bottom: 0;
+        left:0;
+
+    }
+    #app_SideBar{
+        position: absolute;
+        top:0;
+        right:0;
+        bottom: 0;
+        left: auto;
+        max-width: 300px;
+
+        overflow: auto;
+        .areaTop,.areaBottom{
+            display: block;
+            //max-height: 250px;
+        }
+        .areaTop{
+            //float: left;
+            margin-bottom:2px;
+        }
+        .areaBottom{
+            //float: right;
+            margin-top:2px;
+        }
+    }
+}
+#app_Footer{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 20px;
+    border-width: 1px;
+}
+
+
+
+// ToolTip (Wanez)
+[wz-tip]{
+    &:AFTER{
+        content: attr(wz-tip);
+
+        text-align: left;
+
+        line-height: normal;
+        //font-size: 10px;
+        position: absolute;
+        z-index: 999;
+        white-space:pre-line;
+        //white-space:nowrap;
+        //bottom:9999px;
+        //left: 50%;
+        width: 150px;
+        background:#000000;
+        color:#e0e0e0;
+        padding: 2px 3px 2px 3px;
+        //line-height: 24px;
+        //height: 24px;
+        visibility: hidden;
+
+        opacity: 0;
+        transition:opacity 0.6s ease-out;
+    }
+    &:HOVER::AFTER{
+        opacity: 1;
+        //bottom:-35px;
+        visibility: visible;
+    }
+}
+*:HOVER > wztip{
+    //visibility: visible;
+    opacity: 1;
+    display: inline-block;
+}
+wztip{
+    h1{
+        font-size: 1.25em;
+        margin:0 0 2px 0;
+        border-bottom: {
+            width: 1px;
+            color: #FFFFFF;
+            style: dotted;
+        }
+    }
+    position: absolute;
+    z-index: 999 !important;
+    text-align: left;
+    white-space: pre;
+    line-height: normal;
+    max-width: 200px;
+    background: #000000;
+    color: #e0e0e0;
+    padding: 2px 3px 2px 3px;
+
+    display: none;
+    //visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.6s ease-out;
+}
+
+
+.infoBTN{
+    display: inline-block;
+    cursor: pointer;
+    background-color: #5050AF;
+    color:#EFEFEF;
+    width: 20px;
+    text-align: center;
+}
+.linkBTN{
+    cursor: pointer;
+    color: #AAAAFF;
+}
+.formBTN{
+    display: inline-block;
+    text-align: center;
+    background-color: #502f1c;
+    color: #b5a58a;
+    cursor: pointer;
+    border-width:1px;
+    margin: 2px;
+    width: 100px;
+    padding: 2px 5px 2px 5px;
+    border-radius: 25px;
+    &:HOVER{
+        background-color: #57371b;
+        color: #beae93;
+    }
+}
+
+[wz-btn]{
+    cursor: pointer;
+    line-height: 34px;
+    height: 24px;
+    border-width: 1px;
+    box-shadow:0 4px 5px rgba(0,0,0,.3);
+    text-shadow: 0 1px 1px rgba(150,150,150,.35);
+    background: $gradientBTN-000;
+    padding: 0 10px 11px;
+    &:HOVER{
+        //background-color: #005000;
+        background: $gradientBTN-000b;
+        //color: #000000;
+    }
+    &:ACTIVE{
+        //background-color: #500000;
+        background: $gradientBTN-000c;
+        color: #000000;
+        text-shadow: 0 1px 1px rgba(255,255,255,.35);
+    }
+}
+[wz-btn="default"]{
+    display: inline-block;
+    margin: 3px;
+    text-align: center;
+    border-radius: 5px;
+    width: 100px;
+    text-shadow: 0 1px 1px rgba(150,150,150,.35);
+    background: $gradientBTN-001;
+    color: $fontColor-001;
+    &:HOVER{
+        //background-color: #005000;
+        background: $gradientBTN-001b;
+        //color: #000000;
+    }
+    &:ACTIVE{
+        //background-color: #500000;
+        background: $gradientBTN-001c;
+        color: $fontColor-001b;
+        text-shadow: 0 1px 1px rgba(255,255,255,.35);
+        transform: translate(0, 5px);
+        box-shadow:0 1px 1px rgba(0,0,0,.3);
+    }
+}
+
+[wz-btn="list"]{
+    display: block;
+    margin: 2px 0 2px 0;
+    & > input[type="radio"]{
+        //visibility: hidden;
+    }
+    & > input[type="radio"]:CHECKED{
+        background: $gradientBTN-000c;
+    }
+}
+
+[wz-btnCSS]{
+    position: relative;
+    display: block;
+    width: auto;
+    margin: 2px 0 2px 0;
+    line-height: 34px;
+    height: 24px;
+    padding: 0 10px 11px;
+    & input{
+        width:100%;
+        height:100%;
+        margin:0 0;
+        padding:0 0;
+        position:absolute;
+        top:0;
+        right:0;
+        bottom:0;
+        left:0;
+        z-index:2;
+        cursor:pointer;
+        opacity:0;
+        //filter:alpha(opacity=0);
+        & + label{
+            display:block;
+            position:absolute;
+            top:1px;
+            right:1px;
+            bottom:1px;
+            left:1px;
+            cursor: pointer;
+            border-width: 1px;
+            box-shadow:0 4px 5px rgba(0,0,0,.3);
+            text-shadow: 0 1px 1px rgba(150,150,150,.35);
+            background: $gradientBTN-000;
+            padding: 0 10px 11px;
+        }
+        &:HOVER + label{
+            //background-color: #005000;
+            background: $gradientBTN-000b;
+            //color: #000000;
+        }
+        &:CHECKED + label{
+            background: $gradientBTN-000c;
+            color: #000000;
+            text-shadow: 0 1px 1px rgba(255,255,255,.35);
+            transform: translate(0, 4px);
+            box-shadow:0 1px 1px rgba(0,0,0,.3);
+        }
+    }
+}
+
