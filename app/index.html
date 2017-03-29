@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Wanez :: Modding Tools - Grim Dawn [v0.0.0]</title>
+    <script src="lib/tga.js"></script>
+    <script src="lib/moment.js"></script>
+    <link rel="stylesheet" href="themes/default-gd01.css" type="text/css">
+</head>
+<body>
+Loading...
+<script>
+    const fs = require(`fs`);
+    const mkpath = require('mkpath');
+    const eConfig = require('electron-config');
+    const marked = require('marked');
+    const fetchUrl = require("fetch").fetchUrl;
+    //const path = require('path');
+    //const request = require('request');
+    //const PSD = require('psd');
+
+    const dirBase = __dirname.replace(/\\/g, "/");
+    //var wzDir,libWZ,_wzData,_wzTPL; // IDE auto-complete pre-declarations
+    let libWZ;
+    const wzIO = require(`./lib/wzIO`),
+        wzNotify = require(`./lib/wzNotify`);
+    const appData = require(`./data`);
+    const WZ = require(`./lib/Wanez`);
+    require(`./inc`);
+    require('./updater.js');
+</script>
+</body>
+</html>

@@ -103,9 +103,9 @@ html{
             }
         }
         &.right{
-            border-width: 1px;
+            //border-width: 1px;
             float:right;
-            width: 100px;
+            width: 250px;
         }
     }
 }
@@ -198,6 +198,9 @@ html{
         vertical-align: top;
         overflow: auto;
     }
+    .areaTop{
+        padding: 5px 0 5px 0;
+    }
 }
 @media (max-width: 1100px){
     #app_SideBar{
@@ -258,7 +261,17 @@ html{
     border-width: 1px;
 }
 
+.md{
 
+    h3{
+        margin:0;
+    }
+    ul{
+        //color: green;
+        margin: 0 0 0 15px;
+    }
+
+}
 
 // ToolTip (Wanez)
 [wz-tip]{
@@ -379,7 +392,7 @@ wztip{
     margin: 3px;
     text-align: center;
     border-radius: 5px;
-    width: 100px;
+    width: 119px;
     text-shadow: 0 1px 1px rgba(150,150,150,.35);
     background: $gradientBTN-001;
     color: $fontColor-001;
@@ -390,6 +403,8 @@ wztip{
     }
     &:ACTIVE{
         //background-color: #500000;
+
+        //margin: 0 3px 10px 3px;
         background: $gradientBTN-001c;
         color: $fontColor-001b;
         text-shadow: 0 1px 1px rgba(255,255,255,.35);

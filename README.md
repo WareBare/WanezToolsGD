@@ -15,3 +15,10 @@ These tools will not replace the official Modding Tools from Crate, but they mak
   * now click on the skill you want as a modifier for your "parent" skill
 * To remove connections just use the button "del. Connectors"
 * to save all data into the skilltree and ui classtable use the button "Save DBR"
+
+## License and Credits ##
+* the program is using Electron (Node.js + Chromium)
+  * modules used are under the MIT License
+* the following files have not been written by me, information can be found inside the files
+  * app/lib/moment.js
+  * app/lib/tga.js

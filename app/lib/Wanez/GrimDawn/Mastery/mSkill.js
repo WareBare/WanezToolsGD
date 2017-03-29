@@ -1,0 +1,349 @@
+/**
+ * Created by WareBare on 3/26/2017.
+ */
+
+module.exports = class mSkill extends libWZ.GrimDawn.cModule{
+    
+    constructor($fileName,$filePath,$tags){
+        super();
+        
+        this.iFileName = $fileName;
+        this.iFilePath = $filePath;
+        this.iTags = $tags;
+        
+        // todo ui file
+        //this.aUI = [];
+        
+        // todo logic files
+        this.aSkills = {};
+    
+        this.skillId = false; // tool reference to the skills array position
+        
+        /*
+        this.isUsed = false;
+        this.bitmapPositionX = 0;
+        this.bitmapPositionY = 0;
+        this.skillTier = 0;
+        this.skillMaxLevel = 1;
+        this.skillUltimateLevel = 2;
+        this.skillMasteryLevelRequired = 1;
+        */
+        //
+        this.iniSkill();
+    
+        this.aModuleData = [
+            //this.aUI,
+            this.aSkills
+        ];
+    }
+    
+    /**
+     * skillConnectionOff,ui/skills/skillallocation/skills_connectoroffcenter.tex;ui/skills/skillallocation/skills_connectoroffcenter.tex;ui/skills/skillallocation/skills_connectoroffcenter.tex,
+     skillConnectionOn,ui/skills/skillallocation/skills_connectoroncenter.tex;ui/skills/skillallocation/skills_connectoroncenter.tex;ui/skills/skillallocation/skills_connectoroncenter.tex,
+     */
+    removeConnector(){
+        this.setField(`logic`,{
+            'skillConnectionOff': ``,
+            'skillConnectionOn': ``
+        });
+    }
+    
+    /**
+     * 1. calculate difference between skill slots
+     * 2. get length of current connector array
+     * 3. subtract the current length from the length of the ones added
+     * 4. add remaining connectors to the array
+     *
+     * @param $connectSkill
+     */
+    setConnector($connectSkill){
+        let aCoordsThis = this.getCoordsStr().split(`,`),slotDif,arrayDif,isType = `modifier`,conIndex,
+            aCoordsConnect = $connectSkill.getCoordsStr().split(`,`),
+            aConnectors = this.getField(`logic`,`skillConnectionOn`) || [],
+            aConnectorsOff = [],
+            connectorLength = (aConnectors) ? ( (Array.isArray(aConnectors)) ? aConnectors.length : 1 ) : 0, // get length of current connector array
+            aTempConnectors = [],
+            objConnectorToPng = {
+                'branchboth': `ui/skills/skillallocation/skills_connectoronbranchboth.tex`,
+                'branchdown': `ui/skills/skillallocation/skills_connectoronbranchdown.tex`,
+                'branchup': `ui/skills/skillallocation/skills_connectoronbranchup.tex`,
+                'center': `ui/skills/skillallocation/skills_connectoroncenter.tex`,
+                'transmuterdown': `ui/skills/skillallocation/skills_connectorontransmuterdown.tex`,
+                'transmuterup': `ui/skills/skillallocation/skills_connectorontransmuterup.tex`
+            },
+            objConnectorPng = {
+                'ui/skills/skillallocation/skills_connectoroncenter.tex' : {
+                    'up': objConnectorToPng.branchup,
+                    'down': objConnectorToPng.branchdown
+                },
+                'ui/skills/skillallocation/skills_connectoronbranchdown.tex': {
+                    'up': objConnectorToPng.branchboth
+                },
+                'ui/skills/skillallocation/skills_connectoronbranchup.tex': {
+                    'down': objConnectorToPng.branchboth
+                },
+                'ui/skills/skillallocation/skills_connectorontransmuterdown.tex': {
+                    'modifier': objConnectorToPng.branchdown
+                },
+                'ui/skills/skillallocation/skills_connectorontransmuterup.tex': {
+                    'modifier': objConnectorToPng.branchup
+                }
+            };
+    
+        aConnectors = (Array.isArray(aConnectors)) ? aConnectors : [aConnectors];
+        
+        // calculate difference between skill slots
+        //console.log(`X: ${aCoordsThis[0]} - ${aCoordsConnect[0]} | Y: ${aCoordsThis[1]} - ${aCoordsConnect[1]}`);
+        if(aCoordsThis[1] !== aCoordsConnect[1]){
+            isType = `up`;
+            
+        }
+        if(aCoordsThis[1] < aCoordsConnect[1]){
+            isType = `down`;
+        }else if(aCoordsThis[1] > aCoordsConnect[1]){
+            //console.log(`is up`);
+            isType = `up`;
+        }
+        
+        slotDif = (aCoordsConnect[0] - aCoordsThis[0]) / 80;
+        arrayDif = slotDif - connectorLength;
+        //console.log(aConnectors);
+        if(isType === `modifier`){
+            if(arrayDif < 0){
+                aConnectors.splice(aConnectors.length + arrayDif,arrayDif * -1);
+                //aConnectorsOff.splice(aConnectorsOff.length + arrayDif,arrayDif * -1);
+            }else{
+                
+                if(aConnectors.length >= 1){
+                    for(let $_Index in aConnectors){
+                        if(objConnectorPng[aConnectors[$_Index]].modifier){
+                            aConnectors[$_Index] = objConnectorPng[aConnectors[$_Index]].modifier;
+                        }
+                    }
+                }
+                
+            }
+            if(arrayDif > 0){
+                console.log(`do sth`);
+                for(let i=0; arrayDif > i; i++){
+                    console.log(`do sth`);
+                    aConnectors.push(objConnectorToPng.center);
+                    //aConnectors = [objConnectorToPng.center];
+                }
+            }
+        }else{
+            if(arrayDif > 0){
+                aConnectors.push(objConnectorToPng[`transmuter${isType}`]);
+            }else{
+                conIndex = slotDif - 1;
+                console.log(conIndex);
+                if(objConnectorPng[aConnectors[conIndex]][isType]){
+                    aConnectors[conIndex] = objConnectorPng[aConnectors[conIndex]][isType];
+                    console.log(objConnectorPng[aConnectors[conIndex]][isType]);
+                }
+            }
+        }
+    
+        console.log(aConnectors);
+        for(let $_Index in aConnectors){
+            aConnectorsOff[$_Index] = aConnectors[$_Index].replace(`connectoron`,`connectoroff`);
+        }
+        console.log(`Slot: ${slotDif} | Array: ${arrayDif}`);
+        console.log(aConnectorsOff);
+    
+        this.setField(`logic`,{
+            'skillConnectionOff': aConnectorsOff,
+            'skillConnectionOn': aConnectors
+        });
+    }
+    
+    loopBuff($dbr){
+        let skill = $dbr,temp,tempClass;
+        
+        temp = $dbr.getFieldValue(`buffSkillName`) || $dbr.getFieldValue(`petSkillName`);
+        if(temp){
+            tempClass = new libWZ.GrimDawn.cData(`${this.fn.getPaths().Mod}/${temp}`);
+            this.aSkills.buff = this.aSkills.buff || [];
+            this.aSkills.buff.push($dbr);
+            //console.log($dbr);
+            skill = this.loopBuff(tempClass);
+        }
+        
+        return skill;
+    }
+    
+    iniSkill(){
+        let tempClass,tempPath;
+        tempClass = new libWZ.GrimDawn.cData(this.iFilePath);
+        //this.bitmapPositionX = tempClass.getFieldValue(`bitmapPositionX`);
+        //this.bitmapPositionY = tempClass.getFieldValue(`bitmapPositionY`);
+        //if(this.bitmapPositionX && this.bitmapPositionY) this.isUsed = true;
+        this.aSkills.UI = tempClass;
+        tempPath = `${this.fn.getPaths().Mod}/${tempClass.getFieldValue(`skillName`)}`;
+        try{
+            fs.accessSync(`${tempPath}`); // check if file exists
+            
+            tempClass = this.loopBuff(new libWZ.GrimDawn.cData(tempPath));
+            //this.skillTier = tempClass.getFieldValue(`skillTier`);
+            //this.skillMaxLevel = tempClass.getFieldValue(`skillMaxLevel`);
+            //this.skillUltimateLevel = tempClass.getFieldValue(`skillUltimateLevel`);
+            //this.skillMasteryLevelRequired = tempClass.getFieldValue(`skillMasteryLevelRequired`);
+        }catch(err){
+            tempClass = false;
+        }
+        
+        this.aSkills.logic = tempClass;
+    }
+    
+    generateForm(){
+        let out_ = ``,items = {ui:``,logic:``,tag:``},tempId,
+            data = {
+                FileDescription: `UI`,
+                isCircular: `UI`,
+                
+                skillMasteryLevelRequired: `logic`,
+                skillMaxLevel: `logic`,
+                skillUltimateLevel: `logic`,
+                skillDisplayName: `logic`,
+    
+                skillDownBitmapName: `logic`,
+                skillUpBitmapName: `logic`
+            },
+            tpl = {
+                Frame: `{INFO} <form onsubmit="return false;"><fieldset><legend>{SKILL_NAME}</legend>{ITEMS}</fieldset></form>`,
+                Text: `<label>{FIELD}<input type="text" value="{VALUE}" onblur="_cms.editSkillOnBlur(event,this,'{FIELD}','{TYPE}');" onkeydown="_cms.editSkillOnEnter(event);" /></label>`,
+                Items: `<fieldset><legend>{TYPE}</legend>{ITEMS}</fieldset>`
+            };
+        
+        data[this.getField(`logic`,`skillDisplayName`)] = `tag`;
+        
+        for(let $_Field in data){
+            if(items[data[$_Field]] !== ``) items[data[$_Field]] += `<br />`;
+            if(data[$_Field] === `tag`){
+                items[data[$_Field]] += tpl.Text.wzOut({
+                    FIELD: $_Field,
+                    VALUE: this.iTags.getData()[$_Field],
+                    TYPE: data[$_Field]
+                });
+            }else{
+                items[data[$_Field]] += tpl.Text.wzOut({
+                    FIELD: $_Field,
+                    VALUE: this.getField(data[$_Field],$_Field),
+                    TYPE: data[$_Field]
+                });
+            }
+            
+        }
+        
+        out_ = tpl.Frame.wzOut({
+            INFO: `Data is saved automatically (when you use enter/tab or click on another field), changes happen in real-time`,
+            SKILL_NAME: this.getSkillName(),
+            ITEMS: tpl.Items.wzOut({
+                TYPE: `UI`,
+                ITEMS: items.UI
+            }) + tpl.Items.wzOut({
+                TYPE: `Skill`,
+                ITEMS: items.logic
+            }) + tpl.Items.wzOut({
+                TYPE: `Tags`,
+                ITEMS: items.tag
+            })
+        });
+        
+        return out_;
+    }
+    
+    setUsage($bool){
+        this.isUsed = $bool || false;
+    }
+    getCoordsStr(){
+        return this.aSkills.UI.getFieldValue(`bitmapPositionX`) + ',' + this.aSkills.UI.getFieldValue(`bitmapPositionY`);
+    }
+    setSkillTag($field,$value){
+        //this.aTags = this.aTags || {};
+    
+        //this.aTags[$field] = $value;
+        this.aSkills.logic.genTag($field,$value)
+    }
+    getSkillName(){
+        let skillName = this.getField(`UI`,`FileDescription`) || `noName-ID: ${this.getSkillId()}`,tempName;
+        if(this.aSkills.logic){
+            tempName = this.iTags.getData()[this.aSkills.logic.getFieldValue(`skillDisplayName`)];
+            if(tempName){
+                skillName = tempName;
+            }
+        }
+        //console.log(this.iTags.getData()[this.aSkills.logic.getFieldValue(`skillDisplayName`)]);
+        return skillName;
+    }
+    getSkillIcon(){
+        //let imgPath = $modPath+'/'+this.aData.skillUpBitmapName.replace(/\.tex$/g,'.tga'),canvas = '';
+        let imgPath = (this.aSkills.logic) ? `${this.fn.getPaths().Source}/${this.aSkills.logic.getFieldValue(`skillUpBitmapName`).replace(/\.tex$/g,'.tga')}` : ``,
+            canvas = '';
+        //console.log(this.aSkills.logic);
+        
+        try{
+            fs.accessSync(imgPath, fs.F_OK); // check if file exists
+            let tga = new TGA();
+            tga.load(new Uint8Array(fs.readFileSync(imgPath)));
+            
+            
+            canvas = tga;
+        }catch(err){
+        
+        }
+        return canvas;
+    }
+    setSkillId($id){
+        this.skillId = $id || false;
+    }
+    getSkillId(){
+        return this.skillId;
+    }
+    getSkillPaths(){
+        let aPaths = {
+            'relPath': this.iFilePath.split(`/database/`)[1].replace(`/${this.iFileName}`,``),
+            'relFilePath': this.iFilePath.split(`/database/`)[1],
+            'filePath': this.iFilePath,
+            'fileName': this.iFileName,
+            'logicRelPath': (this.aSkills.buff) ? this.aSkills.buff[0].getFilePath().split(`/database/`)[1] : this.aSkills.logic.getFilePath().split(`/database/`)[1]
+        };
+        return aPaths;
+    }
+    
+    getField($type,$field){
+        return (this.aSkills[$type]) ? this.aSkills[$type].getFieldValue($field) : ``;
+    }
+    setField($type,$opt){
+        if(this.aSkills[$type]) this.aSkills[$type].editDBR($opt,true);
+    }
+    editSkills($opt){
+        let objChanges = {},tempFieldName,tempOpt,
+            objFields = {
+            'UI':[`bitmapPositionX`,`bitmapPositionY`],
+            'logic':[`skillTier`,`skillMaxLevel`,`skillUltimateLevel`,`skillMasteryLevelRequired`]
+        };
+        
+        for(let $_Type in objFields){
+            for(let $_Index in objFields[$_Type]){
+                tempFieldName = objFields[$_Type][$_Index];
+                objChanges[tempFieldName] = {
+                    'type': $_Type,
+                    'value': $opt[tempFieldName] || this.getField($_Type,tempFieldName) || ``
+                }
+            }
+        }
+        
+        //$opt = wzSetArDef($opt,objDefaults);
+        
+        console.log(objChanges);
+        
+        for(let $_fieldName in objChanges){
+            tempOpt = {};
+            tempOpt[$_fieldName] = objChanges[$_fieldName].value;
+            this.setField(objChanges[$_fieldName].type,tempOpt);
+        }
+        
+    }
+    
+};

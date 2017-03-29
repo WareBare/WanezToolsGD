@@ -1,0 +1,52 @@
+{
+    "Header": {
+        "ID": "app_Header",
+        "CONTENT": "<div id=\"app_HeaderLoc\" class=\"left\"></div><div id=\"app_HeaderApps\" class=\"center\"></div><div id=\"installUpdate\">No Update</div><div class=\"right\"><span class=\"formBTN\" onclick=\"wzCMS(['Home','Settings']);\">Settings</span><span class=\"formBTN\" onclick=\"location.reload();\">Reload</span></div>"
+    },
+    "Nav": {
+        "ID": "app_Nav",
+        "CONTENT": "myNav",
+        "Items":{
+            "Home":{
+                "Settings":[]
+            },
+            "Mastery":{
+                "UI":[],
+                "Skill":[],
+                "Selection [ip]":[]
+            },
+            "Docs":{
+                "General":["ReadMe"]
+            }
+        },
+        "Disabled":{
+            "Items":{
+                "Equipment":[],
+                "Sets":[],
+                "Runes":[]
+            },
+            "Wanez":{
+                "Runes":[],
+                "Drops":[],
+                "Gear":[],
+                "Entities":[],
+                "DGA":[]
+            },
+            "Docs":{
+                "Wiki [ip]":["DGA [ip]","Mastery [ip]"]
+            }
+        }
+    },
+    "Content": {
+        "ID": "app_Content",
+        "CONTENT": "myBody"
+    },
+    "SideBar": {
+        "ID": "app_SideBar",
+        "CONTENT": "mySideBar"
+    },
+    "Footer": {
+        "ID": "app_Footer",
+        "CONTENT": "<span id=\"appVersion\">v</span> || <span>Copyright © 2017 WareBare. All rights reserved. || E-Mail: warebare89@gmail.com - Discord: WareBare#8461)</span><div id=\"canvas\"></div>"
+    }
+}
