@@ -66,9 +66,10 @@ module.exports = class cData extends libWZ.Core.cBase{
     
     /**
      *
-     * @param {String} [$filePath] default: this.filepath
+     * @param {String} [$filePath] default: this.filepath - use false if this.filepath should be used
+     * @param {Boolean} $alwaysSave [default: false]
      */
-    saveData($filePath){
+    saveData($filePath,$alwaysSave = false){
         $filePath = $filePath || this.filepath;
         let path = $filePath.substring(0, $filePath.lastIndexOf("/"));
         //console.log(`save: ${$filePath}`);
@@ -80,13 +81,10 @@ module.exports = class cData extends libWZ.Core.cBase{
             mkpath.sync(path);
         }
         // check if data has been updated, otherwise saving it is pointless
-        if(this.checkState()){
+        if(this.checkState() || $alwaysSave){
             let data_ = this.cParser.stringifyData(this.aData); // if there is nothing to save, dont bother
             if(data_){
                 //console.log(data_);
-    
-    
-    
                 wzIO.file_put_contents(
                     $filePath,
                     data_

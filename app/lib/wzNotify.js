@@ -16,10 +16,19 @@ module.exports = {
     },
     
     err($msg){
+        /*
         new Notification(`Error`, {
             body: $msg || `An Error occured`,
             icon: this.icons.err
         });
+        */
+        console.log(`wzNotify.err: ${$msg || `An Error Occurred`}`);
+    },
+    todo($msg){
+        console.log(`wzNotify.todo: ${$msg || `An Error Occurred`}`);
+    },
+    warn($msg){
+        console.log(`wzNotify.warn: ${$msg || `You are warned`}`);
     },
     
     info($msg){

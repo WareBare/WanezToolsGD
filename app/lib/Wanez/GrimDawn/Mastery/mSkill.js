@@ -37,9 +37,12 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
         ];
     }
     
+    reloadSkills(){
+        this.aSkills = {};
+        this.iniSkill();
+    }
+    
     /**
-     * skillConnectionOff,ui/skills/skillallocation/skills_connectoroffcenter.tex;ui/skills/skillallocation/skills_connectoroffcenter.tex;ui/skills/skillallocation/skills_connectoroffcenter.tex,
-     skillConnectionOn,ui/skills/skillallocation/skills_connectoroncenter.tex;ui/skills/skillallocation/skills_connectoroncenter.tex;ui/skills/skillallocation/skills_connectoroncenter.tex,
      */
     removeConnector(){
         this.setField(`logic`,{

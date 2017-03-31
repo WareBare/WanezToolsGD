@@ -183,13 +183,15 @@ module.exports = class cData extends libWZ.Core.cData{
     
     /**
      *
-     * @param {object} $opt
-     * @param {Boolean} $useDefaultFileDescription
+     * @param {Object} $opt - data to change {field: `value`}
+     * @param {Boolean} $useDefaultFileDescription [default: false]
      *
      */
     editDBR($opt,$useDefaultFileDescription = false){
         if($useDefaultFileDescription){
-            $opt = $opt || {};
+            $opt = $opt || {
+                    "FileDescription": this.getData().FileDescription
+                };
         }else{
             $opt = wzSetArDef($opt,{
                 "FileDescription": "Updated with WanezToolsGD - "+(moment().format("DD/MM/YYYY hh:mm a"))

@@ -33,13 +33,20 @@ module.exports = {
         this.Base._tagsSkills.saveData();
     
         if($reloadUI){
+            //let mSkill = this.Base._mSkill;
             this.Base._mUI.iniUI();
             this.Base._mSkill = false;
+            //setTimeout(function(){
+                //mSkill.reloadSkills();
+            //},20);
+            //this.Base._mSkill = mSkill;
             
             setTimeout(function(){
                 wzCMS([`Mastery`,`UI`]);
                 //_cms.reloadSkill();
             }, 10);
+            
+            //wzReloadCMS(40);
         }else{
             wzCMS([`Mastery`,`Skill`]);
         }
@@ -76,6 +83,9 @@ module.exports = {
             tempElement.addEventListener(`mouseover`,function(){
                 el.value = $_FileName.replace(`.dbr`,``);
             });
+            //tempElement.addEventListener(`click`,function(){
+                //el.value = $_FileName.replace(`.dbr`,``);
+            //});
             //if($_FileName.includes(el.value)) tempItems += `<li>${$_FileName}</li>`;
             if($_FileName.includes(el.value)) ul.appendChild(tempElement);
             //console.log();

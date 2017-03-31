@@ -110,6 +110,13 @@ wzSideBarDefault = function($btns_,$list_,$contentType,$tpl){
 };
 
 //noinspection JSUnresolvedVariable
-wzReloadCMS = function(){
-    wzCMS(appConfig.get('cms'));
+wzReloadCMS = function($setTimeout){
+    if($setTimeout){
+        setTimeout(function(){
+            wzCMS(appConfig.get('cms'));
+        }, $setTimeout);
+    }else{
+        wzCMS(appConfig.get('cms'));
+    }
+    
 };

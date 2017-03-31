@@ -7,6 +7,7 @@ module.exports = {
     contentType: false,
     contentParam: false,
     modeConnect: false,
+    objBackups: {},
     //_mUI: false,
     
     saveCurrentData: function(){
@@ -128,6 +129,47 @@ module.exports = {
             }, 10);
         }
     },
+    createBackup: function(){
+        if(this.contentType && this.contentParam){
+            this.objBackups[this.contentType] = this.objBackups[this.contentType] || [];
+    
+            let aFiles = wzIO.dir_get_contentsSync(`${this.Base.pathGD.Mod}/${this.contentParam}/${this.contentType}`,true),
+                tempClass,
+                aBackups = [];
+            console.log(aFiles);
+            
+            for(let $_FileName in aFiles){
+                tempClass = new WZ.GrimDawn.cData(aFiles[$_FileName]);
+                //tempClass.editDBR(false,true);
+                aBackups.push(tempClass);
+            }
+            this.objBackups[this.contentType].push({
+                TimeStamp: moment().format("hh:mm a"),
+                Data: aBackups
+            });
+            let backUpEl = document.getElementById(`uiBackUps`);
+    
+            if(backUpEl){
+                backUpEl.innerHTML = this.Base._mUI.genBackupsList(this.objBackups[this.contentType]);
+            }
+            //console.log(this.objBackups[this.contentType]);
+        }else{
+            //console.log(`need to open UI first!`);
+            wzNotify.warn(`need to open UI first!`);
+        }
+    },
+    loadBackup: function($backupId){
+        try{
+            for(let $_Index in this.objBackups[this.contentType][$backupId].Data){
+                this.objBackups[this.contentType][$backupId].Data[$_Index].saveData(false,true);
+                //console.log(this.objBackups[this.contentType][$backUpId][$_Index]);
+            }
+            wzReloadCMS(10);
+        }catch(err){
+            wzNotify.err(`BackUp doesn't exist!`);
+            console.error(err);
+        }
+    },
     
     showUI: function(){
         return this.Base._mUI.genOutput(this.Base._mSkill);
@@ -137,7 +179,7 @@ module.exports = {
         let ret = this.contentType;
         
         if(ret){
-            this.Base._mUI = new WZ.GrimDawn.Mastery.mUI(this.contentType,this.contentParam,this.Base.aGenderPC01,this.Base._tagsSkills,this.Base._mSkill); // if(!this.Base._mUI)
+            this.Base._mUI = new WZ.GrimDawn.Mastery.mUI(this.contentType,this.contentParam,this.Base.aGenderPC01,this.Base._tagsSkills,this.Base._mSkill,this.objBackups[this.contentType]); // if(!this.Base._mUI)
             ret = this.showUI();
         }
         
@@ -168,10 +210,10 @@ module.exports = {
         return [
             {
                 "ONCLICK": "_cms.saveCurrentData()",
-                "TEXT": "Save DBR"
+                "TEXT": "Save UI"
             }, {
-                "ONCLICK": "_cms.saveCurrentTags()",
-                "TEXT": "Save Skill Tags"
+                "ONCLICK": "_cms.createBackup()",
+                "TEXT": "Create Backup"
             }, {
                 "ONCLICK": "_cms.setConnector()",
                 "TEXT": "Set Connector"
