@@ -151,15 +151,21 @@ html{
 }
 #installUpdate{
     display: inline-block;
-    border-width: 1px;
-    width: 100px;
-    padding: 5px;
+    background-color: #AFAFAF;
+    //background-color: #0F5F0F;
+    color: #0F0F0F;
+    margin: 0 5px 0 5px;
+    //border-width: 1px;
+    //width: 100px;
+    padding: 1px;
     //cursor: pointer;
     &.available{
-        color: #0F5F0F;
+        //color: #0F5F0F;
+        background-color: #0F5F0F;
     }
     &.downloading{
-        color: #AF5F5F;
+        //color: #AF5F5F;
+        background-color: #AF5F5F;
     }
 }
 #app_Body{

@@ -1,7 +1,7 @@
 {
     "Header": {
         "ID": "app_Header",
-        "CONTENT": "<div id=\"app_HeaderLoc\" class=\"left\"></div><div id=\"app_HeaderApps\" class=\"center\"></div><div id=\"installUpdate\">No Update</div><div class=\"right\"><span class=\"formBTN\" onclick=\"wzCMS(['Home','Settings']);\">Settings</span><span class=\"formBTN\" onclick=\"location.reload();\">Reload</span></div>"
+        "CONTENT": "<div id=\"app_HeaderLoc\" class=\"left\"></div><div id=\"app_HeaderApps\" class=\"center\"></div><div class=\"right\"><span class=\"formBTN\" onclick=\"wzCMS(['Home','Settings']);\">Settings</span><span class=\"formBTN\" onclick=\"location.reload();\">Reload</span></div>"
     },
     "Nav": {
         "ID": "app_Nav",
@@ -16,7 +16,7 @@
                 "Selection [ip]":[]
             },
             "Docs":{
-                "General":["ReadMe"]
+                "General":["ReadMe","Changelog"]
             }
         },
         "Disabled":{
@@ -50,7 +50,7 @@
         "hasConsole": true,
         "tpl": {
             "console": "<div id=\"footerConsole\"><div class=\"header\"></div></div>",
-            "body": "<div id=\"footerBody\"><div class=\"left\">v{VERSION}</div><div class=\"center\">{COPYRIGHT}</div><div class=\"right\">{CONTACT}</div></div>"
+            "body": "<div id=\"footerBody\"><div class=\"left\">v{VERSION}<span id=\"installUpdate\">checking for Updates...</span></div><div class=\"center\">{COPYRIGHT}</div><div class=\"right\">{CONTACT}</div></div>"
         },
         "CONTENT_OLD": "<div><span id=\"appVersion\">v</span> || <span>Copyright © 2017 WareBare. All rights reserved. || E-Mail: warebare89@gmail.com - Discord: WareBare#8461)</span></div>"
     }

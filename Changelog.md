@@ -1,5 +1,17 @@
 # Changelog #
 
+## v0.0.3 ##
+### Minor Features ###
+* Auto-Updater checks periodically for new updates (10 sec interval)
+* Auto-Updater will show a notification when it's ready to install
+* Auto-Updater information/button has been moved to the bottom left
+
+### Bug Fixes ###
+
+## v0.0.2 ##
+### Bug Fixes ###
+
+
 ## v0.0.1 ##
 ### Edit Skill ###
 * added Skill Description Tag support
