@@ -326,7 +326,7 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
     }
     getSkillIcon(){
         //let imgPath = $modPath+'/'+this.aData.skillUpBitmapName.replace(/\.tex$/g,'.tga'),canvas = '';
-        let imgPath = (this.aSkills.logic) ? `${this.fn.getPaths().Source}/${this.aSkills.logic.getFieldValue(`skillUpBitmapName`).replace(/\.tex$/g,'.tga')}` : ``,
+        let imgPath = (this.aSkills.logic && this.aSkills.logic.getFieldValue(`skillUpBitmapName`)) ? `${this.fn.getPaths().Source}/${this.aSkills.logic.getFieldValue(`skillUpBitmapName`).replace(/\.tex$/g,'.tga')}` : ``,
             canvas = '';
         //console.log(this.aSkills.logic);
         

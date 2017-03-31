@@ -452,7 +452,7 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
         //this.aGroups
         tempOpt = {
             'skillName1': this.objMisc.masteryTable.getFilePath().split(`/database/`)[1],
-            'skillLevel1': 0
+            'skillLevel1': `0`
         };
         for(let i = 2; i <= 99; i++){
             tempOpt[`skillName${i}`] = ``;
@@ -463,7 +463,7 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
                 tempItem = this.aGroups[$_parentId][$_Index];
                 //console.log(tempItem);
                 tempOpt[`skillName${counter}`] = tempItem.getSkillPaths().logicRelPath;
-                tempOpt[`skillLevel${counter}`] = 0;
+                tempOpt[`skillLevel${counter}`] = `0`;
             }
         }
         console.log(tempOpt);
