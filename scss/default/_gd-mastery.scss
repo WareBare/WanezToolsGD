@@ -132,10 +132,10 @@
                 */
             }
             &[wz-mode="current"]{
-                border:{
-                    //width: 2px;
-                    color: #5FFF5F;
-                }
+                box-shadow:0 0 5px 5px #5FAF5F;
+            }
+            &[wz-mode="hasConnector"]{
+                box-shadow:0 0 5px 5px #5F5FAF;
             }
 
 
@@ -163,6 +163,9 @@
                 bottom:-35px;
             }
             */
+        }
+        .isCircular{
+            border-radius: 20px;
         }
     }
 }
