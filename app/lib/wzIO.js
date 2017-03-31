@@ -15,7 +15,8 @@ module.exports = {
             }
         });
     },
-    dir_get_contents($filePath){
+    dir_get_contents($filePath,$ignoreSubDir){
+        $ignoreSubDir = $ignoreSubDir || false;
         let dirContents = {},curPath;
         
         fs.readdir($filePath,function(err,files){
@@ -23,7 +24,7 @@ module.exports = {
                 curPath = $filePath+'/'+files[$_Index];
                 
                 if(fs.lstatSync(curPath).isDirectory()){
-                    dirContents[files[$_Index]] = this.dir_get_contents(curPath);
+                    if(!$ignoreSubDir) dirContents[files[$_Index]] = this.dir_get_contents(curPath);
                     //this.readDir(curPath);
                 }else{
                     //if(files[$_Index].match(/\.dbr$/)){

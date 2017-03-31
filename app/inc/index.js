@@ -9,7 +9,6 @@
  *
  */
 
-const app = require('electron').remote.app;
 appConfig = new eConfig({name: `settings-app`});
 
 /*
@@ -39,5 +38,5 @@ _app = new WZ.Core.cApp();
 _app.create_();
 wzCMS(appConfig.get('cms'));
 
-
-document.getElementById(`appVersion`).innerHTML = `v${app.getVersion()}`;
+//console.log(`is fine`);
+//document.getElementById(`appVersion`).innerHTML = `v${app.getVersion()}`;

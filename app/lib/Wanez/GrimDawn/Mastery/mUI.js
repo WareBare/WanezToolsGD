@@ -15,6 +15,7 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
         this.iCurrentSkill = $currentSkill;
         
         this.aSkills = [];
+        this.aSkillFiles = false;
         this.aGroups = false;
         this.objSkills = {};
         this.objMiscUI = {};
@@ -35,7 +36,7 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
         this.usedSkills = false;
         
         // get all ui skills (this is an array with instances for skills [mSkill]
-        this.getSkills();
+        this.iniUI();
         
         //console.log(this.masteryEnum);
         
@@ -49,6 +50,15 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
     
     iniUI(){
     
+        this.aSkills = [];
+        this.aSkillFiles = false;
+        this.aGroups = false;
+        this.objSkills = {};
+        this.objMiscUI = {};
+        this.objMisc = {};
+        this.usedSkills = false;
+        
+        this.getSkills();
     }
     
     /**
@@ -58,7 +68,7 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
      * tempPath.replace(/^.*[\\\/]/,``).replace(`.dbr`,``)
      */
     getSkills(){
-        let aFiles = wzIO.dir_get_contentsSync(`${this.fn.getPaths().Mod}/${this.iPath}/${this.iDir}`,true),
+        let aFiles = wzIO.dir_get_contentsSync(`${this.fn.getPaths().Mod}/${this.iPath}/${this.iDir}`,true),tempPath,
             tempClass,tempArray,
             aIgnoreFiles = {'classimage.dbr':true,'classpanelbackgroundimage.dbr':true,'classpanelreallocationimage.dbr':true,'classtable.dbr':true,'classtraining.dbr':true,'classtrainingbar.dbr':true};
         
@@ -405,6 +415,26 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
     getSkillPerId($id){
         return this.aSkills[$id] || false;
     }
+    getSkillPerFileName($fileName){
+        let theNewSkill = false;
+        for(let $_ID in this.aSkills){
+            if(this.aSkills[$_ID].getSkillPaths().fileName === $fileName) {
+                theNewSkill = this.aSkills[$_ID];
+                //console.log(theNewSkill);
+            }
+        }
+        return theNewSkill;
+    }
+    getSkillFiles(){
+        let tempPath;
+        if(!this.aSkillFiles){
+            tempPath = this.objMiscUI.classtraining.getFieldValue(`skillName`);
+            tempPath = tempPath.substring(0, tempPath.lastIndexOf("/"));
+            this.aSkillFiles = wzIO.dir_get_contentsSync(`${this.fn.getPaths().Mod}/${tempPath}`,true);
+            //console.log(this.aSkillFiles);
+        }
+        return this.aSkillFiles;
+    }
     
     saveModuleUI($dataMisc){
         let aUsedSkills = [],relPath = ``,tempOpt,tempItem,counter = 1;
@@ -421,7 +451,8 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
         
         //this.aGroups
         tempOpt = {
-            'skillName1': this.objMisc.masteryTable.getFilePath().split(`/database/`)[1]
+            'skillName1': this.objMisc.masteryTable.getFilePath().split(`/database/`)[1],
+            'skillLevel1': 0
         };
         for(let i = 2; i <= 99; i++){
             tempOpt[`skillName${i}`] = ``;
@@ -432,6 +463,7 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
                 tempItem = this.aGroups[$_parentId][$_Index];
                 //console.log(tempItem);
                 tempOpt[`skillName${counter}`] = tempItem.getSkillPaths().logicRelPath;
+                tempOpt[`skillLevel${counter}`] = 0;
             }
         }
         console.log(tempOpt);

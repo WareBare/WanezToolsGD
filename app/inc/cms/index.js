@@ -82,8 +82,8 @@ wzCMS = function($optCMS,$formData){
     }
 };
 wzSideBarDefault = function($btns_,$list_,$contentType,$tpl){
-    $btns_ = appData.tpl.Buttons.Default.wzParseTPL($btns_) || 'No Buttons';
-    $list_ = $list_ || 'No List';
+    $btns_ = appData.tpl.Buttons.Default.wzParseTPL($btns_) || ``;
+    $list_ = $list_ || ``;
     $contentType = $contentType || false;
     $tpl = $tpl || "<div class='areaTop'>{BUTTONS}</div><div class='areaBottom'>{LIST}</div>";
     

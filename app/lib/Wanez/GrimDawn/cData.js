@@ -110,7 +110,9 @@ module.exports = class cData extends libWZ.Core.cData{
     
     /**
      * should only save if any changes have been made to the .dbr
-     * @param $dataMisc
+     * @param {Array} $dataMisc
+     * @param {Boolean} $alwaysSave
+     *
      */
     saveDBR($dataMisc,$alwaysSave = false){
         $dataMisc = $dataMisc || false;
@@ -147,6 +149,18 @@ module.exports = class cData extends libWZ.Core.cData{
         this.saveDataGD($dataMisc,$alwaysSave || saveDBR);
     }
     
+    /**
+     *
+     * @param {Array} $dataMisc
+     * @param {object} $opt
+     * @param {Boolean} $useDefaultFileDescription
+     */
+    updateDBR($dataMisc,$opt,$useDefaultFileDescription = true){
+        this.editDBR($opt,$useDefaultFileDescription);
+        
+        this.saveDBR($dataMisc,true);
+    }
+    
     editTagFields($name,$desc){
         $name = $name || false;
         $desc = $desc || false;
@@ -170,6 +184,8 @@ module.exports = class cData extends libWZ.Core.cData{
     /**
      *
      * @param {object} $opt
+     * @param {Boolean} $useDefaultFileDescription
+     *
      */
     editDBR($opt,$useDefaultFileDescription = false){
         if($useDefaultFileDescription){

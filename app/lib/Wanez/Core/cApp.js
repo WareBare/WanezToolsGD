@@ -73,6 +73,24 @@ class cApp extends libWZ.Core.cBase{
         };
     }
     
+    genFooter(){
+        let out_ = ``;
+        
+        if(this.appData.tpl_app.Footer.hasConsole){
+        
+        }
+        out_ += this.appData.tpl_app.Footer.tpl.body.wzOut({
+            VERSION: app.getVersion(),
+            COPYRIGHT: this.appData.app.Copyright,
+            CONTACT: `Email: ${this.appData.app.Email} | Discord: ${this.appData.app.Discord}`
+        });
+        
+        return {
+            ID: this.appData.tpl_app.Footer.ID,
+            CONTENT: out_
+        }
+    }
+    
     create_($opt){
         // ERRO: missing tmp (see constructor)
         if(this.isErro()) return false;
@@ -89,7 +107,7 @@ class cApp extends libWZ.Core.cBase{
             'NAV': this.appData.tpl.Container.wzOut(this.genNav($opt.Nav)),
             'CONTENT': this.appData.tpl.Container.wzOut(this.appData.tpl_app.Content),
             'SIDEBAR': this.appData.tpl.Container.wzOut(this.appData.tpl_app.SideBar),
-            'FOOTER': this.appData.tpl.Container.wzOut(this.appData.tpl_app.Footer)
+            'FOOTER': this.appData.tpl.Container.wzOut(this.genFooter())
         },document.body);
     }
     

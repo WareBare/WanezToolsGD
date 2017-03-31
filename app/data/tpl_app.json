@@ -47,6 +47,11 @@
     },
     "Footer": {
         "ID": "app_Footer",
-        "CONTENT": "<span id=\"appVersion\">v</span> || <span>Copyright © 2017 WareBare. All rights reserved. || E-Mail: warebare89@gmail.com - Discord: WareBare#8461)</span><div id=\"canvas\"></div>"
+        "hasConsole": true,
+        "tpl": {
+            "console": "<div id=\"footerConsole\"><div class=\"header\"></div></div>",
+            "body": "<div id=\"footerBody\"><div class=\"left\">v{VERSION}</div><div class=\"center\">{COPYRIGHT}</div><div class=\"right\">{CONTACT}</div></div>"
+        },
+        "CONTENT_OLD": "<div><span id=\"appVersion\">v</span> || <span>Copyright © 2017 WareBare. All rights reserved. || E-Mail: warebare89@gmail.com - Discord: WareBare#8461)</span></div>"
     }
 }

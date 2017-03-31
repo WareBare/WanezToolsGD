@@ -40,12 +40,7 @@ module.exports = {
     },
     
     sidebarBtns_: function(){
-        return [
-            {
-                "ONCLICK": "_cms.saveCurrentData()",
-                "TEXT": "S. Data"
-            }
-        ];
+        return [];
     },
     sidebarList_: function(){
         return {

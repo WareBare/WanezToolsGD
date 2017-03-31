@@ -192,30 +192,39 @@ html{
     min-width: 300px;
     min-height: 200px;
 
-    overflow: auto;
+    overflow: hidden;
     .areaTop,.areaBottom{
+        position: absolute;
+        top:0;
+        right:0;
+        bottom: 0;
+        left: 0;
         border-width: 1px;
         vertical-align: top;
-        overflow: auto;
     }
     .areaTop{
         padding: 5px 0 5px 0;
+        height: 190px;
+        //overflow: visible;
+    }
+    .areaBottom{
+        overflow: auto;
+        top:200px;
     }
 }
 @media (max-width: 1100px){
     #app_SideBar{
         max-height: 200px;
         .areaTop,.areaBottom{
+            position: static;
             display: inline-block;
-            width: 270px;
+            width: 300px;
             height: 190px;
         }
         .areaTop{
-            //float: left;
             margin-right:2px;
         }
         .areaBottom{
-            //float: right;
             margin-left:2px;
         }
     }
@@ -237,19 +246,10 @@ html{
         left: auto;
         max-width: 300px;
 
-        overflow: auto;
-        .areaTop,.areaBottom{
-            display: block;
-            //max-height: 250px;
-        }
-        .areaTop{
-            //float: left;
-            margin-bottom:2px;
-        }
-        .areaBottom{
-            //float: right;
-            margin-top:2px;
-        }
+        //overflow: hidden;
+        .areaTop,.areaBottom{}
+        .areaTop{}
+        .areaBottom{}
     }
 }
 #app_Footer{
@@ -259,7 +259,35 @@ html{
     left: 0;
     height: 20px;
     border-width: 1px;
+
+    #footerBody{
+        div{
+            display:inline-block;
+            padding: 0;
+            &.left{
+                //border-width: 1px;
+                float:left;
+                width: 250px;
+                text-align: left;
+                padding: 0;
+            }
+            &.center{
+                display:inline-block;
+                //border-width: 1px;
+                text-align: center;
+                padding: 0;
+            }
+            &.right{
+                //border-width: 1px;
+                float:right;
+                //width: 250px;
+                text-align:right;
+                padding: 0;
+            }
+        }
+    }
 }
+
 
 .md{
 

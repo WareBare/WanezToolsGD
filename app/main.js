@@ -15,7 +15,7 @@ function createWindow () {
         width: 800,
         height: 600,
         minHeight: 600,
-        minWidth: 800,
+        minWidth: 860,
         backgroundColor: '#202020'
     });
 
@@ -34,6 +34,7 @@ function createWindow () {
         // when you should delete the corresponding element.
         win = null;
     });
+    
 }
 
 // This method will be called when Electron has finished

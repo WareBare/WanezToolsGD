@@ -144,12 +144,12 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
             }
         }
     
-        console.log(aConnectors);
+        //console.log(aConnectors);
         for(let $_Index in aConnectors){
             aConnectorsOff[$_Index] = aConnectors[$_Index].replace(`connectoron`,`connectoroff`);
         }
-        console.log(`Slot: ${slotDif} | Array: ${arrayDif}`);
-        console.log(aConnectorsOff);
+        //console.log(`Slot: ${slotDif} | Array: ${arrayDif}`);
+        //console.log(aConnectorsOff);
     
         this.setField(`logic`,{
             'skillConnectionOff': aConnectorsOff,
@@ -195,48 +195,96 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
         this.aSkills.logic = tempClass;
     }
     
-    generateForm(){
-        let out_ = ``,items = {ui:``,logic:``,tag:``},tempId,
+    generateForm($aSkillFiles){
+        let out_ = ``,items = {UI:``,logic:``,tag:``},tempId,tempListItems,
+            aSkillFiles = $aSkillFiles,
             data = {
-                FileDescription: `UI`,
-                isCircular: `UI`,
+                FileDescription: [`UI`,`Text`],
+                isCircular: [`UI`,`Boolean`],
+                skillName: [`UI`,`DataSkills`],
                 
-                skillMasteryLevelRequired: `logic`,
-                skillMaxLevel: `logic`,
-                skillUltimateLevel: `logic`,
-                skillDisplayName: `logic`,
+                skillMasteryLevelRequired: [`logic`,`Number`],
+                skillMaxLevel: [`logic`,`Number`],
+                skillUltimateLevel: [`logic`,`Number`],
+                skillDisplayName: [`logic`,`TextLong`],
+                skillBaseDescription: [`logic`,`TextLong`],
     
-                skillDownBitmapName: `logic`,
-                skillUpBitmapName: `logic`
+                skillDownBitmapName: [`logic`,`TextLongX`],
+                skillUpBitmapName: [`logic`,`TextLongX`]
+            },
+            dataLists = {},
+            parsedData = {
+                DataSkills: (this.getField(`UI`,`skillName`)) ? this.getField(`UI`,`skillName`).replace(/^.*[\\\/]/, '').replace(`.dbr`,``) : ``
             },
             tpl = {
+                DataListItem: `<li>{VALUE}</li>`,
+                DataList: `<ul>{ITEMS}</ul>`,
                 Frame: `{INFO} <form onsubmit="return false;"><fieldset><legend>{SKILL_NAME}</legend>{ITEMS}</fieldset></form>`,
-                Text: `<label>{FIELD}<input type="text" value="{VALUE}" onblur="_cms.editSkillOnBlur(event,this,'{FIELD}','{TYPE}');" onkeydown="_cms.editSkillOnEnter(event);" /></label>`,
-                Items: `<fieldset><legend>{TYPE}</legend>{ITEMS}</fieldset>`
+                Text: `<label><span>{FIELD}</span><input type="text" value="{VALUE}" onchange="_cms.editSkillOnBlur(event,this,'{FIELD}','{TYPE}');" onkeydown="_cms.editSkillOnEnter(event);" /></label>`,
+                TextLong: `<label><span>{FIELD}</span><input type="text" wzType="TextLong" value="{VALUE}" onchange="_cms.editSkillOnBlur(event,this,'{FIELD}','{TYPE}');" onkeydown="_cms.editSkillOnEnter(event);" /></label>`,
+                TextLongX: `<label><span>{FIELD}</span><input type="text" wzType="TextLong" value="{VALUE}" onchange="_cms.editSkillOnBlur(event,this,'{FIELD}','{TYPE}');" onkeydown="_cms.editSkillOnEnter(event);" /></label>`,
+                Number: `<label><span>{FIELD}</span><input type="number" value="{VALUE}" onchange="_cms.editSkillOnBlur(event,this,'{FIELD}','{TYPE}');" onkeydown="_cms.editSkillOnEnter(event);" /></label>`,
+                Boolean: `<label><span>{FIELD}</span><select onchange="_cms.editSkillOnBlur(event,this,'{FIELD}','{TYPE}');"><option value="0"{SELECTED_FALSE}>False<option value="1"{SELECTED_TRUE}>True</select></label>`,
+                TextLarge: `<label><span>{FIELD}</span><textarea wzType="ListArea" onchange="_cms.editSkillOnBlur(event,this,'{FIELD}','{TYPE}');" onkeydown="_cms.editSkillOnEnter(event);">{VALUE}</textarea></label>`,
+                Items: `<fieldset><legend>{TYPE}</legend>{ITEMS}</fieldset>`,
+                // Data
+                DataSkills: `<label><span>{FIELD}</span><input type="text" wzType="TextLong" value="{VALUE}" oninput="_cms.dataSkillsAutoComplete(event,this);" onchange="_cms.editSkillOnBlur(event,this,'{FIELD}','{TYPE}',true);" onkeydown="_cms.editSkillOnEnter(event);" /><ul id="dataSkillsList"></ul></label>` //
             };
         
-        data[this.getField(`logic`,`skillDisplayName`)] = `tag`;
+        data[this.getField(`logic`,`skillDisplayName`)] = [`tag`,`TextLong`];
+        data[this.getField(`logic`,`skillBaseDescription`)] = [`tag`,`TextLarge`];
+        
+        /*
+         <datalist id="DataSkills">
+             <option value="HTML">
+             <option value="CSS">
+             <option value="JavaScript">
+             <option value="Java">
+             <option value="Ruby">
+             <option value="PHP">
+             <option value="Go">
+             <option value="Erlang">
+             <option value="Python">
+             <option value="C">
+             <option value="C#">
+             <option value="C++">
+         </datalist>
+         */
+        tempListItems = ``;
+        for(let $_FileName in aSkillFiles){
+            tempListItems += tpl.DataListItem.wzOut({
+                VALUE: $_FileName//aSkillFiles[$_FileName].split(`/database/`)[1]
+            });
+            //console.log($_FileName);
+        }
+        dataLists.DataSkills = tpl.DataList.wzOut({
+            ITEMS: tempListItems
+        });
         
         for(let $_Field in data){
-            if(items[data[$_Field]] !== ``) items[data[$_Field]] += `<br />`;
-            if(data[$_Field] === `tag`){
-                items[data[$_Field]] += tpl.Text.wzOut({
+            if(items[data[$_Field][0]] !== ``) items[data[$_Field][0]] += `<br />`;
+            if(data[$_Field][0] === `tag`){
+                items[data[$_Field][0]] += tpl[data[$_Field][1]].wzOut({
                     FIELD: $_Field,
                     VALUE: this.iTags.getData()[$_Field],
-                    TYPE: data[$_Field]
+                    TYPE: data[$_Field][0]
                 });
             }else{
-                items[data[$_Field]] += tpl.Text.wzOut({
+                items[data[$_Field][0]] += tpl[data[$_Field][1]].wzOut({
                     FIELD: $_Field,
-                    VALUE: this.getField(data[$_Field],$_Field),
-                    TYPE: data[$_Field]
+                    VALUE: parsedData[data[$_Field][1]] || this.getField(data[$_Field][0],$_Field),
+                    TYPE: data[$_Field][0],
+                    SELECTED_FALSE: (parseInt(this.getField(data[$_Field][0],$_Field)) === 0) ? ` selected` : ``,
+                    SELECTED_TRUE: (parseInt(this.getField(data[$_Field][0],$_Field)) === 1) ? ` selected` : ``,
+                    DATA_LIST: dataLists[data[$_Field][1]] || ``,
+                    DATA: aSkillFiles
                 });
             }
             
         }
         
         out_ = tpl.Frame.wzOut({
-            INFO: `Data is saved automatically (when you use enter/tab or click on another field), changes happen in real-time`,
+            INFO: `Data is saved automatically (when you use enter/tab or click on another field), changes happen in real-time.<br />Changing the skillName will return you to the UI, because the data needs to be parsed again.`,
             SKILL_NAME: this.getSkillName(),
             ITEMS: tpl.Items.wzOut({
                 TYPE: `UI`,
@@ -306,7 +354,7 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
             'relFilePath': this.iFilePath.split(`/database/`)[1],
             'filePath': this.iFilePath,
             'fileName': this.iFileName,
-            'logicRelPath': (this.aSkills.buff) ? this.aSkills.buff[0].getFilePath().split(`/database/`)[1] : this.aSkills.logic.getFilePath().split(`/database/`)[1]
+            'logicRelPath': (this.aSkills.buff) ? this.aSkills.buff[0].getFilePath().split(`/database/`)[1] : ( (this.aSkills.logic) ? this.aSkills.logic.getFilePath().split(`/database/`)[1] : `` )
         };
         return aPaths;
     }
@@ -336,7 +384,7 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
         
         //$opt = wzSetArDef($opt,objDefaults);
         
-        console.log(objChanges);
+        //console.log(objChanges);
         
         for(let $_fieldName in objChanges){
             tempOpt = {};
