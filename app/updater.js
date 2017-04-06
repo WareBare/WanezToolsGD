@@ -7,7 +7,7 @@ const updater = require('electron').remote.require('electron-auto-updater');
 
 let interval = setInterval(() => {
     updater.autoUpdater.checkForUpdates();
-}, 10000);
+}, 60000);
 
 if(app.getName() !== `Electron`){
     

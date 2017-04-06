@@ -1,14 +1,14 @@
 {
     "Header": {
         "ID": "app_Header",
-        "CONTENT": "<div id=\"app_HeaderLoc\" class=\"left\"></div><div id=\"app_HeaderApps\" class=\"center\"></div><div class=\"right\"><span class=\"formBTN\" onclick=\"wzCMS(['Home','Settings']);\">Settings</span><span class=\"formBTN\" onclick=\"location.reload();\">Reload</span></div>"
+        "CONTENT": "<div id=\"notifyArea\"></div><div id=\"app_HeaderLoc\" class=\"left\"></div><div id=\"app_HeaderApps\" class=\"center\"></div><div class=\"right\"><span class=\"formBTN\" onclick=\"wzWND('Settings',{height:'1000px',width:'750px'}).refresh();\">Settings</span><span class=\"formBTN\" onclick=\"location.reload();\">Reload</span></div>"
     },
     "Nav": {
         "ID": "app_Nav",
         "CONTENT": "myNav",
         "Items":{
             "Home":{
-                "Settings":[]
+
             },
             "Mastery":{
                 "UI":[],

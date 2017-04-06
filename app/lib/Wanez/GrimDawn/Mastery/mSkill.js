@@ -98,7 +98,7 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
         // calculate difference between skill slots
         //console.log(`X: ${aCoordsThis[0]} - ${aCoordsConnect[0]} | Y: ${aCoordsThis[1]} - ${aCoordsConnect[1]}`);
         if(aCoordsThis[1] !== aCoordsConnect[1]){
-            isType = `up`;
+            //isType = `up`;
             
         }
         if(aCoordsThis[1] < aCoordsConnect[1]){
@@ -142,7 +142,7 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
                 console.log(conIndex);
                 if(objConnectorPng[aConnectors[conIndex]][isType]){
                     aConnectors[conIndex] = objConnectorPng[aConnectors[conIndex]][isType];
-                    console.log(objConnectorPng[aConnectors[conIndex]][isType]);
+                    //console.log(objConnectorPng[aConnectors[conIndex]][isType]);
                 }
             }
         }
@@ -391,7 +391,7 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
         
         for(let $_fieldName in objChanges){
             tempOpt = {};
-            tempOpt[$_fieldName] = objChanges[$_fieldName].value;
+            tempOpt[$_fieldName] = objChanges[$_fieldName].value || ``;
             this.setField(objChanges[$_fieldName].type,tempOpt);
         }
         

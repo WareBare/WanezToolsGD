@@ -4,7 +4,7 @@
 
 module.exports = {
     Forms:{
-        "configGD_Form": new WZ.Core.cForm('configGD_Form')
+        "configGD_Form": new WZ.Core.cFormWeb('configGD_Form')
     },
     tplContent: {
         "Main": "<div>{CONFIG_GD}</div>"

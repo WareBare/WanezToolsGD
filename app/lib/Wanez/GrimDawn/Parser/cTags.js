@@ -13,7 +13,7 @@ class cTags extends libWZ.Core.cBase{
      * @param $fileContents
      */
     parseData($fileContents){
-        let parsedData = {},parts,
+        let parsedData = {},parts,tempCounter = 0,
             fileLines = $fileContents.split('\r\n');
         
         for( let $_Index in fileLines ){
@@ -21,6 +21,9 @@ class cTags extends libWZ.Core.cBase{
     
             if(parts[1]){
                 parsedData[parts[0]] = parts[1];
+            }else{
+                parsedData[`nonTagLine${tempCounter}`] = parts[0];
+                tempCounter++;
             }
         }
         //console.log(parsedData);
@@ -33,11 +36,17 @@ class cTags extends libWZ.Core.cBase{
      */
     stringifyData($data){
         let stringifiedData = '',convValue,
-            tmpOut = '# modified with WanezToolsGD (https://github.com/WareBare/WanezToolsGD)\r\n\r\n{DATA}\r\n\r\n# Tool Created by: WareBare - Contents of the file have been made by the modder using the tool';
+            //tmpOut = '# modified with WanezToolsGD (https://github.com/WareBare/WanezToolsGD)\r\n\r\n{DATA}\r\n\r\n# Tool Created by: WareBare - Contents of the file have been made by the modder using the tool',
+            tmpOut = `{DATA}`;
         
         for( let $_Key in $data ){
             if(stringifiedData != '') stringifiedData += '\r\n';
-            stringifiedData += $_Key+'='+$data[$_Key];
+            if($_Key.includes(`nonTagLine`)){
+                stringifiedData += $data[$_Key];
+            }else{
+                stringifiedData += $_Key+'='+$data[$_Key];
+            }
+            
         }
         
         return tmpOut.wzOut({

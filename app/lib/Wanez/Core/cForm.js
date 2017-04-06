@@ -1,265 +1,197 @@
 /**
- * Created by WareBare on 3/24/2017.
+ * Created by WareBare on 4/1/2017.
+ *
+ * @author WareBare (Daniel Kamp)
+ * @license MIT
+ * @website https://github.com/WareBare
+ *
  */
 
-module.exports = class cForm extends libWZ.Core.cBase{
+module.exports = class cFrom extends libWZ.Core.cBase{
     
-    constructor($id,$data){
+    constructor($opt){
         super();
         
-        this.formId = $id;
-        this.formData = $data || {};
+        //$opt = $opt || {};
         
-        this.formTLP = this.appData.forms[this.formId];
-        this.formSettings = this.formTLP.settings;
-        this.formItems = this.formTLP.items;
-    
-        this.formConfig = ($data) ? false : new eConfig({name: this.formSettings.configFile});
-        if(this.formConfig){
-            this.formData = this.formConfig.get(this.formSettings.configKey);
-            //console.log(this.formData);
-        }
+        this.iOpt = Object.assign({
+            title: `No Title`,
+            id: Math.random() * (1000 - 1) + 1,
+            items: false,
+            isConfig: true
+        },$opt || {});
         
-        this.form_ = 'No Form Created!';
-        // create form
-        //this.createForm();
-    }
-    
-    
-    /**
-     * converts the string (field-name) into an object with dataName(MySQL Table) and fields(MySQL columns)
-     * @param {string} $fieldName
-     * @return {*[]}
-     */
-    convertNameToObject($fieldName){
-        let split01 = $fieldName.split("::"),
-            dataName = split01[0],
-            fields = split01[1].split("-");
-        
-        return [dataName,fields];
-    }
-    
-    /**
-     * declare this.form_
-     *
-     * separate method in case the form needs to be recreated
-     */
-    createForm(){
-        this.form_ = this.create_();
-    }
-    
-    
-    /**
-     *
-     * @param {string} $fieldName
-     * @return {*}
-     */
-    fetchFieldValue($fieldName){
-        let value_= false;
-        //return false;
-        try{
-            let fieldData = this.convertNameToObject($fieldName),
-                value_ = (this.formConfig) ? this.formConfig.get(this.formSettings.configKey) : this.formData[fieldData[0]].getData();
-            
-            for( let $_key in fieldData[1] ){
-                value_ = value_[fieldData[1][$_key]];
+        this.tplForm = {
+            Frame: `<form id="{ID}" onsubmit="return false;">{FIELD_SETS}</form>`,
+            Fieldset: `<fieldset><legend>{TITLE}</legend>{ITEMS}</fieldset>`,
+            events: {
+                onChange: {
+                    wnd: `wzWND('${this.iOpt.isWnd || ``}').${(this.iOpt.onChange.custom) ? `__getContent().${this.iOpt.onChange.custom}` : `form('onChange','${this.iOpt.id}',this,{RELOAD})`}`,
+                    cms: `_cms.editSkillOnBlur(event,this,'{FIELD}','{TYPE}');` // todo
+                },
+                onFocus: {
+                    wnd: `wzWND('${this.iOpt.isWnd || ``}').${(this.iOpt.onChange.custom) ? `__getContent().${this.iOpt.onChange.custom}` : `form('onFocus','${this.iOpt.id}',this)`}`,
+                    cms: `_cms.editSkillOnBlur(event,this,'{FIELD}','{TYPE}');` // todo
+                }
+            },
+            fields: { // onfocus="{EVENT_ONFOCUS}"
+                text: `<label><span>{LABEL}</span><input type="{TYPE}" name="{NAME}" wzType="{WZ_TYPE}" value="{VALUE}" onchange="{EVENT_ONCHANGE}"{SINGLE_ATTRIBUTES}></label>`,
+                list: `<label><span>{LABEL}</span><textarea name="{NAME}" wzType="{WZ_TYPE}" onchange="{EVENT_ONCHANGE}"{SINGLE_ATTRIBUTES}>{VALUE}</textarea></label>`,
+                comboBox: `<label><span>{LABEL}</span><select{SIZE} wzType="{WZ_TYPE}" name="{NAME}" {EVENT_TYPE}="{EVENT_ONCHANGE}"{SINGLE_ATTRIBUTES}>{VALUE}</select></label>`, //  class="comboBox" size="5"  onmousedown="if(this.options.length>4){this.size=4;}" onchange="this.size=0;{EVENT_ONCHANGE}"
+                comboBoxItem: `<option value="{VALUE}"{SELECTED}>{TEXT}</option>`
             }
-            return value_;
-        }catch (e){
-            console.warn('Form-Field Error fetching Field-Value');
-            return value_;
-        }
-        //return value_;
-    }
-    
-    /**
-     *
-     * @return {string} Form
-     * @private
-     */
-    create_(){ // $id,$aItems
-        let formId = this.formId,
-            items_,groups_ = '',aForm,iItems,
-            buttons_ = '<input type="submit" value="Submit" /> <input type="reset" value="Reset" />',
-            multiFields = ['ListArea','TextLong'];
-        const aSettings = this.formSettings || {},
-            method_ = 'POST',
-            aItems = this.formItems,
-            type = aSettings.Type || 'Default',
-            tmpGroup = this.appData.tpl.Form.Container[type].Group,
-            // get max amount of fields per row
-            maxFieldsPerRow = aSettings.FieldsPerRow || 2;
-        
-        // Parse Groups
-        for( let $_Group in aItems ){
-            // Parse GroupItems
-            items_ = '';
-            iItems = 0;
-            for( let $_fieldName in aItems[$_Group] ){
-                if(iItems == maxFieldsPerRow){
-                    items_ += '<br />';
-                    iItems = 0;
-                }
-                if(aItems[$_Group][$_fieldName]){
-                    items_ += this.addField(aItems[$_Group][$_fieldName][0],$_fieldName,aItems[$_Group][$_fieldName][1],this.fetchFieldValue($_fieldName)); // ,'value'
-                }
-                // add counter if larger field
-                for( let $_i in multiFields ){
-                    if(multiFields[$_i] == aItems[$_Group][$_fieldName][0]) iItems++;
-                }
-                iItems++;
-            }
-            //if(groups_ != '') groups_ += '<br />';
-            groups_ += tmpGroup.wzOut({
-                "ID": formId+'::'+$_Group,
-                "TITLE": $_Group,
-                "ITEMS":items_
-            });
-        }
-        
-        aForm = {
-            "ID": formId,
-            "CLASS": '',
-            "METHOD": method_,
-            "TITLE": aSettings.Name || 'New Form',
-            "GROUPS": groups_,
-            "BUTTONS": buttons_
         };
         
-        return super.create_(this.appData.tpl.Form.Container[type].Frame,aForm);
+        this.formConfig = false;
+        if(this.iOpt.isConfig){
+            this.formConfig = {};
+        }
+        
+        this.nextEl = false;
+        
+        this.iniForm();
     }
     
-    addField($type,$name,$opt,$value){
-        $value = $value || null; //  || null
-        //noinspection JSUnresolvedFunction
-        $opt = wzSetArDef($opt,{
-            'ID':'',
-            'CLASS':'',
-            'NAME': $name,
-            'TEXT':'',
-            'VALUE': false, // false will result in an empty string (value/checked not set)
-            'DEFAULT': false,
-            'REQUIRED': true,
-            'Data': false,
-            "ITEMS": '',
-            "WZ_TYPE": 'wzType="'+$type+'"'
-        });
+    iniForm(){
+    
+    
+    
+    }
+    
+    create(){
+        let form_,fieldset = ``,items = ``,tempItem,tempValue,tempArray,tempName,
+            objFieldTypes = {
+                text: this.tplForm.fields.text.wzOut({
+                    TYPE: `text`,
+                    WZ_TYPE: `TextDefault`
+                }),
+                textLarge: this.tplForm.fields.text.wzOut({
+                    TYPE: `text`,
+                    WZ_TYPE: `TextLarge`
+                }),
+                textLargeX: this.tplForm.fields.text.wzOut({
+                    TYPE: `text`,
+                    WZ_TYPE: `TextLargeX`
+                }),
+                listArea: this.tplForm.fields.list.wzOut({
+                    WZ_TYPE: `ListArea`
+                }),
+                comboBox: this.tplForm.fields.comboBox.wzOut({
+                    WZ_TYPE: `ComboBox`,
+                    SIZE: ``,
+                    EVENT_TYPE: `onChange`
+                }),
+                comboBoxLarge: this.tplForm.fields.comboBox.wzOut({
+                    WZ_TYPE: `ComboBoxLarge`,
+                    SIZE: ``,
+                    EVENT_TYPE: `onChange`
+                }),
+                listBox: this.tplForm.fields.comboBox.wzOut({
+                    WZ_TYPE: `ComboBox`,
+                    SIZE: ` size="5"`,
+                    EVENT_TYPE: `onBlur`
+                })
+            };
         
-        if($opt.ID != '') $opt.ID = ' id="{0}"'.wzOut([$opt.ID]);
-        if($opt.CLASS != '') $opt.CLASS = ' class="{0}"'.wzOut([$opt.CLASS]);
-        $opt.REQUIRED = ($opt.REQUIRED) ? ' required' : '';
-        
-        // VALUE - overwrite $opt.VALUE if $value is set correctly
-        if($value != '' && $value != null) $opt.VALUE = $value;
-        else $opt.VALUE = $opt.DEFAULT;
-        // ComboBox DATA
-        // interrupt VALUE to set ComboBox data and default, otherwise it would not work
-        if($opt.Data){
-            let tmpCB_Item = '<option value="{VALUE}"{SELECTED}>{TEXT}</option>';
-            
-            let dataCB = (typeof $opt.Data === 'string') ? this.fetchFieldValue($opt.Data) : $opt.Data;
-            
-            $opt.ITEMS = '';
-            for( let $_Value in dataCB ){
-                $opt.ITEMS += tmpCB_Item.wzReplace({
-                    'VALUE':$_Value,
-                    'TEXT':dataCB[$_Value],
-                    'SELECTED': ($_Value == $opt.VALUE) ? ' selected' : ''
+        if(this.iOpt.items){
+            for(let $_Group in this.iOpt.items){
+                items = ``;
+                for(let $_FieldName in this.iOpt.items[$_Group]){
+                    tempItem = this.iOpt.items[$_Group][$_FieldName];
+                    tempValue = tempItem.value || ``;
+                    if(this.formConfig){
+                        tempName = $_FieldName.split(`::`);
+                        this.formConfig[tempName[0]] = this.formConfig[tempName[0]] || new eConfig({name: tempName[0]});
+                        tempValue = this.formConfig[tempName[0]].get(tempName[1]) || tempValue;
+                        if( Array.isArray(tempValue) ){
+                            tempArray = tempValue;
+                            tempValue = ``;
+                            for(let $_Index in tempArray){
+                                if(tempValue !== ``) tempValue += `\n`;
+                                tempValue += `${tempArray[$_Index]}`;
+                            }
+                            //console.log(tempValue);
+                        }else if(tempItem.type.includes(`comboBox`) || tempItem.type === `listBox`){
+                            tempValue = ``;
+                            for(let $_Value in tempItem.data){
+                                tempValue += this.tplForm.fields.comboBoxItem.wzOut({
+                                    VALUE: $_Value,
+                                    TEXT: (tempItem.dataUseValue) ? $_Value : tempItem.data[$_Value],
+                                    SELECTED: `${(this.formConfig[tempName[0]].get(tempName[1]) === $_Value) ? ` selected` : ``}`
+                                });
+                            }
+                        }
+                        
+                    }
+                    //if(tempItem.type === `comboBox`){
+                    
+                    //}else{
+                        items += objFieldTypes[tempItem.type || `text`].wzOut({
+                            LABEL: tempItem.label || $_FieldName,
+                            EVENT_ONCHANGE: this.tplForm.events.onChange[(this.iOpt.isWnd) ? `wnd` : `cms`].wzOut({
+                                RELOAD: tempItem.reload || false
+                            }),
+                            EVENT_ONFOCUS: this.tplForm.events.onFocus[(this.iOpt.isWnd) ? `wnd` : `cms`],
+                            VALUE: tempValue,
+                            NAME: $_FieldName,
+                            SINGLE_ATTRIBUTES: `${(tempItem.isRequired) ? ` required` : ``}`
+                        });
+                    //}
+                    
+                }
+                
+                if(fieldset !== ``) fieldset += `<br />`;
+                fieldset += this.tplForm.Fieldset.wzOut({
+                    TITLE: $_Group,
+                    ITEMS: items
                 });
             }
-            $opt.VALUE = false;
         }
-        // VALUE - CONTINUE
-        // ComboBox values are set, continue determining VALUE
-        let tempValue = $opt.VALUE;
-        $opt.VALUE = '';
-        if(typeof tempValue === 'string'){ // is a string doesn't matter if it's empty
-            $opt.VALUE = ' value="'+tempValue+'"';
-        }else if(Array.isArray(tempValue)){
-            if($type == 'ListArea'){
-                let aValues = tempValue;
-                //$opt.VALUE = '';
-                for( let $_Key in aValues ){
-                    if($opt.VALUE != '') $opt.VALUE += '\n';
-                    $opt.VALUE += aValues[$_Key];
-                }
-            }
-        }else if(tempValue === true) { // checkbox is checked
-            $opt.VALUE = ' checked';
-        }else{
-            $opt.VALUE = '';
+    
+        
+        form_ = this.tplForm.Frame.wzOut({
+            ID: this.iOpt.id,
+            FIELD_SETS: this.tplForm.Fieldset.wzOut({
+                TITLE: this.iOpt.title,
+                ITEMS: `${fieldset}`
+            })
+        });
+        
+        return form_;
+    }
+    
+    onChange($el){
+        let wzType = $el.getAttribute(`wzType`),isWnd = this.iOpt.isWnd,
+            newValue = $el.value,
+            saveLoc = $el.name.split(`::`);
+        
+        if(wzType === `ListArea`){
+            newValue = $el.value.split(`\n`);
         }
         
-        return this.appData.tpl.Form.Fields[$type].wzOut($opt);
-    }
-    
-    /**
-     *
-     * @param {Boolean} [$recreate] default: false
-     * @return {string|*}
-     */
-    show_($reCreate = true){
-        if($reCreate) this.createForm();
-        return this.form_;
-    }
-    
-    
-    /**
-     * Saves the field (used while looping through all form-fields)
-     * @see this.convertNameToObject()
-     * @param {object} $fieldData field data including .name and .value
-     *
-     */
-    saveField($fieldData){
-        // get usable data from the name
-        let fieldObject = this.convertNameToObject($fieldData.name),newValue;
-        // set new value
-        switch ($fieldData.getAttribute('wzType')){
-            case 'ListArea':
-                newValue = $fieldData.value.split('\n');
-                break;
-            default:
-                newValue = $fieldData.value;
-                break;
-        }
-        // edit Array (JSON Object)
-        //this.formData[fieldObject[0]].editData(fieldObject[1],newValue);
-        //console.log(`${fieldObject[1]} - ${newValue}`);
-        if(this.formConfig){
-            this.formConfig.set(`${this.formSettings.configKey}.${fieldObject[1]}`.replace(`,`,`.`),newValue);
-        }else{
-            this.formData[fieldObject[0]].editData(fieldObject[1],newValue);
-        }
+        // save changes
+        this.formConfig[saveLoc[0]].set(saveLoc[1],newValue);
         
-        return true;
+        // let user know data was saved
+        wzNotify.save($el.parentNode.firstChild.innerHTML,`Saved`);
+    
+        //this.create();
+        
+        setTimeout(() => {
+            if(isWnd){
+                wzWND(isWnd).refresh();
+            }
+            wzCMS(appConfig.get('cms'));
+        },10);
+    }
+    onFocus($el){
+        this.nextEl = $el;
     }
     
-    /**
-     *
-     * @param $form
-     * @return {boolean}
-     */
-    validateForm($form){
-        for( let $_field in $form ){
-            if($form[$_field] && $form[$_field].name && typeof $form[$_field].value != "undefined"){
-                //console.log($form[$_field].name + ' - ' + $form[$_field].value + ' - '+ $form[$_field].getAttribute('wzType'));
-                // save data to object (not file)
-                if(!this.saveField($form[$_field])) return false;
-            }
-        }
-        for( let $_formKey in this.formData ){
-            //this.formData[$_formKey].printData();
-            if(!this.formConfig) this.formData[$_formKey].saveData();
-            //console.log(this.formData[$_formKey]);
-        }
-        return true;
+};
+
+wzOnFormEnter = function(e){
+    if (e.keyCode === 13) {
+        document.activeElement.blur();
     }
-    /*
-     static validateForm($event,$form){
-     $event.preventDefault();
-     
-     
-     
-     }
-     */
-}
+};

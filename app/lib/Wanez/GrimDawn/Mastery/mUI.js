@@ -25,7 +25,7 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
         this.uiInfo = `Drag Skill into the slot where you want to move them, moving skills into the container ↑ will make them "unused" and remove them from /classtable.dbr and skilltree after pressing the "Save DBR" button.`;
         this.tpl = {
             "Main": `<div id="appGD_UI">{SKILL_WINDOW}</div>`, // <canvas id="canvas" width="400" height="400">No canvas support</canvas>
-            "SkillWindow": "<div class='skillWindow'><div class='skillConnectors'>{SKILL_CONNECTORS}</div><div class='skillPositions'>{SKILL_POSITIONS}</div><div class='skillPicker'>{SKILL_PICKER}</div></div><img src='img/skills_classbackgroundimage.png' />", // target | skills_classbackgroundimage
+            "SkillWindow": "<div class='skillWindow'><div class='skillConnectors'>{SKILL_CONNECTORS}</div><div class='skillConnectors skillConnectors2'>{SKILL_CONNECTORS2}</div><div class='skillPositions'>{SKILL_POSITIONS}</div><div class='skillPicker'>{SKILL_PICKER}</div></div><img src='img/skills_classbackgroundimage.png' />", // target | skills_classbackgroundimage
             "SkillPicker": `<div ondrop="_cms.skillDropUnused(event)" ondragover="_cms.skillAllowDrop(event)">{UNUSED}</div><div id="uiBackUps">{BACKUPS}</div>`, //{USED}
             //"SkillBTN": "<div wz-mode='{MODE}' class='skillCell'>{ICON}<wztip>{INFO}</wztip></div>"
             "SkillBTN": `<div wz-mode="{MODE}" id="btn_{COORDS}" ondrop="_cms.skillDrop(event)" ondragover="_cms.skillAllowDrop(event)" ondragstart="_cms.skillDrag(event)" draggable="true" wz-coords="{COORDS}" wz-id="{ID}" wz-tier="{TIER}" class="skillCell{CLASS_CIRCULAR}" onclick="_cms.setSkill({ID});"><span>{ICON}</span>{INFO}</div>`, // <wztip>{INFO}</wztip> |  ondblclick="_cms.setSkillConnector({ID});"
@@ -105,11 +105,32 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
         */
     }
     
+    getBackupData(){
+        let objData = {},tempSkill;
+        
+        for(let $_ID in this.aSkills){
+            tempSkill = this.aSkills[$_ID];
+            objData[tempSkill.getSkillPaths().fileName] = {
+                UI: {
+                    bitmapPositionX: tempSkill.getField(`UI`,`bitmapPositionX`) || `0`,
+                    bitmapPositionY: tempSkill.getField(`UI`,`bitmapPositionY`) || `0`
+                },
+                logic: {
+                    skillTier: tempSkill.getField(`logic`,`skillTier`),
+                    skillConnectionOff: tempSkill.getField(`logic`,`skillConnectionOff`) || ``,
+                    skillConnectionOn: tempSkill.getField(`logic`,`skillConnectionOn`) || ``
+                }
+            }
+        }
+        
+        return objData;
+    }
+    
     genBackupsList($aBackups){
         let out_ = ``,items_ = ``,aBackups = $aBackups || ((this.iBackups) ? this.iBackups : false),
             tpl = {
                 Frame: `<ul>{ITEMS}</ul>`,
-                Item: `<li onclick="_cms.loadBackup({ID})">{TIMESTAMP}</li>`
+                Item: `<li onclick="_cms.loadBackup({ID})" oncontextmenu="_cms.contextmenuBackupListItem(this,{ID});">{TIMESTAMP}</li>`
             };
     
         if(aBackups){
@@ -128,6 +149,35 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
         
         
         return out_;
+    }
+    
+    useBackupData($data){
+        let tempFileName,tempSkill,tempObj;
+        //console.log($data);
+        for(let $_ID in this.aSkills){
+            tempSkill = this.aSkills[$_ID];
+            tempFileName = tempSkill.getSkillPaths().fileName;
+            //console.log(tempSkill);
+            //console.log($data[tempFileName]);
+            //tempSkill.editSkills($data[tempFileName]);
+            
+            for(let $_Type in $data[tempFileName]){
+                for(let $_FieldName in $data[tempFileName][$_Type]){
+                    tempObj = {};
+                    if( tempSkill.getField($_Type,$_FieldName).toString() !== $data[tempFileName][$_Type][$_FieldName].toString()) {
+                        //console.log(`#01: ${tempSkill.getField($_Type,$_FieldName)}`);
+                        //console.log(`#02: ${$data[tempFileName][$_Type][$_FieldName]}`);
+                        tempObj[$_FieldName] = $data[tempFileName][$_Type][$_FieldName];
+                    }
+                    tempSkill.setField($_Type,tempObj);
+                }
+            }
+            
+            //setTimeout(() => {
+                tempSkill.saveModule();
+            //},10)
+        }
+        
     }
     
     genLayout(){
@@ -165,7 +215,7 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
                         tempConnector = (Array.isArray(this.objSkills[tempCoords].getField(`logic`,`skillConnectionOn`))) ? this.objSkills[tempCoords].getField(`logic`,`skillConnectionOn`)[i-1] : this.objSkills[tempCoords].getField(`logic`,`skillConnectionOn`);
                         conCoords[`${this.tpl.SkillSlots.X[(aSkills[tempCoords].Tier + i)-2]},${this.tpl.SkillSlots.Y[aSkills[tempCoords].Line]}`] = `img/${tempConnector.replace(/^.*[\\\/]/, '').replace(/\.tex/,'.png')}`;
                     }
-                    
+                    //console.log(conCoords);
                     aConnector.push([
                         this.aSkills[$_SkillID],
                         conCoords
@@ -350,11 +400,12 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
     }
     
     genOutput($currentSkill){ // CONTENT_
-        let out_ = '',pos_='',con_='',picker_='',pUnused_='',pUsed_='',
+        let out_ = '',pos_='',con_='',con2_=``,picker_='',pUnused_='',pUsed_='',
             tmpIcon = '<img draggable="false" src="{0}" />',
             tmpAlt = '{0}';
         const aSkills = this.genLayout(),
-            ignoreFields = {'1-1':true,'1-3':true,'1-5':true,'1-7':true,'1-9':true,'1-11':true};
+            ignoreFields = {'1-1':true,'1-3':true,'1-5':true,'1-7':true,'1-9':true,'1-11':true},
+            transmuterLine = {1:true,3:true,5:true,7:true,9:true,11:true};
         
         this.usedSkills = aSkills[0];
         //console.log(this.usedSkills);
@@ -388,17 +439,20 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
         for( let $_Coords in aSkills[0] ){
             let aCoords = $_Coords.split(','),
                 field = aSkills[0][$_Coords].Tier+'-'+aSkills[0][$_Coords].Line,
-                skillName,canvasIcon = '',aRep = {
-                    "MODE": (ignoreFields[field]) ? 'ignore' : 'inactive',
-                    "ICON": '',
-                    "ALT": '',
-                    "INFO": '',
-                    "ID": (aSkills[0][$_Coords].mSkill) ? aSkills[0][$_Coords].mSkill.getSkillId() : ``,
-                    'COORDS': $_Coords,
-                    'TIER': aSkills[0][$_Coords].Tier
-                },aConnector = {
-                    "MODE": "hidden",
-                    "IMG": ""
+                skillName,canvasIcon = '',
+                aRep = {
+                    MODE: `inactive`,//(ignoreFields[field]) ? 'ignore' : 'inactive',
+                    ICON: ``,
+                    ALT: ``,
+                    INFO: ``,
+                    ID: (aSkills[0][$_Coords].mSkill) ? aSkills[0][$_Coords].mSkill.getSkillId() : ``,
+                    COORDS: $_Coords,
+                    TIER: aSkills[0][$_Coords].Tier,
+                    CLASS_CIRCULAR: (transmuterLine[aSkills[0][$_Coords].Line]) ? ` transmuter` : ``
+                },
+                aConnector = {
+                    MODE: `hidden`,
+                    IMG: ``
                 };
             if(aSkills[0][$_Coords].isUsed){
                 skillName = aSkills[0][$_Coords].mSkill.getSkillName();
@@ -435,28 +489,35 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
                 }
             }
     
-            aRep.CLASS_CIRCULAR = ``;
+            //aRep.CLASS_CIRCULAR = ``;
             // check if skill is circular
             if(aSkills[0][$_Coords].isCircular){
-                aRep.CLASS_CIRCULAR = ` isCircular`;
+                aRep.CLASS_CIRCULAR += ` isCircular`;
             }
             
             
             pos_ += this.tpl.SkillBTN.wzOut(aRep);
-            if(aSkills[0][$_Coords].Line & 1){}else {
-                if(aSkills[0][$_Coords].Tier != 9) con_ += this.tpl.Connector.wzOut(aConnector);
+            if(aSkills[0][$_Coords].Line & 1){
+                con2_ += this.tpl.Connector.wzOut(aConnector);
+            }else {
+                if(aSkills[0][$_Coords].Tier !== 9) con_ += this.tpl.Connector.wzOut(aConnector);
             }
-            if(aSkills[0][$_Coords].Tier == 9) {
+            //con_ += this.tpl.Connector.wzOut(aConnector);
+            if(aSkills[0][$_Coords].Tier === 9) {
                 pos_ += '<br />';
-                if(aSkills[0][$_Coords].Line & 1){}else {
+                if(aSkills[0][$_Coords].Line & 1){
+                    con2_ += '<br />';
+                }else {
                     con_ += '<br />';
                 }
             }
+            //con_ += '<br />';
         }
         
         out_ += this.tpl.SkillWindow.wzOut({
             "SKILL_POSITIONS": pos_,
             "SKILL_CONNECTORS": con_,
+            "SKILL_CONNECTORS2": `<br />${con2_}`,
             "SKILL_PICKER": picker_
         });
         

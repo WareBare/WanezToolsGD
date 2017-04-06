@@ -6,12 +6,20 @@ module.exports = {
     file_get_contents($filepath){
         return fs.readFileSync($filepath,'utf-8');
     },
-    file_put_contents($filepath,$content){
+    /**
+     *
+     * @param $filepath
+     * @param $content
+     * @param $removeFromPath - string that should be removed from the path for notify
+     */
+    file_put_contents($filepath,$content,$removeFromPath){
+        $removeFromPath = $removeFromPath || ``;
         fs.writeFile($filepath, $content, function(err) {
             if(err) {
                 console.warn(err);
             } else {
-                console.info("File Saved: "+$filepath);
+                wzNotify.save(`${$filepath.replace($removeFromPath,``)}`);
+                console.info(`File Saved: ${$filepath.replace($removeFromPath,``)}`);
             }
         });
     },

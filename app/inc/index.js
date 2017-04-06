@@ -33,6 +33,7 @@ if(!appConfig.has('cms')){
 }
 
 require(`./cms`);
+require(`./wnd`);
 
 _app = new WZ.Core.cApp();
 _app.create_();

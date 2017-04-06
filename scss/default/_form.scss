@@ -46,23 +46,48 @@ form{
             }
         }
     }
+    label.comboBox{
+        position:relative;
+        display: block;
+        //height:10px;
+        //width:100px;
+        & select{
+            //position:absolute;
+        }
+    }
     input,select,option,textarea{
         margin: 2px 0 0 0;
         display: block;
         width: 150px;
+        cursor: text;
         &:invalid{
             background-color: #AF8080;
         }
-        &[wzType="TextLong"]{
+        &[wzType="ComboBox"]{
+            width: 268px;
+            & option{
+                width: 250px;
+            }
+        }
+        &[wzType="TextLarge"], &[wzType="ComboBoxLarge"]{
             width: 300px;
+            & option{
+                width: 300px;
+            }
+        }
+        &[wzType="TextLargeX"]{
+            width: 500px;
         }
         &[wzType="ListArea"]{
             width: 300px;
-            height:100px;
+            height:50px;
         }
         &[type="number"]{
             width: 50px;
         }
+    }
+    select,option{
+        cursor: default;
     }
     ul{
         position: absolute;
@@ -72,6 +97,7 @@ form{
     }
     input[type="submit"],input[type="reset"]{
         display: inline-block;
+        cursor: pointer;
         margin: 2px;
         width: 100px;
         &:HOVER{

@@ -5,12 +5,27 @@
     border: solid $border-000 0;
     padding: 2px;
     -webkit-user-select: none;
+    cursor: default;
     //-webkit-app-region: drag;
 }
 html{
     padding: 0;
     background-color: $backgroundColor-000;
     color: $fontColor-000;
+}
+
+
+::-webkit-scrollbar{
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(75,75,75,0.5);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    box-shadow: inset 0 0 6px rgba(150,150,150,0.5);
 }
 
 #app{
@@ -111,6 +126,7 @@ html{
 }
 #app_Nav{
     position: absolute;
+    //background-color: #2F2F2F;
     top: 55px;
     left: 0;
     bottom: 25px;
@@ -118,21 +134,24 @@ html{
     width: 200px;
     .navInActive{}
     .navActive{
-        background-color: #555599;
+        border-left-color: $borderColor-ButtonActive;
     }
     .navItem{
-        border-width: 1px;
+        //border-width: 1px;
         margin: 2px 0 2px 0;
+        background-color: #2F2F2F;
+        padding: 0;
     }
     ul{
-        margin: 0 0 0 10px;
+        margin: 0;
         list-style: none;
+        background-color: $backgroundColor-000;
+        padding: 0 0 0 10px;
         li{
-            border-width: 1px;
             cursor: pointer;
-            padding: 0;
+            padding: 0 0 0 10px;
             ul{
-                margin-left: 10px;
+                margin: 0;
             }
         }
         &:HOVER >li{
@@ -143,9 +162,12 @@ html{
         display: block;
         cursor: pointer;
         padding: 2px 5px 2px 5px;
+        border-left: {
+            color: transparent;
+            width: 3px;
+        }
         &:HOVER{
-            background-color: #A0A0FF;
-            color: #000000;
+            border-left-color: $borderColor-ButtonHover;
         }
     }
 }

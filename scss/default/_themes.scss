@@ -10,9 +10,16 @@ $backgroundColor-003: #401F0C;
 $backgroundColor-004: #57371B;
 $backgroundColor-005: #67472B;
 
+$backgroundColor-006: #45240C;
+$backgroundColor-007: #300F00;
+$backgroundColor-008: #351400;
+
 $fontColor-000: #AFAFAF;
 $fontColor-001: #B5A58A;
 $fontColor-001b: #C5B58B;
+
+$borderColor-ButtonHover: #555599;
+$borderColor-ButtonActive: #555599;
 
 $gradientBTN-000: linear-gradient($backgroundColor-000, $backgroundColor-001);
 $gradientBTN-000b: linear-gradient($backgroundColor-001, $backgroundColor-000);
@@ -20,6 +27,9 @@ $gradientBTN-000c: linear-gradient($backgroundColor-001, $backgroundColor-002);
 $gradientBTN-001: linear-gradient($backgroundColor-003,$backgroundColor-003, $backgroundColor-004);
 $gradientBTN-001b: linear-gradient($backgroundColor-004,$backgroundColor-003, $backgroundColor-003);
 $gradientBTN-001c: linear-gradient($backgroundColor-003,$backgroundColor-004, $backgroundColor-005);
+
+$gradientBTN-nav000: linear-gradient(to right, $backgroundColor-003 , $backgroundColor-008);
+$gradientBTN-nav001: linear-gradient(to right, $backgroundColor-008 , $backgroundColor-003);
 
 @if $theme != gd01{
 

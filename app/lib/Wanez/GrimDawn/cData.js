@@ -139,7 +139,7 @@ module.exports = class cData extends libWZ.Core.cData{
     
         try{
             this.prevFile.editDBR({"FileDescription":this.getData().FileDescription});
-            if(this.cParser.stringifyData(this.getData()) != this.cParser.stringifyData(this.prevFile.getData())){
+            if(this.cParser.stringifyData(this.getData()) !== this.cParser.stringifyData(this.prevFile.getData())){
                 saveDBR = true;
             }
         }catch(err){ // if it fails there is no such file = save the file
@@ -204,7 +204,7 @@ module.exports = class cData extends libWZ.Core.cData{
     }
     
     getFieldValue($field){
-        return this.aData[$field];
+        return (this.aData[$field]) ? this.aData[$field] : ``; //  && this.aSkills[$type] !== `undefined`
     }
     getSkillTag(){
         return this.aData.skillDisplayName;

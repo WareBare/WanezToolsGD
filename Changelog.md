@@ -1,25 +1,54 @@
 # Changelog #
 
+## v0.0.4 ##
+Tag Files need to be re-set in Settings, they are now in a list with file extension, in other words old entries cannot be loaded.
+
+### Minor Features ###
+* Transmuter Slots have a purplish border
+* added the first slot to "Transmuter Lines/Rows"
+* Tag Files now retain their formatting (empty lines/comments)
+
+### Major Features ###
+* errors while loading a file will not cause the program to stop working as it did before, it will show a notification at the top with the full path.
+* Backup System will now save all UI Information
+  * Connectors
+  * skillTier
+  * X & Y Coords
+  * SkillTree and ClassTable requires the use of the "Save UI" Button
+
+### Windows, Notifications, Dialogs ###
+* New stuff for better usability and to let the user know what's going on
+* Program Notifications will show at the top and disappear after 2 seconds
+* Settings are now inside a new window with real-time editing (data is saved after entry)
+
+### Bug Fixes ###
+* Connectors now show on "Transmuter Lines/Rows"
+* fixed a bug where adding a transmuter to a skill that already has a transmuter would fail
+* various fixes to loading files and saving files
+* various visual fixes to connectors
+* various fixes to the Backup System
+
 ## v0.0.3 ##
 ### Minor Features ###
-* Auto-Updater checks periodically for new updates (10 sec interval)
-* Auto-Updater will show a notification when it's ready to install
-* Auto-Updater information/button has been moved to the bottom left
+* Auto-Updater:
+  * checks periodically for new updates (10 sec interval).
+  * will show a notification when it's ready to install.
+  * information/button has been moved to the bottom left.
 * Skill Tooltips have been changed
-  * Info: isCircular
-  * Info: hasConnectors
+  * Info: isCircular.
+  * Info: hasConnectors.
 * Visual Changes
-  * the currently selected skill now uses a shadow rather than changed border color (green)
-  * skills with connectors now have a shadow (blue)
-  * circular skills will now show up as circular
+  * the currently selected skill now uses a shadow rather than changed border color (green).
+  * skills with connectors now have a shadow (blue).
+  * circular skills will now show up as circular.
 
 ### Major Features ###
 * Backup System for Mastery/UI
-  * clicking the Button "Create Backup" will create a Backup data for the UI you are looking at (only files in records/ui/skills/[mastery])
-  * this data is not saved inside a file, when you exit the program all Backups are lost
+  * clicking the Button "Create Backup" will create a Backup data for the UI you are looking at (only files in records/ui/skills/[mastery]).
+  * this data is not saved inside a file, when you exit the program all Backups are lost.
 
 ### Bug Fixes ###
-* when you hover over a tooltip, it will now go away
+* when you hover over a tooltip, it will now go away.
 
 ## v0.0.2 ##
 ### Bug Fixes ###

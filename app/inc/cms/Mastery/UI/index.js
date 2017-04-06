@@ -18,6 +18,11 @@ module.exports = {
         this.Base._tagsSkills.saveData();
     },
     
+    contextmenuBackupListItem: function($el,$skillId){
+        //console.log(`success from inside cms`);
+        return false;
+    },
+    
     skillAllowDrop: function(e) {
         e.preventDefault();
     },
@@ -105,9 +110,11 @@ module.exports = {
     setConnector: function($type){
         if(this.Base._mSkill){
             this.modeConnect = true;
-            document.body.style.cursor = 'crosshair';
+            //document.body.style.cursor = 'crosshair';
+            wzNotify.info(`Click on the Skill you want as Transmuter/Modifier`);
         }else{
-            console.log(`requires a skill to be set first!`);
+            //console.log(`requires a skill to be set first!`);
+            wzNotify.warn(`You need to select a Skill first.`);
         }
         
         /*
@@ -127,16 +134,34 @@ module.exports = {
             setTimeout(function(){
                 wzCMS(appConfig.get('cms'));
             }, 10);
+        }else{
+            wzNotify.warn(`You need to select a Skill first.`);
         }
     },
     createBackup: function(){
         if(this.contentType && this.contentParam){
+            //console.log(this.Base._mUI.getBackupData());
+            this.objBackups[this.contentType] = this.objBackups[this.contentType] || [];
+            //let aBackups = [];
+    
+            this.objBackups[this.contentType].push({
+                TimeStamp: moment().format("DD/MM/YYYY hh:mm a"),
+                Data: this.Base._mUI.getBackupData()
+            });
+            // oncontextmenu="javascript:alert('success!');return false;"
+    
+            let backUpEl = document.getElementById(`uiBackUps`);
+            if(backUpEl){
+                backUpEl.innerHTML = this.Base._mUI.genBackupsList(this.objBackups[this.contentType]);
+            }
+            
+            /*
             this.objBackups[this.contentType] = this.objBackups[this.contentType] || [];
     
             let aFiles = wzIO.dir_get_contentsSync(`${this.Base.pathGD.Mod}/${this.contentParam}/${this.contentType}`,true),
                 tempClass,
                 aBackups = [];
-            console.log(aFiles);
+            //console.log(aFiles);
             
             for(let $_FileName in aFiles){
                 tempClass = new WZ.GrimDawn.cData(aFiles[$_FileName]);
@@ -153,21 +178,23 @@ module.exports = {
                 backUpEl.innerHTML = this.Base._mUI.genBackupsList(this.objBackups[this.contentType]);
             }
             //console.log(this.objBackups[this.contentType]);
+            */
         }else{
-            //console.log(`need to open UI first!`);
             wzNotify.warn(`need to open UI first!`);
         }
     },
     loadBackup: function($backupId){
         try{
-            for(let $_Index in this.objBackups[this.contentType][$backupId].Data){
-                this.objBackups[this.contentType][$backupId].Data[$_Index].saveData(false,true);
+            //for(let $_Index in this.objBackups[this.contentType][$backupId].Data){
+                //this.objBackups[this.contentType][$backupId].Data[$_Index].saveData(false,true);
                 //console.log(this.objBackups[this.contentType][$backUpId][$_Index]);
-            }
+                //this.Base._mUI.useBackupData(this.objBackups[this.contentType][$backupId].Data[$_Index]);
+            //}
+            this.Base._mUI.useBackupData(this.objBackups[this.contentType][$backupId].Data);
             wzReloadCMS(10);
         }catch(err){
             wzNotify.err(`BackUp doesn't exist!`);
-            console.error(err);
+            //console.error(err);
         }
     },
     
@@ -212,8 +239,8 @@ module.exports = {
                 "ONCLICK": "_cms.saveCurrentData()",
                 "TEXT": "Save UI"
             }, {
-                "ONCLICK": "_cms.createBackup()",
-                "TEXT": "Create Backup"
+                "ONCLICK": `_cms.Base.loadTags();wzReloadCMS(25)`,
+                "TEXT": "Reload Tags"
             }, {
                 "ONCLICK": "_cms.setConnector()",
                 "TEXT": "Set Connector"
@@ -223,6 +250,12 @@ module.exports = {
             }, {
                 "ONCLICK": "_cms.Base.goToEditSkill()",
                 "TEXT": "Edit Skill"
+            }, {
+                "ONCLICK": "_cms.Base.goToEditMastery()",
+                "TEXT": "Edit Mastery [ip]"
+            }, {
+                "ONCLICK": "_cms.createBackup()",
+                "TEXT": "Create Backup"
             }/*, {
                 "ONCLICK": "_cms.setConnector('transUp')",
                 "TEXT": "Transmuter ↑"

@@ -8,8 +8,8 @@ module.exports = {
     pathGD: false,
     masteryUI: false,
     _mUI: false,
-    _tagsSkills: new WZ.GrimDawn.cData(`${WZ.GrimDawn.tFn.getPaths().Source}/text_en/${appConfig.get(`GrimDawn.Mastery.TagsSkills`)}.txt`,new WZ.GrimDawn.Parser.cTags()),
-    _tagsClasses: new WZ.GrimDawn.cData(`${WZ.GrimDawn.tFn.getPaths().Source}/text_en/${appConfig.get(`GrimDawn.Mastery.TagsClasses`)}.txt`,new WZ.GrimDawn.Parser.cTags()),
+    _tagsSkills: false,
+    _tagsClasses: false,
     _mSkill: false,
     aGenderPC01: [
         new WZ.GrimDawn.cData(`${WZ.GrimDawn.tFn.getPaths().Mod}/records/creatures/pc/femalepc01.dbr`),
@@ -62,12 +62,27 @@ module.exports = {
             wzCMS([`Mastery`,`Skill`]);
             this.loadContent('EditSkill');
         }else{
-            wzNotify.err(`You need to pick a skill first`);
+            wzNotify.warn(`You need to select a Skill first.`);
         }
+    },
+    goToEditMastery:function(){
+        wzNotify.info(`Development is still in progress!`);
+    },
+    loadTags: function(){
+        
+        if(this._tagsSkills){
+            this._tagsSkills.reload();
+            this._tagsClasses.reload();
+        }else{
+            this._tagsSkills = new WZ.GrimDawn.cData(`${WZ.GrimDawn.tFn.getPaths().Source}/text_en/${appConfig.get(`GrimDawn.Mastery.TagsSkills`)}`,new WZ.GrimDawn.Parser.cTags());
+            this._tagsClasses = (appConfig.get(`GrimDawn.Mastery.TagsClasses`) === appConfig.get(`GrimDawn.Mastery.TagsSkills`)) ? this._tagsSkills : new WZ.GrimDawn.cData(`${WZ.GrimDawn.tFn.getPaths().Source}/text_en/${appConfig.get(`GrimDawn.Mastery.TagsClasses`)}`,new WZ.GrimDawn.Parser.cTags());
+        }
+        
     },
     
     ini: function(){
         this.pathGD = WZ.GrimDawn.tFn.getPaths();
+        if(!this._tagsSkills) this.loadTags();
         if(!this.masteryUI) this.masteryUI = this.getMasteries();
         
         //console.log(this.convSkillSlots());

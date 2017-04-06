@@ -14,13 +14,26 @@ module.exports = class cData extends libWZ.Core.cBase{
         //console.log(`cData - Core`);
         this.filepath = $filePath;
         this.cParser = $cParser;
+        this.iData = $aData;
         
-        this.aData = ($aData) ? JSON.parse(JSON.stringify($aData)) : this.cParser.parseData(wzIO.file_get_contents(this.filepath));
+        this.noError = true; // prevent file from being saved if it didnt exist
+    
+        this.aData
+        
+        this.reload();
+        
         
     }
     
     reload(){
-        this.aData = this.cParser.parseData(wzIO.file_get_contents(this.filepath));
+        //this.aData = this.cParser.parseData(wzIO.file_get_contents(this.filepath));
+        try{
+            this.aData = (this.iData) ? JSON.parse(JSON.stringify(this.iData)) : this.cParser.parseData(wzIO.file_get_contents(this.filepath));
+        }catch(err){
+            this.aData = {};
+            this.noError = false;
+            wzNotify.err(`${$filePath}`,`Unable to load File:`);
+        }
     }
     changeFilePath($newFilePath){
         this.filepath = $newFilePath;
@@ -70,34 +83,36 @@ module.exports = class cData extends libWZ.Core.cBase{
      * @param {Boolean} $alwaysSave [default: false]
      */
     saveData($filePath,$alwaysSave = false){
-        $filePath = $filePath || this.filepath;
-        let path = $filePath.substring(0, $filePath.lastIndexOf("/"));
-        //console.log(`save: ${$filePath}`);
-        try{
-            fs.accessSync(path, fs.F_OK);
-            //console.log(`it exists already`);
-        }catch(err){
-            console.log(`create path ${path}`);
-            mkpath.sync(path);
-        }
-        // check if data has been updated, otherwise saving it is pointless
-        if(this.checkState() || $alwaysSave){
-            let data_ = this.cParser.stringifyData(this.aData); // if there is nothing to save, dont bother
-            if(data_){
-                //console.log(data_);
-                wzIO.file_put_contents(
-                    $filePath,
-                    data_
-                );
-                
-            }else{
-                console.log('cParser.stringifyData returned false - may have been intentional');
+        if(this.noError){
+            $filePath = $filePath || this.filepath;
+            let path = $filePath.substring(0, $filePath.lastIndexOf("/"));
+            //console.log(`save: ${$filePath}`);
+            try{
+                fs.accessSync(path, fs.F_OK);
+                //console.log(`it exists already`);
+            }catch(err){
+                console.log(`create path ${path}`);
+                mkpath.sync(path);
             }
+            // check if data has been updated, otherwise saving it is pointless
+            if(this.checkState() || $alwaysSave){
+                let data_ = this.cParser.stringifyData(this.aData); // if there is nothing to save, dont bother
+                if(data_){
+                    //console.log(data_);
+                    wzIO.file_put_contents(
+                        $filePath,
+                        data_,
+                        this.fn.getPaths().Mod
+                    );
             
-            //console.log('Main saved in: '+this.filepath);
-            this.dataUpdated = false;
-        }
+                }else{
+                    console.log('cParser.stringifyData returned false - may have been intentional');
+                }
         
+                //console.log('Main saved in: '+this.filepath);
+                this.dataUpdated = false;
+            }
+        }
     }
     
     /**
