@@ -37,15 +37,15 @@ module.exports = {
                 X: document.getElementById(`coordX`).value,
                 Y: document.getElementById(`coordY`).value
             };
-            console.log(this.moveTo.X);
+            //console.log(this.moveTo.X);
         }else if(!this.moveTo.Sum){
             this.moveTo.Sum = [this.moveTo.X - document.getElementById(`coordX`).value,this.moveTo.Y - document.getElementById(`coordY`).value];
-            console.log(this.moveTo.Sum);
+            //console.log(this.moveTo.Sum);
         }else{
             //console.log(parseInt(document.getElementById(`coordX`).value) + this.moveTo.Sum[0]);
             let newX = parseInt(this.moveTo.X) + this.moveTo.Sum[0],
                 newY = parseInt(this.moveTo.Y) + this.moveTo.Sum[1];
-            console.log(`${newX} - ${newY}`);
+            //console.log(`${newX} - ${newY}`);
             $el.parentElement.style.left = `${newX}px`;
             $el.parentElement.style.top = `${newY}px`;
             this._mSelection.setCoords(this.currentButton,[newX,newY]);
@@ -65,7 +65,7 @@ module.exports = {
     dragButtonStart: function(e,$el,$id){
         let shadow = $el.cloneNode(true);
         e.dataTransfer.setDragImage(shadow, 0, 0);
-        if($id) this.selectButton($el,$id);
+        if($id >= 0) this.selectButton($el,$id);
         //this.currentElement = $el.parentElement;
         //e.preventDefault();
         //if($wndId) _wnd = objWND[$wndId];

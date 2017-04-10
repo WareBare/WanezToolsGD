@@ -1,5 +1,36 @@
 # Changelog #
 
+## v0.0.5 ##
+
+### Edit Skill ###
+* Edit Skill has been moved into a new window rather than changing the content
+* double click will open a new window to edit the skill
+* Pet Editing
+  * a field to edit pet tags has been added (Tags)
+  * a field to add spawnObjects has been added (Files)
+  * create pet file if file in spawnObjects doesn't exist (it will use the file from the previous level - this will require at least 1 pet file)
+  * skill name/level can be changed from inside the program
+  * fields can be hidden to avoid cluttering the screen with every skill the pet has (and makes editing wanted skills easier)
+
+### Major Features ###
+* lists to pick a skill will no longer show skills used by another file
+  * in addition some directories are being ignored (backup, bak, copy, New Folder)
+  * and files starting with "copy " are being ignored
+* Mastery Selection Window can be edited with the program
+
+### Mastery Selection ###
+* Background image will be loaded if one exists, otherwise the default window is loaded (.tga and .png are supported, though .tga takes a little longer to load)
+  * same applies to Button images
+* Texts are loaded but not used, except for tags (requires a classes.txt)
+* UI
+  * as usual tags are loaded to display Mastery Name
+  * Text Size/positioning inside the program does not reflect in-game size/positioning
+    * however, text coords are adjusted as buttons are
+  * Move Buttons around
+  * Buttons can be place above or below of another by double-clicking the button, double-clicking the button above and than double-click the button to move below the one you started with.
+  * without using the "Save Selection" Button nothing is written in the .dbr
+  * using the Reload button will load all data from the .dbr again (resetting unsaved positions)
+
 ## v0.0.4 ##
 Tag Files need to be re-set in Settings, they are now in a list with file extension, in other words old entries cannot be loaded.
 

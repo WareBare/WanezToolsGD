@@ -255,7 +255,7 @@ module.exports = class cFrom extends libWZ.Core.cBase{
             newValue = $el.value,tempOpt = {},
             reload = $el.getAttribute(`reload`),
             saveLoc = $el.name.split(`::`);
-        console.log(reload);
+        //console.log(reload);
         if(wzType === `ListArea` || wzType === `ListAreaLarge`){
             newValue = $el.value.split(`\n`);
         }

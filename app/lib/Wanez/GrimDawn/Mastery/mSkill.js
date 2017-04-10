@@ -180,7 +180,7 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
     iniSpawnObjects(){
         let tempSpawnObjects,tempLvL;
         
-        if(this.aSkills.logic && !this.aSkills.spawnObjects){
+        if(this.aSkills.logic){ //  && !this.aSkills.spawnObjects
             tempSpawnObjects = this.aSkills.logic.getFieldValue(`spawnObjects`);
             if(tempSpawnObjects){
                 tempSpawnObjects = (Array.isArray(tempSpawnObjects)) ? tempSpawnObjects : [tempSpawnObjects];
@@ -195,9 +195,14 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
                         this.aSkills.spawnObjects[tempLvL] = new libWZ.GrimDawn.cData(`${this.fn.getPaths().Mod}/${tempSpawnObjects[$_Index]}`);
                     }catch (err){
                         console.log(`create file`);
+                        let prevIndex = $_Index - 1;
+                        this.aSkills.spawnObjects[tempLvL] = new libWZ.GrimDawn.cData(`${this.fn.getPaths().Mod}/${tempSpawnObjects[prevIndex]}`);
+                        this.aSkills.spawnObjects[tempLvL].changeFilePath(`${this.fn.getPaths().Mod}/${tempSpawnObjects[$_Index]}`);
+                        //this.aSkills.spawnObjects[tempLvL].editDBR({},true);
+                        this.aSkills.spawnObjects[tempLvL].saveData(false,true);
                     }
                 }
-                console.log(this.aSkills.spawnObjects);
+                //console.log(this.aSkills.spawnObjects);
             }
         }
     }

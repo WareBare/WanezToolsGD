@@ -27,7 +27,7 @@ class cModule extends libWZ.GrimDawn.cBase{
             //$data.saveDataGD($dataMisc,true);
             try{
                 $data.saveDBR($dataMisc,$alwaysSave);
-                console.log(`go save`);
+                //console.log(`go save`);
             }catch(err2){
                 try{
                     $data.saveModuleData($dataMisc,$alwaysSave);

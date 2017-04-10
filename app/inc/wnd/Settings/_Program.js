@@ -10,7 +10,7 @@
 module.exports = {
     
     content_: function(){
-        let out_ = `Program - Settings`;
+        let out_ = `It is recommended to "Reload" after closing the Settings Window (if anything was changed)`;
         
         return out_;
     }

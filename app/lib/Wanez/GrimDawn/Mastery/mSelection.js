@@ -84,8 +84,8 @@ module.exports = class mSelection extends libWZ.GrimDawn.cModule{
             bitmapPositionX: $aCoords[0] || $_button.Button.__getField(`bitmapPositionX`)
         });
         $_button.Text.editDBR({
-            bitmapPositionY: $aCoords[1] || $_button.Text.__getField(`bitmapPositionY`),
-            bitmapPositionX: $aCoords[0] || $_button.Text.__getField(`bitmapPositionX`)
+            textBoxY: $aCoords[1] || $_button.Text.__getField(`textBoxY`),
+            textBoxX: $aCoords[0] || $_button.Text.__getField(`textBoxX`)
         });
     }
     
