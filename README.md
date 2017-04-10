@@ -1,11 +1,11 @@
 # WanezToolsGD #
-Unofficial addition to the Modding Tools For GrimDawn.
+Unofficial addition to the official Grim Dawn - Modding Tools (DBR-Editor and Tag Editing).
 
-These tools will not replace the official Modding Tools from Crate, but they make certain tasks easier.
+These tools will not replace the official Modding Tools from Crate, but they make certain tasks easier and less tedious.
 
 ## General ##
 The Main focus currently is on the Mastery Editor, but more features will follow. Any kind of feedback is appreciated.
-Because it is an unsigned .exe (installer) it may trigger some firewalls and anti-virus software.
+This is an unsigned .exe (installer) and may trigger some firewalls and anti-virus software because of it.
 
 ## Mastery Tools ##
 ### Auto-Updater ###
@@ -22,11 +22,11 @@ Because it is an unsigned .exe (installer) it may trigger some firewalls and ant
 * save changes with the button on the right "Save Selection"
 * buttons can be moved by dragging them to the desired location, using the fields at the top or with a double-click feature
 
-![Full Example](http://wanez.de/misc/selection_full-v0.0.5.gif "Full Example")
+![Full Example (gif made using Grim Quest Source)](http://wanez.de/misc/selection_full-v0.0.5.gif "Full Example")
 
 * Buttons can be place above or below of another by double-clicking the button, double-clicking the button above and than double-click the button to move below the one you started with.
 
-![Double Click Example](http://wanez.de/misc/WanezToolsGD-v0.0.5_MasterySelection_dblclick.gif "Double Click Example")
+![Double Click Example (gif made using Grim Quest Source)](http://wanez.de/misc/WanezToolsGD-v0.0.5_MasterySelection_dblclick.gif "Double Click Example")
 
 ### Skill-UI ###
 #### UI ####

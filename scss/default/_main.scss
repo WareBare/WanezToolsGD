@@ -319,12 +319,19 @@ html{
 
 .md{
 
+    h2{
+        color: #6F6FBF;
+        font-weight: bolder;
+        text-decoration: underline;
+    }
     h3{
         margin:0;
+        //font-weight: bolder;
+        text-decoration: underline;
     }
     ul{
         //color: green;
-        margin: 0 0 0 15px;
+        margin: 0 0 0 20px;
     }
 
 }
