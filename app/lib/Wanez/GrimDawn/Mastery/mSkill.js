@@ -11,11 +11,10 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
         this.iFilePath = $filePath;
         this.iTags = $tags;
         
-        // todo ui file
-        //this.aUI = [];
         
-        // todo logic files
+        // UI, logic, buff
         this.aSkills = {};
+        this.objSkillPaths = {};
     
         this.skillId = false; // tool reference to the skills array position
         
@@ -165,14 +164,42 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
         
         temp = $dbr.getFieldValue(`buffSkillName`) || $dbr.getFieldValue(`petSkillName`);
         if(temp){
+            this.objSkillPaths[temp] = true;
             tempClass = new libWZ.GrimDawn.cData(`${this.fn.getPaths().Mod}/${temp}`);
             this.aSkills.buff = this.aSkills.buff || [];
             this.aSkills.buff.push($dbr);
             //console.log($dbr);
             skill = this.loopBuff(tempClass);
+        }else{
+            this.aSkills.buff = this.aSkills.buff || false;
         }
         
         return skill;
+    }
+    
+    iniSpawnObjects(){
+        let tempSpawnObjects,tempLvL;
+        
+        if(this.aSkills.logic && !this.aSkills.spawnObjects){
+            tempSpawnObjects = this.aSkills.logic.getFieldValue(`spawnObjects`);
+            if(tempSpawnObjects){
+                tempSpawnObjects = (Array.isArray(tempSpawnObjects)) ? tempSpawnObjects : [tempSpawnObjects];
+                this.aSkills.spawnObjects = [];
+                for(let $_Index in tempSpawnObjects){
+                    this.objSkillPaths[tempSpawnObjects[$_Index]] = true;
+                    tempLvL = parseInt($_Index) + 1;
+                    // todo check if file exists and create if not
+                    try{
+                        //console.log(`${this.fn.getPaths().Mod}/${tempSpawnObjects[$_Index]}`);
+                        fs.accessSync(`${this.fn.getPaths().Mod}/${tempSpawnObjects[$_Index]}`); // check if file exists
+                        this.aSkills.spawnObjects[tempLvL] = new libWZ.GrimDawn.cData(`${this.fn.getPaths().Mod}/${tempSpawnObjects[$_Index]}`);
+                    }catch (err){
+                        console.log(`create file`);
+                    }
+                }
+                console.log(this.aSkills.spawnObjects);
+            }
+        }
     }
     
     iniSkill(){
@@ -185,17 +212,23 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
         tempPath = `${this.fn.getPaths().Mod}/${tempClass.getFieldValue(`skillName`)}`;
         try{
             fs.accessSync(`${tempPath}`); // check if file exists
-            
+    
             tempClass = this.loopBuff(new libWZ.GrimDawn.cData(tempPath));
-            //this.skillTier = tempClass.getFieldValue(`skillTier`);
-            //this.skillMaxLevel = tempClass.getFieldValue(`skillMaxLevel`);
-            //this.skillUltimateLevel = tempClass.getFieldValue(`skillUltimateLevel`);
-            //this.skillMasteryLevelRequired = tempClass.getFieldValue(`skillMasteryLevelRequired`);
+            this.objSkillPaths[tempPath.split(`/database/`)[1]] = true;
         }catch(err){
             tempClass = false;
         }
         
         this.aSkills.logic = tempClass;
+    
+        /*
+        if(this.aSkills.logic) {
+            tempSpawnObjects = this.aSkills.logic.getFieldValue(`spawnObjects`);
+            if (tempSpawnObjects) {
+            
+            }
+        }
+        */
     }
     
     generateForm($aSkillFiles){
@@ -352,21 +385,34 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
         return this.skillId;
     }
     getSkillPaths(){
-        let aPaths = {
+        let logicRelFilePath = (this.aSkills.buff) ? this.aSkills.buff[0].getFilePath().split(`/database/`)[1] : ( (this.aSkills.logic) ? this.aSkills.logic.getFilePath().split(`/database/`)[1] : `` ),aPaths = {
             'relPath': this.iFilePath.split(`/database/`)[1].replace(`/${this.iFileName}`,``),
             'relFilePath': this.iFilePath.split(`/database/`)[1],
             'filePath': this.iFilePath,
             'fileName': this.iFileName,
-            'logicRelPath': (this.aSkills.buff) ? this.aSkills.buff[0].getFilePath().split(`/database/`)[1] : ( (this.aSkills.logic) ? this.aSkills.logic.getFilePath().split(`/database/`)[1] : `` )
+            'logicRelFilePath': logicRelFilePath,
+            'logicRelPath': logicRelFilePath.substring(0, logicRelFilePath.lastIndexOf("/"))
         };
         return aPaths;
     }
     
     getField($type,$field){
-        return (this.aSkills[$type]) ? this.aSkills[$type].getFieldValue($field) : ``;
+        let aKeys = $type.split(`.`),tempArray = this.aSkills;
+        
+        for(let $_Index in aKeys){
+            tempArray = tempArray[aKeys[$_Index]];
+        }
+        
+        return (tempArray) ? tempArray.getFieldValue($field) : ``;
     }
     setField($type,$opt){
-        if(this.aSkills[$type]) this.aSkills[$type].editDBR($opt,true);
+        let aKeys = $type.split(`.`),tempArray = this.aSkills;
+    
+        for(let $_Index in aKeys){
+            tempArray = tempArray[aKeys[$_Index]];
+        }
+        
+        if(tempArray) tempArray.editDBR($opt,true);
     }
     editSkills($opt){
         let objChanges = {},tempFieldName,tempOpt,

@@ -63,7 +63,7 @@ module.exports = class cWindow extends libWZ.Core.WND.cBase{
         });
         this.tpl.Nav = `<div class="nav">${this.genNav()}</div>`;
         this.content = this.iContents.content_();
-        this.title = this.iContents.title || `No Title`;
+        this.title = `${this.iContents.title || `No Title`}${(this.iContents.titlePage) ? ` - ${this.iContents.titlePage}` : ``}`;
     }
     
     genNav(){
@@ -81,7 +81,12 @@ module.exports = class cWindow extends libWZ.Core.WND.cBase{
             tempEl.innerHTML = `${tempContentType}`;
             nav_.appendChild(tempEl);
             */
-            nav_ += `<span class="${(this.iContents.contentType === tempContentType) ? `active`:``}" onclick="wzWND(['${this.iWndId}','${tempContentType}']).refresh()">${tempContentType}</span>`;
+            if(tempContentType.startsWith(`.`)){
+                nav_ += `<span class="disabled">${tempContentType.replace(/^\./,``)}</span>`;
+            }else{
+                nav_ += `<span class="${(this.iContents.contentType === tempContentType) ? `active`:``}" onclick="wzWND(['${this.iWndId}','${tempContentType}']).refresh()">${tempContentType}</span>`;
+            }
+            
             //console.log(tempContentType);
         }
         //console.log(nav_);

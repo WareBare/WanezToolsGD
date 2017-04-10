@@ -37,21 +37,18 @@ module.exports = {
                     },
                     'settings-app::GrimDawn.Paths.Game': {
                         label: `Game Path`,
-                        type: `textLargeX`,
-                        reload: true
+                        type: `textLargeX`
                     }
                 },
                 'Mods': {
                     'settings-app::GrimDawn.Paths.Mods': {
                         label: `Mods (Folder)`,
-                        type: `listArea`,
-                        reload: true
+                        type: `listArea`
                     },
                     'settings-app::GrimDawn.activeMod': {
                         label: `Active Mod`,
                         type: `comboBox`,
-                        data: appConfig.get(`GrimDawn.Paths.Mods`) || [],
-                        reload: true
+                        data: appConfig.get(`GrimDawn.Paths.Mods`) || []
                     }
                 },
                 'Mastery': {
@@ -59,15 +56,13 @@ module.exports = {
                         label: `Tags - Skills`,
                         type: `listBox`,
                         data: wzIO.dir_get_contentsSync(`${WZ.GrimDawn.tFn.getPaths().Source}/text_en`,true) || [],
-                        dataUseValue: true,
-                        reload: true
+                        dataUseValue: true
                     },
                     'settings-app::GrimDawn.Mastery.TagsClasses': {
                         label: `Tags - Classes`,
                         type: `listBox`,
                         data: wzIO.dir_get_contentsSync(`${WZ.GrimDawn.tFn.getPaths().Source}/text_en`,true) || [],
-                        dataUseValue: true,
-                        reload: true
+                        dataUseValue: true
                     }
                 }
             }

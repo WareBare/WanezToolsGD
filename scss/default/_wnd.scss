@@ -51,6 +51,7 @@
         span{
             display:block;
             padding: 10px 5px 10px 5px;
+            margin: 5px 0 5px 0;
             cursor: pointer;
             border-left: {
                 width: 3px;
@@ -58,6 +59,13 @@
             }
             &:HOVER,&.active{
                 border-left-color: $borderColor-ButtonHover;
+            }
+            &.disabled{
+                color: #5F5F5F;
+                cursor: default;
+                &:HOVER{
+                    border-left-color: transparent;
+                }
             }
         }
     }

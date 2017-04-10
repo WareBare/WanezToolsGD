@@ -19,6 +19,7 @@ form{
     }
     label{
         display: inline-block;
+        vertical-align: top;
         span{
             border-top-width: 1px;
             border-right-width: 1px;
@@ -46,6 +47,7 @@ form{
             }
         }
     }
+
     label.comboBox{
         position:relative;
         display: block;
@@ -56,24 +58,38 @@ form{
         }
     }
     input,select,option,textarea{
-        margin: 2px 0 0 0;
+        margin: 2px 0 0 -2px;
         display: block;
         width: 150px;
         cursor: text;
+        //background-color: #E0E0E0;
+        background: #fcfff4;
+        background: linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+        box-shadow: inset 0 1px 1px white, 0 1px 3px rgba(0,0,0,0.5);
         &:invalid{
             background-color: #AF8080;
         }
-        &[wzType="ComboBox"]{
+        &[wzType="ListBox"]{
             width: 268px;
             & option{
                 width: 250px;
             }
         }
+        &[wzType="ListBoxLarge"]{
+            width: 568px;
+            & option{
+                width: 550px;
+            }
+        }
         &[wzType="TextLarge"], &[wzType="ComboBoxLarge"]{
             width: 300px;
-            & option{
-                width: 300px;
-            }
+        }
+        &[wzType="TextLarger"]{
+            width: 400px;
+        }
+        &[wzType="TextArea"]{
+            height:100px;
+            width: 500px;
         }
         &[wzType="TextLargeX"]{
             width: 500px;
@@ -82,8 +98,21 @@ form{
             width: 300px;
             height:50px;
         }
+        &[wzType="ListAreaLarge"]{
+            width: 568px;
+            height:150px;
+        }
+        &[wzType="CheckDefault"]{
+            cursor: pointer;
+            //display: inline-block;
+            width: auto;
+        }
         &[type="number"]{
             width: 50px;
+        }
+        &[type="checkbox"]{
+            width: 20px;
+            height: 20px;
         }
     }
     select,option{

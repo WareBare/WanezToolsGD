@@ -59,8 +59,11 @@ module.exports = {
      */
     goToEditSkill: function(){
         if(this._mSkill){
-            wzCMS([`Mastery`,`Skill`]);
-            this.loadContent('EditSkill');
+            //wzCMS([`Mastery`,`Skill`]);
+            //this.loadContent('EditSkill');
+            let wnd = wzWND('skillEdit',{height:'1000px',width:'750px'});
+            //wnd.__getContent()._mSkill = this._mSkill;
+            wnd.refresh();
         }else{
             wzNotify.warn(`You need to select a Skill first.`);
         }
@@ -69,13 +72,18 @@ module.exports = {
         wzNotify.info(`Development is still in progress!`);
     },
     loadTags: function(){
+        let pathSkills = ``,
+            pathClasses= ``;
+    
+        this._tagsSkills = new WZ.GrimDawn.cData(`${WZ.GrimDawn.tFn.getPaths().Source}/text_en/${appConfig.get(`GrimDawn.Mastery.TagsSkills`)}`,new WZ.GrimDawn.Parser.cTags());
+        this._tagsClasses = (appConfig.get(`GrimDawn.Mastery.TagsClasses`) === appConfig.get(`GrimDawn.Mastery.TagsSkills`)) ? this._tagsSkills : new WZ.GrimDawn.cData(`${WZ.GrimDawn.tFn.getPaths().Source}/text_en/${appConfig.get(`GrimDawn.Mastery.TagsClasses`)}`,new WZ.GrimDawn.Parser.cTags());
         
         if(this._tagsSkills){
-            this._tagsSkills.reload();
-            this._tagsClasses.reload();
+            //this._tagsSkills.reload();
+            //this._tagsClasses.reload();
+            wzCMS(appConfig.get('cms'));
         }else{
-            this._tagsSkills = new WZ.GrimDawn.cData(`${WZ.GrimDawn.tFn.getPaths().Source}/text_en/${appConfig.get(`GrimDawn.Mastery.TagsSkills`)}`,new WZ.GrimDawn.Parser.cTags());
-            this._tagsClasses = (appConfig.get(`GrimDawn.Mastery.TagsClasses`) === appConfig.get(`GrimDawn.Mastery.TagsSkills`)) ? this._tagsSkills : new WZ.GrimDawn.cData(`${WZ.GrimDawn.tFn.getPaths().Source}/text_en/${appConfig.get(`GrimDawn.Mastery.TagsClasses`)}`,new WZ.GrimDawn.Parser.cTags());
+        
         }
         
     },

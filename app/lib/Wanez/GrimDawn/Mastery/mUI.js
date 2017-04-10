@@ -17,6 +17,7 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
         
         this.aSkills = [];
         this.aSkillFiles = false;
+        this.objSkillPaths = {};
         this.aGroups = false;
         this.objSkills = {};
         this.objMiscUI = {};
@@ -28,7 +29,7 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
             "SkillWindow": "<div class='skillWindow'><div class='skillConnectors'>{SKILL_CONNECTORS}</div><div class='skillConnectors skillConnectors2'>{SKILL_CONNECTORS2}</div><div class='skillPositions'>{SKILL_POSITIONS}</div><div class='skillPicker'>{SKILL_PICKER}</div></div><img src='img/skills_classbackgroundimage.png' />", // target | skills_classbackgroundimage
             "SkillPicker": `<div ondrop="_cms.skillDropUnused(event)" ondragover="_cms.skillAllowDrop(event)">{UNUSED}</div><div id="uiBackUps">{BACKUPS}</div>`, //{USED}
             //"SkillBTN": "<div wz-mode='{MODE}' class='skillCell'>{ICON}<wztip>{INFO}</wztip></div>"
-            "SkillBTN": `<div wz-mode="{MODE}" id="btn_{COORDS}" ondrop="_cms.skillDrop(event)" ondragover="_cms.skillAllowDrop(event)" ondragstart="_cms.skillDrag(event)" draggable="true" wz-coords="{COORDS}" wz-id="{ID}" wz-tier="{TIER}" class="skillCell{CLASS_CIRCULAR}" onclick="_cms.setSkill({ID});"><span>{ICON}</span>{INFO}</div>`, // <wztip>{INFO}</wztip> |  ondblclick="_cms.setSkillConnector({ID});"
+            "SkillBTN": `<div wz-mode="{MODE}" id="btn_{COORDS}" ondrop="_cms.skillDrop(event)" ondragover="_cms.skillAllowDrop(event)" ondragstart="_cms.skillDrag(event)" draggable="true" wz-coords="{COORDS}" wz-id="{ID}" wz-tier="{TIER}" class="skillCell{CLASS_CIRCULAR}" onclick="_cms.setSkill({ID});" ondblclick="_cms.Base.goToEditSkill();"><span>{ICON}</span>{INFO}</div>`, // <wztip>{INFO}</wztip> |  ondblclick="_cms.setSkillConnector({ID});"
             SkillToolTip: `<wztip><h1>{SKILL_NAME}</h1>{COORDS_X}, {COORDS_Y}<br />isCircular: {IS_CIRCULAR}<br />Has Connector: {HAS_CONNECTOR}</wztip>`,
             "Connector": "<img wz-mode='{MODE}' src='{IMG}' alt='!' />",
             "SkillSlots": this.appData.tpl_gd.UI.SkillSlots,
@@ -80,6 +81,7 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
                 tempClass = new libWZ.GrimDawn.Mastery.mSkill($_FileName,aFiles[$_FileName],this.iTags);
                 this.objSkills[tempClass.getCoordsStr()] = tempClass; // $_FileName.replace(`.dbr`,``)
                 this.aSkills.push(tempClass);
+                Object.assign(this.objSkillPaths,tempClass.objSkillPaths);
             }else{
                 this.objMiscUI[$_FileName.replace(`.dbr`,``)] = new libWZ.GrimDawn.cData(aFiles[$_FileName]);
             }
@@ -539,14 +541,42 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
         }
         return theNewSkill;
     }
-    getSkillFiles(){
-        let tempPath;
-        if(!this.aSkillFiles){
-            tempPath = this.objMiscUI.classtraining.getFieldValue(`skillName`);
-            tempPath = tempPath.substring(0, tempPath.lastIndexOf("/"));
+    
+    getLogicPath(){
+        let tempPath = this.objMiscUI.classtraining.getFieldValue(`skillName`);
+        tempPath = tempPath.substring(0, tempPath.lastIndexOf("/"));
+        
+        return tempPath;
+    }
+    getSkillFiles($subDirs){
+        $subDirs = $subDirs || false;
+        let tempPath = this.getLogicPath(),tempFiles,ignoreDir = {backup: true, bak: true,copy: true, 'New Folder': true};
+        //console.log(this.objSkillPaths);
+        if($subDirs){
+            tempFiles = wzIO.dir_get_contentsSync(`${this.fn.getPaths().Mod}/${tempPath}`,false);
+            this.aSkillFiles = {};
+            for(let $_Name in tempFiles){
+                if(typeof tempFiles[$_Name] !== `string`){
+                    //console.log(tempFiles[$_Name]);
+                    if(!ignoreDir[$_Name]){
+                        for(let $_FileName in tempFiles[$_Name]){
+                            if(typeof tempFiles[$_Name][$_FileName] === `string` && !$_FileName.startsWith(`copy `)) this.aSkillFiles[`${$_Name}/${$_FileName}`] = `${tempFiles[$_Name][$_FileName]}`;
+                        }
+                    }
+                }else{
+                    if(!$_Name.startsWith(`copy `)) this.aSkillFiles[$_Name] = this.aSkillFiles[$_Name];
+                }
+            }
+        }else{
             this.aSkillFiles = wzIO.dir_get_contentsSync(`${this.fn.getPaths().Mod}/${tempPath}`,true);
-            //console.log(this.aSkillFiles);
         }
+        for(let $_Key in this.aSkillFiles){
+            if(this.objSkillPaths[`${this.getLogicPath()}/${$_Key}`] || $_Key.startsWith(`copy `)){
+                //console.log(`${this.getLogicPath()}/${$_Key}`);
+                delete this.aSkillFiles[`${$_Key}`];
+            }
+        }
+        
         return this.aSkillFiles;
     }
     
@@ -580,7 +610,7 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
                 tempOpt[`skillLevel${counter}`] = `0`;
             }
         }
-        console.log(tempOpt);
+        //console.log(tempOpt);
         this.objMisc.skillTree.editDBR(tempOpt);
         
         

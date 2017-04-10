@@ -12,8 +12,7 @@
             },
             "Mastery":{
                 "UI":[],
-                "Skill":[],
-                "Selection [ip]":[]
+                "Selection":[]
             },
             "Docs":{
                 "General":["ReadMe","Changelog"]
@@ -30,7 +29,8 @@
                 "Drops":[],
                 "Gear":[],
                 "Entities":[],
-                "DGA":[]
+                "DGA":[],
+                "Skill":[]
             },
             "Docs":{
                 "Wiki [ip]":["DGA [ip]","Mastery [ip]"]

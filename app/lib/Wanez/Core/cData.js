@@ -18,7 +18,7 @@ module.exports = class cData extends libWZ.Core.cBase{
         
         this.noError = true; // prevent file from being saved if it didnt exist
     
-        this.aData
+        this.aData = {};
         
         this.reload();
         
@@ -75,6 +75,14 @@ module.exports = class cData extends libWZ.Core.cBase{
             console.log('Main-Edit ERROR: can only edit arrays and strings');
         }
         return this.getData();
+    }
+    
+    __getField($field){
+        return (this.aData[$field]) ? this.aData[$field] : ``;
+    }
+    __setField($field,$value){
+        //this.aData[$field] = $value;
+        this.editData($field,$value);
     }
     
     /**
