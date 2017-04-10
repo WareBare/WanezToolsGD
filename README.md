@@ -22,11 +22,11 @@ This is an unsigned .exe (installer) and may trigger some firewalls and anti-vir
 * save changes with the button on the right "Save Selection"
 * buttons can be moved by dragging them to the desired location, using the fields at the top or with a double-click feature
 
-![Full Example (gif made using Grim Quest Source)](http://wanez.de/misc/selection_full-v0.0.5.gif "Full Example")
+![Full Example (gif made using Grim Quest Source)](http://wanez.de/misc/selection_full-v0.0.5.gif "Full Example (gif made using Grim Quest Source)")
 
 * Buttons can be place above or below of another by double-clicking the button, double-clicking the button above and than double-click the button to move below the one you started with.
 
-![Double Click Example (gif made using Grim Quest Source)](http://wanez.de/misc/WanezToolsGD-v0.0.5_MasterySelection_dblclick.gif "Double Click Example")
+![Double Click Example (gif made using Grim Quest Source)](http://wanez.de/misc/WanezToolsGD-v0.0.5_MasterySelection_dblclick.gif "Double Click Example (gif made using Grim Quest Source)")
 
 ### Skill-UI ###
 #### UI ####
@@ -57,3 +57,5 @@ This is an unsigned .exe (installer) and may trigger some firewalls and anti-vir
 * the following files have not been written by me, information can be found inside the files
   * app/lib/moment.js
   * app/lib/tga.js
+* I used Grim Quest source to make the tool
+  * Special Thanks to ASYLUM101 for testing the program and providing feedback and ideas to improve the tool
