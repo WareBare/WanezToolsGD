@@ -55,7 +55,7 @@ module.exports = {
             },
             items: objItems
         });
-        out_ = this.forms.main_form.create();
+        out_ = `<div><span style="color: #80FFD5;">^a [Aqua]</span> | <span style="color:#39ABCF;">^b [Blue]</span> | <span style="color:#00FFFF;">^c [Cyan]</span> | <span style="color:#191919;">^d [DarkGray]</span> | <span style="color:#FF69B5;">^f [Fushia]</span> | <span style="color:#10EB5D;">^g [Green]</span> | <span style="color:#5A039A;">^i [Indigo]</span> | <span style="color:#F1E78C;">^k [Khaki]</span> | <span style="color:#92CC00;">^l [Olive]</span> | <span style="color:#800000;">^m [Maroon]</span> | <span style="color:#F3A44D;">^o [Orange]</span> | <span style="color:#BD94C6;">^p [Purple]</span> | <span style="color:#FF4200;">^r [Red]</span> | <span style="color:#9A9A9A;">^s [Silver]</span> | <span style="color:#00FFD2;">^t [Teal]</span> | <span style="color:#FFFFFF;">^w [White]</span> | <span style="color:#FFF62C;">^y [Yellow]</span> | <span>^n [Line Break/Carriage Return]</span></div>${this.forms.main_form.create()}`;
         
         return out_;
     }

@@ -30,7 +30,7 @@ This is an unsigned .exe (installer) and may trigger some firewalls and anti-vir
 
 ### Skill-UI ###
 #### UI ####
-* Skill Icons can be shown if they are .tga
+* Skill Icons can be shown if they are .tga or .png
 * Use Drag & Drop to move skills around
   * changes to the coords are made immediately
   * Skill Tiers are changed respectively

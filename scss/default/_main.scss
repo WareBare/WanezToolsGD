@@ -45,12 +45,13 @@ html{
 }
 
 #app_Header{
-    border-width: 1px;
+    //border-width: 1px;
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    height: 50px;
+    //height: 50px;
+
     text-align:center;
     div{
         display:inline-block;
@@ -67,15 +68,16 @@ html{
                 height: 26px;
                 background-color: #767676;
                 display: inline-block;
-                border-width: 1px;
+                //border-width: 1px;
 
                 cursor: pointer;
 
                 margin-left: 0;
                 padding: 10px 10px 10px 30px;
-                color: $fontColor-001;
-                font-size: 18px;
-                line-height: 27px;
+                //color: $fontColor-001;
+                color: #AFAFAF;
+                font-size: 19px;
+                line-height: 26px;
                 &:AFTER{
                     content: "";
                     position: absolute;
@@ -89,21 +91,25 @@ html{
                 }
             }
             span.headerCMS_0{
-                background-color: $backgroundColor-003;
+                //background-color: $backgroundColor-003;
+                background: $gradientBTN-nav000;
                 &:AFTER{
+                    //background-color: #000000;
                     border-left-color: $backgroundColor-003;
                 }
             }
             span.headerCMS_1{
-                background-color: $backgroundColor-004;
+                //background-color: $backgroundColor-004;
+                background: $gradientBTN-nav001;
                 &:AFTER{
-                    border-left-color: $backgroundColor-004;
+                    border-left-color: $backgroundColor-008;
                 }
             }
             span.headerCMS_2{
-                background-color: $backgroundColor-005;
+                //background-color: $backgroundColor-005;
+                background: $gradientBTN-nav002;
                 &:AFTER{
-                    border-left-color: $backgroundColor-005;
+                    border-left-color: $backgroundColor-010;
                 }
             }
         }
@@ -216,7 +222,7 @@ html{
     left: 0;
     bottom: 0;
     right: 0;
-    border-width: 1px;
+    //border-width: 1px;
     min-width: 300px;
     min-height: 200px;
 

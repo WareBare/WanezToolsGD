@@ -100,13 +100,13 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
             //isType = `up`;
             
         }
-        if(aCoordsThis[1] < aCoordsConnect[1]){
+        if(parseInt(aCoordsThis[1]) < parseInt(aCoordsConnect[1])){
             isType = `down`;
-        }else if(aCoordsThis[1] > aCoordsConnect[1]){
+        }else if(parseInt(aCoordsThis[1]) > parseInt(aCoordsConnect[1])){
             //console.log(`is up`);
             isType = `up`;
         }
-        
+        console.log(isType);
         slotDif = (aCoordsConnect[0] - aCoordsThis[0]) / 80;
         arrayDif = slotDif - connectorLength;
         //console.log(aConnectors);
@@ -128,7 +128,7 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
             if(arrayDif > 0){
                 console.log(`do sth`);
                 for(let i=0; arrayDif > i; i++){
-                    console.log(`do sth`);
+                    //console.log(`do sth`);
                     aConnectors.push(objConnectorToPng.center);
                     //aConnectors = [objConnectorToPng.center];
                 }

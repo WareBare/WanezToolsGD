@@ -1,5 +1,13 @@
 # Changelog #
 
+## v0.1.0 ##
+### Minor Features ###
+* added .png support for Skill Icons
+* added Color Codes overview to edit-tags panel
+
+### Bug Fixes ###
+* fixed a bug where you were unable to set transmuters to a skill below (up was fine, down didn't work)
+
 ## v0.0.5 ##
 
 ### Edit Skill ###

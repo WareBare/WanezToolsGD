@@ -461,7 +461,9 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
                 //canvasIcon = aSkills[0][$_Coords]._Data.getSkillIcon(wzGD_dataSet.PathsDS.Mod.Source);
                 canvasIcon = aSkills[0][$_Coords].mSkill.getSkillIcon();
                 //console.log(canvasIcon);
-                canvasIcon = (canvasIcon != '') ? tmpIcon.wzReplace([canvasIcon.getCanvas().toDataURL()]) : tmpAlt.wzReplace([aSkills[0][$_Coords].mSkill.getField(`UI`,`FileDescription`)]);
+                canvasIcon = new libWZ.GrimDawn.cImageLoader(aSkills[0][$_Coords].mSkill.getField(`logic`,`skillUpBitmapName`),{
+                    retFalse: true
+                }).load() || tmpAlt.wzReplace([aSkills[0][$_Coords].mSkill.getField(`UI`,`FileDescription`)]); // tmpIcon.wzReplace([canvasIcon.getCanvas().toDataURL()])
                 
                 aRep.MODE = 'active';
                 aRep.ICON = canvasIcon;

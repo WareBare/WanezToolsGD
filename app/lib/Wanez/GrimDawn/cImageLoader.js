@@ -25,7 +25,7 @@ module.exports = class cImageLoader extends libWZ.GrimDawn.cBase{
     
     iniImageLoader(){
         //console.log(this.iPath);
-        let imgSrc = ` src="${this.iOpt.default}"`,imgPath = this.iPath.replace(`.tex`,`.tga`),opt = ``;
+        let imgSrc = ` src="${this.iOpt.default}"`,imgPath = this.iPath.replace(`.tex`,`.tga`),opt = ``,isFalse = false;
         
         try{
             fs.accessSync(imgPath, fs.F_OK);
@@ -41,12 +41,17 @@ module.exports = class cImageLoader extends libWZ.GrimDawn.cBase{
                 fs.accessSync(imgPath, fs.F_OK);
                 imgSrc = ` src="${imgPath}"`;
             }catch(err){
-            
+                //if(this.iOpt.altText){
+                    //imgSrc = ` alt="${this.iOpt.altText}"`;
+                //}
+                if(this.iOpt.retFalse){
+                    isFalse = true;
+                }
             }
         }
     
         opt += imgSrc;
-        return this.tpl.wzOut({
+        return (isFalse) ? false : this.tpl.wzOut({
             ID: this.iOpt.id,
             OPTIONS: opt
         })

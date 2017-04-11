@@ -227,7 +227,7 @@ module.exports = {
         
         //console.log($param);
         
-        let out_ = this.contentShowUI() || `Mastery UI<br />The tool starts parsing every directory in records/ui/skills. The list of available classes is shown on the right, by clicking on a name the tool than starts parsing everything inside records/ui/skills/[mastery].<br />Any Subdirectories inside that directory will be ignored, this way you can move old files into a new folder.<br /><br />You will have to stick to Crate's Naming Conventions<ul><li>classimage.dbr</li><li>classpanelbackgroundimage.dbr</li><li>classpanelreallocationimage.dbr</li><li>classtable.dbr</li><li>classtraining.dbr</li><li>classtrainingbar.dbr</li></ul>have their particular use, keep these names or the Tool won't be able to perform certain actions, every other file is considered a skill (UI File), in this case it does not matter if it is called skill01.dbr or Cadence.dbr.<br /><br />Currently only .tga is supported for Skill Icons, let me know if there is a different format you are using (though .psd is not going to happen for a while).`;
+        let out_ = this.contentShowUI() || `Mastery UI<br />The tool starts parsing every directory in records/ui/skills. The list of available classes is shown on the right, by clicking on a name the tool than starts parsing everything inside records/ui/skills/[mastery].<br />Any Subdirectories inside that directory will be ignored, this way you can move old files into a new folder.<br /><br />You will have to stick to Crate's Naming Conventions<ul><li>classimage.dbr</li><li>classpanelbackgroundimage.dbr</li><li>classpanelreallocationimage.dbr</li><li>classtable.dbr</li><li>classtraining.dbr</li><li>classtrainingbar.dbr</li></ul>have their particular use, keep these names or the Tool won't be able to perform certain actions, every other file is considered a skill (UI File), in this case it does not matter if it is called skill01.dbr or Cadence.dbr.<br /><br />Skill Icons can either be .tga or .png, if there is no Icon available or set - the ui file's File Description is used (keep in mind you cannot use a <b>,</b>).`;
         //console.log(this.Base.skillsMasterTable);
         
         return out_;
@@ -250,10 +250,10 @@ module.exports = {
             }, {
                 "ONCLICK": "_cms.Base.goToEditSkill()",
                 "TEXT": "Edit Skill"
-            }, {
+            }/*, {
                 "ONCLICK": "_cms.Base.goToEditMastery()",
                 "TEXT": "Edit Mastery [ip]"
-            }, {
+            }*/, {
                 "ONCLICK": "_cms.createBackup()",
                 "TEXT": "Create Backup"
             }/*, {
