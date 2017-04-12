@@ -2,7 +2,7 @@
 
 ## v0.1.1 ##
 ### Skill Connectors ###
-* First set of Custom Connectors has been added ([see post](http://www.grimdawn.com/forums/showthread.php?p=500973#post500973 ""))
+* First set of Custom Connectors has been added (<a href="http://www.grimdawn.com/forums/showthread.php?p=500973#post500973" target="_blank">see post</a>)
 * added Shortcuts to achieve this, also added Shortcuts for the default Connectors (Set/Remove), they can be seen in Settings/Shortcuts
 
 ### Bug Fixes ###
