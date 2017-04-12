@@ -182,6 +182,65 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
         
     }
     
+    checkConnectorGroup($aConnector,$coordKey,$aSkills){ // aConnector[$_Index][1],$_CoordKey,aSkills
+        let tempCoords,isGroup = false,
+            objChecks = {
+                transmuterUp: {
+                    'img/skills_connectoronbranchup.png': true,
+                    'img/skills_connectoronbranchboth.png': true,
+                    'img/skills_connectorontransmuterup.png': true,
+                    test: true
+                },
+                transmuterDown: {
+                    'img/skills_connectoronbranchdown.png': true,
+                    'img/skills_connectoronbranchboth.png': true,
+                    'img/skills_connectorontransmuterdown.png': true,
+                    'img/skill_down_on.png': true,
+                    'img/skill_bottom_on.png': true,
+                    test: false
+                },
+                modifier: {
+                    'img/skills_connectoroncenter.png': true,
+                    'img/skills_connectoronbranchup.png': true,
+                    'img/skills_connectoronbranchdown.png': true,
+                    'img/skills_connectoronbranchboth.png': true,
+                    'img/skill_down_on.png': false,
+                    'img/skill_bottom_on.png': false,
+                    'img/skill_up_on.png': true
+                }
+            };
+        
+        for(let $_Type in objChecks){
+            /*
+            if(objChecks[$_Type].test){
+                console.log(`true - working`);
+            }else if(objChecks[$_Type].test === false){
+                console.log(`false - working`);
+            }else if(typeof objChecks[$_Type].test === `undefined`){
+                console.log(`undefined - working`);
+            }
+            if(typeof objChecks[$_Type].test !== `undefined`){
+                console.log(`!undefined - working`);
+            }
+            */
+            if(typeof objChecks[$_Type][$aConnector[$coordKey]] !== `undefined`){ //
+                tempCoords = $coordKey.split(`,`);
+                if($_Type === `modifier`) tempCoords = `${parseInt(tempCoords[0]) + 80},${tempCoords[1]}`;
+                if($_Type === `transmuterUp`) tempCoords = `${parseInt(tempCoords[0]) + 80},${parseInt(tempCoords[1]) - 38}`;
+                if($_Type === `transmuterDown`) tempCoords = `${parseInt(tempCoords[0]) + 80},${parseInt(tempCoords[1]) + 32}`;
+                if($aSkills[tempCoords] && $aSkills[tempCoords].mSkill){
+                    if(objChecks[$_Type][$aConnector[$coordKey]]) {
+                        isGroup = [true, tempCoords];
+                    }else if(objChecks[$_Type][$aConnector[$coordKey]] === false){
+                        isGroup = [false, tempCoords];
+                    }
+                }
+            }
+        }
+        
+        return isGroup;
+    }
+    
     genLayout(){
         let aSkills = {},unusedSkills = [],tempTier,tempCoords,aConnector = [];
         
@@ -276,7 +335,7 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
         }
         */
     
-        let tempObj = false,aGroups = false;
+        let tempObj = false,aGroups = false,tempGrp;
         for( let $_Index in aConnector ){
             for( let $_CoordKey in aConnector[$_Index][1] ){
                 if(aSkills[$_CoordKey]) {
@@ -295,6 +354,14 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
                     }
     
                     // todo dynamic
+                    tempGrp = this.checkConnectorGroup(aConnector[$_Index][1],$_CoordKey,aSkills);
+                    if( tempGrp[0] ){
+                        aGroups[aConnector[$_Index][0].getSkillId()].push(aSkills[tempGrp[1]].mSkill); // .getSkillPaths().logicRelPath
+                        aSkills[tempGrp[1]].hasGroup = true;
+                    }else if(tempGrp){
+                        aGroups[aSkills[tempGrp[1]].mSkill.getSkillId()] = [aSkills[tempGrp[1]].mSkill];
+                    }
+                    /*
                     if(aConnector[$_Index][1][$_CoordKey] === `img/skills_connectoroncenter.png`){
                         tempCoords = $_CoordKey.split(`,`);
                         tempCoords = `${parseInt(tempCoords[0]) + 80},${tempCoords[1]}`; //  + this.tpl.SkillSlotsDif.X
@@ -376,7 +443,7 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
                             aSkills[tempCoords].hasGroup = true;
                         }
                     }
-                    
+                    */
                     
                     // img/skills_connectoronbranchup.png
                     // img/skills_connectoroncenter.png
@@ -608,7 +675,7 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
                 counter++;
                 tempItem = this.aGroups[$_parentId][$_Index];
                 //console.log(tempItem);
-                tempOpt[`skillName${counter}`] = tempItem.getSkillPaths().logicRelPath;
+                tempOpt[`skillName${counter}`] = tempItem.getSkillPaths().logicRelFilePath;
                 tempOpt[`skillLevel${counter}`] = `0`;
             }
         }

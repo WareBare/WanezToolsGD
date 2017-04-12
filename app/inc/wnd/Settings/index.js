@@ -15,7 +15,8 @@ module.exports = {
     nav_: function(){
         return [
             `Program`,
-            'Grim Dawn'
+            'Grim Dawn',
+            `Shortcuts`
         ];
     }
     

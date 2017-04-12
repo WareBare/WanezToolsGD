@@ -85,7 +85,7 @@ module.exports = {
         
         if(!isNaN($id)){
             if(this.modeConnect){
-                this.Base._mSkill.setConnector(this.Base._mUI.getSkillPerId($id));
+                this.Base._mSkill.setConnector(this.Base._mUI.getSkillPerId($id),this.modeConnect);
                 this.Base._mSkill.saveModuleData([this.Base._tagsSkills,false,false]);
                 
                 this.modeConnect = false;
@@ -109,7 +109,7 @@ module.exports = {
     },
     setConnector: function($type){
         if(this.Base._mSkill){
-            this.modeConnect = true;
+            this.modeConnect = $type;
             //document.body.style.cursor = 'crosshair';
             wzNotify.info(`Click on the Skill you want as Transmuter/Modifier`);
         }else{
@@ -242,7 +242,7 @@ module.exports = {
                 "ONCLICK": `_cms.Base.loadTags();wzReloadCMS(25)`,
                 "TEXT": "Reload Tags"
             }, {
-                "ONCLICK": "_cms.setConnector()",
+                "ONCLICK": "_cms.setConnector('Default')",
                 "TEXT": "Set Connector"
             }, {
                 "ONCLICK": "_cms.removeConnector()",

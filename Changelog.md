@@ -1,5 +1,13 @@
 # Changelog #
 
+## v0.1.1 ##
+### Skill Connectors ###
+* First set of Custom Connectors has been added ([see post](http://www.grimdawn.com/forums/showthread.php?p=500973#post500973 ""))
+* added Shortcuts to achieve this, also added Shortcuts for the default Connectors (Set/Remove), they can be seen in Settings/Shortcuts
+
+### Bug Fixes ###
+* Fixed a bug that was causing the Skill Tree to only have the path without the filename (if you still have the UI changes, just use the Save UI button again and it will fix it)
+
 ## v0.1.0 ##
 ### Minor Features ###
 * added .png support for Skill Icons

@@ -39,5 +39,27 @@ _app = new WZ.Core.cApp();
 _app.create_();
 wzCMS(appConfig.get('cms'));
 
-//console.log(`is fine`);
-//document.getElementById(`appVersion`).innerHTML = `v${app.getVersion()}`;
+
+let keyUp = (e) => {
+    //console.log(`${e.keyCode}`);
+    
+    if(appConfig.get('cms')[0] === `Mastery` && appConfig.get('cms')[1] === `UI`){
+        if (e.altKey && e.keyCode === 90) {
+            //console.log(`Zenith - Down`);
+            _cms.setConnector(`ZenithDown`);
+        }else if(e.altKey && e.keyCode === 88){
+            //console.log(`Zenith - Up`);
+            //_cms.setConnector(`ZenithUp`);
+            wzNotify.info(`Sorry this is not yet possible!`);
+        }else if(e.altKey && e.keyCode === 67){
+            //console.log(`Zenith - Up`);
+            _cms.setConnector(`Default`);
+        }else if(e.altKey && e.keyCode === 86){
+            //console.log(`Zenith - Up`);
+            _cms.removeConnector();
+        }
+    }
+    
+};
+
+document.addEventListener('keyup', keyUp, false);

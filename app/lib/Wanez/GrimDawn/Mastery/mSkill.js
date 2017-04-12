@@ -58,7 +58,7 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
      *
      * @param $connectSkill
      */
-    setConnector($connectSkill){
+    setConnector($connectSkill,$type){
         let aCoordsThis = this.getCoordsStr().split(`,`),slotDif,arrayDif,isType = `modifier`,conIndex,
             aCoordsConnect = $connectSkill.getCoordsStr().split(`,`),
             aConnectors = this.getField(`logic`,`skillConnectionOn`) || [],
@@ -71,7 +71,13 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
                 'branchup': `ui/skills/skillallocation/skills_connectoronbranchup.tex`,
                 'center': `ui/skills/skillallocation/skills_connectoroncenter.tex`,
                 'transmuterdown': `ui/skills/skillallocation/skills_connectorontransmuterdown.tex`,
-                'transmuterup': `ui/skills/skillallocation/skills_connectorontransmuterup.tex`
+                'transmuterup': `ui/skills/skillallocation/skills_connectorontransmuterup.tex`,
+                'zenithBottomDown': `ui/skills/skill_down_on.tex`,
+                'zenithBottomUp': `ui/skills/skill_up_on.tex`,
+                'zenithBottom': `ui/skills/skill_bottom_on.tex`
+            },
+            objConnectorZenith = {
+                'ZenithDown': [objConnectorToPng.zenithBottomDown,objConnectorToPng.zenithBottom,objConnectorToPng.zenithBottomUp]
             },
             objConnectorPng = {
                 'ui/skills/skillallocation/skills_connectoroncenter.tex' : {
@@ -96,60 +102,73 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
         
         // calculate difference between skill slots
         //console.log(`X: ${aCoordsThis[0]} - ${aCoordsConnect[0]} | Y: ${aCoordsThis[1]} - ${aCoordsConnect[1]}`);
-        if(aCoordsThis[1] !== aCoordsConnect[1]){
-            //isType = `up`;
+        if($type === `Default`){
+            if(parseInt(aCoordsThis[1]) < parseInt(aCoordsConnect[1])){
+                isType = `down`;
+            }else if(parseInt(aCoordsThis[1]) > parseInt(aCoordsConnect[1])){
+                //console.log(`is up`);
+                isType = `up`;
+            }
+            console.log(isType);
+            slotDif = (aCoordsConnect[0] - aCoordsThis[0]) / 80;
+            arrayDif = slotDif - connectorLength;
+            //console.log(aConnectors);
+            if(isType === `modifier`){
+                if(arrayDif < 0){
+                    aConnectors.splice(aConnectors.length + arrayDif,arrayDif * -1);
+                    //aConnectorsOff.splice(aConnectorsOff.length + arrayDif,arrayDif * -1);
+                }else{
             
-        }
-        if(parseInt(aCoordsThis[1]) < parseInt(aCoordsConnect[1])){
-            isType = `down`;
-        }else if(parseInt(aCoordsThis[1]) > parseInt(aCoordsConnect[1])){
-            //console.log(`is up`);
-            isType = `up`;
-        }
-        console.log(isType);
-        slotDif = (aCoordsConnect[0] - aCoordsThis[0]) / 80;
-        arrayDif = slotDif - connectorLength;
-        //console.log(aConnectors);
-        if(isType === `modifier`){
-            if(arrayDif < 0){
-                aConnectors.splice(aConnectors.length + arrayDif,arrayDif * -1);
-                //aConnectorsOff.splice(aConnectorsOff.length + arrayDif,arrayDif * -1);
-            }else{
-                
-                if(aConnectors.length >= 1){
-                    for(let $_Index in aConnectors){
-                        if(objConnectorPng[aConnectors[$_Index]].modifier){
-                            aConnectors[$_Index] = objConnectorPng[aConnectors[$_Index]].modifier;
+                    if(aConnectors.length >= 1){
+                        for(let $_Index in aConnectors){
+                            if(objConnectorPng[aConnectors[$_Index]].modifier){
+                                aConnectors[$_Index] = objConnectorPng[aConnectors[$_Index]].modifier;
+                            }
                         }
                     }
+            
                 }
-                
-            }
-            if(arrayDif > 0){
-                console.log(`do sth`);
-                for(let i=0; arrayDif > i; i++){
-                    //console.log(`do sth`);
-                    aConnectors.push(objConnectorToPng.center);
-                    //aConnectors = [objConnectorToPng.center];
+                if(arrayDif > 0){
+                    console.log(`do sth`);
+                    for(let i=0; arrayDif > i; i++){
+                        //console.log(`do sth`);
+                        aConnectors.push(objConnectorToPng.center);
+                        //aConnectors = [objConnectorToPng.center];
+                    }
                 }
-            }
-        }else{
-            if(arrayDif > 0){
-                aConnectors.push(objConnectorToPng[`transmuter${isType}`]);
             }else{
-                conIndex = slotDif - 1;
-                console.log(conIndex);
-                if(objConnectorPng[aConnectors[conIndex]][isType]){
-                    aConnectors[conIndex] = objConnectorPng[aConnectors[conIndex]][isType];
-                    //console.log(objConnectorPng[aConnectors[conIndex]][isType]);
+                if(arrayDif > 0){
+                    aConnectors.push(objConnectorToPng[`transmuter${isType}`]);
+                }else{
+                    conIndex = slotDif - 1;
+                    console.log(conIndex);
+                    if(objConnectorPng[aConnectors[conIndex]][isType]){
+                        aConnectors[conIndex] = objConnectorPng[aConnectors[conIndex]][isType];
+                        //console.log(objConnectorPng[aConnectors[conIndex]][isType]);
+                    }
                 }
             }
-        }
     
-        //console.log(aConnectors);
-        for(let $_Index in aConnectors){
-            aConnectorsOff[$_Index] = aConnectors[$_Index].replace(`connectoron`,`connectoroff`);
+            //console.log(aConnectors);
+            for(let $_Index in aConnectors){
+                aConnectorsOff[$_Index] = aConnectors[$_Index].replace(`connectoron`,`connectoroff`);
+            }
+        }else if($type === `ZenithDown` || $type === `ZenithUp`){
+            let tempSlot = 0;
+            slotDif = (aCoordsConnect[0] - aCoordsThis[0]) / 80;
+            //arrayDif = slotDif - connectorLength;
+            aConnectors[0] = objConnectorZenith[$type][0];
+            for(let i=1; i<slotDif; i++){
+                aConnectors[i] = objConnectorZenith[$type][1];
+                tempSlot = i;
+            }
+            aConnectors[tempSlot] = objConnectorZenith[$type][2];
+            //console.log(slotDif);
+            for(let $_Index in aConnectors){
+                aConnectorsOff[$_Index] = aConnectors[$_Index].replace(`_on`,`_off`);
+            }
         }
+        
         //console.log(`Slot: ${slotDif} | Array: ${arrayDif}`);
         //console.log(aConnectorsOff);
     
