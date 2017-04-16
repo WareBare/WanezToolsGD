@@ -12,7 +12,7 @@ module.exports = class cData extends libWZ.Core.cBase{
     constructor($filePath,$cParser,$aData = false){
         super();
         //console.log(`cData - Core`);
-        this.filepath = $filePath;
+        this.filepath = $filePath || ``;
         this.cParser = $cParser;
         this.iData = $aData;
         
@@ -20,19 +20,17 @@ module.exports = class cData extends libWZ.Core.cBase{
     
         this.aData = {};
         
-        this.reload();
-        
-        
+        if($filePath !== ``) this.reload();
     }
     
     reload(){
-        //this.aData = this.cParser.parseData(wzIO.file_get_contents(this.filepath));
         try{
             this.aData = (this.iData) ? JSON.parse(JSON.stringify(this.iData)) : this.cParser.parseData(wzIO.file_get_contents(this.filepath));
         }catch(err){
             this.aData = {};
             this.noError = false;
-            wzNotify.err(`${$filePath}`,`Unable to load File:`);
+            wzNotify.err(`${this.filepath}`,`Unable to load File:`);
+            console.log(err);
         }
     }
     changeFilePath($newFilePath){
@@ -120,6 +118,8 @@ module.exports = class cData extends libWZ.Core.cBase{
                 //console.log('Main saved in: '+this.filepath);
                 this.dataUpdated = false;
             }
+        }else{
+            wzNotify.err(`${this.filepath}`,`Unable to save:`);
         }
     }
     

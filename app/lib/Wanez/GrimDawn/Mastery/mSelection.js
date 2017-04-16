@@ -87,6 +87,9 @@ module.exports = class mSelection extends libWZ.GrimDawn.cModule{
             textBoxY: $aCoords[1] || $_button.Text.__getField(`textBoxY`),
             textBoxX: $aCoords[0] || $_button.Text.__getField(`textBoxX`)
         });
+        
+        // textBoxXSize: `275`,
+        // textBoxYSize: `69`,
     }
     
     genOutput(){

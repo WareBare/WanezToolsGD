@@ -41,7 +41,7 @@ module.exports = class cWindow extends libWZ.Core.WND.cBase{
         this.iModule = $contents[1];
         this.iWndId = $wndId;
         this.iContents = Object.assign(this.iIndex,$contents[1]);
-        this.iSettings = $settings;
+        this.iSettings = Object.assign($settings || {},this.iContents.Settings);
         this.wndClass = `wzWindow`;
         this.title = `No Title`;
         

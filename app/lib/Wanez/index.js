@@ -21,7 +21,23 @@ wzSetArDef = function($opt, $optDefaults){
     $opt = $opt || {};
     $optDefaults = $optDefaults || {};
     for( let $_optIndex in $optDefaults ){
-        if(typeof $opt[$_optIndex] == "undefined") $opt[$_optIndex] = $optDefaults[$_optIndex];
+        if(typeof $opt[$_optIndex] === "undefined") $opt[$_optIndex] = $optDefaults[$_optIndex];
+    }
+    
+    return $opt;
+};
+wzSetArDef2 = function($opt, $optDefaults){
+    $opt = $opt || {};
+    $optDefaults = $optDefaults || {};
+    for( let $_optIndex in $optDefaults ){
+        //if(typeof $opt[$_optIndex] === "undefined") {
+            if(typeof $optDefaults[$_optIndex] === `string` || typeof $optDefaults[$_optIndex] === `number`){
+                $opt[$_optIndex] = $optDefaults[$_optIndex];
+            }else{
+                $opt[$_optIndex] = wzSetArDef2($opt[$_optIndex],$optDefaults[$_optIndex]);
+            }
+            
+        //}
     }
     
     return $opt;

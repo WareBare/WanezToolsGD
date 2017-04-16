@@ -236,9 +236,11 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
         tempPath = `${this.fn.getPaths().Mod}/${tempClass.getFieldValue(`skillName`)}`;
         try{
             fs.accessSync(`${tempPath}`); // check if file exists
-    
-            tempClass = this.loopBuff(new libWZ.GrimDawn.cData(tempPath));
-            this.objSkillPaths[tempPath.split(`/database/`)[1]] = true;
+            if(!fs.lstatSync(tempPath).isDirectory()){
+                tempClass = this.loopBuff(new libWZ.GrimDawn.cData(tempPath));
+                this.objSkillPaths[tempPath.split(`/database/`)[1]] = true;
+            }
+            
         }catch(err){
             tempClass = false;
         }

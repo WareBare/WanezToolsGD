@@ -19,6 +19,7 @@ module.exports = {
         out_ += `<tr><td>Set Connector (Zenith) Up [ip]</td><td>Alt</td><td>X</td></tr>`;
         out_ += `<tr><td>Set Connector (Zenith) Down</td><td>Alt</td><td>Z</td></tr>`;
         out_ += `<tr><td>Set Connector Default</td><td>Alt</td><td>C</td></tr>`;
+        out_ += `<tr><td>Set Connector Delete</td><td>Alt</td><td>V</td></tr>`;
         out_ += ``;
         out_ += `</tbody>`;
         out_ += `</table>`;

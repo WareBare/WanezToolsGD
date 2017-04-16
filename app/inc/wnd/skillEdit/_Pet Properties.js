@@ -42,7 +42,7 @@ module.exports = {
         if(this._mSkill.getField(`UI`,`skillName`)) tempOpt[`${this._mSkill.getField(`UI`,`skillName`).replace(`${this._mUI.getLogicPath()}/`,``)}`] = `${this._mSkill.getField(`UI`,`skillName`)}`;
     
     
-        ItemsCustom[`Hide Fields`] = ItemsCustom[`Ignore Fields`] || {};
+        ItemsCustom[`Hide Fields`] = ItemsCustom[`Hide Fields`] || {};
         ItemsCustom[`Hide Fields`][`ignoreSkill::0`] = {
             label: `Empty`,
             type: `checkBox`,

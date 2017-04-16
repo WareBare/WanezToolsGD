@@ -322,7 +322,11 @@ html{
     }
 }
 
-
+.errorPanel{
+    display: block;
+    text-align: center;
+    color: #AF5F5F;
+}
 .md{
 
     h2{
@@ -341,6 +345,7 @@ html{
     }
     a{
         color: #AFAFFF;
+        cursor: pointer;
     }
 
 }

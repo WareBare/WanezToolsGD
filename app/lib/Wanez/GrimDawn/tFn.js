@@ -39,6 +39,28 @@ let trait = {
         objPaths.Mod = `${workingFolder}/mods/${modFolder}/database`;
         objPaths.Source = `${workingFolder}/mods/${modFolder}/source`;
     
+        objPaths.objMasteryUI = {
+            core: `records/ui/skills`,
+            custom: (appConfig.get(`GrimDawn.Mastery.PathUI`) && appConfig.get(`GrimDawn.Mastery.PathUI`) !== ``) ? appConfig.get(`GrimDawn.Mastery.PathUI`) : false
+        };
+        objPaths.MasteryUI = objPaths.objMasteryUI.custom || objPaths.objMasteryUI.core;
+        //objPaths.MasteryUI = appConfig.get(`GrimDawn.Mastery.PathUI`);
+        objPaths.objMasterySkills = {
+            core: `records/skills`,
+            custom: (appConfig.get(`GrimDawn.Mastery.PathSkill`) && appConfig.get(`GrimDawn.Mastery.PathSkill`) !== ``) ? appConfig.get(`GrimDawn.Mastery.PathSkill`) : false
+        };
+        objPaths.MasterySkills = objPaths.objMasterySkills.custom || objPaths.objMasterySkills.core;
+        //objPaths.MasterySkills = appConfig.get(`GrimDawn.Mastery.PathSkill`);
+        // icons
+        // classselection
+        // skillallocation
+        objPaths.objMasterySource = {
+            core: `ui/skills`,
+            custom: (appConfig.get(`GrimDawn.Mastery.PathSource`) && appConfig.get(`GrimDawn.Mastery.PathSource`) !== ``) ? appConfig.get(`GrimDawn.Mastery.PathSource`) : false
+        };
+        objPaths.MasterySource = objPaths.objMasterySource.custom || objPaths.objMasterySource.core;
+        //objPaths.MasterySource = (appConfig.get(`GrimDawn.Mastery.PathSource`) && appConfig.get(`GrimDawn.Mastery.PathSource`) !== ``) ? appConfig.get(`GrimDawn.Mastery.PathSource`) : `ui/skills`;
+    
         return objPaths;
     }
 };

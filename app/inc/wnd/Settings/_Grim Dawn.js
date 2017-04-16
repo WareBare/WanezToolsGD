@@ -42,7 +42,7 @@ module.exports = {
                 },
                 'Mods': {
                     'settings-app::GrimDawn.Paths.Mods': {
-                        label: `Mods (Folder)`,
+                        label: `Mods (Folder, separate folders with new line)`,
                         type: `listArea`
                     },
                     'settings-app::GrimDawn.activeMod': {

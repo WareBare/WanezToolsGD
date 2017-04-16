@@ -12,10 +12,16 @@ module.exports = {
     contentType: `Program`,
     title: `Settings`,
     
+    Settings: {
+        height: `1000px`,
+        width: `750px`,
+    },
+    
     nav_: function(){
         return [
             `Program`,
             'Grim Dawn',
+            'Grim Dawn 2',
             `Shortcuts`
         ];
     }

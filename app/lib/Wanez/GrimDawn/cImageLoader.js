@@ -30,23 +30,32 @@ module.exports = class cImageLoader extends libWZ.GrimDawn.cBase{
         try{
             fs.accessSync(imgPath, fs.F_OK);
             
-            let tga = new TGA();
-            tga.load(new Uint8Array(fs.readFileSync(imgPath)));
+            if(!fs.lstatSync(imgPath).isDirectory()){
+                let tga = new TGA();
+                tga.load(new Uint8Array(fs.readFileSync(imgPath)));
+    
+                imgSrc = ` src="${tga.getCanvas().toDataURL()}"`;
+            }else{
+                if(this.iOpt.retFalse){
+                    isFalse = true;
+                }
+            }
             
-            imgSrc = ` src="${tga.getCanvas().toDataURL()}"`;
             
         }catch(err){
             imgPath = imgPath.replace(`.tga`,`.png`);
             try{
                 fs.accessSync(imgPath, fs.F_OK);
+                
                 imgSrc = ` src="${imgPath}"`;
-            }catch(err){
+            }catch(err2){
                 //if(this.iOpt.altText){
                     //imgSrc = ` alt="${this.iOpt.altText}"`;
                 //}
                 if(this.iOpt.retFalse){
                     isFalse = true;
                 }
+                //console.log(err2);
             }
         }
     

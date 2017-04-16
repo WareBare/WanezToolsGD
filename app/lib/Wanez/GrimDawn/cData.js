@@ -11,18 +11,27 @@
 module.exports = class cData extends libWZ.Core.cData{
     
     constructor($filePath,$parser,$ini,$aData = false){
+        let changePath = false,
+            path = ``;
+    
+        $filePath = $filePath || ``;
+        if($filePath.startsWith(`/`)){
+            $filePath = (!$parser) ? `${libWZ.GrimDawn.tFn.getPaths().Mod}${$filePath}` : `${libWZ.GrimDawn.tFn.getPaths().Source}${$filePath}`;
+        }
+        
         $parser = $parser || new libWZ.GrimDawn.Parser.cDBR();
         
-        let changePath = false;
         try{
             fs.accessSync(`${$filePath}`); // check if file exists
         }catch(err){
             changePath = $filePath;
+            //console.log(err);
             // if mod file does not exist, change mod path to core path
             $filePath = $filePath.replace(`${libWZ.GrimDawn.tFn.getPaths().Mod}`,`${libWZ.GrimDawn.tFn.getPaths().Core}`);
         }
+        
         super($filePath,$parser,$aData);
-
+        
         this.aTags = {};
         this.aLua = {};
         this.aLuaFN = {};
@@ -41,13 +50,24 @@ module.exports = class cData extends libWZ.Core.cData{
         if(changePath) this.changeFilePath(changePath);
     }
     
+    changeFilePath($newFilePath){
+        if($newFilePath.startsWith(`/`)) $newFilePath = `${libWZ.GrimDawn.tFn.getPaths().Mod}${$newFilePath}`;
+        this.filepath = $newFilePath;
+    }
+    
     getTemplate(){
         return this.aData.templateName;
     }
     
+    fetchTemplate($template){
+        //console.log();
+        this.editDBR(wzTemplates.__getDBR($template));
+    }
+    /*
     fetchTemplate(){
         return wzGD_tpl.getDataPath(this.getTemplate());
     }
+    */
     reparseData(){
         let tpl = this.fetchTemplate().getData();
         

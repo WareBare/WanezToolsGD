@@ -159,3 +159,16 @@
         }
     }
 }
+#appGD_MasterySetup{
+    text-align: center;
+    .switch,.info{
+        display: block;
+        text-align: left;
+        vertical-align: top;
+        //border-width: 1px;
+    }
+    .content{
+        display: block;
+        text-align: left;
+    }
+}

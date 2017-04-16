@@ -20,15 +20,17 @@ module.exports = class cFrom extends libWZ.Core.cBase{
             items: false, // groups & fields
             isModule: false, // false || module instance
             _tags: false, // false || tag, if isModule: false but tags are set, tags will be edited
+            useContent: false,
         },$opt || {});
         
         this.tplForm = {
-            Frame: `<form id="{ID}" onsubmit="return false;">{FIELD_SETS}</form>`,
-            Fieldset: `<fieldset><legend>{TITLE}</legend>{ITEMS}</fieldset>`,
+            Frame: `<form id="{ID}" style="${this.iOpt.style || ``}" onsubmit="return false;">{FIELD_SETS}</form>`,
+            Fieldset: `<fieldset style="${this.iOpt.fieldSetStyle || ``}"><legend>{TITLE}</legend>{ITEMS}</fieldset>`,
             events: {
                 onChange: {
                     wnd: `wzWND('${this.iOpt.isWnd || ``}').${(this.iOpt.onChange.custom) ? `__getContent().${this.iOpt.onChange.custom}` : `form('onChange','${this.iOpt.id}',this,{RELOAD})`}`,
-                    cms: `_cms.editSkillOnBlur(event,this,'{FIELD}','{TYPE}');` // todo
+                    cms: `_cms.${this.iOpt.onChange.custom};` // todo
+                    //cms: `wzWND('${this.iOpt.isWnd || ``}').${(this.iOpt.onChange.custom) ? `__getContent().${this.iOpt.onChange.custom}` : `form('onChange','${this.iOpt.id}',this,{RELOAD})`}`,
                 },
                 onFocus: {
                     wnd: `wzWND('${this.iOpt.isWnd || ``}').${(this.iOpt.onChange.custom) ? `__getContent().${this.iOpt.onChange.custom}` : `form('onFocus','${this.iOpt.id}',this)`}`,
@@ -36,7 +38,7 @@ module.exports = class cFrom extends libWZ.Core.cBase{
                 }
             },
             fields: { // onfocus="{EVENT_ONFOCUS}"
-                input: `<label><span>{LABEL}</span><input type="{TYPE}" name="{NAME}" wzReload="{RELOAD}" wzType="{WZ_TYPE}" value="{VALUE}" onchange="{EVENT_ONCHANGE}"{SINGLE_ATTRIBUTES}></label>`,
+                input: `<label><span>{LABEL}</span><input type="{TYPE}" placeholder="{PLACEHOLDER}" name="{NAME}"{SPECIAL} wzReload="{RELOAD}" wzType="{WZ_TYPE}" value="{VALUE}" {EVENT_TYPE}="{EVENT_ONCHANGE}"{SINGLE_ATTRIBUTES}></label>`,
                 list: `<label><span>{LABEL}</span><textarea name="{NAME}" wzReload="{RELOAD}" wzType="{WZ_TYPE}" onchange="{EVENT_ONCHANGE}"{SINGLE_ATTRIBUTES}>{VALUE}</textarea></label>`,
                 textArea: `<label><span>{LABEL}</span><textarea name="{NAME}" wzReload="{RELOAD}" wzType="{WZ_TYPE}" onkeydown="wzOnFormEnter(event);"onchange="{EVENT_ONCHANGE}"{SINGLE_ATTRIBUTES}>{VALUE}</textarea></label>`,
                 comboBox: `<label><span>{LABEL}</span><select{SIZE} wzType="{WZ_TYPE}" wzReload="{RELOAD}" name="{NAME}" {EVENT_TYPE}="{EVENT_ONCHANGE}"{SINGLE_ATTRIBUTES}>{VALUE}</select></label>`, //  class="comboBox" size="5"  onmousedown="if(this.options.length>4){this.size=4;}" onchange="this.size=0;{EVENT_ONCHANGE}"
@@ -45,6 +47,7 @@ module.exports = class cFrom extends libWZ.Core.cBase{
             }
         };
     
+        this.useContent = this.iOpt.useContent;
         this.useModule = this.iOpt.isModule;
         this._tags = this.iOpt._tags;
         
@@ -69,20 +72,16 @@ module.exports = class cFrom extends libWZ.Core.cBase{
     
         if( Array.isArray($tempValue) ){
             tempArray = $tempValue;
-            //tempValue = ``;
             for(let $_Index in tempArray){
                 if(retValue !== ``) retValue += `\n`;
                 retValue += `${tempArray[$_Index]}`;
             }
-            //console.log(tempValue);
         }else if($tempItem.type.includes(`comboBox`) || $tempItem.type === `listBox` || $tempItem.type === `listBoxLarge`) {
-            //tempValue = ``;
             for (let $_Value in $tempItem.data) {
                 tempValue = ($tempItem.dataUseValue) ? $_Value : $tempItem.data[$_Value];
                 if(tempValue === `Clear` || tempValue === ``){
                     $_Value = ``;
                 }else if($tempItem.dataPath){
-                    //tempValue = tempValue.replace($tempItem.dataPath,``);
                     $_Value = `${$tempItem.dataPath}/${$_Value}`;
                 }
                 retValue += this.tplForm.fields.comboBoxItem.wzOut({
@@ -90,20 +89,10 @@ module.exports = class cFrom extends libWZ.Core.cBase{
                     TEXT: tempValue,
                     SELECTED: `${($tempValue === $_Value) ? ` selected` : ``}`
                 });
-                //console.log(`${$tempValue} - ${$_Value}`);
             }
         }else if($tempItem.type.includes(`check`)){
-            //console.log($tempValue);
             retValue = $tempValue;
             if(retValue === `0`) retValue = false;
-            /*
-            if($tempValue === `0` || $tempValue === `1`){
-                retValue = parseInt($tempValue);
-            }else{
-                retValue = $tempValue;
-            }
-            */
-            //retValue = $tempValue;
         }else{
             retValue = $tempValue;
         }
@@ -116,19 +105,27 @@ module.exports = class cFrom extends libWZ.Core.cBase{
             objFieldTypes = {
                 text: this.tplForm.fields.input.wzOut({
                     TYPE: `text`,
-                    WZ_TYPE: `TextDefault`
+                    WZ_TYPE: `TextDefault`,
+                    EVENT_TYPE: `onChange`,
+                    SPECIAL: ``
                 }),
                 textLarge: this.tplForm.fields.input.wzOut({
                     TYPE: `text`,
-                    WZ_TYPE: `TextLarge`
+                    WZ_TYPE: `TextLarge`,
+                    EVENT_TYPE: `onChange`,
+                    SPECIAL: ``
                 }),
                 textLarger: this.tplForm.fields.input.wzOut({
                     TYPE: `text`,
-                    WZ_TYPE: `TextLarger`
+                    WZ_TYPE: `TextLarger`,
+                    EVENT_TYPE: `onChange`,
+                    SPECIAL: ``
                 }),
                 textLargeX: this.tplForm.fields.input.wzOut({
                     TYPE: `text`,
-                    WZ_TYPE: `TextLargeX`
+                    WZ_TYPE: `TextLargeX`,
+                    EVENT_TYPE: `onChange`,
+                    SPECIAL: ``
                 }),
                 textArea: this.tplForm.fields.textArea.wzOut({
                     //TYPE: `text`,
@@ -164,9 +161,15 @@ module.exports = class cFrom extends libWZ.Core.cBase{
                     TYPE: `checkbox`,
                     WZ_TYPE: `CheckDefault`
                 }),
+                radio: this.tplForm.fields.checkBox.wzOut({
+                    TYPE: `radio`,
+                    WZ_TYPE: `CheckDefault`
+                }),
                 number: this.tplForm.fields.input.wzOut({
                     TYPE: `number`,
-                    WZ_TYPE: `NumberDefault`
+                    WZ_TYPE: `NumberDefault`,
+                    EVENT_TYPE: `onBlur`,
+                    SPECIAL: ` step="{STEP}"`
                 })
             };
         
@@ -177,33 +180,19 @@ module.exports = class cFrom extends libWZ.Core.cBase{
                     tempItem = this.iOpt.items[$_Group][$_FieldName];
                     tempValue = tempItem.value || ``;
                     tempName = $_FieldName.split(`::`);
-                    if(this.formConfig) {
+                    if(this.useContent){
+                        if(this.useContent[tempName[0]] && this.useContent[tempName[0]][tempName[1]]) {
+                            tempValue = this.getValue(this.useContent[tempName[0]][tempName[1]], tempItem) || ``;
+                        }else{
+                            tempValue = this.getValue(tempValue, tempItem) || ``;
+                        }
+                    }else if(this.formConfig) {
                         this.formConfig[tempName[0]] = this.formConfig[tempName[0]] || new eConfig({name: tempName[0]});
-                        /*tempValue = this.formConfig[tempName[0]].get(tempName[1]) || tempValue;
-                         if( Array.isArray(tempValue) ){
-                         tempArray = tempValue;
-                         tempValue = ``;
-                         for(let $_Index in tempArray){
-                         if(tempValue !== ``) tempValue += `\n`;
-                         tempValue += `${tempArray[$_Index]}`;
-                         }
-                         //console.log(tempValue);
-                         }else if(tempItem.type.includes(`comboBox`) || tempItem.type === `listBox`){
-                         tempValue = ``;
-                         for(let $_Value in tempItem.data){
-                         tempValue += this.tplForm.fields.comboBoxItem.wzOut({
-                         VALUE: $_Value,
-                         TEXT: (tempItem.dataUseValue) ? $_Value : tempItem.data[$_Value],
-                         SELECTED: `${(this.formConfig[tempName[0]].get(tempName[1]) === $_Value) ? ` selected` : ``}`
-                         });
-                         }
-                         }
-                         */
                         tempValue = this.getValue(this.formConfig[tempName[0]].get(tempName[1]) || tempValue, tempItem);
                     }else if(this.useModule) {
                         //tempName = $_FieldName.split(`::`);
                         tempValue = this.getValue(this.useModule.getField(tempName[0], tempName[1]), tempItem);
-                    }else if(this._tags){
+                    }else if(this._tags) {
                         tempValue = this._tags[tempName[0]].__getField(tempName[1]);
                         //console.log(`${tempName[0]} - ${tempName[1]}`);
                     }else if(tempValue !== ``){
@@ -219,13 +208,15 @@ module.exports = class cFrom extends libWZ.Core.cBase{
                                 RELOAD: tempItem.reload || false
                             }),
                             EVENT_ONFOCUS: this.tplForm.events.onFocus[(this.iOpt.isWnd) ? `wnd` : `cms`],
-                            VALUE: tempValue,
-                            NAME: $_FieldName,
+                            VALUE: (tempItem.type.includes(`radio`)) ? tempName[1] : tempValue,
+                            NAME: (tempItem.name) ? `${tempItem.name}` : $_FieldName,
+                            STEP: tempItem.step || `1`,
+                            PLACEHOLDER: tempItem.ph || ``,
                             RELOAD: (typeof tempItem.reload === `undefined`) ? 1 : ( (tempItem.reload) ? 1 : 0 ),
-                            SINGLE_ATTRIBUTES: `${(tempItem.isRequired) ? ` required` : ``}${(tempItem.type.includes(`check`) && tempValue) ? ` checked` : ``}${(typeof tempItem.reload === `undefined`) ? ` reload` : ( (tempItem.reload) ? ` reload` : `` )}`
+                            SINGLE_ATTRIBUTES: `${(tempItem.isRequired) ? ` required` : ``}${(tempItem.type.includes(`check`) && tempValue) ? ` checked` : ``}${(tempItem.type.includes(`radio`) && tempValue === parseInt(tempName[1])) ? ` checked` : ``}${(typeof tempItem.reload === `undefined`) ? ` reload` : ( (tempItem.reload) ? ` reload` : `` )}`
                         });
                     //}
-                    
+                    if(tempItem.newLine) items += `<br />`;
                 }
                 
                 if(fieldset !== ``) fieldset += `<br />`;
@@ -261,7 +252,10 @@ module.exports = class cFrom extends libWZ.Core.cBase{
         }
         
         // save changes
-        if(this.useModule) {
+        if(this.useContent){
+            this.useContent[saveLoc[0]] = this.useContent[saveLoc[0]] || {};
+            this.useContent[saveLoc[0]][saveLoc[1]] = newValue;
+        }else if(this.useModule) {
             if (wzType.includes(`Check`)) {
                 newValue = ($el.checked) ? `1` : `0`;
             }

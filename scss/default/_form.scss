@@ -19,15 +19,18 @@ form{
     }
     label{
         display: inline-block;
+        background: $gradientLabel-001;
         vertical-align: top;
         span{
-            border-top-width: 1px;
-            border-right-width: 1px;
-            border-left-width: 1px;
-            padding: 2px 5px 2px 5px;
+            //border-top-width: 1px;
+            //border-right-width: 1px;
+            //border-left-width: 1px;
+            //padding: 2px 5px 2px 5px;
+            padding: 2px 0 2px 0;
             margin-left: -2px;
         }
-        margin: 5px 0 5px 0;
+        margin: 5px 5px 5px 5px;
+        padding: 3px 3px 3px 5px;
 
         ul{
             display: inline-block;
@@ -107,12 +110,24 @@ form{
             //display: inline-block;
             width: auto;
         }
+        &[wzType="RadioDefault"]{
+            cursor: pointer;
+            //display: inline-block;
+            width: auto;
+        }
         &[type="number"]{
             width: 50px;
         }
         &[type="checkbox"]{
             width: 20px;
             height: 20px;
+        }
+        &[type="radio"]{
+            width: 20px;
+            height: 20px;
+        }
+        &::-webkit-input-placeholder{
+            //color: #8F8FCF;
         }
     }
     select,option{
