@@ -99,21 +99,35 @@ module.exports = {
         this.dbr.classPanelBackgroundImage.changeFilePath(`/${WZ.GrimDawn.tFn.getPaths().MasteryUI}/${this.formData.Step01.MasteryDirectory}/classpanelbackgroundimage.dbr`);
         this.dbr.classPanelBackgroundImage.fetchTemplate(`database/templates/ingameui/bitmapsingle.tpl`);
         this.dbr.classPanelBackgroundImage.editDBR({
-            bitmapName: `ui/skills/skills_classbackgroundimage.tex`
+            bitmapName: `ui/skills/skills_classbackgroundimage.tex`,
+            bitmapPositionX: `0`,
+            bitmapPositionY: `0`
         });
         // CLASS_PANEL_REALLOCATION_IMAGE \\
         this.dbr.classPanelReallocationImage = new WZ.GrimDawn.cData();
         this.dbr.classPanelReallocationImage.changeFilePath(`/${WZ.GrimDawn.tFn.getPaths().MasteryUI}/${this.formData.Step01.MasteryDirectory}/classpanelreallocationimage.dbr`);
         this.dbr.classPanelReallocationImage.fetchTemplate(`database/templates/ingameui/bitmapsingle.tpl`);
         this.dbr.classPanelReallocationImage.editDBR({
-            bitmapName: `ui/skills/skills_classreallocationbackgroundimage.tex`
+            bitmapName: `ui/skills/skills_classreallocationbackgroundimage.tex`,
+            bitmapPositionX: `0`,
+            bitmapPositionY: `0`
         });
         // CLASS_TABLE \\
         this.dbr.classTable = new WZ.GrimDawn.cData();
         this.dbr.classTable.changeFilePath(`/${WZ.GrimDawn.tFn.getPaths().MasteryUI}/${this.formData.Step01.MasteryDirectory}/classtable.dbr`);
         this.dbr.classTable.fetchTemplate(`database/templates/ingameui/skillpanectrl.tpl`);
         this.dbr.classTable.editDBR({
-            bitmapName: `ui/skills/skills_classreallocationbackgroundimage.tex`
+            BasePane: `records/ui/skills/classcommon/skills_classpanelconfiguration.dbr`,
+            tabSkillButtons: `${WZ.GrimDawn.tFn.getPaths().MasteryUI}/${this.formData.Step01.MasteryDirectory}/classtraining.dbr`,
+            peekThroughColorBlue: `0.800000`,
+            peekThroughColorGreen: `0.600000`,
+            peekThroughColorRed: `0.200000`,
+            peekThroughNextTierSound: `records/sounds/ui/spak_craftingpartcomplete.dbr`,
+            skillPaneBaseBitmap: `${WZ.GrimDawn.tFn.getPaths().MasteryUI}/${this.formData.Step01.MasteryDirectory}/classpanelbackgroundimage.dbr`,
+            skillPaneBaseReallocationBitmap: `${WZ.GrimDawn.tFn.getPaths().MasteryUI}/${this.formData.Step01.MasteryDirectory}/classpanelreallocationimage.dbr`,
+            skillPaneMasteryBitmap: `${WZ.GrimDawn.tFn.getPaths().MasteryUI}/${this.formData.Step01.MasteryDirectory}/classimage.dbr`,
+            skillTabTitle: `tagSkillClassName${enum_}`,
+            skillPaneDescriptionTag: `tagSkillClassDescription${enum_}`,
         });
         // CLASS_TRAINING \\
         this.dbr.classTraining = new WZ.GrimDawn.cData();

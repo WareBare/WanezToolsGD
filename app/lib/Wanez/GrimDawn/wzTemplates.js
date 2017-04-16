@@ -41,9 +41,11 @@ module.exports = {
         return this.loader($relFilePath)[`All Groups`];
     },
     __getDBR($relFilePath){
-        let dataDBR, data = this.loader($relFilePath)[`All Groups`];
-        
-        return this.convertToDBR(data);
+        let data = this.loader($relFilePath)[`All Groups`],
+            dataDBR = this.convertToDBR(data);
+    
+        dataDBR.templateName = $relFilePath;
+        return dataDBR;
     },
     convertToDBR($data){
         let dataDBR = {};
@@ -56,7 +58,7 @@ module.exports = {
                 Object.assign(dataDBR,this.convertToDBR($data[$_Key]));
             }
         }
-        
+    
         return dataDBR;
     },
     

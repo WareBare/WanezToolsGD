@@ -57,7 +57,7 @@ module.exports = {
     },
     
     content_Setup: function(){
-        let info_ = `Only tags are listed similar to the way Crate is using them:<p>tagSkillClassNameXX<br />tagSkillClassNameXXYY<br />tagSkillClassDescriptionXX<br />tagClassXXSkillName00<br />tagClassXXSkillDescription00</p>Future versions will have a merger and/or I grab tags from files.`,
+        let info_ = `Only tags are listed similar to the way Crate is using them:<p>tagSkillClassNameXX<br />tagSkillClassNameXXYY<br />tagSkillClassDescriptionXX<br />tagClassXXSkillName00<br />tagClassXXSkillDescription00</p>Future versions will have a merger and a tag export.`,
             itemsSwitch = {},
             itemsContent = {},
             curEnum_ = (`0${this.curSwitch}`).slice(-2),
