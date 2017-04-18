@@ -250,6 +250,9 @@ module.exports = {
             }, {
                 "ONCLICK": "_cms.Base.goToEditSkill()",
                 "TEXT": "Edit Skill"
+            }, {
+                "ONCLICK": "_cms.Base.createSkill()",
+                "TEXT": "New UI File"
             }/*, {
                 "ONCLICK": "_cms.Base.goToEditMastery()",
                 "TEXT": "Edit Mastery [ip]"

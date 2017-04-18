@@ -233,18 +233,22 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
         //this.bitmapPositionY = tempClass.getFieldValue(`bitmapPositionY`);
         //if(this.bitmapPositionX && this.bitmapPositionY) this.isUsed = true;
         this.aSkills.UI = tempClass;
-        tempPath = `${this.fn.getPaths().Mod}/${tempClass.getFieldValue(`skillName`)}`;
-        try{
-            fs.accessSync(`${tempPath}`); // check if file exists
-            if(!fs.lstatSync(tempPath).isDirectory()){
-                tempClass = this.loopBuff(new libWZ.GrimDawn.cData(tempPath));
-                this.objSkillPaths[tempPath.split(`/database/`)[1]] = true;
+    
+        if(tempClass.getFieldValue(`skillName`)){
+            tempPath = `${this.fn.getPaths().Mod}/${tempClass.getFieldValue(`skillName`)}`;
+            try{
+                fs.accessSync(`${tempPath}`); // check if file exists
+                if(!fs.lstatSync(tempPath).isDirectory()){
+                    tempClass = this.loopBuff(new libWZ.GrimDawn.cData(tempPath));
+                    this.objSkillPaths[tempPath.split(`/database/`)[1]] = true;
+                }
+        
+            }catch(err){
+                tempClass = false;
             }
-            
-        }catch(err){
+        }else{
             tempClass = false;
         }
-        
         this.aSkills.logic = tempClass;
     
         /*
@@ -439,6 +443,13 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
         }
         
         if(tempArray) tempArray.editDBR($opt,true);
+    }
+    getScalableFields(){
+        let retValue = false;
+        if(this.aSkills.logic){
+            retValue = this.aSkills.logic.getScalableFields();
+        }
+        return retValue;
     }
     editSkills($opt){
         let objChanges = {},tempFieldName,tempOpt,

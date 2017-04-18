@@ -119,6 +119,7 @@ module.exports = {
         this.dbr.classTable.editDBR({
             BasePane: `records/ui/skills/classcommon/skills_classpanelconfiguration.dbr`,
             tabSkillButtons: `${WZ.GrimDawn.tFn.getPaths().MasteryUI}/${this.formData.Step01.MasteryDirectory}/classtraining.dbr`,
+            masteryBar: `${WZ.GrimDawn.tFn.getPaths().MasteryUI}/${this.formData.Step01.MasteryDirectory}/classtrainingbar.dbr`,
             peekThroughColorBlue: `0.800000`,
             peekThroughColorGreen: `0.600000`,
             peekThroughColorRed: `0.200000`,
@@ -151,7 +152,7 @@ module.exports = {
         });
         // CLASS_SELECTION_BUTTON \\
         this.dbr.classSelectionButton = new WZ.GrimDawn.cData();
-        this.dbr.classSelectionButton.changeFilePath(`/${WZ.GrimDawn.tFn.getPaths().MasteryUI}/classselection/skills_classselectionbutton${enum_}.dbr`);
+        this.dbr.classSelectionButton.changeFilePath(`/records/ui/skills/classselection/skills_classselectionbutton${enum_}.dbr`);
         this.dbr.classSelectionButton.fetchTemplate(`database/templates/ingameui/buttonstatic.tpl`);
         this.dbr.classSelectionButton.editDBR({
             bitmapNameDisabled: this.formData.Step01.classSelectionButtonImage.wzOut({TYPE: `disabled`,ENUM: enum_}),
@@ -164,7 +165,7 @@ module.exports = {
         });
         // CLASS_SELECTION_TEXT \\
         this.dbr.classSelectionText = new WZ.GrimDawn.cData();
-        this.dbr.classSelectionText.changeFilePath(`/${WZ.GrimDawn.tFn.getPaths().MasteryUI}/classselection/skills_classselectiontext${enum_}.dbr`);
+        this.dbr.classSelectionText.changeFilePath(`/records/ui/skills/classselection/skills_classselectiontext${enum_}.dbr`);
         this.dbr.classSelectionText.fetchTemplate(`database/templates/ingameui/textstaticstring.tpl`);
         this.dbr.classSelectionText.editDBR({
             style: `records/ui/styles/text/style_special_skillnames.dbr`,
@@ -193,9 +194,9 @@ module.exports = {
         //this.formData.Step01.Enum - 1
         for(let i=0; i<30; i++){
             if(this.formData.Step01.Enum - 1 === i){
-                aButtons[i] = `${WZ.GrimDawn.tFn.getPaths().MasteryUI}/classselection/skills_classselectionbutton${enum_}.dbr`;
-                aTexts[i] = `${WZ.GrimDawn.tFn.getPaths().MasteryUI}/classselection/skills_classselectiontext${enum_}.dbr`;
-                aBitmaps[i] = `ingameui/customui/gamepanels/playerclass${enum_}_roundicon.tex`;
+                aButtons[i] = `records/ui/skills/classselection/skills_classselectionbutton${enum_}.dbr`;
+                aTexts[i] = `records/ui/skills/classselection/skills_classselectiontext${enum_}.dbr`;
+                aBitmaps[i] = `${WZ.GrimDawn.tFn.getPaths().MasterySource}/classselection/skills_classselectedimage${enum_}.tex`; // todo form field
                 aTags[i] = `tagSkillClassDescription${enum_}`;
             }else{
                 aButtons[i] = aButtons[i] || `placeholder_${i + 1}`;
@@ -215,7 +216,7 @@ module.exports = {
         // this.formData.Step01.classSelectionButton.wzOut({TYPE: `down`,ENUM: enum_})
         
         //this.dbr.classImage = tempClass;
-        console.log(this.dbr);
+        //console.log(this.dbr);
         this.saveDBR();
     },
     

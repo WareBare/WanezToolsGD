@@ -13,15 +13,24 @@ module.exports = {
         $opt = Object.assign({
             start: false,
             number: 1,
+            numberMax: 0,
             max: 100,
             type: `inc`,
             round: false,
-            dec: 0
+            dec: 0,
+            mul: false,
+            incEvery: 1,
+            incInc: 0,
+            incOnceEvery: 1
         },$opt || {});
         
         let $number = parseFloat($opt.number),
+            $numberMax = parseFloat($opt.numberMax),
             $start = parseFloat($opt.start) || $number,
-            $max = $opt.max;
+            $incInc = parseFloat($opt.incInc),
+            $max = $opt.max,
+            prevInc = 0,
+            tempInc = 0;
         
         let aValues = [];
         
@@ -36,14 +45,28 @@ module.exports = {
             }else{
                 aValues.push($start.toFixed($opt.dec));
             }
-    
-            if($opt.type === `inc`) {
-                $start = $start + $number;
-            }else if($opt.type === `mul`){
-                $start = $start * $number;
+            
+            tempInc = (i / $opt.incEvery) % 1;
+            if(tempInc === 0){
+                //prevInc = tempInc;
+                $number = $number + $incInc;
+            }
+            
+            if((i / $opt.incOnceEvery) % 1 === 0){
+                if($opt.type === `inc`) {
+                    $start = $start + $number;
+                }else if($opt.type === `mul`){
+                    $start = $start * $number;
+                }
             }
             
             
+            if($opt.mul){
+                $start = $start * $opt.mul;
+            }
+            if($numberMax > 0 && $start > $numberMax){
+                $start = $numberMax;
+            }
         }
         
         return aValues;

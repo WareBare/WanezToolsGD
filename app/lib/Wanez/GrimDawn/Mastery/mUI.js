@@ -107,6 +107,28 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
         */
     }
     
+    createSkillUI(){
+        let newClass = new libWZ.GrimDawn.cData();
+        
+        newClass.changeFilePath(`${this.fn.getPaths().Mod}/${this.iPath}/${this.iDir}/skill${(`0${this.aSkills.length + 1}`).slice(-2)}.dbr`);
+        newClass.fetchTemplate(`database/templates/ingameui/skillbutton.tpl`);
+        newClass.editDBR({
+            FileDescription: `${(`0${this.aSkills.length + 1}`).slice(-2)}`,
+            bitmapNameDown: `ui/skills/skillallocation/skills_buttonborderdown01.tex`,
+            bitmapNameInFocus: `ui/skills/skillallocation/skills_buttonborderover01.tex`,
+            bitmapNameUp: `ui/skills/skillallocation/skills_buttonborder01.tex`,
+            bitmapPositionX: `0`,
+            bitmapPositionY: `0`,
+            isCircular: `0`,
+            //skillName: `0`,
+            skillOffsetX: `4`,
+            skillOffsetY: `4`,
+            soundNameDown: `records/sounds/ui/spak_buttonskillincrement.dbr`,
+        });
+        
+        newClass.saveDBR();
+    }
+    
     getBackupData(){
         let objData = {},tempSkill;
         

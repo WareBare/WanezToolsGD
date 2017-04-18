@@ -13,6 +13,8 @@ module.exports = {
     title: `Edit Skill`,
     wndId: `skillEdit`,
     
+    skillConfig: new eConfig({name: `gd-skills`}),
+    
     _mUI: false,
     _mSkill: false,
     _tagsSkills: false,
@@ -27,7 +29,7 @@ module.exports = {
             `${(this._mSkill.getField(`UI`,`skillName`)) ? `` : `.`}Files`,
             `Config`,
             `Tags`,
-            `.Properties`,
+            `Properties`,
             `${(this._mSkill.getField(`logic`,`spawnObjects`)) ? `` : `.`}Pet Properties`
         ];
     }

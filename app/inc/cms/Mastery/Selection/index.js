@@ -85,6 +85,7 @@ module.exports = {
         }
         this.forms.switch_form = new WZ.Core.cForm({
             id: 'switch_form',
+            isConfig: false,
             onChange: {
                 custom: `submitSwitch(this)`
             },

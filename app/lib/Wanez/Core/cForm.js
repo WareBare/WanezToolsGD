@@ -21,6 +21,7 @@ module.exports = class cFrom extends libWZ.Core.cBase{
             isModule: false, // false || module instance
             _tags: false, // false || tag, if isModule: false but tags are set, tags will be edited
             useContent: false,
+            isConfig: true
         },$opt || {});
         
         this.tplForm = {
@@ -43,7 +44,7 @@ module.exports = class cFrom extends libWZ.Core.cBase{
                 textArea: `<label><span>{LABEL}</span><textarea name="{NAME}" wzReload="{RELOAD}" wzType="{WZ_TYPE}" onkeydown="wzOnFormEnter(event);"onchange="{EVENT_ONCHANGE}"{SINGLE_ATTRIBUTES}>{VALUE}</textarea></label>`,
                 comboBox: `<label><span>{LABEL}</span><select{SIZE} wzType="{WZ_TYPE}" wzReload="{RELOAD}" name="{NAME}" {EVENT_TYPE}="{EVENT_ONCHANGE}"{SINGLE_ATTRIBUTES}>{VALUE}</select></label>`, //  class="comboBox" size="5"  onmousedown="if(this.options.length>4){this.size=4;}" onchange="this.size=0;{EVENT_ONCHANGE}"
                 comboBoxItem: `<option value="{VALUE}"{SELECTED}>{TEXT}</option>`,
-                checkBox: `<label><span>{LABEL}</span><input type="{TYPE}" name="{NAME}" wzReload="{RELOAD}" wzType="{WZ_TYPE}" value="{VALUE}" onchange="{EVENT_ONCHANGE}"{SINGLE_ATTRIBUTES}></label>`
+                checkBox: `<label><span>{LABEL}</span><input type="{TYPE}" tabindex="-1" name="{NAME}" wzReload="{RELOAD}" wzType="{WZ_TYPE}" value="{VALUE}" onchange="{EVENT_ONCHANGE}"{SINGLE_ATTRIBUTES}></label>`
             }
         };
     
@@ -53,7 +54,7 @@ module.exports = class cFrom extends libWZ.Core.cBase{
         
         this.formConfig = false;
         if(!this.useModule && !this._tags){
-            this.formConfig = {};
+            if(this.iOpt.isConfig) this.formConfig = {};
         }
         
         this.nextEl = false;
@@ -170,6 +171,12 @@ module.exports = class cFrom extends libWZ.Core.cBase{
                     WZ_TYPE: `NumberDefault`,
                     EVENT_TYPE: `onBlur`,
                     SPECIAL: ` step="{STEP}"`
+                }),
+                numberOnChange: this.tplForm.fields.input.wzOut({
+                    TYPE: `number`,
+                    WZ_TYPE: `NumberDefault`,
+                    EVENT_TYPE: `onChange`,
+                    SPECIAL: ` step="{STEP}"`
                 })
             };
         
@@ -213,7 +220,7 @@ module.exports = class cFrom extends libWZ.Core.cBase{
                             STEP: tempItem.step || `1`,
                             PLACEHOLDER: tempItem.ph || ``,
                             RELOAD: (typeof tempItem.reload === `undefined`) ? 1 : ( (tempItem.reload) ? 1 : 0 ),
-                            SINGLE_ATTRIBUTES: `${(tempItem.isRequired) ? ` required` : ``}${(tempItem.type.includes(`check`) && tempValue) ? ` checked` : ``}${(tempItem.type.includes(`radio`) && tempValue === parseInt(tempName[1])) ? ` checked` : ``}${(typeof tempItem.reload === `undefined`) ? ` reload` : ( (tempItem.reload) ? ` reload` : `` )}`
+                            SINGLE_ATTRIBUTES: `${(tempItem.isRequired) ? ` required` : ``}${(tempItem.type.includes(`check`) && tempValue) ? ` checked` : ``}${(tempItem.type.includes(`radio`) && `${tempValue}` === tempName[1]) ? ` checked` : ``}${(typeof tempItem.reload === `undefined`) ? ` reload` : ( (tempItem.reload) ? ` reload` : `` )}`
                         });
                     //}
                     if(tempItem.newLine) items += `<br />`;
@@ -261,6 +268,23 @@ module.exports = class cFrom extends libWZ.Core.cBase{
             }
             if (saveLoc[1] === `FileDescription`) alwaysSave = true;
             tempOpt[saveLoc[1]] = newValue;
+            
+            if($el.name === `UI::isCircular`){ // todo find a better solution for isCircular bitmaps
+                if($el.checked){
+                    this.useModule.setField(saveLoc[0], {
+                        bitmapNameUp: `ui/skills/skillallocation/skills_buttonborderround01.tex`,
+                        bitmapNameDown: `ui/skills/skillallocation/skills_buttonborderrounddown01.tex`,
+                        bitmapNameInFocus: `ui/skills/skillallocation/skills_buttonborderroundover01.tex`
+                    });
+                }else{
+                    this.useModule.setField(saveLoc[0], {
+                        bitmapNameUp: `ui/skills/skillallocation/skills_buttonborder01.tex`,
+                        bitmapNameDown: `ui/skills/skillallocation/skills_buttonborderdown01.tex`,
+                        bitmapNameInFocus: `ui/skills/skillallocation/skills_buttonborderover01.tex`
+                    });
+                }
+            }
+            
             this.useModule.setField(saveLoc[0], tempOpt);
             this.useModule.saveModuleData([this._tags, false, false], alwaysSave);
             if (this._tags) this._tags.saveData();

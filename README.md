@@ -13,9 +13,17 @@ This is an unsigned .exe (installer) and may trigger some firewalls and anti-vir
 * currently it is set to check every 10 seconds
 * Settings will be added at a later time
 
+### Mastery Wizard ###
+* create a new mastery
+* templates are parsed and used to create the required files
+* base values can be set per level - Cunning 2 will result in 100 at level 50 (no need to enter every value per hand, the tool is going to do it)
+  * ![Step 2](http://wanez.de/misc/WanezToolsGD-v0.1.2_MasteryWizard_step02.png "Step 2")
+
 ### Mastery Selection ###
 #### Setup ####
-* `todo` Pick the masteries and slots/enumeration you want in your Mod
+* you can edit Mastery Tags and Mastery Combination Tags
+  * ![Mastery Edit - Tags](http://wanez.de/misc/WanezToolsGD-v0.1.2_Mastery_tags.png "Mastery Edit - Tags")
+* `todo` Pick the masteries and slots/enumeration you want in your Mod (Mastery Merger)
 
 #### UI ####
 * `todo` a function allows you to adjust button positions into a grid
@@ -49,6 +57,8 @@ This is an unsigned .exe (installer) and may trigger some firewalls and anti-vir
   * create pet file if file in spawnObjects doesn't exist (it will use the file from the previous level - this will require at least 1 pet file)
   * skill name/level can be changed from inside the program
   * fields can be hidden to avoid cluttering the screen with every skill a pet has (and makes editing wanted skills easier)
+  * change Item stats with for all available skill levels just by changing a few base values
+    * ![Skill - Edit Properties](http://wanez.de/misc/WanezToolsGD-v0.1.2_SkillEdit_properties.gif "Skill - Edit Properties")
   * `todo` mass editing/adding of skills
 
 ## License and Credits ##

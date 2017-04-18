@@ -149,6 +149,7 @@ module.exports = class cData extends libWZ.Core.cData{
         // open file
         if(!this.prevFile){
             try{
+                fs.accessSync(`${this.filepath}`); // check if file exists
                 this.prevFile = new libWZ.GrimDawn.cData(this.filepath);
             }catch(err){
                 this.prevFile = false;
@@ -167,6 +168,30 @@ module.exports = class cData extends libWZ.Core.cData{
         }
         
         this.saveDataGD($dataMisc,$alwaysSave || saveDBR);
+    }
+    
+    getScalableFields(){
+        let retValue,ignoreFields = {
+            skillConnectionOff: true,
+            skillConnectionOn: true,
+            spawnObjects: true,
+            charFxPakOtherNames: true,
+            ragDollDirection: true,
+            ragDollEffect: true,
+            ragDollElevation: true,
+            ragDollPush: true,
+            conversionInType: true,
+            conversionOutType: true,
+            charBuffFxType: true
+        };
+        
+        retValue = {};
+        for(let $_FieldName in this.aData){
+            if(Array.isArray( this.aData[$_FieldName] ) && !ignoreFields[$_FieldName] && !$_FieldName.startsWith(`toolMath`)){
+                retValue[$_FieldName] = this.aData[$_FieldName];
+            }
+        }
+        return retValue;
     }
     
     /**

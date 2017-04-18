@@ -47,7 +47,7 @@ module.exports = {
                 err_ += `<li>"Class Selection - Button (DBR)" cannot be empty, has to be a *.dbr and include {ENUM}!</li>`;
             }
             // \\
-            if(!tempStep.classSelectionButtonImage || tempStep.classSelectionButtonImage === ``) tempStep.classSelectionButtonImage = `${WZ.GrimDawn.tFn.getPaths().MasterySource}/classselection/skills_buttonclassselection{TYPE}01.tex`;
+            if(!tempStep.classSelectionButtonImage || tempStep.classSelectionButtonImage === ``) tempStep.classSelectionButtonImage = `ui/skills/classselection/skills_buttonclassselection{TYPE}01.tex`;
             if(!tempStep.classSelectionButtonImage || !tempStep.classSelectionButtonImage.includes(`.tex`) || !tempStep.classSelectionButtonImage.includes(`{TYPE}`)){
                 err_ += `<li>"Class Selection - Button (Image)" cannot be empty, has to be a *.tex and include {TYPE}!</li>`;
             }
@@ -138,7 +138,7 @@ module.exports = {
                     'Step01::classSelectionButtonImage': {
                         label: `Class Selection - Button (Image)`,
                         type: `textLargeX`,
-                        value: `${WZ.GrimDawn.tFn.getPaths().MasterySource}/classselection/skills_buttonclassselection{TYPE}01.tex`
+                        value: `ui/skills/classselection/skills_buttonclassselection{TYPE}01.tex`
                     },
                     'Step01::classSelectionButtonTextX': {
                         label: `Class Selection - Button (Text) SizeX`,

@@ -151,7 +151,7 @@
             right: 0;
             bottom: 0;
             left: 0;
-            padding-top: 20px;
+            padding-top: 15px;
             //text-align: center;
             &[draggable=true]{
                 //cursor: move;
@@ -170,5 +170,24 @@
     .content{
         display: block;
         text-align: left;
+    }
+}
+
+#wndGD_SkillProperties{
+    text-align: left;
+    .form,.right,.left,.propValues,.propLevels,.dataValues{ // .dataSelection
+        display: inline-block;
+        vertical-align: top;
+    }
+    .dataValues{
+        //max-width: 280px;
+        //overflow: auto;
+    }
+    .propValues{
+        height: 300px;
+        overflow: auto;
+    }
+    .right{
+        border-left-width:1px;
     }
 }

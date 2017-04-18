@@ -19,7 +19,9 @@ module.exports = {
     
     getMasteries: function(){
         // records/ui/skills
-        let aDefault = wzIO.dir_get_contentsSync(`${this.pathGD.Mod}/records/ui/skills`),tempClass,
+        let aDefault = wzIO.dir_get_contentsSync(`${this.pathGD.Mod}/records/ui/skills`),
+            aCustom = wzIO.dir_get_contentsSync(`${this.pathGD.Mod}/mod_wanez/_mastery`) || false,
+            tempClass,
             aMasteryUI = {},tempMasteryUI = {};
         
         for( let $_Key in aDefault){
@@ -32,10 +34,33 @@ module.exports = {
                 };
             }
         }
+        for( let $_Key in aCustom){
+            if(aCustom[$_Key]['classtable.dbr']){
+                aMasteryUI['mod_wanez/_mastery'] = aMasteryUI['mod_wanez/_mastery'] || {};
+                tempClass = new WZ.GrimDawn.cData(`${aCustom[$_Key]['classtable.dbr']}`);
+                aMasteryUI['mod_wanez/_mastery'][$_Key] = {
+                    'dir': aCustom[$_Key],
+                    'tag': this._tagsClasses.getData()[tempClass.getFieldValue(`skillTabTitle`)] || tempClass.getFieldValue(`skillTabTitle`)
+                };
+            }
+        }
         
         //console.log(aMasteryUI);
         return aMasteryUI;
     },
+    
+    createSkill: function(){
+        if(this._mUI){
+            this._mUI.createSkillUI();
+    
+            setTimeout(() => {
+                wzCMS(appConfig.get('cms'));
+            },10);
+        }else{
+            wzNotify.warn(`You need to select a Mastery first.`);
+        }
+    },
+    
     convSkillSlots: function(){
         let objSlots = {},tempTier,tempCoords,
             slots = appData.tpl_gd.UI.SkillSlots;
@@ -92,7 +117,37 @@ module.exports = {
         this.pathGD = WZ.GrimDawn.tFn.getPaths();
         if(!this._tagsSkills) this.loadTags();
         if(!this.masteryUI) this.masteryUI = this.getMasteries();
-        
+        /*
+        let aStats = [15.0,22.0,29.0,36.0,44.0,52.0,61.0,70.0,79.0,88.0,97.0,106.0,116.0,126.0,136.0,148.0,159.0,170.0,181.0,192.0,203.0,215.0,227.0,242.0,257.0,280.0],
+            aStats4 = wzMathGD.genValues({
+                dec: 0,
+                mul: 1.046,
+                max: 26,
+                start: 15,
+                number: 5
+            }),
+            aStats2 = [20.0,27.5,35.75],
+            aStats3 = [30.0,36.3,43.23],
+            curStats = aStats4,
+            v1 = curStats[20] - curStats[19],
+            v2 = curStats[21] - curStats[20],
+            dif = v2 - v1,
+            perc = dif / v1 + 1,
+            p1 = ((v1 + curStats[0] - curStats[0] * perc) % 1) * 10;
+        p1 = (p1) ? p1 : v1;
+        */
+        /*
+        console.log(`${v1} - ${v2} = ${dif} (${perc}) -> ${p1}`);
+        console.log(`start value: ${curStats[0]} | increment: ${p1} | %: ${perc}`);
+        console.log(`${aStats}`);
+        console.log(`${wzMathGD.genValues({
+            dec: 0,
+            mul: 1.02,
+            max: 26,
+            start: 20,
+            number: 8
+        })}`);
+        */
         //console.log(this.convSkillSlots());
     },
     

@@ -1,5 +1,38 @@
 # Changelog #
 
+## v0.1.2 ##
+### Mastery Wizard ###
+* allows you to create a new Mastery with all files required
+* it will use Enumeration and a Folder name to determine Paths and Tags used by the Mastery
+* made a guide in Docs/Wiki, more information can be found there
+
+### Mastery Setup ###
+* the Button for Setup in Mastery Selection just entered phase 1 of it's development
+* you can edit tags for Masteries
+* you can edit tags for Mastery Combinations
+* tags will follow Crate's Naming Convention
+  * tagSkillClassNameXX is used for Combinations - the two Tags to display the two Masteries
+
+### Skill - Edit Properties ###
+* used fields with an array will show (if offensiveChaosMin is not empty and has at least 2 values set it will show up)
+* you may now edit a skills properties, by using just a few values
+  * used values are saved in case you want to quickly rebalance something later
+* the field's values are used to calculate the numbers for the Ultimate Skill Level + 10 (in case you change the Ultimate level you have some room and don't have to change the stats again)
+* the wiki page (inside the Program) will give you more information
+
+### Minor Features ###
+* added support for custom paths [optional]
+  * Mastery UI Files
+  * Mastery Skills
+  * Mastery Source
+* you can now create a "New UI File" this will create a new skillbutton file inside the UI folder with the name skillXX.dbr the number is calculated by the number of files in that folder, this will cause issues if you have files that skipped a number (skill01, skill02, skill04 - skill03 is missing - the new file would be skill04 and overwrite the old skill04)
+
+### Bug Fixes ###
+* fixed a bug caused by trying to load missing files and images
+* fixed a bug with isCircular, where button images would remain unchanged
+
+---
+
 ## v0.1.1 ##
 ### Skill Connectors ###
 * First set of Custom Connectors has been added (<a href="http://www.grimdawn.com/forums/showthread.php?p=500973#post500973" target="_blank">see post</a>)
