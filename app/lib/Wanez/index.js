@@ -161,7 +161,7 @@ wzTest = function(){
 String.prototype.wzParseTPL = function($aButtons){
     let btns_ = '';
     for( let $_Index in $aButtons ){
-        btns_ += this.wzOut($aButtons[$_Index]);
+        if($aButtons[$_Index].TEXT) btns_ += this.wzOut($aButtons[$_Index]);
     }
     return btns_;
 };

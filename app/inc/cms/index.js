@@ -93,11 +93,14 @@ wzSideBarDefault = function($btns_,$list_,$contentType,$tpl){
         for( let $_contentType in $list_ ){
             //console.log(`CMS: ${$list_[$_contentType]}`);
             // can use .param for an additional parameter and .text if the button text should be different than the content type
-            aBTNs.push({
-                "ONCLICK": `_cms.Base.loadCMS('${$_contentType}','${$list_[$_contentType].param}');`, // ,${`'${$list_[$_contentType]}'` || false}
-                "TEXT": $list_[$_contentType].text || $_contentType,
-                "CHECKED": ($_contentType == $contentType) ? 'checked':''
-            });
+            //if($list_[$_contentType].TEXT){
+                aBTNs.push({
+                    "ONCLICK": `_cms.Base.loadCMS('${$_contentType}','${$list_[$_contentType].param}');`, // ,${`'${$list_[$_contentType]}'` || false}
+                    "TEXT": $list_[$_contentType].text || $_contentType,
+                    "CHECKED": ($_contentType == $contentType) ? 'checked':''
+                });
+            //}
+            
         }
         
         $list_ = appData.tpl.Buttons.ListCSS.wzParseTPL(aBTNs);

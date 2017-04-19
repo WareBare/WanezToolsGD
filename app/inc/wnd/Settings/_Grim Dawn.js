@@ -36,7 +36,7 @@ module.exports = {
                         isRequired: true
                     },
                     'settings-app::GrimDawn.Paths.Game': {
-                        label: `Game Path`,
+                        label: `Install Path`,
                         type: `textLargeX`
                     }
                 },

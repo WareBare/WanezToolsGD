@@ -18,6 +18,26 @@ module.exports = {
         this.Base._tagsSkills.saveData();
     },
     
+    // appConfig.get(`GrimDawn.Mastery.SourcePFX`) && appConfig.get(`GrimDawn.Mastery.SourcePFX`) !== `` && appConfig.get(`GrimDawn.Mastery.PathPFX`) && appConfig.get(`GrimDawn.Mastery.PathPFX`) !== ``
+    syncPFX: function(){
+        let aFiles = wzIO.dir_get_contentsSync(`${WZ.GrimDawn.tFn.getPaths().InstallPFX}/${appConfig.get(`GrimDawn.Mastery.SourcePFX`)}/${this.contentType}`),
+            isSuccess = true;
+        // `${WZ.GrimDawn.tFn.getPaths().Source}/${appConfig.get(`GrimDawn.Mastery.PathPFX`)}/${this.contentType}`
+        //console.log(aFiles);
+        for(let $_FileName in aFiles){
+            try {
+                fs.copySync(`${aFiles[$_FileName]}`, `${WZ.GrimDawn.tFn.getPaths().Source}/${appConfig.get(`GrimDawn.Mastery.PathPFX`)}/${this.contentType}/${$_FileName}`);
+                //console.log("success!")
+                console.log(`${WZ.GrimDawn.tFn.getPaths().Source}/${appConfig.get(`GrimDawn.Mastery.PathPFX`)}/${this.contentType}/${$_FileName}`);
+            } catch (err) {
+                //console.error(err)
+                wzNotify.err(`An error occurred while copying *.pfx files`,`Error - PFX`);
+                isSuccess = false;
+            }
+        }
+        if(isSuccess) wzNotify.info(`All *.pfx were copied successfully`,`Success - Copy PFX`);
+    },
+    
     contextmenuBackupListItem: function($el,$skillId){
         //console.log(`success from inside cms`);
         return false;
@@ -234,6 +254,19 @@ module.exports = {
     },
     
     sidebarBtns_: function(){
+        let syncPFX = false;
+    
+        if(this.contentType){
+            if(appConfig.get(`GrimDawn.Mastery.SourcePFX`) && appConfig.get(`GrimDawn.Mastery.SourcePFX`) !== `` && appConfig.get(`GrimDawn.Mastery.PathPFX`) && appConfig.get(`GrimDawn.Mastery.PathPFX`) !== ``){
+                syncPFX = {
+                    "ONCLICK": "_cms.syncPFX()",
+                    "TEXT": "Sync .pfx"
+                };
+            }
+        }
+        
+        
+        
         return [
             {
                 "ONCLICK": "_cms.saveCurrentData()",
@@ -259,13 +292,7 @@ module.exports = {
             }*/, {
                 "ONCLICK": "_cms.createBackup()",
                 "TEXT": "Create Backup"
-            }/*, {
-                "ONCLICK": "_cms.setConnector('transUp')",
-                "TEXT": "Transmuter ↑"
-            }, {
-                "ONCLICK": "_cms.setConnector('transDown')",
-                "TEXT": "Transmuter ↓"
-            }*/
+            }, syncPFX
         ];
     },
     sidebarList_: function(){

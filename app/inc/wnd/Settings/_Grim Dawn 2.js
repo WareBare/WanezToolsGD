@@ -45,7 +45,18 @@ module.exports = {
                     'settings-app::GrimDawn.Mastery.PathSource': {
                         label: `Path to Additional Source UI Files [optional]`,
                         type: `textLargeX`,
-                        ph: `ui/skills`
+                        ph: `ui/skills`,
+                        newLine: true
+                    },
+                    'settings-app::GrimDawn.Mastery.SourcePFX': {
+                        label: `Mastery PFX Source Folder (Install Directory) [optional]`,
+                        type: `text`,
+                        ph: `dev`
+                    },
+                    'settings-app::GrimDawn.Mastery.PathPFX': {
+                        label: `Path to Mastery PFX Folder (Working Directory - Source) [optional]`,
+                        type: `textLarge`,
+                        ph: `fx/particlesystems`
                     }
                 }
             }

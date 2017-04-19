@@ -182,7 +182,8 @@ module.exports = class cData extends libWZ.Core.cData{
             ragDollPush: true,
             conversionInType: true,
             conversionOutType: true,
-            charBuffFxType: true
+            charBuffFxType: true,
+            skillProjectileName: true
         };
         
         retValue = {};

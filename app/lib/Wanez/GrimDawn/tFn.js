@@ -35,6 +35,8 @@ let trait = {
             workingFolder = appConfig.get(`GrimDawn.Paths.Working`),
             modFolder = appConfig.get(`GrimDawn.Paths.Mods.${appConfig.get(`GrimDawn.activeMod`) || 0}`);
     
+        objPaths.Install = appConfig.get(`GrimDawn.Paths.Game`);
+        objPaths.InstallPFX = `${appConfig.get(`GrimDawn.Paths.Game`)}/source`;
         objPaths.Core = `${workingFolder}/database`;
         objPaths.Mod = `${workingFolder}/mods/${modFolder}/database`;
         objPaths.Source = `${workingFolder}/mods/${modFolder}/source`;

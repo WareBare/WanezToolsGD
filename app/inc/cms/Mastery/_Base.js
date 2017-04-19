@@ -20,7 +20,7 @@ module.exports = {
     getMasteries: function(){
         // records/ui/skills
         let aDefault = wzIO.dir_get_contentsSync(`${this.pathGD.Mod}/records/ui/skills`),
-            aCustom = wzIO.dir_get_contentsSync(`${this.pathGD.Mod}/mod_wanez/_mastery`) || false,
+            aCustom = (`${this.pathGD.Mod}/records/ui/skills` !== `${this.pathGD.Mod}/${WZ.GrimDawn.tFn.getPaths().MasteryUI}`) ? wzIO.dir_get_contentsSync(`${this.pathGD.Mod}/${WZ.GrimDawn.tFn.getPaths().MasteryUI}`) : {},
             tempClass,
             aMasteryUI = {},tempMasteryUI = {};
         
@@ -36,9 +36,9 @@ module.exports = {
         }
         for( let $_Key in aCustom){
             if(aCustom[$_Key]['classtable.dbr']){
-                aMasteryUI['mod_wanez/_mastery'] = aMasteryUI['mod_wanez/_mastery'] || {};
+                aMasteryUI[`${WZ.GrimDawn.tFn.getPaths().MasteryUI}`] = aMasteryUI[`${WZ.GrimDawn.tFn.getPaths().MasteryUI}`] || {};
                 tempClass = new WZ.GrimDawn.cData(`${aCustom[$_Key]['classtable.dbr']}`);
-                aMasteryUI['mod_wanez/_mastery'][$_Key] = {
+                aMasteryUI[`${WZ.GrimDawn.tFn.getPaths().MasteryUI}`][$_Key] = {
                     'dir': aCustom[$_Key],
                     'tag': this._tagsClasses.getData()[tempClass.getFieldValue(`skillTabTitle`)] || tempClass.getFieldValue(`skillTabTitle`)
                 };
