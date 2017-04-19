@@ -1,5 +1,19 @@
 # Changelog #
 
+## v0.1.3 ##
+### PFX ###
+* you can now copy *.pfx to your mod's source with the click of a button
+* this will require additional settings in "Grim Dawn 2"
+  * `Mastery PFX Source Folder` - is the name of the folder inside the Grim Dawn installation source folder (/Grim Dawn/source/)
+  * `Path to Mastery PFX Folder` - is the path inside the Working Directory's Source Directory (/mods/myMod/source/)
+  * once those fields are filled out and you have Mastery selected in Mastery/UI the button will appear, the UI folder name for the Mastery is used, so the total Path ends up being:
+    * /Grim Dawn/source/[my/pfx/source/path]/[uifolder]
+    * /mods/myMod/source/[my/pfx/target/path]/[uifolder]
+
+### Bug Fixes ###
+* fixed an issue with tag files where empty tags would be removed
+* fixed a bug for paths to custom mastery directories
+
 ## v0.1.2 ##
 ### Mastery Wizard ###
 * allows you to create a new Mastery with all files required

@@ -47,7 +47,9 @@ module.exports = {
                         type: `textLargeX`,
                         ph: `ui/skills`,
                         newLine: true
-                    },
+                    }
+                },
+                'PFX': {
                     'settings-app::GrimDawn.Mastery.SourcePFX': {
                         label: `Mastery PFX Source Folder (Install Directory) [optional]`,
                         type: `text`,

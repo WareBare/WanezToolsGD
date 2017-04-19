@@ -260,7 +260,7 @@ module.exports = {
             if(appConfig.get(`GrimDawn.Mastery.SourcePFX`) && appConfig.get(`GrimDawn.Mastery.SourcePFX`) !== `` && appConfig.get(`GrimDawn.Mastery.PathPFX`) && appConfig.get(`GrimDawn.Mastery.PathPFX`) !== ``){
                 syncPFX = {
                     "ONCLICK": "_cms.syncPFX()",
-                    "TEXT": "Sync .pfx"
+                    "TEXT": "Sync *.pfx"
                 };
             }
         }

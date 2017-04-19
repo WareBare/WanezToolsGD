@@ -20,7 +20,10 @@ class cTags extends libWZ.Core.cBase{
             parts = fileLines[$_Index].split('=');
     
             if(parts[1]){
-                parsedData[parts[0]] = parts[1];
+                parsedData[parts[0]] = parts[1] || ``;
+            }else if(fileLines[$_Index].includes(`=`)){
+                parsedData[parts[0]] = ``;
+                console.log(parsedData[parts[0]]);
             }else{
                 parsedData[`nonTagLine${tempCounter}`] = parts[0];
                 tempCounter++;
