@@ -1,0 +1,474 @@
+{
+    "settings":{
+        "scale": [
+            [1.0, 3.0,4.0,5.0,6.0,7.0, 7.8,8.6,13.8,15.0,17.0 ],
+            
+            [1.0, 3.06,5.0,8.37,9.18,10.1, 11.47,12.7,14.0,15.3,16.7 ],
+            [1.0, 3.61,5.94,10.1,11.05,12.0, 14.03,15.34,16.6,18.0 ],
+            [1.0, 2.25,3.3,5.0,6.2,6.9, 7.7,8.65,9.6,10.55,11.45 ],
+            [1.0, 2.0,2.5,3.2,3.7,3.8, 4.2,4.4,4.6,4.8,5.1 ],
+            [1.0, 1.65,2.2,2.40,2.7,3.0, 3.3,3.75,4.20,4.70,5.1 ],
+            
+            [1.0, 1.8,3.0,4.6,5.3,6.2, 6.3,6.35,6.4,9.0,11.6 ],
+            [1.0, 1.1,1.2,1.3,1.4,1.6, 1.7,1.8,1.9,2.0,2.15 ],
+            [1.0, 2.0,3.0,3.5,4.0,4.5, 5.0,5.5,6.0,7.0,8.0 ],
+            [1.0, 2.0,3.0,4.0,5.0,6.0, 7.0,8.0,9.0,10.0,11.0 ],
+            [1.0, 1.0,1.0,1.0,1.0,1.0, 1.0,1.0,1.0,1.0,1.0 ],
+
+            [1.0, 1.2,1.4,1.6,1.8,2.0, 2.2,2.4,2.6,2.8,3.0 ],
+            [1.0, 1.15,1.55,1.85,2.25,2.4, 2.5,2.7,2.9,3.1,3.3 ],
+            [1.0, 1.45,1.9,2.4,4.3,4.50, 4.7,5.15,5.6,6.1,6.6 ],
+            [1.0, 1.0,1.0,1.0,1.0,2.0, 1.0,1.0,1.0,1.0,3.0 ],
+            [1.0, 1.65,2.10,2.45,2.90,3.25, 3.55,3.8,4.0,4.2,4.4 ]
+        ],
+        "flatDMG":{
+            "Axe1H": [15.0,24.0, 0.0,0.0, -0.06,"tagAttackSpeedFast"],
+            "Axe2H": [30.0,48.0, 0.0,0.0, -0.17,"tagAttackSpeedVerySlow"],
+            "Dagger": [5.0,15.0, 35.0,35.0, -0.03,"tagAttackSpeedVeryFast"],
+            "Gun1H": [15.0,20.0, 18.0,18.0, -0.1,"tagAttackSpeedAverage"],
+            "Gun2H": [30.0,40.0, 20.0,20.0, -0.2,"tagAttackSpeedVerySlow"],
+            "Mace1H": [10.0,33.0, 6.0,6.0, -0.13,"tagAttackSpeedSlow"],
+            "Mace2H": [20.0,66.0, 0.0,0.0, -0.19,"tagAttackSpeedVerySlow"],
+            "Scepter": [10.0,30.0, 0.0,0.0, -0.1,"tagAttackSpeedAverage"],
+            "Sword1H": [10.0,15.0, 21.0,21.0, -0.06,"tagAttackSpeedFast"],
+            "Sword2H": [11.0,45.0, 18.0,18.0, -0.16,"tagAttackSpeedVerySlow"]
+        },
+        "speedTags":{
+            "tagAttackSpeedVerySlow": -0.2,
+            "tagAttackSpeedSlow": -0.15,
+            "tagAttackSpeedAverage": -0.1,
+            "tagAttackSpeedFast": -0.06,
+            "tagAttackSpeedVeryFast": -0.03
+        },
+        "armorVariations": [
+            [
+                {
+                    "field": "defensiveProtection",
+                    "mul": 1.50,
+                    "weight": 0
+                }, {
+                    "field": "strengthRequirement",
+                    "mul": 1,
+                    "weight": 0
+                }, {
+                    "field": "armorClassification",
+                    "value": "Heavy",
+                    "weight": 0
+                }
+            ], [
+                {
+                    "field": "defensiveProtection",
+                    "mul": 1.00,
+                    "weight": 0
+                }, {
+                    "field": "dexterityRequirement",
+                    "mul": 1,
+                    "weight": 0
+                }, {
+                    "field": "armorClassification",
+                    "value": "Light",
+                    "weight": 0
+                }
+            ], [
+                {
+                    "field": "defensiveProtection",
+                    "mul": 0.5,
+                    "weight": 0
+                }, {
+                    "field": "intelligenceRequirement",
+                    "mul": 1,
+                    "weight": 0
+                }, {
+                    "field": "armorClassification",
+                    "value": "Caster",
+                    "weight": 0
+                }
+            ]
+        ],
+        "accessoryVariations":[
+            [
+                {
+                    "field": "offensivePhysicalMin",
+                    "mul": 0.1,
+                    "weight": 0
+                }, {
+                    "field": "offensivePhysicalMax",
+                    "mul": 0.1,
+                    "weight": 0
+                }
+            ], [
+                {
+                    "field": "characterManaRegen",
+                    "mul": 0.5,
+                    "weight": 0
+                }
+            ], [
+                {
+                    "field": "characterLifeRegen",
+                    "mul": 0.5,
+                    "weight": 0
+                }
+            ], [
+                {
+                    "field": "characterIncreasedExperience",
+                    "mul": 1.0,
+                    "weight": 0
+                }
+            ]
+        ]
+    },
+    "properties":{
+        "characterLife": {
+            "value": 60,
+            "scale": 1
+        },
+        "characterLifeModifier": {
+            "value": 5,
+            "scale": 7
+        },
+        "characterLifeRegen": {
+            "value": 1.5,
+            "scale": 3
+        },
+        "characterLifeRegenModifier": {
+            "value": 1.5,
+            "scale": 3
+        },
+        
+        "characterMana": {
+            "value": 58,
+            "scale": 2
+        },
+        "characterManaModifier": {
+            "value": 6,
+            "scale": 7
+        },
+        "characterManaRegen": {
+            "value": 0.5,
+            "scale": 4
+        },
+        "characterManaRegenModifier": {
+            "value": 10,
+            "scale": 5
+        },
+        
+        "defensiveProtection": {
+            "value": 40,
+            "scale": 1
+        },
+        "defensiveProtectionModifier": {
+            "value": 6,
+            "scale": 4
+        },
+        "defensiveAbsorption": {
+            "value": 2,
+            "scale": 1
+        },
+        
+        "characterOffensiveAbility": {
+            "value": 10,
+            "scale": 6
+        },
+        "characterOffensiveAbilityModifier": {
+            "value": 10,
+            "scale": 7
+        },
+        "characterDefensiveAbility": {
+            "value": 7,
+            "scale": 6
+        },
+        "characterDefensiveAbilityModifier": {
+            "value": 7,
+            "scale": 7
+        },
+        
+        "characterDodgePercent": {
+            "value": 1,
+            "scale": 0
+        },
+        "characterDeflectProjectile": {
+            "value": 1,
+            "scale": 3
+        },
+        
+        "augmentAllLevel": {
+            "value": 1,
+            "scale": 14
+        },
+    
+        "defensivePhysical": {
+            "value": 15,
+            "scale": 5
+        },
+        "defensiveElementalResistance": {
+            "value": 7,
+            "scale": 5
+        },
+        "defensiveFire": {
+            "value": 15,
+            "scale": 5
+        },
+        "defensiveCold": {
+            "value": 15,
+            "scale": 5
+        },
+        "defensiveLightning": {
+            "value": 15,
+            "scale": 5
+        },
+        "defensivePierce": {
+            "value": 15,
+            "scale": 5
+        },
+        "defensivePoison": {
+            "value": 15,
+            "scale": 5
+        },
+        "defensiveAether": {
+            "value": 15,
+            "scale": 5
+        },
+        "defensiveLife": {
+            "value": 15,
+            "scale": 5
+        },
+        "defensiveChaos": {
+            "value": 15,
+            "scale": 5
+        },
+        "defensiveBleeding": {
+            "value": 15,
+            "scale": 5
+        },
+        "defensiveStun": {
+            "value": 15,
+            "scale": 5
+        },
+        "defensiveFreeze": {
+            "value": 15,
+            "scale": 5
+        },
+        "defensiveDisruption": {
+            "value": 15,
+            "scale": 5
+        },
+        
+        "characterStrength": {
+            "value": 10,
+            "scale": 0
+        },
+        "characterDexterity": {
+            "value": 10,
+            "scale": 0
+        },
+        "characterIntelligence": {
+            "value": 10,
+            "scale": 0
+        },
+        "characterStrengthModifier": {
+            "value": 4,
+            "scale": 7
+        },
+        "characterDexterityModifier": {
+            "value": 4,
+            "scale": 7
+        },
+        "characterIntelligenceModifier": {
+            "value": 4,
+            "scale": 7
+        },
+        
+        "characterIncreasedExperience": {
+            "value": 15,
+            "scale": 7
+        },
+        
+        "characterRunSpeedModifier": {
+            "value": 5,
+            "scale": 8
+        },
+        "characterSpellCastSpeedModifier": {
+            "value": 7,
+            "scale": 7
+        },
+        "characterAttackSpeedModifier":{
+            "value": 8,
+            "scale": 7
+        },
+        "characterTotalSpeedModifier":{
+            "value": 5,
+            "scale": 7
+        },
+
+        "offensiveTotalDamageModifier":{
+            "value": 10,
+            "scale": 7
+        },
+        "skillProjectileSpeedModifier":{
+            "value": 5,
+            "scale": 7
+        },
+
+        "skillCooldownReduction":{
+            "value": 5,
+            "scale": 7
+        },
+        "skillManaCostReduction":{
+            "value": 5,
+            "scale": 7
+        },
+
+        "strengthRequirement":{
+            "value": 35,
+            "scale": 0
+        },
+        "dexterityRequirement":{
+            "value": 35,
+            "scale": 0
+        },
+        "intelligenceRequirement":{
+            "value": 35,
+            "scale": 0
+        },
+
+        "offensivePhysicalMin":{
+            "value": 100,
+            "scale": 15
+        },
+        "offensivePhysicalMax":{
+            "value": 100,
+            "scale": 15
+        },
+        "offensiveBonusPhysicalMin":{
+            "value": 100,
+            "scale": 12
+        },
+        "offensiveBonusPhysicalMax":{
+            "value": 100,
+            "scale": 13
+        },
+        "offensivePhysicalModifier":{
+            "value": 15,
+            "scale": 7
+        },
+
+        "offensivePierceRatioMin":{
+            "value": 100,
+            "scale": 10
+        },
+        "offensivePierceRatioMax":{
+            "value": 100,
+            "scale": 10
+        },
+        "characterBaseAttackSpeed":{
+            "value": 0.1,
+            "scale": 10
+        },
+
+        "offensiveBaseColdMin":{
+            "value": 100,
+            "scale": 15
+        },
+        "offensiveBaseColdMax":{
+            "value": 100,
+            "scale": 15
+        },
+        "offensiveBaseFireMin":{
+            "value": 100,
+            "scale": 15
+        },
+        "offensiveBaseFireMax":{
+            "value": 100,
+            "scale": 15
+        },
+        "offensiveBasePoisonMin":{
+            "value": 100,
+            "scale": 15
+        },
+        "offensiveBasePoisonMax":{
+            "value": 100,
+            "scale": 15
+        },
+        "offensiveBaseLightningMin":{
+            "value": 100,
+            "scale": 15
+        },
+        "offensiveBaseLightningMax":{
+            "value": 100,
+            "scale": 15
+        },
+        "offensiveBaseLifeMin":{
+            "value": 100,
+            "scale": 15
+        },
+        "offensiveBaseLifeMax":{
+            "value": 100,
+            "scale": 15
+        },
+        "offensiveBaseChaosMin":{
+            "value": 100,
+            "scale": 15
+        },
+        "offensiveBaseChaosMax":{
+            "value": 100,
+            "scale": 15
+        },
+        "offensiveBaseAetherMin":{
+            "value": 100,
+            "scale": 15
+        },
+        "offensiveBaseAetherMax":{
+            "value": 100,
+            "scale": 15
+        },
+        "offensiveColdModifier":{
+            "value": 20,
+            "scale": 7
+        },
+        "offensiveSlowColdModifier":{
+            "value": 20,
+            "scale": 7
+        },
+        "offensiveFireModifier":{
+            "value": 20,
+            "scale": 7
+        },
+        "offensiveSlowFireModifier":{
+            "value": 20,
+            "scale": 7
+        },
+        "offensivePoisonModifier":{
+            "value": 20,
+            "scale": 7
+        },
+        "offensiveSlowPoisonModifier":{
+            "value": 20,
+            "scale": 7
+        },
+        "offensiveLightningModifier":{
+            "value": 20,
+            "scale": 7
+        },
+        "offensiveSlowLightningModifier":{
+            "value": 20,
+            "scale": 7
+        },
+        "offensiveLifeModifier":{
+            "value": 20,
+            "scale": 7
+        },
+        "offensiveSlowLifeModifier":{
+            "value": 20,
+            "scale": 7
+        },
+        "offensiveChaosModifier":{
+            "value": 20,
+            "scale": 7
+        },
+        "offensiveAetherModifier":{
+            "value": 20,
+            "scale": 7
+        }
+    }
+    
+}

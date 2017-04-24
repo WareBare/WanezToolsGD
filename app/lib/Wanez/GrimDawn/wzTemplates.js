@@ -11,8 +11,8 @@ module.exports = {
     
     aData: {},
     //appConfig: new eConfig({name: `settings-app`}),
-    pathCore: libWZ.GrimDawn.tFn.getPaths().Core.replace(`database`,``),
-    pathMod: libWZ.GrimDawn.tFn.getPaths().Mod.replace(`database`,``),
+    //pathCore: libWZ.GrimDawn.tFn.getPaths().Core.replace(`database`,``),
+    //pathMod: libWZ.GrimDawn.tFn.getPaths().Mod.replace(`database`,``),
     
     loader($relFilePath){
         //let wantedData = this.aData[$relFilePath];
@@ -22,11 +22,11 @@ module.exports = {
         if(!this.aData[$relFilePath]){
             try{
                 //console.log(`File: ${this.pathMod}${$relFilePath}`);
-                this.aData[$relFilePath] = this.parseData(wzIO.file_get_contents(`${this.pathMod}${$relFilePath}`));
+                this.aData[$relFilePath] = this.parseData(wzIO.file_get_contents(`${libWZ.GrimDawn.tFn.getPaths().Mod.replace(`database`,``)}${$relFilePath}`));
             }catch(err){
                 try{
                     //console.log(`File: ${this.pathCore}${$relFilePath}`);
-                    this.aData[$relFilePath] = this.parseData(wzIO.file_get_contents(`${this.pathCore}${$relFilePath}`));
+                    this.aData[$relFilePath] = this.parseData(wzIO.file_get_contents(`${libWZ.GrimDawn.tFn.getPaths().Core.replace(`database`,``)}${$relFilePath}`));
                 }catch(err){
                     console.log(err);
                     wzNotify.err(`${$relFilePath}`,`Template Does Not Exist`);
@@ -41,24 +41,55 @@ module.exports = {
         return this.loader($relFilePath)[`All Groups`];
     },
     __getDBR($relFilePath){
+        this.aDBR = this.aDBR || {};
+        let data = this.loader($relFilePath)[`All Groups`];
+            //dataDBR = this.convertToDBR(data);
+        
+        this.aDBR[$relFilePath] = this.aDBR[$relFilePath] || Object.assign({templateName: $relFilePath},this.convertToDBR(data));
+        /*
+        if(!this.aDBR[$relFilePath]){
+            this.aDBR[$relFilePath] = {
+                templateName: $relFilePath
+            };
+            Object.assign(this.aDBR[$relFilePath],this.convertToDBR(data));
+        }
+        */
+        
+        //dataDBR.templateName = $relFilePath;
+        return this.aDBR[$relFilePath];
+    },
+    __getGroupFields($relFilePath,$groupNames){
         let data = this.loader($relFilePath)[`All Groups`],
-            dataDBR = this.convertToDBR(data);
+            objNames = {},
+            dataFields = {};
     
-        dataDBR.templateName = $relFilePath;
-        return dataDBR;
+    
+        for( let $_Index in $groupNames ){
+            objNames[$groupNames[$_Index]] = true;
+        }
+        
+        for(let $_Group in data){
+            if(objNames[$_Group]){
+                Object.assign(dataFields,this.convertToDBR(data[$_Group]))
+            }
+        }
+        
+        return dataFields;
     },
     convertToDBR($data){
-        let dataDBR = {};
+        let dataDBR = {},ignoreKeys = {
+            'Object Variable': true
+        };
     
         for(let $_Key in $data){
             // wzSetArDef()
             if($data[$_Key].name){
-                dataDBR[$_Key] = $data[$_Key].defaultValue;
+                if(!ignoreKeys[$_Key]) dataDBR[$_Key] = $data[$_Key].defaultValue;
             }else{
                 Object.assign(dataDBR,this.convertToDBR($data[$_Key]));
             }
         }
-    
+        //console.log(`convertToDBR`);
         return dataDBR;
     },
     

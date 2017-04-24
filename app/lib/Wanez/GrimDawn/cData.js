@@ -11,9 +11,26 @@
 module.exports = class cData extends libWZ.Core.cData{
     
     constructor($filePath,$parser,$ini,$aData = false){
-        let changePath = false,
+        let changePath = false,temp,
             path = ``;
     
+        switch($parser){
+            case `LuaFN`:
+                $parser = new libWZ.GrimDawn.Parser.cLuaFN();
+                break;
+            case `Lua`:
+                temp = $filePath.replace(`.lua`,``).replace(`scripts/`,``).replace(/\//g,`.`).replace(/\\/g,`.`).replace(/^\./,``);
+                //console.log(temp);
+                $parser = new libWZ.GrimDawn.Parser.cLua(temp);
+                break;
+            case `Tags`:
+                $parser = new libWZ.GrimDawn.Parser.cTags();
+                break;
+            default:
+                //$parser = (typeof $parser === `string`) ? false : $parser;
+                break;
+        }
+        
         $filePath = $filePath || ``;
         if($filePath.startsWith(`/`)){
             $filePath = (!$parser) ? `${libWZ.GrimDawn.tFn.getPaths().Mod}${$filePath}` : `${libWZ.GrimDawn.tFn.getPaths().Source}${$filePath}`;
@@ -317,8 +334,8 @@ module.exports = class cData extends libWZ.Core.cData{
     }
     
     mathStatValue($fieldName,$level,$dec,$mul){
-        let prop = this._propertiesGD.getData().properties,
-            settings = this._propertiesGD.getData().settings,
+        let prop = appData[`gd-properties`].properties, // this._propertiesGD.getData().properties
+            settings = appData[`gd-properties`].settings, // this._propertiesGD.getData().settings
             ret = false;
         
         $fieldName = $fieldName || 'characterLife';

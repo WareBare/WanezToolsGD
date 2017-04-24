@@ -82,6 +82,11 @@ module.exports = class cData extends libWZ.Core.cBase{
         //this.aData[$field] = $value;
         this.editData($field,$value);
     }
+    __setFields($opt){
+        for(let $_key in $opt){
+            this.editData($_key,$opt[$_key]);
+        }
+    }
     
     /**
      *

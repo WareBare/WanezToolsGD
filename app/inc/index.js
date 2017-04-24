@@ -12,6 +12,12 @@
 appConfig = new eConfig({name: `settings-app`});
 
 /*
+let storageInterval = setInterval(() => {
+    wzStorageGD.watchClasses();
+},100);
+*/
+
+/*
 config.set('unicorn', '🦄');
 console.log(config.get('unicorn'));
 //=> '🦄'

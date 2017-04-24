@@ -11,5 +11,8 @@ module.exports = {
     Parser: libWZ.GrimDawn.Parser = require(`./Parser`),
     cData: libWZ.GrimDawn.cData = require(`./cData`),
     cModule: libWZ.GrimDawn.cModule = require(`./cModule`),
+    Assets: libWZ.GrimDawn.Assets = require(`./Assets`),
     Mastery: libWZ.GrimDawn.Mastery = require(`./Mastery`),
+    Items: libWZ.GrimDawn.Items = require(`./Items`),
+    Wanez: libWZ.GrimDawn.Wanez = require(`./Wanez`)
 };

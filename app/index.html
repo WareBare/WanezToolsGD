@@ -11,6 +11,7 @@
 Loading...
 <script>
     const fs = require(`fs-extra`);
+    //const chokidar = require('chokidar');
     const mkpath = require('mkpath');
     const eConfig = require('electron-config');
     const marked = require('marked');
@@ -20,17 +21,19 @@ Loading...
     //const request = require('request');
     //const PSD = require('psd');
 
-    const dirBase = __dirname.replace(/\\/g, "/");
+    const dirBase = __dirname.replace(/\\/g, "/"),
+        dirAssets = `${dirBase}/assets`;
     //var wzDir,libWZ,_wzData,_wzTPL; // IDE auto-complete pre-declarations
     let libWZ;
     const wzIO = require(`./lib/wzIO`),
         wzNotify = require(`./lib/wzNotify`),
+        wzStorageGD = require(`./lib/Wanez/GrimDawn/wzStorage`),
         wzMathGD = require(`./lib/Wanez/GrimDawn/wzMath`);
     const appData = require(`./data`);
     const WZ = require(`./lib/Wanez`);
+    const wzTemplates = require(`./lib/Wanez/GrimDawn/wzTemplates`);
     require(`./inc`);
     require('./updater.js');
-    const wzTemplates = require(`./lib/Wanez/GrimDawn/wzTemplates`);
 </script>
 </body>
 </html>
