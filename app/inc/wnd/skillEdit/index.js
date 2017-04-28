@@ -21,8 +21,16 @@ module.exports = {
     
     nav_: function(){
         this._mUI = _cms.Base._mUI;
-        this._mSkill = _cms.Base._mSkill;
-        this._tagsSkills = _cms.Base._tagsSkills;
+        
+        if(_cms.Base._mSkill){
+            this._mSkill = _cms.Base._mSkill;
+            _cms.Base._mSkill = false;
+        }else{
+            this._mSkill = this._mUI.getSkillPerId(this._mSkill.getSkillId());
+        }
+        
+        //this._tagsSkills = _cms.Base._tagsSkills;
+        this._tagsSkills = wzStorageGD.__get(`text_en/${appConfig.get(`GrimDawn.Mastery.TagsSkills`)}`,`Tags`);
         //console.log(this._mSkill.aSkills.buff);
         return [
             `UI`,

@@ -200,7 +200,8 @@ module.exports = class cFrom extends libWZ.Core.cBase{
                         //tempName = $_FieldName.split(`::`);
                         tempValue = this.getValue(this.useModule.getField(tempName[0], tempName[1]), tempItem);
                     }else if(this._tags) {
-                        tempValue = this._tags[tempName[0]].__getField(tempName[1]);
+                        //if(typeof this._tags[tempName[0]] === `string`) this._tags[tempName[0]] = wzStorageGD.__get(this._tags[tempName[0]]);
+                        tempValue = (typeof this._tags[tempName[0]] === `string`) ? wzStorageGD.__get(this._tags[tempName[0]]).__getField(tempName[1]) : this._tags[tempName[0]].__getField(tempName[1]);
                         //console.log(`${tempName[0]} - ${tempName[1]}`);
                     }else if(tempValue !== ``){
                         tempValue = this.getValue(tempValue,tempItem);
@@ -257,6 +258,8 @@ module.exports = class cFrom extends libWZ.Core.cBase{
         if(wzType === `ListArea` || wzType === `ListAreaLarge`){
             newValue = $el.value.split(`\n`);
         }
+    
+        
         
         // save changes
         if(this.useContent){
@@ -285,13 +288,24 @@ module.exports = class cFrom extends libWZ.Core.cBase{
                 }
             }
             
-            this.useModule.setField(saveLoc[0], tempOpt);
-            this.useModule.saveModuleData([this._tags, false, false], alwaysSave);
-            if (this._tags) this._tags.saveData();
+            this.useModule.setField(saveLoc[0], tempOpt,[this._tags, false, false]);
+            //this.useModule.saveModuleData([this._tags, false, false], alwaysSave);
+            if (this._tags) {
+                this._tags.saveData();
+            }
         }else if(this._tags){
             //this._tags[saveLoc[0]][saveLoc[1]] = newValue;
-            this._tags[saveLoc[0]].__setField(saveLoc[1],newValue);
-            this._tags[saveLoc[0]].saveData();
+            //console.log(this._tags[saveLoc[0]]);
+            if(typeof this._tags[saveLoc[0]] === `string`){
+                tempOpt = {};
+                tempOpt[saveLoc[1]] = newValue;
+                wzStorageGD.update(this._tags[saveLoc[0]],tempOpt);
+                //console.log(`this`);
+            }else{
+                this._tags[saveLoc[0]].__setField(saveLoc[1],newValue);
+                this._tags[saveLoc[0]].saveData();
+            }
+            
         }else{
             this.formConfig[saveLoc[0]].set(saveLoc[1],newValue);
             // let user know data was saved

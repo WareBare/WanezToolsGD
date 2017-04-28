@@ -350,6 +350,60 @@ html{
 
 }
 
+#mdInput{
+    float: left;
+    width: 49%;
+    textarea{
+        width: 99%;
+    }
+}
+#mdHTML{
+    float: right;
+    width: 50%;
+    background-color: #15171d;
+    color: Wheat;
+    border-width: 1px;
+    h1{
+        //color: Wheat;
+        font-weight: normal;
+        text-decoration: none;
+    }
+    h2{
+        color: Wheat;
+        font-weight: normal;
+        text-decoration: none;
+    }
+    h3{
+        margin:0;
+        font-weight: normal;
+        text-decoration: none;
+        //font-style: italic;
+    }
+    h4{
+        //color: Wheat;
+        font-weight: normal;
+        text-decoration: none;
+    }
+    ul{
+        //color: green;
+        margin: 0 0 0 20px;
+    }
+}
+
+.colorPicker{
+    display: inline-block;
+    padding: 0;
+    background-color: #FFFFFF;
+    span{
+        display: inline-block;
+        height: 12px;
+        width: 12px;
+        margin: 1px;
+        border-width: 1px;
+        cursor: pointer;
+    }
+}
+
 // ToolTip (Wanez)
 [wz-tip]{
     &:AFTER{

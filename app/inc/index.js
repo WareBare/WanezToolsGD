@@ -11,6 +11,9 @@
 
 appConfig = new eConfig({name: `settings-app`});
 
+//clipboard.writeText('Example String', 'selection');
+//console.log(clipboard.readText('selection'));
+
 /*
 let storageInterval = setInterval(() => {
     wzStorageGD.watchClasses();

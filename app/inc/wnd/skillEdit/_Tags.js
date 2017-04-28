@@ -48,7 +48,8 @@ module.exports = {
             isWnd: this.wndId,
             //isModule: this._mSkill,
             _tags: {
-                skills: this._tagsSkills
+                //skills: this._tagsSkills
+                skills: `text_en/${appConfig.get(`GrimDawn.Mastery.TagsSkills`)}`
             },
             onChange: {
                 //custom: `submitForm(this)`

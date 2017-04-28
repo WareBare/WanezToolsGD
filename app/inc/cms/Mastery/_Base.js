@@ -11,9 +11,12 @@ module.exports = {
     _tagsSkills: false,
     _tagsClasses: false,
     _mSkill: false,
+    
     aGenderPC01: [
-        new WZ.GrimDawn.cData(`${WZ.GrimDawn.tFn.getPaths().Mod}/records/creatures/pc/femalepc01.dbr`),
-        new WZ.GrimDawn.cData(`${WZ.GrimDawn.tFn.getPaths().Mod}/records/creatures/pc/malepc01.dbr`)
+        //new WZ.GrimDawn.cData(`${WZ.GrimDawn.tFn.getPaths().Mod}/records/creatures/pc/femalepc01.dbr`),
+        //new WZ.GrimDawn.cData(`${WZ.GrimDawn.tFn.getPaths().Mod}/records/creatures/pc/malepc01.dbr`)
+        wzStorageGD.load(`records/creatures/pc/femalepc01.dbr`),
+        wzStorageGD.load(`records/creatures/pc/malepc01.dbr`)
     ],
     skillsMasterTable: new WZ.GrimDawn.cData(`${WZ.GrimDawn.tFn.getPaths().Mod}/records/ui/skills/skills_mastertable.dbr`),
     
@@ -100,13 +103,15 @@ module.exports = {
         let pathSkills = ``,
             pathClasses= ``;
     
-        this._tagsSkills = new WZ.GrimDawn.cData(`${WZ.GrimDawn.tFn.getPaths().Source}/text_en/${appConfig.get(`GrimDawn.Mastery.TagsSkills`)}`,new WZ.GrimDawn.Parser.cTags());
-        this._tagsClasses = (appConfig.get(`GrimDawn.Mastery.TagsClasses`) === appConfig.get(`GrimDawn.Mastery.TagsSkills`)) ? this._tagsSkills : new WZ.GrimDawn.cData(`${WZ.GrimDawn.tFn.getPaths().Source}/text_en/${appConfig.get(`GrimDawn.Mastery.TagsClasses`)}`,new WZ.GrimDawn.Parser.cTags());
+        //this._tagsSkills = new WZ.GrimDawn.cData(`${WZ.GrimDawn.tFn.getPaths().Source}/text_en/${appConfig.get(`GrimDawn.Mastery.TagsSkills`)}`,new WZ.GrimDawn.Parser.cTags());
+        this._tagsSkills = wzStorageGD.__get(`text_en/${appConfig.get(`GrimDawn.Mastery.TagsSkills`)}`,`Tags`);
+        //this._tagsClasses = (appConfig.get(`GrimDawn.Mastery.TagsClasses`) === appConfig.get(`GrimDawn.Mastery.TagsSkills`)) ? this._tagsSkills : new WZ.GrimDawn.cData(`${WZ.GrimDawn.tFn.getPaths().Source}/text_en/${appConfig.get(`GrimDawn.Mastery.TagsClasses`)}`,new WZ.GrimDawn.Parser.cTags());
+        this._tagsClasses = (appConfig.get(`GrimDawn.Mastery.TagsClasses`) === appConfig.get(`GrimDawn.Mastery.TagsSkills`)) ? this._tagsSkills : wzStorageGD.__get(`text_en/${appConfig.get(`GrimDawn.Mastery.TagsClasses`)}`,`Tags`);
         
         if(this._tagsSkills){
             //this._tagsSkills.reload();
             //this._tagsClasses.reload();
-            wzCMS(appConfig.get('cms'));
+            //wzCMS(appConfig.get('cms'));
         }else{
         
         }
@@ -115,7 +120,8 @@ module.exports = {
     
     ini: function(){
         this.pathGD = WZ.GrimDawn.tFn.getPaths();
-        if(!this._tagsSkills) this.loadTags();
+        //if(!this._tagsSkills) this.loadTags();
+        this.loadTags();
         if(!this.masteryUI) this.masteryUI = this.getMasteries();
         /*
         let aStats = [15.0,22.0,29.0,36.0,44.0,52.0,61.0,70.0,79.0,88.0,97.0,106.0,116.0,126.0,136.0,148.0,159.0,170.0,181.0,192.0,203.0,215.0,227.0,242.0,257.0,280.0],

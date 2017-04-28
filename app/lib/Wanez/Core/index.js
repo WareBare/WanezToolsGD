@@ -6,6 +6,7 @@ libWZ.Core = {};
 
 module.exports = {
     cBase: libWZ.Core.cBase = require(`./cBase`),
+    cMarkdown: libWZ.Core.cMarkdown = require(`./cMarkdown`),
     WND: libWZ.Core.WND = require(`./WND`),
     Parser: libWZ.Core.Parser = require(`./Parser`),
     cData: libWZ.Core.cData = require(`./cData`),

@@ -9,13 +9,28 @@
 
 module.exports = {
     tplContent: {},
+    forms: {},
+    
+    formOnChange: function($el){
+        //this.forms.main_form.onChange($el);
+    },
+    
+    content_Edit: function(){
+        let out_ = ``;
+        
+        
+        
+        return out_;
+    },
     
     content_: function($contentType){
         this.contentType = $contentType || this.contentType;
-    
-        this.Base.iniMateria();
         
         let out_ = `Materia => Components`;
+    
+        if(this.contentType){
+            out_ = this.content_Edit();
+        }
         
         return `${out_}`;
     },
@@ -24,7 +39,9 @@ module.exports = {
         return [];
     },
     sidebarList_: function(){
-        return {}
+        this.Base.iniMateria();
+        
+        return this.Base._mMateria.getList();
     }
     
 };

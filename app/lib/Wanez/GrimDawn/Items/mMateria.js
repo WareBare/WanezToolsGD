@@ -47,6 +47,18 @@ module.exports = class mMateria extends libWZ.GrimDawn.cModule{
         return isViable;
     }
     
+    getList(){
+        let list = {};
+        
+        for(let $_Index in this.aMateria){
+            list[$_Index] = {
+                text: this.aMateria[$_Index].replace(/^.*[\\\/]/, '')
+            };
+        }
+        
+        return list;
+    }
+    
     getProperties(){
         let objProperties = {},tempClass,tempFields,tempFieldValue,fieldsTPL = wzTemplates.__getGroupFields(`database/templates/itemrelic.tpl`,[`Offensive Parameters`,`Defensive Parameters`,`Retaliation Parameters`,`Character Parameters`,`Skill Parameters`,`Conversion Parameters`,`Skill Augment`,`Skill Modifiers`,`Pet Bonus`,`Relic Qualifiers`]);
     
@@ -70,6 +82,14 @@ module.exports = class mMateria extends libWZ.GrimDawn.cModule{
         }
     
         return objProperties;
+    }
+    
+    getField($type,$field){
+        return wzStorageGD.__get(this.aMateria[$type]).getFieldValue($field);
+    }
+    
+    setField($type,$opt,$dataMisc){
+        wzStorageGD.update(this.aMateria[$type],$opt,$dataMisc,true);//.editDBR($opt,true);
     }
     
 };

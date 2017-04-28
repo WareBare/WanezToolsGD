@@ -21,6 +21,7 @@ module.exports = {
     cEntityLootTable: libWZ.GrimDawn.Wanez.cEntityLootTable = require(`./cEntityLootTable`),
     cContainer: libWZ.GrimDawn.Wanez.cContainer = require(`./cContainer`),
     mAffixes: libWZ.GrimDawn.Wanez.mAffixes = require(`./mAffixes`),
+    mProxies: libWZ.GrimDawn.Wanez.mProxies = require(`./mProxies`),
     mArmor: libWZ.GrimDawn.Wanez.mArmor = require(`./mArmor`),
     mContainers: libWZ.GrimDawn.Wanez.mContainers = require(`./mContainers`),
     mControllers: libWZ.GrimDawn.Wanez.mControllers = require(`./mControllers`),

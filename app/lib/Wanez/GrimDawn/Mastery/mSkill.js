@@ -30,6 +30,9 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
         //
         this.iniSkill();
     
+        this.aModuleClasses = [
+            this.aSkills
+        ];
         this.aModuleData = [
             //this.aUI,
             this.aSkills
@@ -184,9 +187,11 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
         temp = $dbr.getFieldValue(`buffSkillName`) || $dbr.getFieldValue(`petSkillName`);
         if(temp){
             this.objSkillPaths[temp] = true;
-            tempClass = new libWZ.GrimDawn.cData(`${this.fn.getPaths().Mod}/${temp}`);
+            //tempClass = new libWZ.GrimDawn.cData(`${this.fn.getPaths().Mod}/${temp}`);
+            tempClass = wzStorageGD.load(temp);
             this.aSkills.buff = this.aSkills.buff || [];
-            this.aSkills.buff.push($dbr);
+            //this.aSkills.buff.push($dbr);
+            this.aSkills.buff.push(temp);
             //console.log($dbr);
             skill = this.loopBuff(tempClass);
         }else{
@@ -197,10 +202,11 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
     }
     
     iniSpawnObjects(){
-        let tempSpawnObjects,tempLvL;
+        let tempSpawnObjects,tempLvL,
+            aSkillLogic = wzStorageGD.__get(this.aSkills.logic);
         
-        if(this.aSkills.logic){ //  && !this.aSkills.spawnObjects
-            tempSpawnObjects = this.aSkills.logic.getFieldValue(`spawnObjects`);
+        if(aSkillLogic){ //  && !this.aSkills.spawnObjects
+            tempSpawnObjects = aSkillLogic.getFieldValue(`spawnObjects`);
             if(tempSpawnObjects){
                 tempSpawnObjects = (Array.isArray(tempSpawnObjects)) ? tempSpawnObjects : [tempSpawnObjects];
                 this.aSkills.spawnObjects = [];
@@ -211,7 +217,7 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
                     try{
                         //console.log(`${this.fn.getPaths().Mod}/${tempSpawnObjects[$_Index]}`);
                         fs.accessSync(`${this.fn.getPaths().Mod}/${tempSpawnObjects[$_Index]}`); // check if file exists
-                        this.aSkills.spawnObjects[tempLvL] = new libWZ.GrimDawn.cData(`${this.fn.getPaths().Mod}/${tempSpawnObjects[$_Index]}`);
+                        //this.aSkills.spawnObjects[tempLvL] = new libWZ.GrimDawn.cData(`${this.fn.getPaths().Mod}/${tempSpawnObjects[$_Index]}`);
                     }catch (err){
                         console.log(`create file`);
                         let prevIndex = $_Index - 1;
@@ -220,6 +226,7 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
                         //this.aSkills.spawnObjects[tempLvL].editDBR({},true);
                         this.aSkills.spawnObjects[tempLvL].saveData(false,true);
                     }
+                    this.aSkills.spawnObjects[tempLvL] = wzStorageGD.load(tempSpawnObjects[$_Index]);
                 }
                 //console.log(this.aSkills.spawnObjects);
             }
@@ -229,10 +236,8 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
     iniSkill(){
         let tempClass,tempPath;
         tempClass = new libWZ.GrimDawn.cData(this.iFilePath);
-        //this.bitmapPositionX = tempClass.getFieldValue(`bitmapPositionX`);
-        //this.bitmapPositionY = tempClass.getFieldValue(`bitmapPositionY`);
-        //if(this.bitmapPositionX && this.bitmapPositionY) this.isUsed = true;
-        this.aSkills.UI = tempClass;
+        //this.aSkills.UI = tempClass;
+        this.aSkills.UI = this.iFilePath.split(`/database/`)[1];
     
         if(tempClass.getFieldValue(`skillName`)){
             tempPath = `${this.fn.getPaths().Mod}/${tempClass.getFieldValue(`skillName`)}`;
@@ -241,6 +246,8 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
                 if(!fs.lstatSync(tempPath).isDirectory()){
                     tempClass = this.loopBuff(new libWZ.GrimDawn.cData(tempPath));
                     this.objSkillPaths[tempPath.split(`/database/`)[1]] = true;
+                    
+                    tempClass = tempPath.split(`/database/`)[1];
                 }
         
             }catch(err){
@@ -260,7 +267,7 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
         }
         */
     }
-    
+    /*
     generateForm($aSkillFiles){
         let out_ = ``,items = {UI:``,logic:``,tag:``},tempId,tempListItems,
             aSkillFiles = $aSkillFiles,
@@ -300,22 +307,6 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
         data[this.getField(`logic`,`skillDisplayName`)] = [`tag`,`TextLong`];
         data[this.getField(`logic`,`skillBaseDescription`)] = [`tag`,`TextLarge`];
         
-        /*
-         <datalist id="DataSkills">
-             <option value="HTML">
-             <option value="CSS">
-             <option value="JavaScript">
-             <option value="Java">
-             <option value="Ruby">
-             <option value="PHP">
-             <option value="Go">
-             <option value="Erlang">
-             <option value="Python">
-             <option value="C">
-             <option value="C#">
-             <option value="C++">
-         </datalist>
-         */
         tempListItems = ``;
         for(let $_FileName in aSkillFiles){
             tempListItems += tpl.DataListItem.wzOut({
@@ -366,23 +357,30 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
         
         return out_;
     }
-    
+    */
     setUsage($bool){
         this.isUsed = $bool || false;
     }
     getCoordsStr(){
-        return this.aSkills.UI.getFieldValue(`bitmapPositionX`) + ',' + this.aSkills.UI.getFieldValue(`bitmapPositionY`);
+        //return this.aSkills.UI.getFieldValue(`bitmapPositionX`) + ',' + this.aSkills.UI.getFieldValue(`bitmapPositionY`);
+        let tempClass = wzStorageGD.__get(this.aSkills.UI);
+        
+        return tempClass.getFieldValue(`bitmapPositionX`) + ',' + tempClass.getFieldValue(`bitmapPositionY`);
     }
     setSkillTag($field,$value){
         //this.aTags = this.aTags || {};
     
         //this.aTags[$field] = $value;
-        this.aSkills.logic.genTag($field,$value)
+        
+        //this.aSkills.logic.genTag($field,$value)
+        wzStorageGD.__get(this.aSkills.logic).genTag($field,$value);
     }
     getSkillName(){
-        let skillName = this.getField(`UI`,`FileDescription`) || `noName-ID: ${this.getSkillId()}`,tempName;
-        if(this.aSkills.logic){
-            tempName = this.iTags.getData()[this.aSkills.logic.getFieldValue(`skillDisplayName`)];
+        let skillName = this.getField(`UI`,`FileDescription`) || `noName-ID: ${this.getSkillId()}`,tempName,
+            aSkillLogic = wzStorageGD.__get(this.aSkills.logic);
+        //if(this.aSkills.logic){
+        if(aSkillLogic){
+            tempName = this.iTags.getData()[aSkillLogic.getFieldValue(`skillDisplayName`)]; // this.aSkills.logic
             if(tempName){
                 skillName = tempName;
             }
@@ -392,7 +390,8 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
     }
     getSkillIcon(){
         //let imgPath = $modPath+'/'+this.aData.skillUpBitmapName.replace(/\.tex$/g,'.tga'),canvas = '';
-        let imgPath = (this.aSkills.logic && this.aSkills.logic.getFieldValue(`skillUpBitmapName`)) ? `${this.fn.getPaths().Source}/${this.aSkills.logic.getFieldValue(`skillUpBitmapName`).replace(/\.tex$/g,'.tga')}` : ``,
+        let aSkillLogic = wzStorageGD.__get(this.aSkills.logic),
+            imgPath = (aSkillLogic && aSkillLogic.getFieldValue(`skillUpBitmapName`)) ? `${this.fn.getPaths().Source}/${aSkillLogic.getFieldValue(`skillUpBitmapName`).replace(/\.tex$/g,'.tga')}` : ``,
             canvas = '';
         //console.log(this.aSkills.logic);
         
@@ -415,7 +414,9 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
         return this.skillId;
     }
     getSkillPaths(){
-        let logicRelFilePath = (this.aSkills.buff) ? this.aSkills.buff[0].getFilePath().split(`/database/`)[1] : ( (this.aSkills.logic) ? this.aSkills.logic.getFilePath().split(`/database/`)[1] : `` ),aPaths = {
+        let aSkillLogic = wzStorageGD.__get(this.aSkills.logic),
+            aSkillBuff = wzStorageGD.__get(this.aSkills.buff),
+            logicRelFilePath = (aSkillBuff) ? aSkillBuff[0].getFilePath().split(`/database/`)[1] : ( (aSkillLogic) ? aSkillLogic.getFilePath().split(`/database/`)[1] : `` ),aPaths = {
             'relPath': this.iFilePath.split(`/database/`)[1].replace(`/${this.iFileName}`,``),
             'relFilePath': this.iFilePath.split(`/database/`)[1],
             'filePath': this.iFilePath,
@@ -427,27 +428,29 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
     }
     
     getField($type,$field){
-        let aKeys = $type.split(`.`),tempArray = this.aSkills;
+        let aKeys = $type.split(`.`),
+            tempArray = this.aSkills;
         
         for(let $_Index in aKeys){
             tempArray = tempArray[aKeys[$_Index]];
         }
         
-        return (tempArray) ? tempArray.getFieldValue($field) : ``;
+        return (tempArray) ? wzStorageGD.__get(tempArray).getFieldValue($field) : ``;
     }
-    setField($type,$opt){
+    setField($type,$opt,$dataMisc){
         let aKeys = $type.split(`.`),tempArray = this.aSkills;
     
         for(let $_Index in aKeys){
             tempArray = tempArray[aKeys[$_Index]];
         }
         
-        if(tempArray) tempArray.editDBR($opt,true);
+        if(tempArray) wzStorageGD.update(tempArray,$opt,$dataMisc,true);//.editDBR($opt,true);
     }
     getScalableFields(){
-        let retValue = false;
-        if(this.aSkills.logic){
-            retValue = this.aSkills.logic.getScalableFields();
+        let aSkillLogic = wzStorageGD.__get(this.aSkills.logic),
+            retValue = false;
+        if(aSkillLogic){
+            retValue = aSkillLogic.getScalableFields();
         }
         return retValue;
     }

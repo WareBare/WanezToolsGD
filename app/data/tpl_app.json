@@ -8,10 +8,10 @@
         "CONTENT": "myNav",
         "Items":{
             "Home":{
-
+                "BBCode":[]
             },
             "Mastery":{
-                "UI":[],
+                "Skill Allocation":[],
                 "Selection":[]
             },
             "Items":{
@@ -21,7 +21,8 @@
                 "Entities": [],
                 "Runic Inscriptions":[],
                 "GnT":[],
-                "Misc":[]
+                "Misc":[],
+                "Campaign":[]
             },
             "Docs":{
                 "General":["ReadMe","Changelog"],

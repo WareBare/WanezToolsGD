@@ -87,7 +87,7 @@ wzSideBarDefault = function($btns_,$list_,$contentType,$tpl){
     $contentType = $contentType || false;
     $tpl = $tpl || "<div class='areaTop'>{BUTTONS}</div><div class='areaBottom'>{LIST}</div>";
     
-    if(typeof $list_ != 'string'){
+    if(typeof $list_ !== 'string'){
         let aBTNs = [];
         
         for( let $_contentType in $list_ ){
@@ -97,7 +97,7 @@ wzSideBarDefault = function($btns_,$list_,$contentType,$tpl){
                 aBTNs.push({
                     "ONCLICK": `_cms.Base.loadCMS('${$_contentType}','${$list_[$_contentType].param}');`, // ,${`'${$list_[$_contentType]}'` || false}
                     "TEXT": $list_[$_contentType].text || $_contentType,
-                    "CHECKED": ($_contentType == $contentType) ? 'checked':''
+                    "CHECKED": ($_contentType === $contentType) ? 'checked':''
                 });
             //}
             

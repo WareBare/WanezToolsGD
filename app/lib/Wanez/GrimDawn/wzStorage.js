@@ -32,7 +32,7 @@ module.exports = {
         this.objStorage[$relFilePath] = {
             time: new Date().getTime(),
             parser: ($parser) ? $parser : false,
-            class: new libWZ.GrimDawn.cData(`/${$relFilePath}`,$parser)
+            class: ($relFilePath) ? new libWZ.GrimDawn.cData(`/${$relFilePath}`,$parser) : false
         };
         
         return this.objStorage[$relFilePath];
@@ -63,26 +63,41 @@ module.exports = {
                 stats = fs.statSync(this.objStorage[$relFilePath].class.getFilePath());
                 if(this.objStorage[$relFilePath].time < stats.mtime.getTime()){
                     loadClass = true;
+                    console.log(`reload: ${$relFilePath}`);
                 }
             }catch (err){}
         }else{
             loadClass = true;
+            console.log(`load: ${$relFilePath}`);
         }
         
         if(loadClass){ //  || this.objStorage[$relFilePath].time < stats.mtime.getTime()
             this.load($relFilePath,{override: true,parser: $parser});
-            console.log(`reload: ${$relFilePath}`);
+            //console.log(`load: ${$relFilePath}`);
         }
         
         return this.objStorage[$relFilePath].class;
     },
     
-    update($relFilePath,$opt){
+    update($relFilePath,$opt,$dataMisc,$useDefaultFileDescription = false){
         let tempClass = this.__get($relFilePath);
     
-        tempClass.class.__setFields($opt);
-        tempClass.time = new Date().getTime();
-        console.log(`set new time: ${$_RelFilePath}`);
+        if($relFilePath.endsWith(`.dbr`)){
+            tempClass.editDBR($opt,$useDefaultFileDescription);
+            tempClass.saveDataGD($dataMisc,true);
+        }else{
+            tempClass.__setFields($opt);
+            tempClass.saveData();
+        }
+        this.objStorage[$relFilePath].time = new Date().getTime() + 100;
+        //console.log(`set new time: ${this.objStorage[$relFilePath].time}`);
+    },
+    updateDBR($relFilePath,$opt,$useDefaultFileDescription = false){
+        //let tempClass = this.__get($relFilePath);
+        
+        this.__get($relFilePath).editDBR($opt,$useDefaultFileDescription);
+        this.objStorage[$relFilePath].time = new Date().getTime() + 100;
+        console.log(`set new time: ${$relFilePath} - ${new Date().getTime()}`);
     },
     
     reload(){
