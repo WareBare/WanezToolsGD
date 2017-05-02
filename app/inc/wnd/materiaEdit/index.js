@@ -9,9 +9,13 @@
 
 module.exports = {
     
-    contentType: `UI`,
-    title: `Edit Skill`,
-    wndId: `skillEdit`,
+    contentType: `Qualifiers`,
+    title: `Edit Materia`,
+    wndId: `materiaEdit`,
+    Settings: {
+        height: `1000px`,
+        width: `750px`,
+    },
     
     skillConfig: new eConfig({name: `gd-skills`}),
     
@@ -19,11 +23,13 @@ module.exports = {
     
     nav_: function(){
         this._mMateria = _cms.Base._mMateria;
+        this.currentMateria = _cms.Base.currentMateria;
         
         //this._tagsSkills = wzStorageGD.__get(`text_en/${appConfig.get(`GrimDawn.Mastery.TagsSkills`)}`,`Tags`);
         
         return [
-            `Qualifiers`
+            `Qualifiers`,
+            `Properties`
         ];
     }
     

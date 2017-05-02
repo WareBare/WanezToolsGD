@@ -47,6 +47,12 @@ module.exports = {
                         type: `textLargeX`,
                         ph: `ui/skills`,
                         newLine: true
+                    },
+                    'settings-app::GrimDawn.Mastery.PathIcons': {
+                        label: `Path to Additional Icon Source Files [optional] - used for skill creation default icon path`,
+                        type: `textLargeX`,
+                        ph: `ui/skills/icons`,
+                        newLine: true
                     }
                 },
                 'PFX': {

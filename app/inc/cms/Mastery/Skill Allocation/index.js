@@ -67,7 +67,7 @@ module.exports = {
                 'bitmapPositionY': aCoordsNew[1],
                 'skillTier': tier
             });
-            mSkill.saveModuleData([this.Base._tagsSkills,false,false]);
+            //mSkill.saveModuleData([this.Base._tagsSkills,false,false]);
             //this.saveCurrentData();
         }catch(err){
         
@@ -104,6 +104,9 @@ module.exports = {
         //$id = $id || false;
         
         if(!isNaN($id)){
+            if(this.pressConnector && this.Base._mSkill){
+                this.modeConnect = `Default`;
+            }
             if(this.modeConnect){
                 this.Base._mSkill.setConnector(this.Base._mUI.getSkillPerId($id),this.modeConnect);
                 this.Base._mSkill.saveModuleData([this.Base._tagsSkills,false,false]);
@@ -254,7 +257,13 @@ module.exports = {
     },
     
     sidebarBtns_: function(){
-        let syncPFX = false;
+        let syncPFX = false,
+            syncData = false,
+            createBackup = false,
+            newUI = false,
+            setConnector = false,
+            remConnector = false,
+            editSkill = false;
     
         if(this.contentType){
             if(appConfig.get(`GrimDawn.Mastery.SourcePFX`) && appConfig.get(`GrimDawn.Mastery.SourcePFX`) !== `` && appConfig.get(`GrimDawn.Mastery.PathPFX`) && appConfig.get(`GrimDawn.Mastery.PathPFX`) !== ``){
@@ -263,36 +272,49 @@ module.exports = {
                     "TEXT": "Sync *.pfx"
                 };
             }
+            syncData = {
+                "ONCLICK": "_cms.saveCurrentData()",
+                "TEXT": "Save UI"
+            };
+            createBackup = {
+                "ONCLICK": "_cms.createBackup()",
+                "TEXT": "Create Backup"
+            };
+            newUI = {
+                "ONCLICK": "_cms.Base.createSkill()",
+                "TEXT": "New UI File"
+            };
+            
+            if(this.Base._mSkill){
+                setConnector = {
+                    "ONCLICK": "_cms.setConnector('Default')",
+                    "TEXT": "Set Connector"
+                };
+                remConnector = {
+                    "ONCLICK": "_cms.removeConnector()",
+                    "TEXT": "Del. Connector"
+                };
+                editSkill = {
+                    "ONCLICK": "_cms.Base.goToEditSkill()",
+                    "TEXT": "Edit Skill"
+                };
+            }
         }
         
         
         
         return [
-            {
-                "ONCLICK": "_cms.saveCurrentData()",
-                "TEXT": "Save UI"
-            }, {
+            /*{
                 "ONCLICK": `_cms.Base.loadTags();wzReloadCMS(25)`,
                 "TEXT": "Reload Tags"
-            }, {
-                "ONCLICK": "_cms.setConnector('Default')",
-                "TEXT": "Set Connector"
-            }, {
-                "ONCLICK": "_cms.removeConnector()",
-                "TEXT": "Del. Connector"
-            }, {
-                "ONCLICK": "_cms.Base.goToEditSkill()",
-                "TEXT": "Edit Skill"
-            }, {
-                "ONCLICK": "_cms.Base.createSkill()",
-                "TEXT": "New UI File"
-            }/*, {
-                "ONCLICK": "_cms.Base.goToEditMastery()",
-                "TEXT": "Edit Mastery [ip]"
-            }*/, {
-                "ONCLICK": "_cms.createBackup()",
-                "TEXT": "Create Backup"
-            }, syncPFX
+            },*/
+            syncData,
+            editSkill,
+            setConnector,
+            remConnector,
+            newUI,
+            createBackup,
+            syncPFX
         ];
     },
     sidebarList_: function(){

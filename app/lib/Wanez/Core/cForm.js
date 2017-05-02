@@ -19,6 +19,7 @@ module.exports = class cFrom extends libWZ.Core.cBase{
             id: Math.random() * (1000 - 1) + 1, // it needs an id, even if it's random
             items: false, // groups & fields
             isModule: false, // false || module instance
+            isStorageClass: false, // requires string for wzStorageGD
             _tags: false, // false || tag, if isModule: false but tags are set, tags will be edited
             useContent: false,
             isConfig: true
@@ -42,18 +43,19 @@ module.exports = class cFrom extends libWZ.Core.cBase{
                 input: `<label><span>{LABEL}</span><input type="{TYPE}" placeholder="{PLACEHOLDER}" name="{NAME}"{SPECIAL} wzReload="{RELOAD}" wzType="{WZ_TYPE}" value="{VALUE}" {EVENT_TYPE}="{EVENT_ONCHANGE}"{SINGLE_ATTRIBUTES}></label>`,
                 list: `<label><span>{LABEL}</span><textarea name="{NAME}" wzReload="{RELOAD}" wzType="{WZ_TYPE}" onchange="{EVENT_ONCHANGE}"{SINGLE_ATTRIBUTES}>{VALUE}</textarea></label>`,
                 textArea: `<label><span>{LABEL}</span><textarea name="{NAME}" wzReload="{RELOAD}" wzType="{WZ_TYPE}" onkeydown="wzOnFormEnter(event);"onchange="{EVENT_ONCHANGE}"{SINGLE_ATTRIBUTES}>{VALUE}</textarea></label>`,
-                comboBox: `<label><span>{LABEL}</span><select{SIZE} wzType="{WZ_TYPE}" wzReload="{RELOAD}" name="{NAME}" {EVENT_TYPE}="{EVENT_ONCHANGE}"{SINGLE_ATTRIBUTES}>{VALUE}</select></label>`, //  class="comboBox" size="5"  onmousedown="if(this.options.length>4){this.size=4;}" onchange="this.size=0;{EVENT_ONCHANGE}"
+                comboBox: `<label><span>{LABEL}</span><select{SIZE} onkeydown="wzOnFormEnter(event);" wzType="{WZ_TYPE}" wzReload="{RELOAD}" name="{NAME}" {EVENT_TYPE}="{EVENT_ONCHANGE}"{SINGLE_ATTRIBUTES}>{VALUE}</select></label>`, //  class="comboBox" size="5"  onmousedown="if(this.options.length>4){this.size=4;}" onchange="this.size=0;{EVENT_ONCHANGE}"
                 comboBoxItem: `<option value="{VALUE}"{SELECTED}>{TEXT}</option>`,
                 checkBox: `<label><span>{LABEL}</span><input type="{TYPE}" tabindex="-1" name="{NAME}" wzReload="{RELOAD}" wzType="{WZ_TYPE}" value="{VALUE}" onchange="{EVENT_ONCHANGE}"{SINGLE_ATTRIBUTES}></label>`
             }
         };
     
+        this.useStorageClass = this.iOpt.isStorageClass;
         this.useContent = this.iOpt.useContent;
         this.useModule = this.iOpt.isModule;
         this._tags = this.iOpt._tags;
         
         this.formConfig = false;
-        if(!this.useModule && !this._tags){
+        if(!this.useModule && !this._tags && !this.useStorageClass){
             if(this.iOpt.isConfig) this.formConfig = {};
         }
         
@@ -80,6 +82,7 @@ module.exports = class cFrom extends libWZ.Core.cBase{
         }else if($tempItem.type.includes(`comboBox`) || $tempItem.type === `listBox` || $tempItem.type === `listBoxLarge`) {
             for (let $_Value in $tempItem.data) {
                 tempValue = ($tempItem.dataUseValue) ? $_Value : $tempItem.data[$_Value];
+                //tempValue = ($tempItem.dataUseKey) ? $tempItem.data[$_Value] : $_Value;
                 if(tempValue === `Clear` || tempValue === ``){
                     $_Value = ``;
                 }else if($tempItem.dataPath){
@@ -90,6 +93,7 @@ module.exports = class cFrom extends libWZ.Core.cBase{
                     TEXT: tempValue,
                     SELECTED: `${($tempValue === $_Value) ? ` selected` : ``}`
                 });
+                //console.log(retValue);
             }
         }else if($tempItem.type.includes(`check`)){
             retValue = $tempValue;
@@ -199,6 +203,8 @@ module.exports = class cFrom extends libWZ.Core.cBase{
                     }else if(this.useModule) {
                         //tempName = $_FieldName.split(`::`);
                         tempValue = this.getValue(this.useModule.getField(tempName[0], tempName[1]), tempItem);
+                    }else if(this.useStorageClass){
+                        tempValue = this.getValue(wzStorageGD.__get(this.useStorageClass).__getField(tempName[0]));
                     }else if(this._tags) {
                         //if(typeof this._tags[tempName[0]] === `string`) this._tags[tempName[0]] = wzStorageGD.__get(this._tags[tempName[0]]);
                         tempValue = (typeof this._tags[tempName[0]] === `string`) ? wzStorageGD.__get(this._tags[tempName[0]]).__getField(tempName[1]) : this._tags[tempName[0]].__getField(tempName[1]);
@@ -293,6 +299,14 @@ module.exports = class cFrom extends libWZ.Core.cBase{
             if (this._tags) {
                 this._tags.saveData();
             }
+        }else if(this.useStorageClass){
+            if (wzType.includes(`Check`)) {
+                newValue = ($el.checked) ? `1` : `0`;
+            }
+            //if (saveLoc[1] === `FileDescription`) alwaysSave = true;
+            tempOpt[saveLoc[1]] = newValue;
+            
+            wzStorageGD.update(this.useStorageClass,tempOpt,false,true);
         }else if(this._tags){
             //this._tags[saveLoc[0]][saveLoc[1]] = newValue;
             //console.log(this._tags[saveLoc[0]]);

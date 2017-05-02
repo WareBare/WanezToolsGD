@@ -28,7 +28,7 @@ module.exports = class cWindow extends libWZ.Core.WND.cBase{
                 Frame: `<div class="header" draggable="true" ondrag="fnWND.drag(event);" ondragstart="fnWND.dragStart(event,'${this.iID}');" ondragend="fnWND.dragEnd(event);">{TITLE}{BUTTON_GRP}</div>`,
                 Title: `<span class="title">{TITLE_TEXT}</span>`,
                 ButtonGrp: `<span>{MINIMIZE}{MAXIMIZE}{CLOSE}</span>`,
-                CloseBTN: `<img class="closeBtn" src="img/close.png" onclick="wzWND('${this.iID}').close()"></img>`,
+                CloseBTN: `<img class="closeBtn" src="img/close.png" onclick="wzWND('${this.iID}').close();wzCMS(appConfig.get('cms'));"></img>`,
                 MiniBTN: ``,
                 MaxBTN: ``
             },

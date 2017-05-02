@@ -1,5 +1,64 @@
 # Changelog #
 
+## v0.2.0 ##
+### Minor Features ###
+* data storage has been changed for *.dbr, *.txt. The program will check if the file has been updated and edit data after reloading the newer file. (this change is not finished for all Mastery Tools, only Skill Allocation Files and Skill Tags have this change, just keep this in mind when you are using the Mastery-Setup features).
+* Default Connector can now be set by pressing Alt (previous ways are still possible, too - Alt+C or the Button).
+
+### Mastery Tools ###
+* Mastery/UI renamed to Mastery/Skill Allocation.
+  * opening the Skill Edit - Window will now throw you back to UI if other options are unavailable.
+* You may now create a new Modifier, Transmuter or Passive file from "Skill - Edit UI".
+  * this will set some default fields, such as the Path to Icon.tex (Icon Path from Settings + mastery folder name (eg playerclass01) + /skillicon_ + FileDescription + _[suffix].tex)
+* skillTier is generated when you open the Skill - Edit UI (Window) in addition to moving the skills around. This will prevent bugs with newly created skills and attaching a Skill to an already placed Skill Icon.
+* Skill - Edit Properties now has a list field where you can pick a new Property from, if you click in it and start typing it will bring you closer to the entry you want (you have to be rather quick or it will start again at the first letter)
+  * when you are done just click somewhere else or use "Enter".
+* I also added a "Delete" Button to the calculation form (next to Save) which will clear the field (values are still saved locally, in case you misclicked - your old data is still inside the Program).
+* Mastery/Selection renamed to Mastery/Setup.
+  * Setup renamed to Config.
+  * the button to save Selection changes will now only appear while the Selection content is open.
+* You are now able to edit a Mastery's Properties the same way you can with the Mastery Wizard - by using a new Button that only appears while you are in the Config Area and have a Mastery selected (Button: "Edit Mastery").
+  * The Values used are calculated by using the highest value and divide it by the number of entries (this is more or less a guess)
+  * changing a value will save the value directly
+  * this feature is using the malepc01.dbr to get to the SkillTree.dbr and uses skillName1 to get the ClassTraining.dbr
+  * this is the first step towards a Mastery-Merger
+* added skillTier to the Tooltip, if it shows a ?, it means there is no Skill File attached.
+
+### Materia/Component Tools ###
+* currently only files to the vanilla path are parsed.
+* files that don't exist in the mod folder will be created if any changes are made.
+* tags are currently not supported (they need to be edited manually.
+
+### Markdown to BBCode ###
+* Markdown to BBCode Converter.
+* While this was something I made for myself I'm leaving it in the Tool for everyone to use.
+* Markdown is easy to get into and easy to write texts with different headers and lists.
+* write Markdown on the left and see the converted text in Forum BBCode on the right.
+* change the colors of headers.
+* change font style of headers.
+* the button "Copy BBCode" will copy the contents for the forum to the clipboard and you can just paste it in a new post on the forums.
+* you can save the text by using the button "Save MD" and update it with "Update MD".
+  * when you are changing the title and use "Save MD" a new entry is created with the text, using "Update MD" will override the old entry with the new title.
+  * you may also delete entries with the "Delete MD" button, but unlike the other two, this will ignore the title.
+  * changes are saved automatically, you don't really need the button "Update MD" unless you want to change the title or save the color/font changes.
+* you can start a new text simply by changing the title and using the "Save MD" to create a new entry, after that just delete the contents and write your new text. (if you remove the text first, it will overwrite the old one - deleting your work)
+  * a nice sideeffect is you will save your settings and colors/font styles will apply to your new text.
+  * only changing the title without saving it will still overwrite the old text under the old title, because changes to a title need to be submitted first.
+* You can use _ (Underscore) to change the font style to _italic_(x1), __bold__(x2) or ___underline___(x3), the text you want to change needs to start with _ (underscore) followed by a non-whitespace character and end with a non-whitespace character followed by another _ (underscore).
+* ` can be used to change the appearance of your text - however, it requires at least a space before and after.
+  * ` `can be used to change the color`
+  * `` ``can be used for spoiler2`` - will be displayed black in the editor.
+
+### WanezMod Tools ###
+* tools to change the generated parts of my mod (DGA, etc).
+* the menu buttons are removed, if you want to use them you need a .json file from me anyways, when I send you the files I'll tell you what to do to access the tools (future updates will check if the files exist and show the respective menu items, but I need to overhaul the menu class for that).
+* but due to me trying to be transparent about what is added and a bunch of new files appeard on github, I figured I should mention it here. You won't see or feel a difference though, data is only loaded when needed.
+
+### Bug Fixes ###
+* "Skill Edit": fixed a bug where the window wouldn't refresh its data properly when changing the file reference in the UI File.
+* "Skill Edit": all other fields are greyed out if you don't have a Skill File attached to the UI File.
+* Settings will refresh data for "Skill Allocation". This makes a difference for first time setup and changing Tag Files/Active Mod.
+
 ## v0.1.3 ##
 ### PFX ###
 * you can now copy *.pfx to your mod's source with the click of a button

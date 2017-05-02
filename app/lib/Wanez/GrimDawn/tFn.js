@@ -63,6 +63,12 @@ let trait = {
         objPaths.MasterySource = objPaths.objMasterySource.custom || objPaths.objMasterySource.core;
         //objPaths.MasterySource = (appConfig.get(`GrimDawn.Mastery.PathSource`) && appConfig.get(`GrimDawn.Mastery.PathSource`) !== ``) ? appConfig.get(`GrimDawn.Mastery.PathSource`) : `ui/skills`;
     
+        objPaths.objMasteryIcons = {
+            core: `ui/skills/icons`,
+            custom: (appConfig.get(`GrimDawn.Mastery.PathIcons`) && appConfig.get(`GrimDawn.Mastery.PathIcons`) !== ``) ? appConfig.get(`GrimDawn.Mastery.PathIcons`) : false
+        };
+        objPaths.MasteryIcons = objPaths.objMasteryIcons.custom || objPaths.objMasteryIcons.core;
+        
         return objPaths;
     }
 };

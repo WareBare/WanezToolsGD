@@ -427,6 +427,20 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
         return aPaths;
     }
     
+    setSkillTier(){
+        if(this.aSkills.logic){
+            let dataX = appData[`app-gd`].UI.SkillSlots.X, newTier;
+            for(let $_Index in dataX){
+                newTier = parseInt($_Index) + 1;
+                if(parseInt(this.getField(`UI`,`bitmapPositionX`)) === dataX[$_Index] && newTier !== parseInt(this.getField(`logic`,`skillTier`))){
+                    this.setField(`logic`,{
+                        skillTier: newTier
+                    })
+                }
+            }
+        }
+    }
+    
     getField($type,$field){
         let aKeys = $type.split(`.`),
             tempArray = this.aSkills;
@@ -455,7 +469,7 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
         return retValue;
     }
     editSkills($opt){
-        let objChanges = {},tempFieldName,tempOpt,
+        let objChanges = {},tempFieldName,tempOpt = {},
             objFields = {
             'UI':[`bitmapPositionX`,`bitmapPositionY`],
             'logic':[`skillTier`,`skillMaxLevel`,`skillUltimateLevel`,`skillMasteryLevelRequired`]
@@ -471,14 +485,13 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
             }
         }
         
-        //$opt = wzSetArDef($opt,objDefaults);
-        
-        //console.log(objChanges);
-        
         for(let $_fieldName in objChanges){
-            tempOpt = {};
-            tempOpt[$_fieldName] = objChanges[$_fieldName].value || ``;
-            this.setField(objChanges[$_fieldName].type,tempOpt);
+            tempOpt[objChanges[$_fieldName].type] = tempOpt[objChanges[$_fieldName].type] || {};
+            tempOpt[objChanges[$_fieldName].type][$_fieldName] = objChanges[$_fieldName].value || ``;
+        }
+    
+        for(let $_Type in tempOpt){
+            this.setField($_Type,tempOpt[$_Type]);
         }
         
     }

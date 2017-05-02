@@ -52,7 +52,11 @@ wzCMS(appConfig.get('cms'));
 let keyUp = (e) => {
     //console.log(`${e.keyCode}`);
     
-    if(appConfig.get('cms')[0] === `Mastery` && appConfig.get('cms')[1] === `UI`){
+    if(appConfig.get('cms')[0] === `Mastery` && appConfig.get('cms')[1] === `Skill Allocation`){
+        if(e.keyCode === 18){
+            _cms.pressConnector = false;
+            //console.log(`no please`);
+        }
         if (e.altKey && e.keyCode === 90) {
             //console.log(`Zenith - Down`);
             _cms.setConnector(`ZenithDown`);
@@ -70,5 +74,14 @@ let keyUp = (e) => {
     }
     
 };
+let keyDown = (e) => {
+    if(appConfig.get('cms')[0] === `Mastery` && appConfig.get('cms')[1] === `Skill Allocation`){
+        if (e.keyCode === 18) {
+            _cms.pressConnector = true;
+            //console.log(`yes please`);
+        }
+    }
+};
 
 document.addEventListener('keyup', keyUp, false);
+document.addEventListener('keydown',keyDown,false);

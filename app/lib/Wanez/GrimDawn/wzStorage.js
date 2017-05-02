@@ -63,12 +63,12 @@ module.exports = {
                 stats = fs.statSync(this.objStorage[$relFilePath].class.getFilePath());
                 if(this.objStorage[$relFilePath].time < stats.mtime.getTime()){
                     loadClass = true;
-                    console.log(`reload: ${$relFilePath}`);
+                    //console.log(`reload: ${$relFilePath}`);
                 }
             }catch (err){}
         }else{
             loadClass = true;
-            console.log(`load: ${$relFilePath}`);
+            //console.log(`load: ${$relFilePath}`);
         }
         
         if(loadClass){ //  || this.objStorage[$relFilePath].time < stats.mtime.getTime()
@@ -97,7 +97,7 @@ module.exports = {
         
         this.__get($relFilePath).editDBR($opt,$useDefaultFileDescription);
         this.objStorage[$relFilePath].time = new Date().getTime() + 100;
-        console.log(`set new time: ${$relFilePath} - ${new Date().getTime()}`);
+        //console.log(`set new time: ${$relFilePath} - ${new Date().getTime()}`);
     },
     
     reload(){
@@ -113,10 +113,10 @@ module.exports = {
                 //console.log(storage[$_RelFilePath].class.getFilePath());
                 fs.accessSync(`${storage[$_RelFilePath].class.getFilePath()}`); // check if file exists
                 fs.stat(storage[$_RelFilePath].class.getFilePath(), (err,stats) => {
-                    console.log(`checking`);
+                    //console.log(`checking`);
                     if(storage[$_RelFilePath].time < stats.mtime.getTime()){
                         wzStorageGD.load($_RelFilePath,{override: true});
-                        console.log(`reload: ${$_RelFilePath}`);
+                        //console.log(`reload: ${$_RelFilePath}`);
                     }
                 });
             }catch(err){

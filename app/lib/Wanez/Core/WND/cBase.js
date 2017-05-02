@@ -80,6 +80,7 @@ module.exports = class cBase extends libWZ.Core.cBase{
     }
     destroy(){
         this.parentEl.removeChild(this.wnd);
+        //wzCMS(appConfig.get('cms'));
     }
     loadContent(){
         this.wnd.innerHTML = `${this.tpl.Header}${this.tpl.Nav}${this.tpl.Body}`.wzOut({

@@ -11,18 +11,11 @@
                 "BBCode":[]
             },
             "Mastery":{
-                "Skill Allocation":[],
-                "Selection":[]
+                "Setup":[],
+                "Skill Allocation":[]
             },
             "Items":{
                 "Materia": []
-            },
-            "Wanez":{
-                "Entities": [],
-                "Runic Inscriptions":[],
-                "GnT":[],
-                "Misc":[],
-                "Campaign":[]
             },
             "Docs":{
                 "General":["ReadMe","Changelog"],
@@ -36,12 +29,11 @@
                 "Runes":[]
             },
             "Wanez":{
-                "Runes":[],
-                "Drops":[],
-                "Gear":[],
-                "Entities":[],
-                "DGA":[],
-                "Skill":[]
+                "Entities": [],
+                "Runic Inscriptions":[],
+                "GnT":[],
+                "Misc":[],
+                "Campaign":[]
             },
             "Docs":{
                 "Wiki [ip]":["DGA [ip]","Mastery [ip]"]

@@ -84,6 +84,10 @@ module.exports = class mMateria extends libWZ.GrimDawn.cModule{
         return objProperties;
     }
     
+    getMateriaById($id){
+        return wzStorageGD.__get(this.aMateria[$id]);
+    }
+    
     getField($type,$field){
         return wzStorageGD.__get(this.aMateria[$type]).getFieldValue($field);
     }

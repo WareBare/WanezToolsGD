@@ -15,6 +15,25 @@ module.exports = {
     
     forms: {},
     
+    submitNewField($el){
+        //console.log($el.value);
+        let tempOpt = {};
+    
+        tempOpt[$el.value] = [1,2];
+        this._mSkill.setField(`logic`,tempOpt);
+        
+        wzWND(this.wndId).refresh();
+    },
+    deleteProperty(){
+        let tempOpt = {};
+    
+        tempOpt[this.curSwitch] = ``;
+        this._mSkill.setField(`logic`,tempOpt);
+        this.curSwitch = false;
+    
+        wzWND(this.wndId).refresh();
+    },
+    
     submitSwitch: function($el){
         this.curSwitch = $el.value;
         
@@ -103,13 +122,13 @@ module.exports = {
     },
     
     content_: function(){
-        let out_,itemsSwitch = {},content_ = `Choose a Property you wish to edit.`,
+        let out_,itemsSwitch = {},content_ = `Choose a Property you wish to edit.`,newField = ``,
             scalableFields = this._mSkill.getScalableFields(),
             oldValues_ = `<h3>Old</h3>`,
             newValues_ = `<h3>New</h3>`,
             lvl_ = `<h3>LvL</h3>`,
             tplContent = `<div class="form">{FORM}{BUTTON}</div><div class="propValues"><div class="propLevels">{LEVELS}</div><div class="left">{OLD_VALUES}</div><div id="skillProperies_newValues" class="right">{NEW_VALUES}</div></div>`,
-            tpl = `<div id="wndGD_SkillProperties"><div class="dataSelection">{CUSTOM}</div><div class="dataValues">{FORM}</div></div>`;
+            tpl = `<div id="wndGD_SkillProperties"><div class="dataSelection">{CUSTOM}</div><div class="dataValues">{FORM}</div><div class="dataNewField">{NEW_FIELD}</div></div>`;
             /*curStats = scalableFields[this.curSwitch] || [0,0,0],
             v1 = parseFloat(curStats[1]) - parseFloat(curStats[0]),
             v2 = parseFloat(curStats[2]) - parseFloat(curStats[1]),
@@ -152,7 +171,35 @@ module.exports = {
             items: itemsSwitch
         });
     
+        let availFields = wzTemplates.__getGroupFields(this._mSkill.getField(`logic`,`templateName`),[`Offensive Parameters`,`Defensive Parameters`,`Retaliation Parameters`,`Character Parameters`,`Skill Parameters`,`Modifiers`,`Projectile Config`,`Spawn Config`,`Spark Config`]);
+        //console.log(availFields);
     
+        for(let $_FieldName in availFields){
+            newField += $_FieldName;
+        }
+        this.forms.newfield_form = new WZ.Core.cForm({
+            id: 'newfield_form',
+            isWnd: this.wndId,
+            isConfig: false,
+            onChange: {
+                custom: `submitNewField(this)`
+            },
+            items: {
+                'New Field': {
+                    'newField::start': {
+                        label: `Select a new Field`,
+                        type: `listBoxLarge`,
+                        data: availFields,
+                        dataUseValue: true,
+                        //value: curStats[0],
+                        value: `Clear`
+                    },
+                }
+            }
+        });
+        
+        
+        
         this.forms.main_form = new WZ.Core.cForm({
             id: 'main_form',
             isWnd: this.wndId,
@@ -241,12 +288,14 @@ module.exports = {
             lvl_ += `<div>${(`0${parseInt($_Index) + 1}`).slice(-2)}</div>`;
             newValues_ += `<div>${this.newValues[$_Index]}</div>`;
         }
+    
         
         out_ = tpl.wzOut({
+            NEW_FIELD: this.forms.newfield_form.create(),
             CUSTOM: this.forms.switch_form.create(),
             FORM: (this.curSwitch) ? tplContent.wzOut({
                 FORM: this.forms.main_form.create(),
-                BUTTON: `<span class="formBTN" onclick="wzWND('${this.wndId}').__getContent().saveProperties();">Save</span>`,
+                BUTTON: `<span class="formBTN" onclick="wzWND('${this.wndId}').__getContent().saveProperties();">Save</span><span class="formBTN" onclick="wzWND('${this.wndId}').__getContent().deleteProperty();">Delete</span>`,
                 LEVELS: lvl_,
                 OLD_VALUES: oldValues_,
                 NEW_VALUES: newValues_

@@ -3,7 +3,8 @@
     "Container": "<div id=\"{ID}\">{CONTENT}</div>",
     "Buttons":{
         "Default": "<span wz-btn=\"default\" onclick=\"{ONCLICK}\">{TEXT}</span>",
-        "ListCSS": "<li wz-btnCSS=\"list\" onclick=\"{ONCLICK}\"><input type=\"radio\" name=\"css3_masterySelection\"{CHECKED}><label>{TEXT}</label></li>"
+        "ListCSS": "<li wz-btnCSS=\"list\" onclick=\"{ONCLICK}\"><input type=\"radio\" name=\"css3_masterySelection\"{CHECKED}><label>{TEXT}</label></li>",
+        "ListContent": "<li wz-btnCSS=\"listContent\" onclick=\"{ONCLICK}\"><input type=\"radio\" name=\"css3_contentListBTN\"{CHECKED}><label>{TEXT}</label></li>"
     },
     "Nav": {
         "Frame": "{ITEMS}",

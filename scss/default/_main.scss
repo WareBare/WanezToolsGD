@@ -354,21 +354,25 @@ html{
     float: left;
     width: 49%;
     textarea{
+        //overflow: auto;
+        height: 2000px;
         width: 99%;
     }
 }
 #mdHTML{
     float: right;
-    width: 50%;
+    width: 49%;
     background-color: #15171d;
     color: Wheat;
     border-width: 1px;
     h1{
         //color: Wheat;
+        margin: 0;
         font-weight: normal;
         text-decoration: none;
     }
     h2{
+        margin: 0;
         color: Wheat;
         font-weight: normal;
         text-decoration: none;
@@ -612,3 +616,15 @@ wztip{
     }
 }
 
+
+[wz-btnCSS="listContent"]{
+    display: block;
+    width: 250px;
+    margin: 2px 0 2px 0;
+    & > input[type="radio"]{
+        //visibility: hidden;
+    }
+    & > input[type="radio"]:CHECKED{
+        background: $gradientBTN-000c;
+    }
+}

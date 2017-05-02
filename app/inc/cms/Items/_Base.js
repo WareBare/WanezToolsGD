@@ -16,6 +16,12 @@ module.exports = {
         this._mMateria = new WZ.GrimDawn.Items.mMateria(`records/items/materia`);
     },
     
+    showMateriaEdit: function($materia){
+        this.currentMateria = $materia;
+        
+        wzWND('materiaEdit').refresh();
+    },
+    
     content_: function(){
         let out_ = '';
         

@@ -61,6 +61,32 @@ This is an unsigned .exe (installer) and may trigger some firewalls and anti-vir
     * ![Skill - Edit Properties](http://wanez.de/misc/WanezToolsGD-v0.1.2_SkillEdit_properties.gif "Skill - Edit Properties")
   * `todo` mass editing/adding of skills
 
+## Item Tools ##
+* First stage of item editing starts with Materia/Components.
+
+### Materia/Components ###
+* Vanilla path is checked in your mod folder and than in the extracted game files.
+* if you are changing a vanilla file, it is copied over to your mod's directory with the change you made.
+* `todo` tag adjustments depending on Qualifier changes.
+
+## Other Tools ##
+### BBCode ###
+* Markdown to BBCode Converter.
+* While this was something I made for myself I'm leaving it in the Tool for everyone to use.
+* Markdown is easy to get into and easy to write texts with different headers and lists.
+* write Markdown on the left and see the converted text in Forum BBCode on the right.
+* change the colors of headers.
+* change font style of headers.
+* the button "Copy BBCode" will copy the contents for the forum to the clipboard and you can just paste it in a new post on the forums.
+* you can save the text by using the button "Save MD" and update it with "Update MD".
+  * when you are changing the title and use "Save MD" a new entry is created with the text, using "Update MD" will override the old entry with the new title.
+  * you may also delete entries with the "Delete MD" button, but unlike the other two, this will ignore the title.
+  * changes are saved automatically, you don't really need the button "Update MD" unless you want to change the title or save the color/font changes.
+* you can start a new text simply by changing the title and using the "Save MD" to create a new entry, after that just delete the contents and write your new text. (if you remove the text first, it will overwrite the old one - deleting your work)
+  * a nice sideeffect is you will save your settings and colors/font styles will apply to your new text.
+  * only changing the title without saving it will still overwrite the old text under the old title, because changes to a title need to be submitted first.
+
+
 ## License and Credits ##
 * the program is using Electron (Node.js + Chromium)
   * modules used are under the MIT License

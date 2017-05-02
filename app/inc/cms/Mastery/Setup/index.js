@@ -32,6 +32,9 @@ module.exports = {
     submitTagsForm: function($el){
         this.forms.main_form.onChange($el);
     },
+    editMastery(){
+    
+    },
     
     genMasteryCombo: function($data){
         let aCombo = [],tempOpt;
@@ -56,7 +59,7 @@ module.exports = {
         return aCombo;
     },
     
-    content_Setup: function(){
+    content_Config: function(){
         let info_ = `Only tags are listed similar to the way Crate is using them:<p>tagSkillClassNameXX<br />tagSkillClassNameXXYY<br />tagSkillClassDescriptionXX<br />tagClassXXSkillName00<br />tagClassXXSkillDescription00</p>Future versions will have a merger and a tag export.`,
             itemsSwitch = {},
             itemsContent = {},
@@ -248,7 +251,7 @@ module.exports = {
         this._mSelection = new WZ.GrimDawn.Mastery.mSelection(this.Base._tagsClasses);
     },
     
-    content_UI: function(){
+    content_Selection: function(){
         let out_,tempSelection;
     
         if(!this._mSelection) this.loadSelectionModule();
@@ -267,13 +270,13 @@ module.exports = {
     content_: function($contentType){
         this.contentType = $contentType || this.contentType;
         
-        let out_ = `Work In Progress`;
+        let out_ = `Add a new Mastery, change Mastery Tags/Properties and move Buttons around on the Selection Window. More coming soon.`;
         
         if(this.contentType){
-            if(this.contentType === `Setup`){
-                out_ = this.content_Setup();
-            }else if(this.contentType === `UI`){
-                out_ = this.content_UI();
+            if(this.contentType === `Config`){
+                out_ = this.content_Config();
+            }else if(this.contentType === `Selection`){
+                out_ = this.content_Selection();
             }
         }
         
@@ -281,11 +284,25 @@ module.exports = {
     },
     
     sidebarBtns_: function(){
-        return [
-            {
+        let showSaveSelection = false,
+            showEditMastery = false;
+        
+        if(this.contentType === `Selection`){
+            showSaveSelection = {
                 "ONCLICK": "_cms.saveCurrentData()",
                 "TEXT": "Save Selection"
-            },
+            };
+        }
+        if(this.contentType === `Config` && this.curSwitch){
+            showEditMastery = {
+                "ONCLICK": "wzWND('masteryEdit').refresh();", // _cms.editMastery()
+                "TEXT": "Edit Mastery"
+            };
+        }
+        
+        return [
+            showSaveSelection,
+            showEditMastery,
             {
                 "ONCLICK": "wzWND('masteryWizard').refresh();",
                 "TEXT": "New Mastery"
@@ -294,8 +311,8 @@ module.exports = {
     },
     sidebarList_: function(){
         return {
-            'Setup':[],
-            'UI': []
+            'Config':[],
+            'Selection': []
         }
     }
     

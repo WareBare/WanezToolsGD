@@ -30,7 +30,7 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
             "SkillPicker": `<div ondrop="_cms.skillDropUnused(event)" ondragover="_cms.skillAllowDrop(event)">{UNUSED}</div><div id="uiBackUps">{BACKUPS}</div>`, //{USED}
             //"SkillBTN": "<div wz-mode='{MODE}' class='skillCell'>{ICON}<wztip>{INFO}</wztip></div>"
             "SkillBTN": `<div wz-mode="{MODE}" id="btn_{COORDS}" ondrop="_cms.skillDrop(event)" ondragover="_cms.skillAllowDrop(event)" ondragstart="_cms.skillDrag(event)" draggable="true" wz-coords="{COORDS}" wz-id="{ID}" wz-tier="{TIER}" class="skillCell{CLASS_CIRCULAR}" onclick="_cms.setSkill({ID});" ondblclick="_cms.Base.goToEditSkill();"><span>{ICON}</span>{INFO}</div>`, // <wztip>{INFO}</wztip> |  ondblclick="_cms.setSkillConnector({ID});"
-            SkillToolTip: `<wztip><h1>{SKILL_NAME}</h1>{COORDS_X}, {COORDS_Y}<br />isCircular: {IS_CIRCULAR}<br />Has Connector: {HAS_CONNECTOR}</wztip>`,
+            SkillToolTip: `<wztip><h1>{SKILL_NAME}</h1>{COORDS_X}, {COORDS_Y}<br />isCircular: {IS_CIRCULAR}<br />Has Connector: {HAS_CONNECTOR}<br />Tier: {TIER}</wztip>`,
             "Connector": "<img wz-mode='{MODE}' src='{IMG}' alt='!' />",
             "SkillSlots": this.appData.tpl_gd.UI.SkillSlots,
             "SkillSlotsDif": this.appData.tpl_gd.UI.SkillSlotsDif
@@ -364,18 +364,12 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
                     aSkills[$_CoordKey].Connected = aConnector[$_Index][1][$_CoordKey];
                     if(aSkills[$_CoordKey].isUsed) {
                         aSkills[$_CoordKey].Parent = aConnector[$_Index][0];
-                        //console.log(aConnector[$_Index][1][$_CoordKey]);
-                        //console.log(aConnector[$_Index][0].getSkillId()); // $_CoordKey
-                        //console.log($_CoordKey);
-                        //if(tempObj) aGroups.push(tempObj);
-                        //tempObj = [];
                         aGroups = aGroups || [];
                         aGroups[aConnector[$_Index][0].getSkillId()] = aGroups[aConnector[$_Index][0].getSkillId()] || [(aSkills[$_CoordKey] && aSkills[$_CoordKey].mSkill) ? aSkills[$_CoordKey].mSkill : false];
     
                         aSkills[$_CoordKey].hasGroup = true;
                     }
     
-                    // todo dynamic
                     tempGrp = this.checkConnectorGroup(aConnector[$_Index][1],$_CoordKey,aSkills);
                     if( tempGrp[0] ){
                         aGroups[aConnector[$_Index][0].getSkillId()].push(aSkills[tempGrp[1]].mSkill); // .getSkillPaths().logicRelPath
@@ -383,92 +377,7 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
                     }else if(tempGrp){
                         aGroups[aSkills[tempGrp[1]].mSkill.getSkillId()] = [aSkills[tempGrp[1]].mSkill];
                     }
-                    /*
-                    if(aConnector[$_Index][1][$_CoordKey] === `img/skills_connectoroncenter.png`){
-                        tempCoords = $_CoordKey.split(`,`);
-                        tempCoords = `${parseInt(tempCoords[0]) + 80},${tempCoords[1]}`; //  + this.tpl.SkillSlotsDif.X
-                        if(aSkills[tempCoords] && aSkills[tempCoords].mSkill){
-                            //console.log(aSkills[tempCoords].mSkill.getSkillName());
-                            aGroups[aConnector[$_Index][0].getSkillId()].push(aSkills[tempCoords].mSkill); // .getSkillPaths().logicRelPath
-                            aSkills[tempCoords].hasGroup = true;
-                        }
-                    }else if(aConnector[$_Index][1][$_CoordKey] === `img/skills_connectoronbranchup.png`){
-                        tempCoords = $_CoordKey.split(`,`);
-                        tempCoords = `${parseInt(tempCoords[0]) + 80},${parseInt(tempCoords[1]) - 38}`; //  + this.tpl.SkillSlotsDif.X
-                        if(aSkills[tempCoords] && aSkills[tempCoords].mSkill){
-                            //console.log(aSkills[tempCoords].mSkill.getSkillName());
-                            aGroups[aConnector[$_Index][0].getSkillId()].push(aSkills[tempCoords].mSkill);
-                            aSkills[tempCoords].hasGroup = true;
-                        }
-                        
-                        tempCoords = $_CoordKey.split(`,`);
-                        tempCoords = `${parseInt(tempCoords[0]) + 80},${tempCoords[1]}`; //  + this.tpl.SkillSlotsDif.X
-                        if(aSkills[tempCoords] && aSkills[tempCoords].mSkill){
-                            //console.log(aSkills[tempCoords].mSkill.getSkillName());
-                            aGroups[aConnector[$_Index][0].getSkillId()].push(aSkills[tempCoords].mSkill);
-                            aSkills[tempCoords].hasGroup = true;
-                        }
-                    }else if(aConnector[$_Index][1][$_CoordKey] === `img/skills_connectoronbranchdown.png`){
-                        tempCoords = $_CoordKey.split(`,`);
-                        tempCoords = `${parseInt(tempCoords[0]) + 80},${parseInt(tempCoords[1]) + 32}`; //  + this.tpl.SkillSlotsDif.X
-                        if(aSkills[tempCoords] && aSkills[tempCoords].mSkill){
-                            //console.log(aSkills[tempCoords].mSkill.getSkillName());
-                            aGroups[aConnector[$_Index][0].getSkillId()].push(aSkills[tempCoords].mSkill);
-                            aSkills[tempCoords].hasGroup = true;
-                        }
-        
-                        tempCoords = $_CoordKey.split(`,`);
-                        tempCoords = `${parseInt(tempCoords[0]) + 80},${tempCoords[1]}`; //  + this.tpl.SkillSlotsDif.X
-                        if(aSkills[tempCoords] && aSkills[tempCoords].mSkill){
-                            //console.log(aSkills[tempCoords].mSkill.getSkillName());
-                            aGroups[aConnector[$_Index][0].getSkillId()].push(aSkills[tempCoords].mSkill);
-                            aSkills[tempCoords].hasGroup = true;
-                        }
-                    }else if(aConnector[$_Index][1][$_CoordKey] === `img/skills_connectoronbranchboth.png`){
-    
-                        tempCoords = $_CoordKey.split(`,`);
-                        tempCoords = `${parseInt(tempCoords[0]) + 80},${tempCoords[1]}`; //  + this.tpl.SkillSlotsDif.X
-                        if(aSkills[tempCoords] && aSkills[tempCoords].mSkill){
-                            //console.log(aSkills[tempCoords].mSkill.getSkillName());
-                            aGroups[aConnector[$_Index][0].getSkillId()].push(aSkills[tempCoords].mSkill);
-                            aSkills[tempCoords].hasGroup = true;
-                        }
-    
-                        tempCoords = $_CoordKey.split(`,`);
-                        tempCoords = `${parseInt(tempCoords[0]) + 80},${parseInt(tempCoords[1]) + 32}`; //  + this.tpl.SkillSlotsDif.X
-                        if(aSkills[tempCoords] && aSkills[tempCoords].mSkill){
-                            //console.log(aSkills[tempCoords].mSkill.getSkillName());
-                            aGroups[aConnector[$_Index][0].getSkillId()].push(aSkills[tempCoords].mSkill);
-                            aSkills[tempCoords].hasGroup = true;
-                        }
-                        tempCoords = $_CoordKey.split(`,`);
-                        tempCoords = `${parseInt(tempCoords[0]) + 80},${parseInt(tempCoords[1]) - 38}`; //  + this.tpl.SkillSlotsDif.X
-                        if(aSkills[tempCoords] && aSkills[tempCoords].mSkill){
-                            //console.log(aSkills[tempCoords].mSkill.getSkillName());
-                            aGroups[aConnector[$_Index][0].getSkillId()].push(aSkills[tempCoords].mSkill);
-                            aSkills[tempCoords].hasGroup = true;
-                        }
-                    }else if(aConnector[$_Index][1][$_CoordKey] === `img/skills_connectorontransmuterup.png`){
-                        tempCoords = $_CoordKey.split(`,`);
-                        tempCoords = `${parseInt(tempCoords[0]) + 80},${parseInt(tempCoords[1]) - 38}`; //  + this.tpl.SkillSlotsDif.X
-                        if(aSkills[tempCoords] && aSkills[tempCoords].mSkill){
-                            //console.log(aSkills[tempCoords].mSkill.getSkillName());
-                            aGroups[aConnector[$_Index][0].getSkillId()].push(aSkills[tempCoords].mSkill);
-                            aSkills[tempCoords].hasGroup = true;
-                        }
-                    }else if(aConnector[$_Index][1][$_CoordKey] === `img/skills_connectorontransmuterdown.png`){
-                        tempCoords = $_CoordKey.split(`,`);
-                        tempCoords = `${parseInt(tempCoords[0]) + 80},${parseInt(tempCoords[1]) + 32}`; //  + this.tpl.SkillSlotsDif.X
-                        if(aSkills[tempCoords] && aSkills[tempCoords].mSkill){
-                            //console.log(aSkills[tempCoords].mSkill.getSkillName());
-                            aGroups[aConnector[$_Index][0].getSkillId()].push(aSkills[tempCoords].mSkill);
-                            aSkills[tempCoords].hasGroup = true;
-                        }
-                    }
-                    */
                     
-                    // img/skills_connectoronbranchup.png
-                    // img/skills_connectoroncenter.png
                 }
                 
             }
@@ -512,20 +421,6 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
             "BACKUPS": this.genBackupsList()
         });
         
-        //_wzTPL.AppGD.UI.Coords.X
-        //_wzTPL.AppGD.UI.Coords.Y
-        /*
-         for( let $_Line in _wzTPL.AppGD.UI.SkillSlots.Y ){
-         
-         for( let $_Tier in _wzTPL.AppGD.UI.SkillSlots.X ){
-         skills_ += this.tplContent.SkillBTN.wzOut({
-         "ICON": $_Tier + ' - ' + $_Line,
-         "INFO": 'Tier: '+$_Tier + '\nLine: ' + $_Line
-         })
-         }
-         skills_ += '<br />';
-         }
-         */
         // POSITIONS - START
         for( let $_Coords in aSkills[0] ){
             let aCoords = $_Coords.split(','),
@@ -565,7 +460,8 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
                     COORDS_Y: aCoords[1],
                     IS_USED: aSkills[0][$_Coords].isUsed,
                     IS_CIRCULAR: aSkills[0][$_Coords].isCircular,
-                    HAS_CONNECTOR: (aSkills[0][$_Coords].hasConnector) ? `Yes` : `No`
+                    HAS_CONNECTOR: (aSkills[0][$_Coords].hasConnector) ? `Yes` : `No`,
+                    TIER: aSkills[0][$_Coords].mSkill.getField(`logic`,`skillTier`) || `?`//aSkills[0][$_Coords].Tier
                 });
             }
             if(aSkills[0][$_Coords].Connected){
@@ -639,6 +535,7 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
         
         return tempPath;
     }
+    
     getSkillFiles($subDirs){
         $subDirs = $subDirs || false;
         let tempPath = this.getLogicPath(),tempFiles,ignoreDir = {backup: true, bak: true,copy: true, 'New Folder': true};
