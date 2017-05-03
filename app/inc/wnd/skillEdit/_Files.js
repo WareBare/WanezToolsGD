@@ -35,7 +35,7 @@ module.exports = {
                 
                 tempItems[`Buff/Pet`] = {};
                 tempItems[`Buff/Pet`][`buff.${$_Index}::${fieldName}`] = {
-                    label: `buffSkillName`,
+                    label: fieldName,
                     type: `listBoxLarge`,
                     data: Object.assign({'':``},tempOpt,this._mUI.getSkillFiles(true)),
                     dataUseValue: true,

@@ -200,7 +200,9 @@ module.exports = class cData extends libWZ.Core.cData{
             conversionInType: true,
             conversionOutType: true,
             charBuffFxType: true,
-            skillProjectileName: true
+            skillProjectileName: true,
+            targetingMode: true,
+            fxChanges: true
         };
         
         retValue = {};

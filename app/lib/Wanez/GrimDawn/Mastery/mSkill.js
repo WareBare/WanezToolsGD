@@ -182,22 +182,45 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
     }
     
     loopBuff($dbr){
-        let skill = $dbr,temp,tempClass;
+        let skill = $dbr,temp,tempClass,
+            buffTemplates = {
+                'database/templates/skill_buffradiustoggled.tpl': true,
+                'database/templates/skill_attackbuffradius.tpl': true,
+                'database/templates/skillsecondary_buffradius.tpl': true,
+                'database/templates/skillsecondary_petmodifier.tpl': true
+            };
         
         temp = $dbr.getFieldValue(`buffSkillName`) || $dbr.getFieldValue(`petSkillName`);
+        
+        // check if the file linkes exists (if not it's most likely a core file)
+        if(temp){
+            try{
+                fs.accessSync(`${this.fn.getPaths().Mod}/${temp}`); // check if file exists
+            }catch(err){
+                temp = false;
+            }
+        }
+        
         if(temp){
             this.objSkillPaths[temp] = true;
             //tempClass = new libWZ.GrimDawn.cData(`${this.fn.getPaths().Mod}/${temp}`);
             tempClass = wzStorageGD.load(temp);
             this.aSkills.buff = this.aSkills.buff || [];
             //this.aSkills.buff.push($dbr);
-            this.aSkills.buff.push(temp);
-            //console.log($dbr);
+            this.aSkills.buff.push($dbr.getFilePath().split(`/database/`)[1]); // temp
+            //console.log($dbr.getFilePath().split(`/database/`)[1]);
             skill = this.loopBuff(tempClass);
+            //skill = temp;
+        }else if(buffTemplates[$dbr.getFieldValue(`templateName`)]){
+            temp = $dbr.getFilePath().split(`/database/`)[1];
+            //tempClass = wzStorageGD.load(temp);
+            this.aSkills.buff = this.aSkills.buff || [];
+            this.aSkills.buff.push(temp);
+            skill = false;
         }else{
             this.aSkills.buff = this.aSkills.buff || false;
         }
-        
+    
         return skill;
     }
     
@@ -244,10 +267,10 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
             try{
                 fs.accessSync(`${tempPath}`); // check if file exists
                 if(!fs.lstatSync(tempPath).isDirectory()){
-                    tempClass = this.loopBuff(new libWZ.GrimDawn.cData(tempPath));
+                    tempClass = this.loopBuff(wzStorageGD.load(tempClass.getFieldValue(`skillName`))); // new libWZ.GrimDawn.cData(tempPath)
                     this.objSkillPaths[tempPath.split(`/database/`)[1]] = true;
-                    
-                    tempClass = tempPath.split(`/database/`)[1];
+    
+                    if(tempClass) tempClass = tempClass.getFilePath().split(`/database/`)[1];
                 }
         
             }catch(err){
@@ -257,7 +280,7 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
             tempClass = false;
         }
         this.aSkills.logic = tempClass;
-    
+        //console.log(tempClass);
         /*
         if(this.aSkills.logic) {
             tempSpawnObjects = this.aSkills.logic.getFieldValue(`spawnObjects`);
@@ -415,8 +438,8 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
     }
     getSkillPaths(){
         let aSkillLogic = wzStorageGD.__get(this.aSkills.logic),
-            aSkillBuff = wzStorageGD.__get(this.aSkills.buff),
-            logicRelFilePath = (aSkillBuff) ? aSkillBuff[0].getFilePath().split(`/database/`)[1] : ( (aSkillLogic) ? aSkillLogic.getFilePath().split(`/database/`)[1] : `` ),aPaths = {
+            aSkillBuff = (this.aSkills.buff) ? wzStorageGD.__get(this.aSkills.buff[0]) : false,
+            logicRelFilePath = (aSkillBuff) ? aSkillBuff.getFilePath().split(`/database/`)[1] : ( (aSkillLogic) ? aSkillLogic.getFilePath().split(`/database/`)[1] : `` ),aPaths = {
             'relPath': this.iFilePath.split(`/database/`)[1].replace(`/${this.iFileName}`,``),
             'relFilePath': this.iFilePath.split(`/database/`)[1],
             'filePath': this.iFilePath,

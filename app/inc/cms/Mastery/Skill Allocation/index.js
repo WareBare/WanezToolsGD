@@ -76,7 +76,7 @@ module.exports = {
         //wzCMS(appConfig.get('cms'));
         setTimeout(function(){
             wzCMS(appConfig.get('cms'));
-        }, 25);
+        }, 10);
     },
     skillDropUnused: function(e){
         e.preventDefault();

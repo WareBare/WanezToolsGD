@@ -1,5 +1,15 @@
 # Changelog #
 
+## v0.2.1 ##
+### Mastery Tools ###
+#### Skill Edit ####
+* Added `weaponDamagePct` to the list, however this is added to the list - unlike all other fields which the Program gets by parsing templates.
+* Removed `targetMode` from the _Show Property_ selection.
+* Adding a new field will select that new Field to change its Values (it kept the field you were editing before).
+
+### Bug Fixes ###
+* Fixed various issues with `buff/pet files`.
+
 ## v0.2.0 ##
 ### Minor Features ###
 * data storage has been changed for *.dbr, *.txt. The program will check if the file has been updated and edit data after reloading the newer file. (this change is not finished for all Mastery Tools, only Skill Allocation Files and Skill Tags have this change, just keep this in mind when you are using the Mastery-Setup features).

@@ -21,6 +21,7 @@ module.exports = {
     
         tempOpt[$el.value] = [1,2];
         this._mSkill.setField(`logic`,tempOpt);
+        this.curSwitch = $el.value;
         
         wzWND(this.wndId).refresh();
     },
@@ -189,7 +190,7 @@ module.exports = {
                     'newField::start': {
                         label: `Select a new Field`,
                         type: `listBoxLarge`,
-                        data: availFields,
+                        data: Object.assign({weaponDamagePct: ``},availFields),
                         dataUseValue: true,
                         //value: curStats[0],
                         value: `Clear`
