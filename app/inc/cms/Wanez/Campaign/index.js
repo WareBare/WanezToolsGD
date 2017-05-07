@@ -17,6 +17,12 @@ module.exports = {
         console.log(this._mModule);
     },
     
+    content_Enemies(){
+    
+        this._mModule = new WZ.GrimDawn.Wanez.mEnemiesCampaign();
+    
+    },
+    
     content_Proxy: function(){
         let out_;
         
@@ -36,6 +42,8 @@ module.exports = {
             case `Proxy`:
                 out_ = this.content_Proxy();
                 break;
+            case `Enemies`:
+                out_ = this.content_Enemies();
             default:
                 break;
         }
@@ -44,22 +52,30 @@ module.exports = {
     },
     
     sidebarBtns_: function(){
-        let saveProxy = false;
+        let saveProxy = false, saveEnemies = false;
         
         if(this.contentType === `Proxy`){
             saveProxy = {
                 "ONCLICK": "_cms.saveProxies()",
                 "TEXT": "Save Proxies"
             };
+        }else if(this.contentType === `Enemies`){
+            saveEnemies = {
+                "ONCLICK": "_cms.saveProxies()",
+                "TEXT": "Save Enemies"
+            };
         }
         
+        
         return [
-            saveProxy
+            saveProxy,
+            saveEnemies
         ];
     },
     sidebarList_: function(){
         return {
-            'Proxy':[]
+            'Proxy':[],
+            'Enemies':[]
         }
     }
     

@@ -165,7 +165,7 @@ module.exports = class cRuneStone extends libWZ.GrimDawn.cData{
         this._craft.fetchTemplate(`database/templates/oneshot_scroll.tpl`);
         this._craft.editDBR(this.optOneShotScroll);
         
-        this.aTags[`tagWzRunes_ItemsStones_${tplFile}_NAME`] = `Craft: (Runic Stone) ${this.iGearType} - ${this.iGearSlot}`;
+        this.aTags[`tagWzRunes_ItemsStones_${tplFile}_NAME`] = `Craft: (Stone) ${this.iGearType} - ${this.iGearSlot}`;
         this.aTags[`tagWzRunes_ItemsStones_${tplFile}_DESC`] = `"Crafts a Runic Stone for ${this.iGearSlot} - ${this.iGearType} with a random number of Sockets"`;
         this._craft.editDBR({
             "itemText": `tagWzRunes_ItemsStones_${tplFile}_DESC`,

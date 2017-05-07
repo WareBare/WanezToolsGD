@@ -1,7 +1,7 @@
 {
     "settings":{
         "scale": [
-            [1.0, 3.0,4.0,5.0,6.0,7.0, 7.8,8.6,13.8,15.0,17.0 ],
+            [1.0, 3.0,6.0,9.0,12.0,16.0, 20.0,24.0,28,33.0,38.0 ],
             
             [1.0, 3.06,5.0,8.37,9.18,10.1, 11.47,12.7,14.0,15.3,16.7 ],
             [1.0, 3.61,5.94,10.1,11.05,12.0, 14.03,15.34,16.6,18.0 ],
@@ -18,7 +18,7 @@
             [1.0, 1.2,1.4,1.6,1.8,2.0, 2.2,2.4,2.6,2.8,3.0 ],
             [1.0, 1.15,1.55,1.85,2.25,2.4, 2.5,2.7,2.9,3.1,3.3 ],
             [1.0, 1.45,1.9,2.4,4.3,4.50, 4.7,5.15,5.6,6.1,6.6 ],
-            [1.0, 1.0,1.0,1.0,1.0,2.0, 1.0,1.0,1.0,1.0,3.0 ],
+            [1.0, 1.0,1.0,1.0,1.0,2.0, 2.0,2.0,2.0,2.0,3.0 ],
             [1.0, 1.65,2.10,2.45,2.90,3.25, 3.55,3.8,4.0,4.2,4.4 ]
         ],
         "flatDMG":{
@@ -58,7 +58,7 @@
             ], [
                 {
                     "field": "defensiveProtection",
-                    "mul": 1.00,
+                    "mul": 1.1,
                     "weight": 0
                 }, {
                     "field": "dexterityRequirement",
@@ -72,7 +72,7 @@
             ], [
                 {
                     "field": "defensiveProtection",
-                    "mul": 0.5,
+                    "mul": 0.75,
                     "weight": 0
                 }, {
                     "field": "intelligenceRequirement",
@@ -184,7 +184,7 @@
         
         "characterDodgePercent": {
             "value": 1,
-            "scale": 0
+            "scale": 3
         },
         "characterDeflectProjectile": {
             "value": 1,
@@ -197,59 +197,59 @@
         },
     
         "defensivePhysical": {
-            "value": 15,
+            "value": 10,
             "scale": 5
         },
         "defensiveElementalResistance": {
-            "value": 7,
+            "value": 5,
             "scale": 5
         },
         "defensiveFire": {
-            "value": 15,
+            "value": 10,
             "scale": 5
         },
         "defensiveCold": {
-            "value": 15,
+            "value": 10,
             "scale": 5
         },
         "defensiveLightning": {
-            "value": 15,
+            "value": 10,
             "scale": 5
         },
         "defensivePierce": {
-            "value": 15,
+            "value": 10,
             "scale": 5
         },
         "defensivePoison": {
-            "value": 15,
+            "value": 10,
             "scale": 5
         },
         "defensiveAether": {
-            "value": 15,
+            "value": 10,
             "scale": 5
         },
         "defensiveLife": {
-            "value": 15,
+            "value": 10,
             "scale": 5
         },
         "defensiveChaos": {
-            "value": 15,
+            "value": 10,
             "scale": 5
         },
         "defensiveBleeding": {
-            "value": 15,
+            "value": 10,
             "scale": 5
         },
         "defensiveStun": {
-            "value": 15,
+            "value": 10,
             "scale": 5
         },
         "defensiveFreeze": {
-            "value": 15,
+            "value": 10,
             "scale": 5
         },
         "defensiveDisruption": {
-            "value": 15,
+            "value": 10,
             "scale": 5
         },
         
@@ -364,6 +364,54 @@
             "value": 0.1,
             "scale": 10
         },
+        "defensiveBlock": {
+            "value": 60,
+            "scale": 1
+        },
+        "defensiveBlockChance":{
+            "value": 100,
+            "scale": 10
+        },
+        "blockRecoveryTime":{
+            "value": 0.1,
+            "scale": 10
+        },
+        "defensiveReflect":{
+            "value": 10,
+            "scale": 10
+        },
+        "retaliationPierceGlobal":{
+            "value": 1,
+            "scale": 10
+        },
+        "retaliationPierceChance":{
+            "value": 10,
+            "scale": 10
+        },
+        "retaliationGlobalChance":{
+            "value": 10,
+            "scale": 10
+        },
+        "retaliationStunChance":{
+            "value": 10,
+            "scale": 10
+        },
+        "retaliationStunGlobal":{
+            "value": 1,
+            "scale": 10
+        },
+        "retaliationStunMin":{
+            "value": 1,
+            "scale": 10
+        },
+        "retaliationPierceMin":{
+            "value": 500,
+            "scale": 1
+        },
+        "retaliationTotalDamageModifier":{
+            "value": 30,
+            "scale": 7
+        },
 
         "offensiveBaseColdMin":{
             "value": 100,
@@ -422,51 +470,51 @@
             "scale": 15
         },
         "offensiveColdModifier":{
-            "value": 20,
+            "value": 40,
             "scale": 7
         },
         "offensiveSlowColdModifier":{
-            "value": 20,
+            "value": 40,
             "scale": 7
         },
         "offensiveFireModifier":{
-            "value": 20,
+            "value": 40,
             "scale": 7
         },
         "offensiveSlowFireModifier":{
-            "value": 20,
+            "value": 40,
             "scale": 7
         },
         "offensivePoisonModifier":{
-            "value": 20,
+            "value": 40,
             "scale": 7
         },
         "offensiveSlowPoisonModifier":{
-            "value": 20,
+            "value": 40,
             "scale": 7
         },
         "offensiveLightningModifier":{
-            "value": 20,
+            "value": 40,
             "scale": 7
         },
         "offensiveSlowLightningModifier":{
-            "value": 20,
+            "value": 40,
             "scale": 7
         },
         "offensiveLifeModifier":{
-            "value": 20,
+            "value": 40,
             "scale": 7
         },
         "offensiveSlowLifeModifier":{
-            "value": 20,
+            "value": 40,
             "scale": 7
         },
         "offensiveChaosModifier":{
-            "value": 20,
+            "value": 40,
             "scale": 7
         },
         "offensiveAetherModifier":{
-            "value": 20,
+            "value": 40,
             "scale": 7
         }
     }

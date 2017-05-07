@@ -24,7 +24,32 @@ module.exports = class aEnchantment extends libWZ.GrimDawn.Assets.cAsset{
             maxTransparency: `0.5`,
             dropSound: `records/sounds/items/spak_itemdropcraftingpart.dbr`,
             dropSound3D: `records/sounds/items/spak_itemdropcraftingpart.dbr`,
-            dropSoundWater: `records/sounds/items/spak_itemdropwaterplunksm.dbr`
+            dropSoundWater: `records/sounds/items/spak_itemdropwaterplunksm.dbr`,
+            amulet: `0`,
+            bracelet: `0`,
+            ring: `0`,
+            medal: `0`,
+            head: `0`,
+            shoulders: `0`,
+            hands: `0`,
+            chest: `0`,
+            waist: `0`,
+            legs: `0`,
+            feet: `0`,
+            shield: `0`,
+            offhand: `0`,
+            spear: `0`,
+            staff: `0`,
+            axe: `0`,
+            mace: `0`,
+            sword: `0`,
+            dagger: `0`,
+            scepter: `0`,
+            ranged1h: `0`,
+            ranged2h: `0`,
+            axe2h: `0`,
+            mace2h: `0`,
+            sword2h: `0`
         };
         
         this.fetchTemplate(`database/templates/itemenchantment.tpl`);

@@ -25,6 +25,7 @@ module.exports = {
     mArmor: libWZ.GrimDawn.Wanez.mArmor = require(`./mArmor`),
     mContainers: libWZ.GrimDawn.Wanez.mContainers = require(`./mContainers`),
     mControllers: libWZ.GrimDawn.Wanez.mControllers = require(`./mControllers`),
-    mEnemies: libWZ.GrimDawn.Wanez.mEnemies = require(`./mEnemies`)
+    mEnemies: libWZ.GrimDawn.Wanez.mEnemies = require(`./mEnemies`),
+    mEnemiesCampaign: libWZ.GrimDawn.Wanez.mEnemiesCampaign = require(`./mEnemiesCampaign`)
 };
 

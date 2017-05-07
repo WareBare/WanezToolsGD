@@ -273,12 +273,12 @@ module.exports = {
         }
     },
     armorMul: {
-        "Feet": 0.3,
-        "Hands": 0.3,
-        "Head": 0.3,
-        "Legs": 0.75,
-        "Shoulders": 0.5,
-        "Chest": 1.0
+        "Feet": 1.2,
+        "Hands": 1.2,
+        "Head": 1.35,
+        "Legs": 1.5,
+        "Shoulders": 1.35,
+        "Chest": 1.5
     },
     aAffixes: {},
     aArmor: {},
@@ -506,11 +506,12 @@ module.exports = {
                             
                             for( let $_Index02 in curVariation ){
                                 tempData = Object.assign({},curVariation[$_Index02]);
-                                if($_Type === "Armor" && $_Index02 === 0) { // was $_Index02 == 0
+                                if($_Type === "Armor" && $_Index02 == 0) { // was $_Index02 == 0
                                     tempData.mul = tempData.mul * this.armorMul[$_Slot];
                                     //tempData.mul = this.armorMul[$_Slot];
                                     //tempData.mul = tempData.mul;
                                     //console.log(`armorMul: ${$_Slot} - ${$_Index02} - ${tempData.mul}`);
+                                    //console.log(tempData.mul);
                                 }
                                 tempVariation.push(tempData);
                             }

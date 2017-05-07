@@ -27,6 +27,7 @@ module.exports = class mRunicInscriptions extends libWZ.GrimDawn.cModule{
             "Axes": [`axe`,`axe2h`],
             "Maces": [`mace`,`mace2h`],
             "Swords": [`sword`,`sword2h`],
+            "Caster Weapons": [`staff`,`scepter`],
             "All Armor": [`head`,`shoulders`,`hands`,`chest`,`waist`,`legs`,`feet`]
         };
         this.aSlotTags = {
@@ -263,21 +264,52 @@ module.exports = class mRunicInscriptions extends libWZ.GrimDawn.cModule{
     }
     
     genSlotTags($baseStats){
-        let tags_ = ``;
-        //iData = ($isRune) ? this.iData.Runes : this.iData.Inscriptions;
+        let tags_ = ``,aSlots = {},objRep,tempSlots,isChoice = true;
         
-        //console.log($tempFile.getData());
-        //iData.Items[$_Id].Slots
-        //for(let $_Id in iData.Items){
         for(let $_Index in this.aSlotTags){
-            //console.log(this.aSlotTags[$_Index]);
-            if( $baseStats[$_Index] === `1`){
-                if(tags_ !== '') tags_ += `, `;
-                tags_ += `${this.aSlotTags[$_Index]}`
+            if( $baseStats[$_Index] && $baseStats[$_Index] !== `0`){
+                //if(tags_ !== '') tags_ += `, `;
+                //tags_ += `${this.aSlotTags[$_Index]}`;
+                aSlots[$_Index] = this.aSlotTags[$_Index];
             }
-            
         }
-        //}
+        
+        // check for slot groups
+        for(let $_Tag in this.aSlotTagsCombo){
+            tempSlots = this.aSlotTagsCombo[$_Tag];
+            isChoice = true;
+            for(let $_Index in tempSlots){
+                if(!aSlots[tempSlots[$_Index]]){
+                    isChoice = false;
+                }
+            }
+            if(isChoice){
+                for(let $_Index in tempSlots){
+                    delete aSlots[tempSlots[$_Index]];
+                }
+                if(tags_ !== '') {
+                    tags_ += `, `;
+                }else{
+                    tags_ += `Used in `;
+                }
+                tags_ += `${$_Tag}`;
+            }
+        }
+        // add remaining slots
+        for(let $_Slot in aSlots){
+            if(tags_ !== '') {
+                if($_Slot === Object.keys(aSlots)[Object.keys(aSlots).length - 1] ){
+                    tags_ += ` and `;
+                }else{
+                    tags_ += `, `;
+                }
+                
+            }else{
+                tags_ += `Used in `;
+            }
+            tags_ += `${aSlots[$_Slot]}`;
+        }
+        
         //console.log(tags_);
         
         return tags_;

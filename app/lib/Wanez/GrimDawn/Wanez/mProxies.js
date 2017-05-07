@@ -40,14 +40,14 @@ module.exports = class mProxies extends libWZ.GrimDawn.cModule{
             //console.log(`${this.fn.getPaths().Core}/${tempPath}`);
             //console.log(this.aProxyFolders[$_Index]);
             for(let $_FileName in aFiles){
-                if(!$_FileName.includes(`aethercrystal`)){
+                //if(!$_FileName.includes(`aethercrystal`)){
                     tempClass = new libWZ.GrimDawn.cData(`${this.fn.getPaths().Core}/${tempPath}/${$_FileName}`);
                     if( (tempClass.__getField(`Class`) === `Proxy` || tempClass.__getField(`Class`) === `ProxyAmbush`) && tempClass.__getField(`delayedRun`) === `0`){
     
                         tempClass.changeFilePath(`${this.fn.getPaths().Mod}/${tempPath}/${$_FileName}`);
                         tempClass.editDBR({
-                            onAddToWorld: `wanez.gd.cloneProxy`,
-                            delayedRun: `1`
+                            onAddToWorld: `wanez.gd.cloneProxy`
+                            //delayedRun: `1`
                         });
                         //console.log(tempClass);
                         this.aProxies.push(tempClass);
@@ -61,7 +61,7 @@ module.exports = class mProxies extends libWZ.GrimDawn.cModule{
                         this.aProxies.push(tempClass);
                         //console.log(tempClass);
                     }
-                }
+                //}
                 
             }
             

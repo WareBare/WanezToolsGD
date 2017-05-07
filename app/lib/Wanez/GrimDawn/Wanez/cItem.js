@@ -69,6 +69,8 @@ module.exports = class cItem extends libWZ.GrimDawn.cData{
                     if(tempArr[$_i] === `characterBaseAttackSpeed`){
                         aAffixes[tempArr[$_i]] = (this.mathStatValue(tempArr[$_i],$lvl,1) * tempAffix.mul * -0.1).toFixed(2);
                         //console.log(aAffixes[tempArr[$_i]]);
+                    }else if(tempArr[$_i] === `blockRecoveryTime`){
+                        aAffixes[tempArr[$_i]] = (this.mathStatValue(tempArr[$_i],$lvl,1) * tempAffix.mul).toFixed(2);
                     }else{
                         aAffixes[tempArr[$_i]] = Math.ceil(this.mathStatValue(tempArr[$_i],$lvl,1) * tempAffix.mul);
                     }
