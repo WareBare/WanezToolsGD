@@ -362,4 +362,20 @@ module.exports = class cData extends libWZ.Core.cData{
         
         this.aTags[$key] = $value;
     }
+    
+    __setTags($opt){
+        $opt = $opt || false;
+        let tempOpt;
+        
+        if($opt){
+            for(let $_FieldDBR in $opt){
+                tempOpt = {};
+                this.genTag($opt[$_FieldDBR].key,$opt[$_FieldDBR].value);
+                tempOpt[$_FieldDBR] = $opt[$_FieldDBR].key;
+                this.editDBR(tempOpt,true);
+            }
+        }
+        
+    }
+    
 };

@@ -15,4 +15,6 @@ module.exports = class cAsset extends libWZ.GrimDawn.cData{
         if($saveFilePath) this.changeFilePath(`${this.fn.getPaths().Mod}/${$saveFilePath}`);
     }
     
+    
+    
 };

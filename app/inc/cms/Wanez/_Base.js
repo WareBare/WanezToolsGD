@@ -123,6 +123,13 @@ module.exports = {
         
         $class.saveDBR()
     },
+    saveGearBlacksmith: function(){
+        this.saveCrafter(new WZ.GrimDawn.cData(`/mod_wanez/_gear/creatures/npcs/blacksmith_leveling01.dbr`),[`mod_wanez/_gear/items/leveling/blueprints`,`mod_wanez/_gear/exchange/blueprints`,`mod_wanez/_gear/items/artifacts/blueprints`]);
+        this.saveCrafter(new WZ.GrimDawn.cData(`/mod_wanez/_gear/creatures/npcs/blacksmith_leveling02.dbr`),[`mod_wanez/_gear/items/leveling/blueprints`,`mod_wanez/_gear/exchange/blueprints`,`mod_wanez/_gear/items/artifacts/blueprints`]);
+        this.saveCrafter(new WZ.GrimDawn.cData(`/mod_wanez/_gear/creatures/npcs/blacksmith_leveling03.dbr`),[`mod_wanez/_gear/items/leveling/blueprints`,`mod_wanez/_gear/exchange/blueprints`,`mod_wanez/_gear/items/artifacts/blueprints`]);
+        this.saveCrafter(new WZ.GrimDawn.cData(`/mod_wanez/_gear/creatures/npcs/blacksmith_leveling04.dbr`),[`mod_wanez/_gear/items/leveling/blueprints`,`mod_wanez/_gear/exchange/blueprints`,`mod_wanez/_gear/items/artifacts/blueprints`]);
+        this.saveCrafter(new WZ.GrimDawn.cData(`/mod_wanez/_gear/creatures/npcs/blacksmith_leveling05.dbr`),[`mod_wanez/_gear/items/leveling/blueprints`,`mod_wanez/_gear/exchange/blueprints`,`mod_wanez/_gear/items/artifacts/blueprints`]);
+    },
     
     content_: function(){
         let out_ = '';

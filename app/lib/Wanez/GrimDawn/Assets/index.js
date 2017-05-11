@@ -13,6 +13,7 @@ module.exports = {
     cAsset: libWZ.GrimDawn.Assets.cAsset = require(`./cAsset`),
     aScroll: libWZ.GrimDawn.Assets.aScroll = require(`./aScroll`),
     aMateria: libWZ.GrimDawn.Assets.aMateria = require(`./aMateria`),
+    aCharm: libWZ.GrimDawn.Assets.aCharm = require(`./aCharm`),
     aCraft: libWZ.GrimDawn.Assets.aCraft = require(`./aCraft`),
     aPotion: libWZ.GrimDawn.Assets.aPotion = require(`./aPotion`),
     aMonster: libWZ.GrimDawn.Assets.aMonster = require(`./aMonster`),

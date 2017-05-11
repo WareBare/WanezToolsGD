@@ -459,26 +459,6 @@ module.exports = {
     saveTags: function(){
         this._tagsGear.saveData();
     },
-    saveLevelingBlacksmith: function(){ // todo
-        this.Base.saveCrafter(new WZ.GrimDawn.cData(`/mod_wanez/_gear/creatures/npcs/blacksmith_leveling01.dbr`),[`mod_wanez/_gear/items/leveling/blueprints`,`mod_wanez/_gear/exchange/blueprints`]);
-        
-        /*
-         let _smith = new WZ.GrimDawn.cData(wzGD_dataSet.PathsDS.Mod.Home+'/database/mod_wanez/_gear/creatures/npcs/blacksmith_leveling01.dbr'),
-         pathBlueprints = "mod_wanez/_gear/items/leveling/blueprints",
-         aBlueprints = [];
-         
-         let files = fs.readdirSync(wzGD_dataSet.PathsDS.Mod.Home+'/database/'+pathBlueprints);
-         
-         for( let $_Index in files ){
-         aBlueprints.push(pathBlueprints+'/'+files[$_Index]);
-         }
-         //console.log(aBlueprints);
-         _smith.editDBR({
-         "defaultRecipes":aBlueprints
-         });
-         _smith.saveData();
-         */
-    },
     
     iniArmorDefault: function(){
         let curType,curSlot,aVariations,curVariation,tempData,tempVariation,aVariationTemp,tempItemVariation,tempItems,
@@ -656,7 +636,7 @@ module.exports = {
                 "ONCLICK": "_cms.saveTags()",
                 "TEXT": "Save Tags"
             }, {
-                "ONCLICK": "_cms.saveLevelingBlacksmith()",
+                "ONCLICK": "_cms.Base.saveGearBlacksmith()",
                 "TEXT": "Save BS Lvl"
             }
         ];

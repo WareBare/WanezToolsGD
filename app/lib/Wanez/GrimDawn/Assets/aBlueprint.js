@@ -19,6 +19,7 @@ module.exports = class aBlueprint extends libWZ.GrimDawn.Assets.cAsset{
             dropSound3D: `records/sounds/items/spak_itemdropgeneric.dbr`,
             dropSoundWater: `records/sounds/items/spak_itemdropwaterplunksm.dbr`,
             itemCost: `100`,
+            artifactCreateQuantity: `1`,
             itemLevel: `1`,
             //actorRadius: `1.0`,
             //actorHeight: `0.5`,
@@ -67,7 +68,7 @@ module.exports = class aBlueprint extends libWZ.GrimDawn.Assets.cAsset{
             for(let $_Index in $arrOptional){
                 tempCount = parseInt($_Index) + 1;
                 this.editData('reagent'+tempCount+'BaseName',$arrOptional[$_Index]);
-                this.editData('reagent'+tempCount+'Quantity',1);
+                this.editData('reagent'+tempCount+'Quantity',`1`);
             }
         }
         

@@ -194,14 +194,20 @@ module.exports = class mRunicInscriptions extends libWZ.GrimDawn.cModule{
                     if(i === 0){ // SCROLL
                         //tempFile = new libWZ.GrimDawn.cScroll(wzGD_dataSet.PathsDS.Mod.Home+'/database/'+this.pathRunes+'/'+tempRuneString.FileName);
                         tempFile = new libWZ.GrimDawn.Assets.aScroll(`${this.pathRunes}/${tempRuneString.FileName}`);
-                        //console.log('SCROLL');
+                        tempFile.editDBR({
+                            bitmap: `wanez/items/runes/bitmaps/${tempRuneString.FileName.replace(`.dbr`,`.tex`)}`,
+                            bitmapButtonUp: `wanez/items/runes/bitmaps/${tempRuneString.FileName.replace(`.dbr`,`.tex`)}`,
+                            bitmapButtonDown: `wanez/items/runes/bitmaps/${tempRuneString.FileName.replace(`.dbr`,`.tex`)}`
+                        });
+                        //console.log(`wanez/items/runes/bitmaps/${tempRuneString.FileName.replace(`.dbr`,`.tex`)}`);
                     }else if($isRune){ // RUNE
                         //tempFile = new libWZ.GrimDawn.RunicInscription.cRune(wzGD_dataSet.PathsDS.Mod.Home+'/database/'+this.pathRunes+'/'+tempRuneString.FileName);
                         tempFile = new libWZ.GrimDawn.Assets.aMateria(`${this.pathRunes}/${tempRuneString.FileName}`);
                         tempFile.editDBR({
-                            shardBitmap: `wanez/items/runes/bitmaps/rune_compa_default.tex`,
-                            relicBitmap: `wanez/items/runes/bitmaps/rune_compa_default.tex`
+                            shardBitmap: `wanez/items/runes/bitmaps/${tempRuneString.FileName.replace(/[a-z]\.dbr$/g,`a.tex`)}`, // rune_compa_default
+                            relicBitmap: `wanez/items/runes/bitmaps/${tempRuneString.FileName.replace(/[a-z]\.dbr$/g,`a.tex`)}`
                         });
+                        //console.log(`wanez/items/runes/bitmaps/${tempRuneString.FileName.replace(/[a-z]\.dbr$/g,`a.tex`)}`);
                     }else{ // INSCRIPTION
                         //tempFile = new libWZ.GrimDawn.RunicInscription.cInscription(wzGD_dataSet.PathsDS.Mod.Home+'/database/'+this.pathInscriptions+'/'+tempRuneString.FileName);
                         tempFile = new libWZ.GrimDawn.Assets.aEnchantment(`${this.pathInscriptions}/${tempRuneString.FileName}`);
@@ -250,14 +256,6 @@ module.exports = class mRunicInscriptions extends libWZ.GrimDawn.cModule{
                     aData[$_Id][i].Names = tempRuneString;
                 }
             }
-            
-            //if(iData.Settings.hasBlueprint) aData[$_Id].Blueprint = new libWZ.GrimDawn.cBlueprint();
-            
-            //aData[$_Id] = iData.Items[$_Id].Title;
-            //aData[$_Id] = ($isRune) ? new libWZ.GrimDawn.RunicInscription.cRune() : new libWZ.GrimDawn.RunicInscription.cInscription();
-            //console.log(aData[$_Id]);
-            // UI
-            //this.aUI[modeStr].push(this.genUIElement($_Id,true));
         }
         
         return aData;
