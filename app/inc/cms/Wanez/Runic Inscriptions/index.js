@@ -48,6 +48,37 @@ module.exports = {
         //this.fnLog();
     },
     
+    saveLootTables: function(){
+        let pathItems = `${WZ.GrimDawn.tFn.getPaths().Mod}/mod_wanez/_runes/items/materia`,
+            aFiles = fs.readdirSync(`${pathItems}`),
+            aFilesScrolls = [], // stores rel scroll filepaths
+            objTdyn = {},
+            aTdyn = [],
+            tempID_3,tempIndex;
+        
+        for(let $_FileName in aFiles){
+            if(aFiles[$_FileName].match(/^runec_/) && aFiles[$_FileName].match(/[0-9].dbr$/)){
+                aFilesScrolls.push(`mod_wanez/_runes/items/materia/${aFiles[$_FileName]}`);
+            }
+        }
+        console.log(aFilesScrolls);
+        for(let $_Index in aFilesScrolls){
+            // tdyn limit is 80, don't add more items than the limit (get file number)
+            tempIndex = ($_Index > 0) ? (Math.ceil(parseInt($_Index) / 80)) : 1;
+            
+            // SCROLLS \\
+            objTdyn[`RuneC_${tempIndex}`] = objTdyn[`RuneC_${tempIndex}`] || {
+                    'tdyn_path': `mod_wanez/_runes/items/materia/loottables/`,
+                    'tdyn_file': `tdyn_runec_${(`00${tempIndex}`).slice(-3)}x.dbr`, // tdyn limit is 80, don't add more items than the limit (set file number)
+                    'items': []
+                };
+            objTdyn[`RuneC_${tempIndex}`].items.push(`${aFilesScrolls[$_Index]}`);
+        }
+        for(let $_Type in objTdyn){
+            this.Base.saveLootTable( new WZ.GrimDawn.Assets.aLootTdyn(`${objTdyn[$_Type].tdyn_path}${objTdyn[$_Type].tdyn_file}`), objTdyn[$_Type].items);
+        }
+    },
+    
     updateBlacksmith: function(){
         let configPaths = this.runeConfig.get(`Settings.Paths`),
             basePath = configPaths._runes,
@@ -251,6 +282,9 @@ module.exports = {
             }, {
                 "ONCLICK": "_cms.Base.saveCurrentDataMisc();",
                 "TEXT": "S. More Src"
+            }, {
+                "ONCLICK": "_cms.saveLootTables();",
+                "TEXT": "Save LT"
             }
         ];
     },
@@ -258,6 +292,9 @@ module.exports = {
         return {
             'RuneB': {
                 text: `From Materia`
+            },
+            'RuneC': {
+                text: `Phasing`
             }
         }
     }

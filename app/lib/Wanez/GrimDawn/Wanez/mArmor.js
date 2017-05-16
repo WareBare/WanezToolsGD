@@ -16,8 +16,6 @@ module.exports = class mArmor extends libWZ.GrimDawn.cModule{
         this.iTier = $tier;
         this.iParams = $itemParams[this.iIndex];
         this.aData = this.iniArmor($items[this.iIndex],$lvl);
-        //this.aAffixes = this.aData.affixes;
-        //this.aTables = this.iniTables(this.aData.tables);
         this.aModuleData = false;
     }
     
@@ -37,6 +35,9 @@ module.exports = class mArmor extends libWZ.GrimDawn.cModule{
                         tempParams = this.iParams[$_Type][$_Slot].params || false;
                         //console.log(tempParams);
                         tempClass = new libWZ.GrimDawn.Wanez.cItem([$_Type,$_Slot,this.iIndex],arrVariation[$_Index],$lvl,this.iSettings.itemFile,this.iTier,tempParams);
+                        tempClass.editDBR({
+                            itemClassification: ($lvl >= 50) ? `Legendary` : (($lvl >= 25) ? `Epic` : `Rare`)
+                        });
                         //console.log(arrVariation[$_Index]);
                         aArmor[tempArmorKey].push(tempClass);
                         

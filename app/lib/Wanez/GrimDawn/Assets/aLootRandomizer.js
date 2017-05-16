@@ -16,7 +16,7 @@ module.exports = class aLootRandomizer extends libWZ.GrimDawn.Assets.cAsset{
             lootRandomizerName: `tagWaDGA_PrefixAX`,
             lootRandomizerJitter: `30.0`,
             lootRandomizerCost: `300`,
-            itemClassification: `Epic`,
+            itemClassification: `Rare`,
             marketAdjustmentPercent: `50.0`,
             characterBaseAttackSpeedTag: `CharacterAttackSpeedAverage`
         };

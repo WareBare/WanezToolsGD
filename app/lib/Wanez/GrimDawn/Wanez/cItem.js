@@ -9,22 +9,17 @@
 
 module.exports = class cItem extends libWZ.GrimDawn.cData{
     
-    constructor($assetType,$arrAffixes,$lvl,$itemFile,$tier,$ini){ // ,$arrAsset,$savePath,$ini
-        //let useAsset = false;
-        //super(useAsset,new libWZ.GrimDawn.Parser.cDBR(),$ini); // ,$ini
+    constructor($assetType,$arrAffixes,$lvl,$itemFile,$tier,$ini){
         super();
-        //this.aData = new libWZ.GrimDawn.Assets[$data.wzAsset]($savePath).getData();
+        
         if(Array.isArray($assetType)){
-            //useAsset = wzAssets.newGear[$assetType[0]][$assetType[1]];
             this.aData = new libWZ.GrimDawn.Assets.aGear(false,`${$assetType[0]}${$assetType[1]}`).getData();
         }else{
             switch($assetType){
                 case 'Affix':
-                    //useAsset = wzAssets.newLootRandomizer;
                     this.aData = new libWZ.GrimDawn.Assets.aLootRandomizer().getData();
                     break;
                 default:
-                    //useAsset = false;
                     break;
             }
         }
@@ -44,7 +39,6 @@ module.exports = class cItem extends libWZ.GrimDawn.cData{
         this.prevFile = false;
         
         this.editDBR(this.aAffixes);
-        //this.changeFilePath($savePath);
     }
     
     iniAffixes($arrAffixes,$lvl){
@@ -78,7 +72,7 @@ module.exports = class cItem extends libWZ.GrimDawn.cData{
                 
             }
             if(tempAffix.ID){
-                this.AffixID += (`0${tempAffix.ID}`).slice(-2); // this.parseIntToString(tempAffix.ID,1)
+                this.AffixID += (`0${tempAffix.ID}`).slice(-2);
             }
             tempVariation = tempVariation || tempAffix.Variation;
             tempCount = tempCount || tempAffix.Count;
@@ -86,7 +80,7 @@ module.exports = class cItem extends libWZ.GrimDawn.cData{
         }
         
         if(tempVariation && tempCount){
-            this.AffixID = `${(`0${tempVariation}`).slice(-2)}${(`0${tempCount}`).slice(-2)}`; // this.parseIntToString(tempVariation,1) + this.parseIntToString(tempCount,1)
+            this.AffixID = `${(`0${tempVariation}`).slice(-2)}${(`0${tempCount}`).slice(-2)}`;
         }
         if(petBonuses){
             let filePath = this.iItemFile.path,
@@ -144,33 +138,11 @@ module.exports = class cItem extends libWZ.GrimDawn.cData{
     
     saveItem($dataMisc){
         $dataMisc = $dataMisc || false;
-        /*
-        let saveDBR = false;
-        // check if any changes have been made to the item \\
-        // open file
-        if(!this.prevFile){
-            try{
-                this.prevFile = new libWZ.GrimDawn.cData(`${this.fn.getPaths().Mod}/${this.itemFile}`);
-            }catch(err){
-                this.prevFile = false;
-            }
-        }else{
-            this.prevFile.reload();
-        }
         
-        this.prevFile.editDBR({"FileDescription":this.getData().FileDescription});
-        
-        // compare files // this.prevFile ||
-        if(this.cParser.stringifyData(this.getData()) !== this.cParser.stringifyData(this.prevFile.getData())){
-            saveDBR = true;
-            //console.log(JSON.stringify(this.getData()));
-            //console.log(JSON.stringify(this.prevFile.getData()));
-        }
-        */
         if(this._petBonus){
             this._petBonus.saveDBR();
         }
-        //this.saveDBR($dataMisc,saveDBR);
+        
         this.saveDBR($dataMisc);
     }
     

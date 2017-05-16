@@ -412,7 +412,16 @@
             "value": 30,
             "scale": 7
         },
-
+    
+        "offensiveLifeLeechMin":{
+            "value": 0.1,
+            "scale": 10
+        },
+        "offensiveLifeLeechMax":{
+            "value": 0.1,
+            "scale": 10
+        },
+        
         "offensiveBaseColdMin":{
             "value": 100,
             "scale": 15
@@ -469,6 +478,65 @@
             "value": 100,
             "scale": 15
         },
+    
+    
+        "offensiveColdMin":{
+            "value": 100,
+            "scale": 15
+        },
+        "offensiveColdMax":{
+            "value": 100,
+            "scale": 15
+        },
+        "offensiveFireMin":{
+            "value": 100,
+            "scale": 15
+        },
+        "offensiveFireMax":{
+            "value": 100,
+            "scale": 15
+        },
+        "offensivePoisonMin":{
+            "value": 100,
+            "scale": 15
+        },
+        "offensivePoisonMax":{
+            "value": 100,
+            "scale": 15
+        },
+        "offensiveLightningMin":{
+            "value": 100,
+            "scale": 15
+        },
+        "offensiveLightningMax":{
+            "value": 100,
+            "scale": 15
+        },
+        "offensiveLifeMin":{
+            "value": 100,
+            "scale": 15
+        },
+        "offensiveLifeMax":{
+            "value": 100,
+            "scale": 15
+        },
+        "offensiveChaosMin":{
+            "value": 100,
+            "scale": 15
+        },
+        "offensiveChaosMax":{
+            "value": 100,
+            "scale": 15
+        },
+        "offensiveAetherMin":{
+            "value": 100,
+            "scale": 15
+        },
+        "offensiveAetherMax":{
+            "value": 100,
+            "scale": 15
+        },
+        
         "offensiveColdModifier":{
             "value": 40,
             "scale": 7
@@ -516,6 +584,54 @@
         "offensiveAetherModifier":{
             "value": 40,
             "scale": 7
+        },
+        "offensiveElementalModifier":{
+            "value": 35,
+            "scale": 7
+        },
+        "defensiveFireMaxResist":{
+            "value": 1,
+            "scale": 10
+        },
+        "defensiveColdMaxResist":{
+            "value": 1,
+            "scale": 10
+        },
+        "defensiveLightningMaxResist":{
+            "value": 1,
+            "scale": 10
+        },
+        "defensiveChaosMaxResist":{
+            "value": 1,
+            "scale": 10
+        },
+        "defensiveAetherMaxResist":{
+            "value": 1,
+            "scale": 10
+        },
+        "defensiveLifeMaxResist":{
+            "value": 1,
+            "scale": 10
+        },
+        "defensivePoisonMaxResist":{
+            "value": 1,
+            "scale": 10
+        },
+        "defensivePhysicalMaxResist":{
+            "value": 1,
+            "scale": 10
+        },
+        "defensivePierceMaxResist":{
+            "value": 1,
+            "scale": 10
+        },
+        "defensiveDisruptionMaxResist":{
+            "value": 1,
+            "scale": 10
+        },
+        "defensiveAllMaxResist":{
+            "value": 1,
+            "scale": 10
         }
     }
     

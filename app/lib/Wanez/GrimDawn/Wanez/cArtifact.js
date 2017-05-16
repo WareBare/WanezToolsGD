@@ -9,7 +9,7 @@
 
 module.exports = class cArtifact extends libWZ.GrimDawn.cData{
     
-    constructor($assetType,$arrAffixes,$tier,$id,$name,$ini){
+    constructor($assetType,$arrAffixes,$tier,$id,$name,$ini,$itemSkill){
         super();
     
         this.aData = new libWZ.GrimDawn.Assets.aGear(false,`${$assetType}`).getData();
@@ -27,6 +27,7 @@ module.exports = class cArtifact extends libWZ.GrimDawn.cData{
         };
         this.iTier = $tier;
         
+        this.iItemSkill = $itemSkill;
         this.AffixID = $id;
         this._petBonus = false;
         this.affixWeight = 100;
@@ -51,20 +52,23 @@ module.exports = class cArtifact extends libWZ.GrimDawn.cData{
             if(typeof tempAffix.field === 'string') tempArr = [tempAffix.field];
             
             for( let $_i in tempArr){
+    
+                aAffixes[tempArr[$_i]] = parseFloat(aAffixes[tempArr[$_i]]) || 0.0;
                 
                 if(tempAffix.isPet){
                     petBonuses = petBonuses || {};
-                    petBonuses[tempArr[$_i]] = Math.ceil(this.mathStatValue(tempArr[$_i],$lvl,1) * tempAffix.mul);
+                    petBonuses[tempArr[$_i]] = parseFloat(petBonuses[tempArr[$_i]]) || 0.0;
+                    petBonuses[tempArr[$_i]] = petBonuses[tempArr[$_i]] + Math.ceil(this.mathStatValue(tempArr[$_i],$lvl,1) * tempAffix.mul);
                 }else if(tempAffix.value){
-                    aAffixes[tempArr[$_i]] = tempAffix.value;
+                    aAffixes[tempArr[$_i]] = aAffixes[tempArr[$_i]] +  + tempAffix.value;
                 }else{
                     if(tempArr[$_i] === `characterBaseAttackSpeed`){
-                        aAffixes[tempArr[$_i]] = (this.mathStatValue(tempArr[$_i],$lvl,1) * tempAffix.mul * -0.1).toFixed(2);
+                        aAffixes[tempArr[$_i]] = (aAffixes[tempArr[$_i]] + (this.mathStatValue(tempArr[$_i],$lvl,1) * tempAffix.mul * -0.1)).toFixed(2);
                         //console.log(aAffixes[tempArr[$_i]]);
                     }else if(tempArr[$_i] === `blockRecoveryTime`){
-                        aAffixes[tempArr[$_i]] = (this.mathStatValue(tempArr[$_i],$lvl,1) * tempAffix.mul).toFixed(2);
+                        aAffixes[tempArr[$_i]] = (aAffixes[tempArr[$_i]] + (this.mathStatValue(tempArr[$_i],$lvl,1) * tempAffix.mul)).toFixed(2);
                     }else{
-                        aAffixes[tempArr[$_i]] = Math.ceil(this.mathStatValue(tempArr[$_i],$lvl,1) * tempAffix.mul);
+                        aAffixes[tempArr[$_i]] = aAffixes[tempArr[$_i]] + Math.ceil(this.mathStatValue(tempArr[$_i],$lvl,1) * tempAffix.mul);
                     }
                 }
                 
@@ -83,6 +87,11 @@ module.exports = class cArtifact extends libWZ.GrimDawn.cData{
             this._petBonus.editDBR(petBonuses);
             
             aAffixes["petBonusName"] = itemFile;
+        }
+        
+        if(this.iItemSkill){
+            aAffixes[`itemSkillName`] = this.iItemSkill[0];
+            aAffixes[`itemSkillLevelEq`] = this.iItemSkill[1];
         }
         
         return aAffixes;

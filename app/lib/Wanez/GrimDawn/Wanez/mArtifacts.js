@@ -32,7 +32,7 @@ module.exports = class mArtifacts extends libWZ.GrimDawn.cModule{
     }
     
     iniArtifacts($data){
-        let tempStats,tempArtifact,tempItem,artifactName,tempBlueprintPath,
+        let tempStats,tempArtifact,tempItem,artifactName,tempBlueprintPath,tempStatsAll,itemSkill,
             aCreationCost = [50000,100000,200000,300000,500000,700000,900000,1000000,1250000,1500000],
             aReagentQuantity = [1,1,3,5,10,25,50,100,150,200];
         // items: Book Pages
@@ -42,6 +42,8 @@ module.exports = class mArtifacts extends libWZ.GrimDawn.cModule{
         for(let $_ID in $data){
             tempArtifact = [];
             tempStats = $data[$_ID].stats;
+            tempStatsAll = [];
+            itemSkill = false;
             // check if stats exists to prevent error
             if(tempStats){
                 // BASE ITEM (PATTERN) \\
@@ -87,14 +89,25 @@ module.exports = class mArtifacts extends libWZ.GrimDawn.cModule{
                 
                 // loop through stats to prepare upgrades \\
                 for(let $_Tier in tempStats){
+                    if(tempStatsAll.length){
+                        tempStatsAll = tempStatsAll.concat(tempStats[$_Tier]);
+                    }else{
+                        tempStatsAll = tempStats[$_Tier];
+                    }
+                    if($data[$_ID].skill){
+                        itemSkill = [$data[$_ID].skill.name,$data[$_ID].skill.level[$_Tier]];
+                    }
+                    
+                    //console.log(tempStatsAll.length);
                     // ITEMS \\
                     tempItem = new libWZ.GrimDawn.Wanez.cArtifact(
                         $data[$_ID].gearAsset,
-                        tempStats[$_Tier],
+                        tempStatsAll, // tempStats[$_Tier]
                         $_Tier,
                         $_ID,
                         $data[$_ID].name,
-                        $data[$_ID].params
+                        $data[$_ID].params,
+                        itemSkill
                     );
                     tempArtifact.push(tempItem);
                     
