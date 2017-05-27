@@ -19,7 +19,7 @@ module.exports = class mSelection extends libWZ.GrimDawn.cModule{
         this.backgroundImage = ``;
         this.tpl = {
             Frame: `{FIELDS}<div id="appGD_Selection" ondragover="_cms.dragAllowDrop(event);">{WINDOW}</div>`,
-            Fields: `X: <input id="coordX" type="number" wzType="Number" onchange="_cms.saveCoords(this,'x');"> Y: <input id="coordY" type="number" onchange="_cms.saveCoords(this,'y');">`
+            Fields: `<form style="text-align: left" onsubmit="return false;"><label>{btnX}</label><label>{btnY}</label><label>{btnOffsetX}</label><label>{btnOffsetY}</label></form>`
         };
         
         this.iniSelection();
@@ -80,12 +80,12 @@ module.exports = class mSelection extends libWZ.GrimDawn.cModule{
     
     setCoords($_button,$aCoords){
         $_button.Button.editDBR({
-            bitmapPositionY: $aCoords[1] || $_button.Button.__getField(`bitmapPositionY`),
-            bitmapPositionX: $aCoords[0] || $_button.Button.__getField(`bitmapPositionX`)
+            bitmapPositionY: ($aCoords[1]) ? `${(parseInt($aCoords[1]) + (appConfig.get(`GrimDawn.Mastery.OffsetY`)  || 0))}` : $_button.Button.__getField(`bitmapPositionY`),
+            bitmapPositionX: ($aCoords[0]) ? `${(parseInt($aCoords[0]) + (appConfig.get(`GrimDawn.Mastery.OffsetX`) || 0))}` : $_button.Button.__getField(`bitmapPositionX`)
         });
         $_button.Text.editDBR({
-            textBoxY: $aCoords[1] || $_button.Text.__getField(`textBoxY`),
-            textBoxX: $aCoords[0] || $_button.Text.__getField(`textBoxX`)
+            textBoxY: ($aCoords[1]) ? `${(parseInt($aCoords[1]) + (appConfig.get(`GrimDawn.Mastery.OffsetY`) || 0))}` : $_button.Text.__getField(`textBoxY`),
+            textBoxX: ($aCoords[0]) ? `${(parseInt($aCoords[0]) + (appConfig.get(`GrimDawn.Mastery.OffsetX`) || 0))}` : $_button.Text.__getField(`textBoxX`)
         });
         
         // textBoxXSize: `275`,
@@ -98,7 +98,12 @@ module.exports = class mSelection extends libWZ.GrimDawn.cModule{
         for(let $_Index in this.aButtons){
             btn_ += this.aButtons[$_Index].Output;
         }
-        fields_ = this.tpl.Fields.wzOut({});
+        fields_ = this.tpl.Fields.wzOut({
+            btnX: `X <input id="coordX" type="number" onchange="_cms.saveCoords(this,'x');">`,
+            btnY: `Y <input id="coordY" type="number" onchange="_cms.saveCoords(this,'y');">`,
+            btnOffsetX: `Offset-X <input id="coordOffsetX" type="number" onchange="_cms.saveOffset(this,'X');" value="${appConfig.get(`GrimDawn.Mastery.OffsetX`) || 0}">`,
+            btnOffsetY: `Offset-Y <input id="coordOffsetY" type="number" onchange="_cms.saveOffset(this,'Y');" value="${appConfig.get(`GrimDawn.Mastery.OffsetY`) || 0}">`
+        });
         
         out_ = this.tpl.Frame.wzOut({
             WINDOW: `${this.backgroundImage}${btn_}`,
@@ -120,8 +125,9 @@ module.exports = class mSelection extends libWZ.GrimDawn.cModule{
         
         for(let $_Index in this.aButtons){
             try{
-                document.getElementById(`selectionButton_${$_Index}`).style.left = `${this.aButtons[$_Index].Button.__getField(`bitmapPositionX`)}px`;
-                document.getElementById(`selectionButton_${$_Index}`).style.top = `${this.aButtons[$_Index].Button.__getField(`bitmapPositionY`)}px`;
+                document.getElementById(`selectionButton_${$_Index}`).style.left = `${parseInt(this.aButtons[$_Index].Button.__getField(`bitmapPositionX`)) - (appConfig.get(`GrimDawn.Mastery.OffsetX`) || 0)}px`;
+                document.getElementById(`selectionButton_${$_Index}`).style.top = `${parseInt(this.aButtons[$_Index].Button.__getField(`bitmapPositionY`)) - (appConfig.get(`GrimDawn.Mastery.OffsetY`) || 0)}px`;
+                console.log(parseInt(this.aButtons[$_Index].Button.__getField(`bitmapPositionY`)) + (appConfig.get(`GrimDawn.Mastery.OffsetY`) || 0));
             }catch(err){
                 console.log(err);
             }

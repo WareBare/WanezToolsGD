@@ -94,7 +94,7 @@ module.exports = {
             if(!this.ignoreTag){
                 Items[`Pet Level ${$_Level}`][`spawnObjects.${$_Level}::description`] = {
                     label: `description (tag)`,
-                    type: `text`
+                    type: `textLarge`
                 };
             }
             
@@ -124,6 +124,7 @@ module.exports = {
             isWnd: this.wndId,
             isModule: this._mSkill,
             _tags: this._tagsSkills,
+            //fieldSetStyle: `width: 575px;`,
             onChange: {
                 //custom: `submitForm(this)`
             },

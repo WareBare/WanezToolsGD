@@ -17,18 +17,13 @@ module.exports = {
     },
     
     err($msg,$title){
-        /*
-        new Notification(`Error`, {
-            body: $msg || `An Error occured`,
-            icon: this.icons.err
-        });
-        */
-        //console.log(`wzNotify.err: ${$msg || `An Error Occurred`}`);
         wzWND({
             Title: $title || `ERROR!`,
             Body: $msg || ``,
             Icon: this.icons.err
         },`notify`).show();
+    
+        log.error(`${$title || `ERROR!`} => ${$msg || ``}`);
     },
     todo($msg){
         console.log(`wzNotify.todo: ${$msg || `An Error Occurred`}`);
@@ -40,6 +35,8 @@ module.exports = {
             Body: $msg || ``,
             Icon: this.icons.warn
         },`notify`).show();
+        
+        log.warn(`${$title || `ERROR!`} => ${$msg || ``}`);
     },
     
     info($msg,$title){
@@ -56,6 +53,8 @@ module.exports = {
             Body: $msg || ``,
             Icon: this.icons.save
         },`notify`).show();
+    
+        log.warn(`${$title || `File Saved!`} => ${$msg || ``}`);
     },
     
 };

@@ -44,6 +44,10 @@ module.exports = {
         this._luaFnCurrent = $luaFn || false;
     },
     
+    saveTagsDGA(){
+        this._tagsDGA.saveData();
+    },
+    
     iniDifficulties: function(){
         
         let aDifficulties_DGA = [`default`,`normal`,`hard`,`elite`],

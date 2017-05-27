@@ -72,6 +72,24 @@ let keyUp = (e) => {
             _cms.removeConnector();
         }
     }
+    if(appConfig.get('cms')[0] === `Mastery` && appConfig.get('cms')[1] === `Setup` && _cms.contentType === `Selection`){
+        if(e.keyCode === 38){
+            _cms.moveButtonWithKey(`Up`);
+            //console.log(`arrow Up`);
+        }else if(e.keyCode === 39){
+    
+            _cms.moveButtonWithKey(`Right`);
+            //console.log(`arrow Right`);
+        }else if(e.keyCode === 40){
+    
+            _cms.moveButtonWithKey(`Down`);
+            //console.log(`arrow Down`);
+        }else if(e.keyCode === 37){
+    
+            _cms.moveButtonWithKey(`Left`);
+            //console.log(`arrow Left`);
+        }
+    }
     
 };
 let keyDown = (e) => {
@@ -82,6 +100,13 @@ let keyDown = (e) => {
         }
     }
 };
+
+
+log.warn(`Program loaded using: v${app.getVersion()}`);
+//log.info('Hello, info');
+//log.error('Hello, error');
+//log.debug('Hello, debug');
+
 
 document.addEventListener('keyup', keyUp, false);
 document.addEventListener('keydown',keyDown,false);

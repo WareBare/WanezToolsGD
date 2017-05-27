@@ -30,6 +30,7 @@ module.exports = class cData extends libWZ.Core.cBase{
             this.aData = {};
             this.noError = false;
             wzNotify.err(`${this.filepath}`,`Unable to load File:`);
+            log.error(`${err}`);
             console.log(err);
         }
     }
@@ -103,6 +104,7 @@ module.exports = class cData extends libWZ.Core.cBase{
                 //console.log(`it exists already`);
             }catch(err){
                 console.log(`create path ${path}`);
+                log.warn(`Created Path => ${path}`);
                 mkpath.sync(path);
             }
             // check if data has been updated, otherwise saving it is pointless

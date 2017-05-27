@@ -17,14 +17,6 @@
             "Items":{
                 "Materia": []
             },
-            "Wanez":{
-                "Entities": [],
-                "Runic Inscriptions":[],
-                "GnT":[],
-                "Artifacts":[],
-                "Misc":[],
-                "Campaign":[]
-            },
             "Docs":{
                 "General":["ReadMe","Changelog"],
                 "Wiki":["Mastery Wizard","Skill Edit - Window"]
@@ -35,6 +27,14 @@
                 "Equipment":[],
                 "Sets":[],
                 "Runes":[]
+            },
+            "Wanez":{
+                "Entities": [],
+                "Runic Inscriptions":[],
+                "GnT":[],
+                "Artifacts":[],
+                "Misc":[],
+                "Campaign":[]
             },
             "Docs":{
                 "Wiki [ip]":["DGA [ip]","Mastery [ip]"]

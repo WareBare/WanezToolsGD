@@ -1,7 +1,7 @@
 {
     "settings":{
         "scale": [
-            [1.0, 3.0,6.0,9.0,12.0,16.0, 20.0,24.0,28,33.0,38.0 ],
+            [1.0, 2.0,3.0,5.0,7.0,9.0, 12.0,15.0,18,21.0,25.0 ],
             
             [1.0, 3.06,5.0,8.37,9.18,10.1, 11.47,12.7,14.0,15.3,16.7 ],
             [1.0, 3.61,5.94,10.1,11.05,12.0, 14.03,15.34,16.6,18.0 ],
@@ -197,59 +197,67 @@
         },
     
         "defensivePhysical": {
-            "value": 10,
+            "value": 15,
             "scale": 5
         },
         "defensiveElementalResistance": {
-            "value": 5,
+            "value": 7,
             "scale": 5
         },
         "defensiveFire": {
-            "value": 10,
+            "value": 15,
             "scale": 5
         },
         "defensiveCold": {
-            "value": 10,
+            "value": 15,
             "scale": 5
         },
         "defensiveLightning": {
-            "value": 10,
+            "value": 15,
             "scale": 5
         },
         "defensivePierce": {
-            "value": 10,
+            "value": 15,
             "scale": 5
         },
         "defensivePoison": {
-            "value": 10,
+            "value": 15,
             "scale": 5
         },
         "defensiveAether": {
-            "value": 10,
+            "value": 15,
             "scale": 5
         },
         "defensiveLife": {
-            "value": 10,
+            "value": 15,
             "scale": 5
         },
         "defensiveChaos": {
-            "value": 10,
+            "value": 15,
             "scale": 5
         },
         "defensiveBleeding": {
-            "value": 10,
+            "value": 15,
             "scale": 5
         },
         "defensiveStun": {
-            "value": 10,
+            "value": 15,
             "scale": 5
         },
         "defensiveFreeze": {
-            "value": 10,
+            "value": 15,
+            "scale": 5
+        },
+        "defensivePetrify": {
+            "value": 15,
+            "scale": 5
+        },
+        "defensiveTotalSpeedResistance": {
+            "value": 15,
             "scale": 5
         },
         "defensiveDisruption": {
-            "value": 10,
+            "value": 15,
             "scale": 5
         },
         
@@ -535,6 +543,11 @@
         "offensiveAetherMax":{
             "value": 100,
             "scale": 15
+        },
+    
+        "offensivePierceModifier":{
+            "value": 40,
+            "scale": 7
         },
         
         "offensiveColdModifier":{

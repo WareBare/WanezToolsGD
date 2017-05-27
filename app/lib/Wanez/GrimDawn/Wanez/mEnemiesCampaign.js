@@ -43,14 +43,22 @@ module.exports = class mEnemiesCampaign extends libWZ.GrimDawn.cModule{
             if($_FileName.endsWith(`.dbr`) && !$_FileName.startsWith(`trap_`)){
                 tempClass = new libWZ.GrimDawn.cData(aFiles[$_FileName]);
                 tempClass.changeFilePath(aFiles[$_FileName].replace(this.fn.getPaths().Core,this.fn.getPaths().Mod));
-                tempClass.__setField(`onDie`,`wanez.gd.onDie${tempClass.__getField(`monsterClassification`)}`);
-
+                if(!tempClass.__getField(`onDie`) || tempClass.__getField(`onDie`) === ``) {
+                    tempClass.__setField(`onDie`,`wanez.gd.onDie${tempClass.__getField(`monsterClassification`)}`);
+                }else{
+                    tempClass.__setField(`onDie`,tempClass.__getField(`onDie`));
+                }
+                
                 this.aEnemies.push( tempClass );
             }else if(!$_FileName.endsWith(`.dbr`) && !ignoreFolders[$_FileName]){
                 for(let $_subFileName in aFiles[$_FileName]){
                     tempClass = new libWZ.GrimDawn.cData(aFiles[$_FileName][$_subFileName]);
                     tempClass.changeFilePath(aFiles[$_FileName][$_subFileName].replace(this.fn.getPaths().Core,this.fn.getPaths().Mod));
-                    tempClass.__setField(`onDie`,`wanez.gd.onDie${tempClass.__getField(`monsterClassification`)}`);
+                    if(!tempClass.__getField(`onDie`) || tempClass.__getField(`onDie`) === ``) {
+                        tempClass.__setField(`onDie`,`wanez.gd.onDie${tempClass.__getField(`monsterClassification`)}`);
+                    }else{
+                        tempClass.__setField(`onDie`,tempClass.__getField(`onDie`));
+                    }
     
                     this.aEnemies.push( tempClass );
                 }

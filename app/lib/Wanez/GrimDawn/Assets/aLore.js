@@ -15,7 +15,7 @@ module.exports = class aLore extends libWZ.GrimDawn.Assets.cAsset{
         this.opt = {
             noteBitmap: `items/misc/parchment01.tex`,
             noteWidth: `450`,
-            experienceBonus: `10000`,
+            experienceBonus: `5000`,
             itemClassification: `Common`,
             dropSound: `records/sounds/items/spak_itemdropgeneric.dbr`,
             dropSound3D: `records/sounds/items/spak_itemdropgeneric.dbr`,

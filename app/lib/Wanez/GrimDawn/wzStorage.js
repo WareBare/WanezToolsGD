@@ -29,11 +29,39 @@ module.exports = {
     objStorage: {},
     
     addClass($relFilePath,$parser){
-        this.objStorage[$relFilePath] = {
-            time: new Date().getTime(),
-            parser: ($parser) ? $parser : false,
-            class: ($relFilePath) ? new libWZ.GrimDawn.cData(`/${$relFilePath}`,$parser) : false
-        };
+        let isFile = true;
+        
+        try{
+            //console.log()
+            fs.accessSync(`${libWZ.GrimDawn.tFn.getPaths().Mod}/${$relFilePath}`); // check if file exists
+        }catch(err1){
+            try{
+                fs.accessSync(`${libWZ.GrimDawn.tFn.getPaths().Core}/${$relFilePath}`); // check if file exists
+            }catch(err2){
+                try{
+                    fs.accessSync(`${libWZ.GrimDawn.tFn.getPaths().Source}/${$relFilePath}`); // check if file exists
+                }catch(err3){
+                    isFile = false;
+                    log.error(`${err1}`);
+                    log.error(`${err2}`);
+                    log.error(`${err3}`);
+                }
+                
+            }
+        }
+        if(isFile){
+            this.objStorage[$relFilePath] = {
+                time: new Date().getTime(),
+                parser: ($parser) ? $parser : false,
+                class: ($relFilePath) ? new libWZ.GrimDawn.cData(`/${$relFilePath}`,$parser) : false
+            };
+        }else{
+            this.objStorage[$relFilePath] = {
+                time: new Date().getTime(),
+                parser: ($parser) ? $parser : false,
+                class: ($relFilePath) ? false : false
+            };
+        }
         
         return this.objStorage[$relFilePath];
     },

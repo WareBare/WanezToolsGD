@@ -178,7 +178,7 @@ module.exports = {
             tplObj.replace.INDEX = [ [parseInt($_Index), aInscriptions[$_Index].Title.replace(`${runeData.Inscriptions.Settings.Title}: `,``)] ];
             
             // TITLE \\
-            tplObj.replace.TYPE = [ [tempCounter, `Inscription - ^g${aInscriptions[$_Index].Title.replace(`${runeData.Inscriptions.Settings.Title}: `,``)}`, aInscriptions[$_Index].Text || `No Entry`] ];
+            tplObj.replace.TYPE = [ [tempCounter, `Inscription - ^g${aInscriptions[$_Index].Title.replace(`${runeData.Inscriptions.Settings.Title}`,``).replace(`: `,``)}`, aInscriptions[$_Index].Text || `No Entry`] ];
             tempCounter++;
             aLore.push(JSON.parse(JSON.stringify(tplObj)));
             

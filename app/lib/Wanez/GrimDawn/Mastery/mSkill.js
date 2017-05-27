@@ -185,6 +185,7 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
         let skill = $dbr,temp,tempClass,
             buffTemplates = {
                 'database/templates/skill_buffradiustoggled.tpl': true,
+                'database/templates/skill_buffradius.tpl': true,
                 'database/templates/skill_attackbuffradius.tpl': true,
                 'database/templates/skillsecondary_buffradius.tpl': true,
                 'database/templates/skillsecondary_petmodifier.tpl': true
@@ -242,14 +243,29 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
                         fs.accessSync(`${this.fn.getPaths().Mod}/${tempSpawnObjects[$_Index]}`); // check if file exists
                         //this.aSkills.spawnObjects[tempLvL] = new libWZ.GrimDawn.cData(`${this.fn.getPaths().Mod}/${tempSpawnObjects[$_Index]}`);
                     }catch (err){
+                        /*
                         console.log(`create file`);
                         let prevIndex = $_Index - 1;
                         this.aSkills.spawnObjects[tempLvL] = new libWZ.GrimDawn.cData(`${this.fn.getPaths().Mod}/${tempSpawnObjects[prevIndex]}`);
                         this.aSkills.spawnObjects[tempLvL].changeFilePath(`${this.fn.getPaths().Mod}/${tempSpawnObjects[$_Index]}`);
                         //this.aSkills.spawnObjects[tempLvL].editDBR({},true);
                         this.aSkills.spawnObjects[tempLvL].saveData(false,true);
+                        */
+                        let prevIndex = 0;
+                        this.aSkills.spawnObjects[tempLvL] = new libWZ.GrimDawn.cData(`${this.fn.getPaths().Mod}/${tempSpawnObjects[prevIndex]}`);
+                        this.aSkills.spawnObjects[tempLvL].changeFilePath(`${this.fn.getPaths().Mod}/${tempSpawnObjects[$_Index]}`);
+                        let tempObject = this.aSkills.spawnObjects[tempLvL];
+                        
+                        for(let i=1; i<= 17; i++){
+                            if(tempObject.__getField(`skillLevel${i}`) === `1`){
+                                tempObject.__setField(`skillLevel${i}`,parseInt($_Index) + 1);
+                            }
+                        }
+                        //this.aSkills.spawnObjects[tempLvL].editDBR({},true);
+                        this.aSkills.spawnObjects[tempLvL].saveData(false,true);
                     }
-                    this.aSkills.spawnObjects[tempLvL] = wzStorageGD.load(tempSpawnObjects[$_Index]);
+                    //wzStorageGD.load(tempSpawnObjects[$_Index]);
+                    this.aSkills.spawnObjects[tempLvL] = tempSpawnObjects[$_Index];
                 }
                 //console.log(this.aSkills.spawnObjects);
             }

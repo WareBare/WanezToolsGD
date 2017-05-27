@@ -1,5 +1,25 @@
 # Changelog #
 
+## v0.2.2 ##
+### Mastery Tools ###
+#### Mastery Selection ####
+* Arrow keys can be used to move buttons.
+* Added offset Fields.
+  * this will add the number in the field for the final calculation to show in game
+  * adding an offset will move the buttons inside the tool accordingly (if you are loading your current selection and it is not the same in the tool you can change the offset fields to make them fit without changing your in game set up, any changes inside the tool will use the offset to adjust the differences)
+
+#### Skill Edit ####
+* Pet files will now be created when you open "Pet Properties", click on it again to refresh the content.
+  * this function will create all files up to ultimate level if they do not exist and adjust skill level 1 to the pet level (if you want a skill to remain at lvl 1 you have to change it back to 1)
+
+### General ###
+#### Log ####
+* added a log, you can find at "%USERPROFILE%\AppData\Roaming\<app name>\log.log"
+
+#### Bug Fixes ####
+* Fixed various issues with `buff/pet files`.
+* Various issues with data handling have been fixed.
+
 ## v0.2.1 ##
 ### Mastery Tools ###
 #### Skill Edit ####

@@ -156,6 +156,11 @@ module.exports = {
         });
     },
     
+    saveOffset: function($el, $type){
+        appConfig.set(`GrimDawn.Mastery.Offset${$type}`,parseInt($el.value));
+        appConfig.set(`GrimDawn.Mastery.Offset${$type}`,parseInt($el.value));
+        wzCMS(appConfig.get('cms'));
+    },
     saveCoords: function($el,$type){
         $type = $type || false;
     
@@ -167,6 +172,35 @@ module.exports = {
             this._mSelection.setCoords(this.currentButton,[false,$el.value]);
         }
     },
+    moveButtonWithKey($direction){
+        let fieldX = document.getElementById(`coordX`),
+            fieldY = document.getElementById(`coordY`),
+            newX = fieldX.value,newY = fieldY.value;
+        
+        switch($direction){
+            case `Up`:
+                newY = parseInt(fieldY.value) - 1;
+                break;
+            case `Right`:
+                newX = parseInt(fieldX.value) + 1;
+                break;
+            case `Down`:
+                newY = parseInt(fieldY.value) + 1;
+                break;
+            case `Left`:
+                newX = parseInt(fieldX.value) - 1;
+                break;
+            default:
+                console.log(`move button switch-case: default`);
+                break;
+        }
+        fieldX.value = parseInt(newX);
+        fieldY.value = parseInt(newY);
+        this.currentElement.style.left = `${newX}px`;
+        this.currentElement.style.top = `${newY}px`;
+        this._mSelection.setCoords(this.currentButton,[newX,newY]);
+    },
+    
     moveButtonTo: function($el){
         if(!this.moveTo){
             this.moveTo = {

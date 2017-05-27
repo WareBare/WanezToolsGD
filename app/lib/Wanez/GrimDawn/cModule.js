@@ -20,21 +20,23 @@ class cModule extends libWZ.GrimDawn.cBase{
     
     performSaveAction($data,$dataMisc,$alwaysSave = false){
         $data = (typeof $data === `string`) ? wzStorageGD.__get($data) : $data;
-        try{
-            // saveItem() if it is an item, otherwise just saveDataGD()
-            // saveItem() checks if there has been changes, and only saves the file if that's the case to prevent stat re-rolling with every update
-            $data.saveItem($dataMisc);
-        }catch(err){
-            //$data.saveDataGD($dataMisc,true);
+        if($data){
             try{
-                $data.saveDBR($dataMisc,$alwaysSave);
-                //console.log(`go save`);
-            }catch(err2){
+                // saveItem() if it is an item, otherwise just saveDataGD()
+                // saveItem() checks if there has been changes, and only saves the file if that's the case to prevent stat re-rolling with every update
+                $data.saveItem($dataMisc);
+            }catch(err){
+                //$data.saveDataGD($dataMisc,true);
                 try{
-                    $data.saveModuleData($dataMisc,$alwaysSave);
-                    //console.log(`Module saved inside a Module`);
-                }catch(err3){
-                    //console.log(`Error while saving Module`);
+                    $data.saveDBR($dataMisc,$alwaysSave);
+                    //console.log(`go save`);
+                }catch(err2){
+                    try{
+                        $data.saveModuleData($dataMisc,$alwaysSave);
+                        //console.log(`Module saved inside a Module`);
+                    }catch(err3){
+                        //console.log(`Error while saving Module`);
+                    }
                 }
             }
         }
@@ -67,18 +69,20 @@ class cModule extends libWZ.GrimDawn.cBase{
             }
             
         }
+        //wzNotify.save(`Module Data was saved.`);
     }
     
     saveModuleData($dataMisc,$alwaysSave = false){
         $dataMisc = $dataMisc || false;
         this.saveModule($dataMisc,$alwaysSave);
         //console.log(`save`);
+        wzNotify.save(`Module Data was saved.`);
     }
     
     saveModuleClasses($dataMisc,$alwaysSave = false){
         //this.aModuleClasses
         
-        this.saveModuleData();
+        this.saveModuleData($dataMisc,$alwaysSave);
     }
     
 }

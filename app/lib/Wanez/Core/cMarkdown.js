@@ -41,6 +41,7 @@ module.exports = class cMarkdown extends libWZ.Core.cBase{
         
         for(let $_Index in aData){
             if(this.bbcode !== ``) this.bbcode += `\n`;
+            if(this.html !== `` && newList) this.html += `<br />`;
             out = aData[$_Index];
             tempHTML = ``;
             tempBBCode = ``;

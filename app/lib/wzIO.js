@@ -17,6 +17,7 @@ module.exports = {
         fs.writeFile($filepath, $content, function(err) {
             if(err) {
                 console.warn(err);
+                log.error(`${err}`);
             } else {
                 wzNotify.save(`${$filepath.replace($removeFromPath,``)}`);
                 console.info(`File Saved: ${$filepath.replace($removeFromPath,``)}`);

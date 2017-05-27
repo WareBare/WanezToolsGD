@@ -93,6 +93,7 @@ module.exports = class cArtifact extends libWZ.GrimDawn.cData{
             aAffixes[`itemSkillName`] = this.iItemSkill[0];
             aAffixes[`itemSkillLevelEq`] = this.iItemSkill[1];
         }
+        aAffixes.itemClassification = `Legendary`;
         
         return aAffixes;
     }
