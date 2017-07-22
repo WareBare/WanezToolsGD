@@ -59,6 +59,35 @@ module.exports = class mMateria extends libWZ.GrimDawn.cModule{
         return list;
     }
     
+    removePartials(){
+        let tempClass, tempData, relicLength, isUpdated = false;
+        
+        for(let $_ID in this.aMateria){
+            isUpdated = false;
+            tempClass = wzStorageGD.__get(`${this.aMateria[$_ID]}`);
+            tempData = tempClass.getData();
+            relicLength = parseInt(tempData.completedRelicLevel);
+            //console.log(tempClass.getData());
+            // only check if completedRelicLevel is actually higher than 1 (otherwise it doesn't have partials to remove)
+            if(relicLength > 1){
+                for(let $_Field in tempData){
+                    // check if data is array and has the length of the relic
+                    if(Array.isArray(tempData[$_Field]) && tempData[$_Field].length >= relicLength){
+                        //console.log($_Field);
+                        //console.log(tempData[$_Field][relicLength - 1]);
+                        tempClass.__setField($_Field,tempData[$_Field][relicLength - 1]);
+                        isUpdated = true;
+                        //console.log(tempData[$_Field]);
+                    }
+                }
+                if(isUpdated){
+                    tempClass.saveDBR();
+                }
+            }
+        }
+        
+    }
+    
     getProperties(){
         let objProperties = {},tempClass,tempFields,tempFieldValue,fieldsTPL = wzTemplates.__getGroupFields(`database/templates/itemrelic.tpl`,[`Offensive Parameters`,`Defensive Parameters`,`Retaliation Parameters`,`Character Parameters`,`Skill Parameters`,`Conversion Parameters`,`Skill Augment`,`Skill Modifiers`,`Pet Bonus`,`Relic Qualifiers`]);
     

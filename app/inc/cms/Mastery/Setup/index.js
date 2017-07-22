@@ -301,6 +301,65 @@ module.exports = {
         return out_;
     },
     
+    setMasteryEnum(){
+        // fetch skilltree (malepc01.dbr)
+        let PC = wzStorageGD.__get(`records/creatures/pc/malepc01.dbr`),
+            file,_file,opt,classTraining,
+            aFiles = [];
+        
+        // loop through each skilltree entry, if entry is set go to the path set
+        for(let i = 1; i<=30; i++){
+            //aEnums[i] = PC.__getField(`skillTree${i}`) || false;
+            if(file = PC.__getField(`skillTree${i}`)){
+                try{
+                    // check if file exists,
+                    fs.accessSync(`${WZ.GrimDawn.tFn.getPaths().Mod}/${file}`);
+                    classTraining = wzStorageGD.__get(`${file}`);
+                    file = classTraining.__getField(`skillName1`);
+                    fs.accessSync(`${WZ.GrimDawn.tFn.getPaths().Mod}/${file}`);
+                    // if file exists update field MasteryEnumeration to SkillClassXX
+                    _file = wzStorageGD.__get(`${file}`);
+                    _file.editDBR({
+                        MasteryEnumeration: `SkillClass${i}`
+                    });
+                    aFiles.push(_file);
+                }catch(err){
+                    // [if not delete entry]
+                }
+            }
+            
+        }
+        
+        
+        for(let $_Enum in aFiles){
+            aFiles[$_Enum].saveDBR();
+        }
+        
+        // show success msg
+    },
+    
+    content_Enumeration(){
+        let out_;
+        
+        // content \\
+        out_ = ``;
+        
+        // list/grid to edit enum (skilltree entry order) \\
+        // needs skilltree (malepc01.dbr/femalepc01.dbr)
+        // needs ui/skills/skills_mastertable
+        // needs ui/skills/classselection/skills_classselectiontable.dbr
+        
+        // button for enum update
+        out_ += appData.tpl.Buttons.Default.wzParseTPL([
+            {
+                "ONCLICK": "_cms.setMasteryEnum();",
+                "TEXT": "Set Enum"
+            }
+        ]);
+        
+        return out_;
+    },
+    
     content_: function($contentType){
         this.contentType = $contentType || this.contentType;
         
@@ -311,6 +370,8 @@ module.exports = {
                 out_ = this.content_Config();
             }else if(this.contentType === `Selection`){
                 out_ = this.content_Selection();
+            }else if(this.contentType === `Enumeration`){
+                out_ = this.content_Enumeration();
             }
         }
         
@@ -340,12 +401,17 @@ module.exports = {
             {
                 "ONCLICK": "wzWND('masteryWizard').refresh();",
                 "TEXT": "New Mastery"
+            },
+            {
+                "ONCLICK": "_cms.setMasteryEnum();",
+                "TEXT": "Set Enum"
             }
         ];
     },
     sidebarList_: function(){
         return {
             'Config':[],
+            //'Enumeration': [],
             'Selection': []
         }
     }

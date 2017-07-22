@@ -62,6 +62,7 @@ module.exports = class mSelection extends libWZ.GrimDawn.cModule{
                     //console.log(this.aButtons[$_Index].Output);
                 }catch(err){
                     console.log(err);
+                    log.error(`${err}`);
                 }
             }
             
@@ -127,9 +128,10 @@ module.exports = class mSelection extends libWZ.GrimDawn.cModule{
             try{
                 document.getElementById(`selectionButton_${$_Index}`).style.left = `${parseInt(this.aButtons[$_Index].Button.__getField(`bitmapPositionX`)) - (appConfig.get(`GrimDawn.Mastery.OffsetX`) || 0)}px`;
                 document.getElementById(`selectionButton_${$_Index}`).style.top = `${parseInt(this.aButtons[$_Index].Button.__getField(`bitmapPositionY`)) - (appConfig.get(`GrimDawn.Mastery.OffsetY`) || 0)}px`;
-                console.log(parseInt(this.aButtons[$_Index].Button.__getField(`bitmapPositionY`)) + (appConfig.get(`GrimDawn.Mastery.OffsetY`) || 0));
+                //console.log(parseInt(this.aButtons[$_Index].Button.__getField(`bitmapPositionY`)) + (appConfig.get(`GrimDawn.Mastery.OffsetY`) || 0));
             }catch(err){
                 console.log(err);
+                log.error(`${err}`);
             }
         }
     }

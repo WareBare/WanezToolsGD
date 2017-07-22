@@ -45,6 +45,9 @@ module.exports = {
                     log.error(`${err1}`);
                     log.error(`${err2}`);
                     log.error(`${err3}`);
+                    console.log(`${err1}`);
+                    console.log(`${err2}`);
+                    console.log(`${err3}`);
                 }
                 
             }

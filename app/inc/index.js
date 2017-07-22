@@ -9,6 +9,8 @@
  *
  */
 
+log.warn(`Program loaded using: v${app.getVersion()}`);
+
 appConfig = new eConfig({name: `settings-app`});
 
 //clipboard.writeText('Example String', 'selection');
@@ -102,7 +104,6 @@ let keyDown = (e) => {
 };
 
 
-log.warn(`Program loaded using: v${app.getVersion()}`);
 //log.info('Hello, info');
 //log.error('Hello, error');
 //log.debug('Hello, debug');

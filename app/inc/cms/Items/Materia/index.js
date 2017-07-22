@@ -14,6 +14,9 @@ module.exports = {
     formOnChange: function($el){
         //this.forms.main_form.onChange($el);
     },
+    removePartials: function(){
+        this.Base._mMateria.removePartials();
+    },
     
     content_Edit: function(){
         let out_,aMagic_BTNs = [],aRare_BTNs = [],aOther_BTNs = [],list = this.Base._mMateria.getList(),
@@ -70,7 +73,10 @@ module.exports = {
     },
     
     sidebarBtns_: function(){
-        return [];
+        return [{
+            "ONCLICK": "_cms.removePartials();",
+            "TEXT": "Remove Partials"
+        }];
     },
     sidebarList_: function(){
         return {

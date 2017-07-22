@@ -1,5 +1,16 @@
 # Changelog #
 
+## v0.2.3 ##
+### Mastery Tools ###
+#### Selection (Merging) ####
+* a new button "Set Enum" checks file references inside the malepc01.dbr to get to the skilltree and skilltraining files, changing the field MasteryEnumeration (in skilltraining.dbr) to the Enum of the skillTree entry.
+
+### Materia ###
+* you can now remove partial components with the use of a button
+  * this will remove all partials and use the value at the position the completed component would use (most of the time the last value in the array)
+  * components inside the Materia folder are being parsed (modded components first than vanilla if there is no modded component for it)
+  * all components are listed inside the content panel, if it is empty there is an error with your paths
+
 ## v0.2.2 ##
 ### Mastery Tools ###
 #### Mastery Selection ####
