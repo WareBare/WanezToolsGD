@@ -321,6 +321,9 @@ module.exports = class cFrom extends libWZ.Core.cBase{
             }
             
         }else{
+            if (wzType.includes(`Check`)) {
+                newValue = ($el.checked); //  ? true : false
+            }
             this.formConfig[saveLoc[0]].set(saveLoc[1],newValue);
             // let user know data was saved
             wzNotify.save($el.parentNode.firstChild.innerHTML,`Saved`);

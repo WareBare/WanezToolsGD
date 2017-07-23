@@ -16,8 +16,9 @@ module.exports = {
     forms: {},
     
     content_: function(){
-        let out_,
+        let out_ = ``,
             objItems = {},
+            tagSlots = {},
             aIgnoreQualifier = {bracelet: true},
             objGroups = {
                 amulet: `Accessory`,
@@ -56,6 +57,14 @@ module.exports = {
                     label: $_Index,
                     type: `checkBox`
                 };
+                if(this._tagsMateria){
+                    if(this._mMateria.getMateriaById(this.currentMateria).__getField($_Index) === `1`){
+                        //console.log(`${$_Index}`);
+                        //tagSlots.push($_Index);
+                        tagSlots[$_Index] = true;
+                    }
+                }
+                
             }
         
         }
@@ -71,7 +80,28 @@ module.exports = {
             items: objItems
         });
     
-        out_ = this.forms.main_form.create();
+        
+        if(this._tagsMateria){
+            //console.log(tagSlots);
+            //console.log(this._mMateria.genSlotTags(tagSlots));
+            let itemText = this._tagsMateria.__getField(this._mMateria.getMateriaById(this.currentMateria).__getField("itemText"));
+            let itemText2 = itemText.split(`^w^n`);
+            //console.log(itemText.replace(itemText2[1],`(${this._mMateria.genSlotTags(tagSlots)})`));
+            //itemText[1] = `(${this._mMateria.genSlotTags(tagSlots)})`;
+            if(itemText2[1]){
+                if(itemText2[1] !== `(${this._mMateria.genSlotTags(tagSlots)})` && !appConfig.get(`GrimDawn.Items.allowTagChangeQualifier`)){
+                    this._tagsMateria.__setField(this._mMateria.getMateriaById(this.currentMateria).__getField("itemText"), itemText.replace(itemText2[1],`(${this._mMateria.genSlotTags(tagSlots)})`));
+                    this._tagsMateria.saveData();
+                }
+                
+                out_ += `${(appConfig.get(`GrimDawn.Items.allowTagChangeQualifier`)) ? `<span style="color: darkred;">Tags will not be updated with:</span> ` : `<span style="color: darkgreen;">Tags have been updated:</span> ` }${this._mMateria.genSlotTags(tagSlots)}<br />`;
+            }
+            
+        }else{
+            out_ += `When you add the file for Materia Tags in the <span style="color: lightblue;cursor: pointer;" onclick="wzWND('Settings').refresh();">Settings (Grim Dawn)</span> changing a Qualifier will update the tag for you, however this requires the vanilla formating [{TEXT}^w^n{Qualifier}] - without ^w^n the tool won't know where to change the text and may cause weird behavior. Remember to refresh this window when you do (just click on Qualifier on the left).<br />`;
+        }
+        
+        out_ += this.forms.main_form.create();
         
         return out_;
     }

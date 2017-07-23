@@ -64,6 +64,18 @@ module.exports = {
                         data: wzIO.dir_get_contentsSync(`${WZ.GrimDawn.tFn.getPaths().Source}/text_en`,true) || [],
                         dataUseValue: true
                     }
+                },
+                'Materia': {
+                    'settings-app::GrimDawn.Items.TagsMateria': {
+                        label: `Tags - Materia`,
+                        type: `listBox`,
+                        data: wzIO.dir_get_contentsSync(`${WZ.GrimDawn.tFn.getPaths().Source}/text_en`,true) || [],
+                        dataUseValue: true
+                    },
+                    'settings-app::GrimDawn.Items.allowTagChangeQualifier': {
+                        label: `Should prevent Tag changes for Qualifiers (check if you want to disable that feature and change tags for qualifiers per Hand)`,
+                        type: `checkBox`
+                    }
                 }
             }
         });

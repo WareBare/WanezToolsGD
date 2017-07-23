@@ -1,5 +1,18 @@
 # Changelog #
 
+## v0.2.4 ##
+### Materia ###
+#### Tags ####
+* when changing a qualifier the tool will automatically adjust the tags.
+  * this also supports tags such as "Used in all weapons".
+  * this feature requires a new entry in Settings (Grim Dawn), simply add the tag file at the bottom.
+  * you can also disable this feature by checking the CheckBox below the List.
+  * if an entry does not exist in the tag file the tool won't create it (for Qualifier changes).
+* and of course you can change tags per hand.
+
+#### Bugfixes ####
+* fixed a bug with partial removal that would change the values but not the number of pieces
+
 ## v0.2.3 ##
 ### Mastery Tools ###
 #### Selection (Merging) ####

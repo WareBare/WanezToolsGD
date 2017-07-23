@@ -16,6 +16,46 @@ module.exports = class mMateria extends libWZ.GrimDawn.cModule{
         //this.objProperties = {};
     
         if($path) this.iniMateria($path);
+    
+    
+        this.aSlotTagsCombo = {
+            "all weapons": [`axe`,`mace`,`sword`,`dagger`,`scepter`,`ranged1h`,`ranged2h`,`axe2h`,`mace2h`,`sword2h`],
+            "melee weapons": [`axe`,`mace`,`sword`,`dagger`,`axe2h`,`mace2h`,`sword2h`],
+            "one-handed melee weapons": [`axe`,`mace`,`sword`,`dagger`],
+            "two-handed melee weapons": [`ranged2h`,`axe2h`,`mace2h`,`sword2h`],
+            "ranged weapons": [`ranged1h`,`ranged2h`],
+            "axes": [`axe`,`axe2h`],
+            "maces": [`mace`,`mace2h`],
+            "swords": [`sword`,`sword2h`],
+            "caster weapons": [`staff`,`scepter`],
+            "all armor": [`head`,`shoulders`,`hands`,`chest`,`waist`,`legs`,`feet`]
+        };
+        this.aSlotTags = {
+            'amulet': `amulets`,
+            'ring': `rings`,
+            'medal': `medals`,
+            'head': `head armor`,
+            'shoulders': `shoulder armor`,
+            'hands': `hand armor`,
+            'chest': `chest armor`,
+            'waist': `waist`,
+            'legs': `leg armor`,
+            'feet': `boots`,
+            'shield': `shields`,
+            'offhand': `caster off-hands`,
+            'spear': `spears`,
+            'staff': `staves`,
+            'axe': `one-handed axes`,
+            'mace': `one-handed maces`,
+            'sword': `one-handed swords`,
+            'dagger': `daggers`,
+            'scepter': `scepters`,
+            'ranged1h': `one-handed guns`,
+            'ranged2h': `two-handed guns`,
+            'axe2h': `two-handed axes`,
+            'mace2h': `two-handed maces`,
+            'sword2h': `two-handed swords`
+        };
         
         //console.log(wzStorageGD.getClass(this.aMateria[0]));
     }
@@ -81,6 +121,7 @@ module.exports = class mMateria extends libWZ.GrimDawn.cModule{
                     }
                 }
                 if(isUpdated){
+                    tempClass.__setField("completedRelicLevel","1");
                     tempClass.saveDBR();
                 }
             }
@@ -111,6 +152,61 @@ module.exports = class mMateria extends libWZ.GrimDawn.cModule{
         }
     
         return objProperties;
+    }
+    
+    genSlotTags($baseStats){
+        let tags_ = ``,aSlots = {},objRep,tempSlots,isChoice = true;
+        
+        for(let $_Index in this.aSlotTags){
+            if( $baseStats[$_Index] ){
+                aSlots[$_Index] = this.aSlotTags[$_Index];
+            }
+        }
+        
+        // check for slot groups
+        for(let $_Tag in this.aSlotTagsCombo){
+            tempSlots = this.aSlotTagsCombo[$_Tag];
+            isChoice = true;
+            for(let $_Index in tempSlots){
+                if(!aSlots[tempSlots[$_Index]]){
+                    isChoice = false;
+                }
+            }
+            if(isChoice){
+                for(let $_Index in tempSlots){
+                    delete aSlots[tempSlots[$_Index]];
+                }
+                if(tags_ !== '') {
+                    if(aSlots.length > 1){
+                        tags_ += `, `;
+                    }else{
+                        tags_ += ` and `;
+                    }
+                    
+                }else{
+                    tags_ += `Used in `;
+                }
+                tags_ += `${$_Tag}`;
+            }
+        }
+        // add remaining slots
+        for(let $_Slot in aSlots){
+            if(tags_ !== '') {
+                if($_Slot === Object.keys(aSlots)[Object.keys(aSlots).length - 1] ){
+                    tags_ += ` and `;
+                }else{
+                    tags_ += `, `;
+                }
+                
+            }else{
+                tags_ += `Used in `;
+            }
+            tags_ += `${aSlots[$_Slot]}`;
+        }
+        
+        //console.log(tags_);
+        
+        return tags_;
     }
     
     getMateriaById($id){

@@ -20,16 +20,19 @@ module.exports = {
     skillConfig: new eConfig({name: `gd-skills`}),
     
     _mMateria: false,
+    _tagsMateria: false,
     
     nav_: function(){
         this._mMateria = _cms.Base._mMateria;
         this.currentMateria = _cms.Base.currentMateria;
+        this._tagsMateria = _cms.Base._tagsMateria;
         
         //this._tagsSkills = wzStorageGD.__get(`text_en/${appConfig.get(`GrimDawn.Mastery.TagsSkills`)}`,`Tags`);
         
         return [
             `Qualifiers`,
-            `Properties`
+            `Properties`,
+            `Tags`
         ];
     }
     

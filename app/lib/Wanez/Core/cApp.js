@@ -82,7 +82,7 @@ class cApp extends libWZ.Core.cBase{
         out_ += this.appData.tpl_app.Footer.tpl.body.wzOut({
             VERSION: app.getVersion(),
             COPYRIGHT: this.appData.app.Copyright,
-            CONTACT: `Email: ${this.appData.app.Email} | Discord: ${this.appData.app.Discord}`
+            CONTACT: `Email: ${this.appData.app.Email} ${(this.appData.app.Discord) ? `| Discord: ${this.appData.app.Discord}` : ``} ${(this.appData.app.Info) ? `| Info: ${this.appData.app.Info}` : ``}`
         });
         
         return {

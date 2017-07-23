@@ -11,6 +11,7 @@ module.exports = {
     tplContent: {},
     
     _mMateria: false,
+    _tagsMateria: false,
     
     iniMateria: function(){
         this._mMateria = new WZ.GrimDawn.Items.mMateria(`records/items/materia`);
@@ -20,6 +21,17 @@ module.exports = {
         this.currentMateria = $materia;
         
         wzWND('materiaEdit').refresh();
+    },
+    
+    loadTags(){
+    
+        if(appConfig.get(`GrimDawn.Items.TagsMateria`)){
+            this._tagsMateria = wzStorageGD.__get(`text_en/${appConfig.get(`GrimDawn.Items.TagsMateria`)}`,`Tags`);
+        }
+        
+    },
+    ini(){
+        this.loadTags();
     },
     
     content_: function(){
