@@ -76,6 +76,7 @@ The first thing you should do is go into **Settings** by using the button on the
 | **Install Directory** | where Grim Dawn is installed |
 | **Mods** | the name of the mod (the folder), separated by a new line. An Example is in the picture with multiple mods. **Not Required For Merger Tools** |
 | **Active Mod** | pick the mod you are currently working on. **Not Required For Merger Tools** |
+
 *Mods/Active Mod: may not be required, but if you intend to add <a href="#2.1.2">Mastery Combination Tags with this Program</a> you need to fill out these fields and the Mastery fields after Merging*
 
 <a name="1.1.1.1"></a>
