@@ -11,6 +11,18 @@ module.exports = {
     tplContent: {},
     forms: {},
     
+    TagsVanillaClasses: [
+        ``,
+        `Soldier`,
+        `Demolitionist`,
+        `Occultist`,
+        `Nightblade`,
+        `Arcanist`,
+        `Shaman`,
+        `Inquisitor`,
+        `Necromancer`
+    ],
+    
     curSwitch: 0,
     
     _mSelection: false,
@@ -70,8 +82,9 @@ module.exports = {
     
         itemsSwitch[`Show Mastery`] = itemsSwitch[`Show Mastery`] || {};
         
-        for(let i=1; i<=30; i++){
+        for(let i=1; i<=40; i++){
             tempField = this.Base.aGenderPC01[0].__getField(`skillTree${i}`) || false;
+            console.log(tempField);
             if(tempField && tempField.includes(`.dbr`)) {
                 usedEnum.push({
                     int: i,
@@ -79,7 +92,7 @@ module.exports = {
                 });
     
                 itemsSwitch[`Show Mastery`][`show::${i}`] = {
-                    label: this.Base._tagsClasses.__getField(`tagSkillClassName${(`0${i}`).slice(-2)}`) || `${i}`,
+                    label: this.Base._tagsClasses.__getField(`tagSkillClassName${(`0${i}`).slice(-2)}`) || `${this.TagsVanillaClasses[i]}`,
                     type: `radio`,
                     name: `radioShow`,
                     value: this.curSwitch

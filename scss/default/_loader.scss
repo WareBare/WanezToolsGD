@@ -7,3 +7,7 @@
 @import "form";
 @import "gd-misc";
 @import "gd-mastery";
+
+body.busy-cursor {
+    cursor: progress !important;
+}

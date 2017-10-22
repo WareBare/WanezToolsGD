@@ -20,9 +20,13 @@ module.exports = {
     nav_: function(){
         return [
             `Program`,
+            `Shortcuts`,
             'Grim Dawn',
             'Grim Dawn 2',
-            `Shortcuts`
+            `Mastery`,
+            `Items`,
+            `Merger`,
+            `Mods (Wanez)`
         ];
     }
     

@@ -11,6 +11,7 @@
 Loading...
 <script>
     const fs = require(`fs-extra`);
+    const child_process = require('child_process').execFile;
     //const chokidar = require('chokidar');
     const mkpath = require('mkpath');
     const eConfig = require('electron-config');
@@ -19,6 +20,11 @@ Loading...
     const app = require('electron').remote.app;
     const {clipboard} = require('electron');
     const log = require('electron').remote.require('electron-log');
+
+    // ContextMenu
+    const remote = require('electron').remote;
+    //const ctxMenu = remote.require('electron-editor-context-menu');
+    //const MenuItem = require('electron-context-menu');
     //const path = require('path');
     //const request = require('request');
     //const PSD = require('psd');

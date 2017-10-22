@@ -30,7 +30,7 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
             "SkillPicker": `<div ondrop="_cms.skillDropUnused(event)" ondragover="_cms.skillAllowDrop(event)">{UNUSED}</div><div id="uiBackUps">{BACKUPS}</div>`, //{USED}
             //"SkillBTN": "<div wz-mode='{MODE}' class='skillCell'>{ICON}<wztip>{INFO}</wztip></div>"
             "SkillBTN": `<div wz-mode="{MODE}" id="btn_{COORDS}" ondrop="_cms.skillDrop(event)" ondragover="_cms.skillAllowDrop(event)" ondragstart="_cms.skillDrag(event)" draggable="true" wz-coords="{COORDS}" wz-id="{ID}" wz-tier="{TIER}" class="skillCell{CLASS_CIRCULAR}" onclick="_cms.setSkill({ID});" ondblclick="_cms.Base.goToEditSkill();"><span>{ICON}</span>{INFO}</div>`, // <wztip>{INFO}</wztip> |  ondblclick="_cms.setSkillConnector({ID});"
-            SkillToolTip: `<wztip><h1>{SKILL_NAME}</h1>{COORDS_X}, {COORDS_Y}<br />isCircular: {IS_CIRCULAR}<br />Has Connector: {HAS_CONNECTOR}<br />Tier: {TIER}</wztip>`,
+            SkillToolTip: `<wztip><h1>{SKILL_NAME}</h1>{COORDS_X}, {COORDS_Y}<br />isCircular: {IS_CIRCULAR}<br />Has Connector: {HAS_CONNECTOR}<br />Tier: {TIER}<br />Ranks: {RANK_MAX} / {RANK_ULTIMATE}</wztip>`,
             "Connector": "<img wz-mode='{MODE}' src='{IMG}' alt='!' />",
             "SkillSlots": this.appData.tpl_gd.UI.SkillSlots,
             "SkillSlotsDif": this.appData.tpl_gd.UI.SkillSlotsDif
@@ -211,12 +211,14 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
                     'img/skills_connectoronbranchup.png': true,
                     'img/skills_connectoronbranchboth.png': true,
                     'img/skills_connectorontransmuterup.png': true,
+                    'img/skills_connectorontransmuterboth.png': true,
                     test: true
                 },
                 transmuterDown: {
                     'img/skills_connectoronbranchdown.png': true,
                     'img/skills_connectoronbranchboth.png': true,
                     'img/skills_connectorontransmuterdown.png': true,
+                    'img/skills_connectorontransmuterboth.png': true,
                     'img/skill_down_on.png': true,
                     'img/skill_bottom_on.png': true,
                     test: false
@@ -364,15 +366,31 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
                     aSkills[$_CoordKey].Connected = aConnector[$_Index][1][$_CoordKey];
                     if(aSkills[$_CoordKey].isUsed) {
                         aSkills[$_CoordKey].Parent = aConnector[$_Index][0];
+                        
                         aGroups = aGroups || [];
-                        aGroups[aConnector[$_Index][0].getSkillId()] = aGroups[aConnector[$_Index][0].getSkillId()] || [(aSkills[$_CoordKey] && aSkills[$_CoordKey].mSkill) ? aSkills[$_CoordKey].mSkill : false];
-    
+                        if(aConnector[$_Index][0].getField(`logic`,`templateName`) === `database/templates/skill_transmuter.tpl` || aConnector[$_Index][0].getField(`logic`,`templateName`) === `database/templates/skill_modifier.tpl`){
+                            //console.log(aGroups[aConnector[$_Index][0].getSkillId()]);
+                            aGroups[aConnector[$_Index][0].getSkillId()] = aGroups[aConnector[$_Index][0].getSkillId()] || [false,(aSkills[$_CoordKey] && aSkills[$_CoordKey].mSkill) ? aSkills[$_CoordKey].mSkill : false];
+                        }else{
+                            aGroups[aConnector[$_Index][0].getSkillId()] = aGroups[aConnector[$_Index][0].getSkillId()] || [(aSkills[$_CoordKey] && aSkills[$_CoordKey].mSkill) ? aSkills[$_CoordKey].mSkill : false];
+                        }
+                        
                         aSkills[$_CoordKey].hasGroup = true;
                     }
     
                     tempGrp = this.checkConnectorGroup(aConnector[$_Index][1],$_CoordKey,aSkills);
+                    //console.log(tempGrp);
                     if( tempGrp[0] ){
-                        aGroups[aConnector[$_Index][0].getSkillId()].push(aSkills[tempGrp[1]].mSkill); // .getSkillPaths().logicRelPath
+                        if(!aGroups[aConnector[$_Index][0].getSkillId()][0]){
+                            if(aSkills[tempGrp[1]].mSkill.getField(`logic`,`templateName`) === `database/templates/skill_transmuter.tpl` || aSkills[tempGrp[1]].mSkill.getField(`logic`,`templateName`) === `database/templates/skill_modifier.tpl`){
+                                aGroups[aConnector[$_Index][0].getSkillId()].push(aSkills[tempGrp[1]].mSkill); // .getSkillPaths().logicRelPath
+                            }else{
+                                aGroups[aConnector[$_Index][0].getSkillId()][0] = aSkills[tempGrp[1]].mSkill; // .getSkillPaths().logicRelPath
+                            }
+                        }else{
+                            aGroups[aConnector[$_Index][0].getSkillId()].push(aSkills[tempGrp[1]].mSkill); // .getSkillPaths().logicRelPath
+                        }
+                        
                         aSkills[tempGrp[1]].hasGroup = true;
                     }else if(tempGrp){
                         aGroups[aSkills[tempGrp[1]].mSkill.getSkillId()] = [aSkills[tempGrp[1]].mSkill];
@@ -461,6 +479,8 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
                     IS_USED: aSkills[0][$_Coords].isUsed,
                     IS_CIRCULAR: aSkills[0][$_Coords].isCircular,
                     HAS_CONNECTOR: (aSkills[0][$_Coords].hasConnector) ? `Yes` : `No`,
+                    RANK_MAX: aSkills[0][$_Coords].mSkill.getField(`logic`,`skillMaxLevel`),
+                    RANK_ULTIMATE: aSkills[0][$_Coords].mSkill.getField(`logic`,`skillUltimateLevel`),
                     TIER: aSkills[0][$_Coords].mSkill.getField(`logic`,`skillTier`) || `?`//aSkills[0][$_Coords].Tier
                 });
             }

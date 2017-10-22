@@ -9,6 +9,7 @@ module.exports = {
     cMarkdown: libWZ.Core.cMarkdown = require(`./cMarkdown`),
     WND: libWZ.Core.WND = require(`./WND`),
     Parser: libWZ.Core.Parser = require(`./Parser`),
+    NodeEditor: libWZ.Core.NodeEditor = require(`./NodeEditor`),
     cData: libWZ.Core.cData = require(`./cData`),
     cApp: libWZ.Core.cApp = require(`./cApp`),
     cForm: libWZ.Core.cForm = require(`./cForm`),

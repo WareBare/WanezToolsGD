@@ -75,6 +75,7 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
                 'center': `ui/skills/skillallocation/skills_connectoroncenter.tex`,
                 'transmuterdown': `ui/skills/skillallocation/skills_connectorontransmuterdown.tex`,
                 'transmuterup': `ui/skills/skillallocation/skills_connectorontransmuterup.tex`,
+                'transmuterboth': `ui/skills/skillallocation/skills_connectorontransmuterboth.tex`,
                 'zenithBottomDown': `ui/skills/skill_down_on.tex`,
                 'zenithBottomUp': `ui/skills/skill_up_on.tex`,
                 'zenithBottom': `ui/skills/skill_bottom_on.tex`
@@ -94,10 +95,12 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
                     'down': objConnectorToPng.branchboth
                 },
                 'ui/skills/skillallocation/skills_connectorontransmuterdown.tex': {
-                    'modifier': objConnectorToPng.branchdown
+                    'modifier': objConnectorToPng.branchdown,
+                    'up': objConnectorToPng.transmuterboth
                 },
                 'ui/skills/skillallocation/skills_connectorontransmuterup.tex': {
-                    'modifier': objConnectorToPng.branchup
+                    'modifier': objConnectorToPng.branchup,
+                    'down': objConnectorToPng.transmuterboth
                 }
             };
     

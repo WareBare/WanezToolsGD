@@ -13,6 +13,31 @@ log.warn(`Program loaded using: v${app.getVersion()}`);
 
 appConfig = new eConfig({name: `settings-app`});
 
+/*
+MenuItem({
+    prepend: (params, browserWindow) => [{
+        label: 'Rainbow',
+        // Only show it when right-clicking images
+        visible: params.mediaType === 'image'
+    }]
+});
+*/
+/*
+window.addEventListener('contextmenu', function(e) {
+    // Only show the context menu in text editors.
+    //if (!e.target.closest('textarea, input, [contenteditable="true"]')) return;
+    
+    let menu = ctxMenu();
+    
+    // The 'contextmenu' event is emitted after 'selectionchange' has fired but possibly before the
+    // visible selection has changed. Try to wait to show the menu until after that, otherwise the
+    // visible selection will update after the menu dismisses and look weird.
+    setTimeout(function() {
+        menu.popup(remote.getCurrentWindow());
+    }, 30);
+});
+*/
+
 //clipboard.writeText('Example String', 'selection');
 //console.log(clipboard.readText('selection'));
 
@@ -43,6 +68,19 @@ if(!appConfig.has('cms')){
     appConfig.set('cms.2',false);
 }
 
+ExecuteProgramGD = function(InExecutable){
+    if(appConfig.get(`GrimDawn.Paths.Game`)){
+        child_process(`${appConfig.get(`GrimDawn.Paths.Game`)}/${InExecutable}`, function(err, data) {
+            if(err){
+                console.error(err);
+                return;
+            }
+        
+            console.log(data.toString());
+        });
+    }
+};
+
 require(`./cms`);
 require(`./wnd`);
 
@@ -51,8 +89,19 @@ _app.create_();
 wzCMS(appConfig.get('cms'));
 
 
+
 let keyUp = (e) => {
-    //console.log(`${e.keyCode}`);
+    //console.log(e.keyCode);
+    
+    if(e.keyCode === 116){
+        location.reload();
+    }else if(e.keyCode === 112){
+        wzCMS([`Docs`,`ReadMe`]);
+    }else if(e.keyCode === 113){
+        wzCMS([`Docs`,`Change Log`]);
+    }else if(e.keyCode === 117){
+        wzWND('Settings').refresh();
+    }
     
     if(appConfig.get('cms')[0] === `Mastery` && appConfig.get('cms')[1] === `Skill Allocation`){
         if(e.keyCode === 18){

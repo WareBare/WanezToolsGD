@@ -29,14 +29,14 @@ module.exports = {
                 /*custom: `submitForm(this)`*/
             },
             items: {
-                'Paths & Directories': {
+                'Directories': {
                     'settings-app::GrimDawn.Paths.Working': {
-                        label: `Working Path`,
+                        label: `Working Directory`,
                         type: `textLargeX`,
                         isRequired: true
                     },
                     'settings-app::GrimDawn.Paths.Game': {
-                        label: `Install Path`,
+                        label: `Install Directory`,
                         type: `textLargeX`
                     }
                 },
@@ -49,32 +49,6 @@ module.exports = {
                         label: `Active Mod`,
                         type: `comboBox`,
                         data: appConfig.get(`GrimDawn.Paths.Mods`) || []
-                    }
-                },
-                'Mastery': {
-                    'settings-app::GrimDawn.Mastery.TagsSkills': {
-                        label: `Tags - Skills`,
-                        type: `listBox`,
-                        data: wzIO.dir_get_contentsSync(`${WZ.GrimDawn.tFn.getPaths().Source}/text_en`,true) || [],
-                        dataUseValue: true
-                    },
-                    'settings-app::GrimDawn.Mastery.TagsClasses': {
-                        label: `Tags - Classes`,
-                        type: `listBox`,
-                        data: wzIO.dir_get_contentsSync(`${WZ.GrimDawn.tFn.getPaths().Source}/text_en`,true) || [],
-                        dataUseValue: true
-                    }
-                },
-                'Materia': {
-                    'settings-app::GrimDawn.Items.TagsMateria': {
-                        label: `Tags - Materia`,
-                        type: `listBox`,
-                        data: wzIO.dir_get_contentsSync(`${WZ.GrimDawn.tFn.getPaths().Source}/text_en`,true) || [],
-                        dataUseValue: true
-                    },
-                    'settings-app::GrimDawn.Items.allowTagChangeQualifier': {
-                        label: `Should prevent Tag changes for Qualifiers (check if you want to disable that feature and change tags for qualifiers per Hand)`,
-                        type: `checkBox`
                     }
                 }
             }

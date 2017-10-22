@@ -10,6 +10,8 @@ _cms = false;
  * @param {Boolean|Object} [$formData]
  */
 wzCMS = function($optCMS,$formData){
+    wzLoadingCMS(true);
+    
     $formData = $formData || false; // if form - loadForm will have all the form data
     const navClassInActive = 'navInActive',
         navClassActive = 'navActive';
@@ -55,15 +57,21 @@ wzCMS = function($optCMS,$formData){
                     $contentType = $contentType || false;
                     $contentParams = $contentParams || false;
                     contentEl.innerHTML = cms.content_($contentType,$contentParams) || headerTitle_;
+                    //wzLoadingCMS(false);
                 };
                 cms.Base.loadSideBar = function(){
                     sidebarEl.innerHTML = (cms.sidebar_) ? cms.sidebar_() : wzSideBarDefault(( (cms.sidebarBtns_) ? cms.sidebarBtns_() : false ), ( (cms.sidebarList_) ? cms.sidebarList_() : false ),( (cms.contentType) ? cms.contentType : false ),( (cms.tplSideBar) ? cms.tplSideBar : false ));
                 };
                 cms.Base.loadCMS = function($contentType,$contentParams){
+                    wzLoadingCMS(true);
                     $contentType = $contentType || false;
                     $contentParams = $contentParams || false;
-                    this.loadContent($contentType,$contentParams);
-                    this.loadSideBar();
+                    let $this = this;
+                    setTimeout(function(){
+                        $this.loadContent($contentType,$contentParams);
+                        $this.loadSideBar();
+                    }, 10);
+                    //this.loadContent($contentType,$contentParams);
                 };
                 cms.Base.ini();
             }catch(err){}
@@ -72,14 +80,21 @@ wzCMS = function($optCMS,$formData){
                 SideBar: sidebarEl,
                 HeaderLoc: headerLocEl
             };
-            headerLocEl.innerHTML = headerTitle_;
-            contentEl.innerHTML = cms.content_() || headerTitle_;
-            sidebarEl.innerHTML = (cms.sidebar_) ? cms.sidebar_() : wzSideBarDefault(( (cms.sidebarBtns_) ? cms.sidebarBtns_() : false ), ( (cms.sidebarList_) ? cms.sidebarList_() : false ),( (cms.contentType) ? cms.contentType : false ),( (cms.tplSideBar) ? cms.tplSideBar : false ));
+            setTimeout(function(){
+                headerLocEl.innerHTML = headerTitle_;
+                contentEl.innerHTML = cms.content_() || headerTitle_;
+                sidebarEl.innerHTML = (cms.sidebar_) ? cms.sidebar_() : wzSideBarDefault(( (cms.sidebarBtns_) ? cms.sidebarBtns_() : false ), ( (cms.sidebarList_) ? cms.sidebarList_() : false ),( (cms.contentType) ? cms.contentType : false ),( (cms.tplSideBar) ? cms.tplSideBar : false ));
+                //wzLoadingCMS(false);
+            }, 10);
+            //headerLocEl.innerHTML = headerTitle_;
+            //contentEl.innerHTML = cms.content_() || headerTitle_;
+            //sidebarEl.innerHTML = (cms.sidebar_) ? cms.sidebar_() : wzSideBarDefault(( (cms.sidebarBtns_) ? cms.sidebarBtns_() : false ), ( (cms.sidebarList_) ? cms.sidebarList_() : false ),( (cms.contentType) ? cms.contentType : false ),( (cms.tplSideBar) ? cms.tplSideBar : false ));
         }
         
     }catch(err){
         console.error(err);
     }
+    
 };
 wzSideBarDefault = function($btns_,$list_,$contentType,$tpl){
     $btns_ = appData.tpl.Buttons.Default.wzParseTPL($btns_) || ``;
@@ -122,4 +137,32 @@ wzReloadCMS = function($setTimeout){
         wzCMS(appConfig.get('cms'));
     }
     
+};
+
+wzLoadingCMS = function(bInStartLoading){
+    bInStartLoading = bInStartLoading || false;
+    let LoadingScreen;
+    
+    if(bInStartLoading){
+        //console.log(`Start Loading`);
+        LoadingScreen = document.createElement(`div`);
+        LoadingScreen.setAttribute(`id`, `wzLoadingScreen`);
+        
+        let LoadingImage = document.createElement(`div`);
+        LoadingImage.setAttribute(`class`, `loadingImage`);
+        LoadingImage.innerHTML = `Loading...`;
+        
+        LoadingScreen.appendChild(LoadingImage);
+        
+        document.body.appendChild(LoadingScreen);
+    
+        setTimeout(function(){
+            wzLoadingCMS(false);
+        }, 10);
+    }else{
+        //console.log(`Finish Loading`);
+        LoadingScreen = document.getElementById(`wzLoadingScreen`);
+        
+        document.body.removeChild(LoadingScreen);
+    }
 };
