@@ -8,7 +8,8 @@
         "CONTENT": "myNav",
         "Items":{
             "Home":{
-                "BBCode":[]
+                "BBCode":[],
+                "BBCode_old":[]
             },
             "Mastery":{
                 "Setup":[],
@@ -24,6 +25,14 @@
                 "Mastery Merger": [],
                 "DBR Merger": []
             },
+            ".Wanez":{
+                "Entities": [],
+                "Runic Inscriptions":[],
+                "GnT":[],
+                "Artifacts":[],
+                "Misc":[],
+                "Campaign":[]
+            },
             "Docs":{
                 "ReadMe": [],
                 "Change Log": [],
@@ -35,14 +44,6 @@
                 "Equipment":[],
                 "Sets":[],
                 "Runes":[]
-            },
-            "Wanez":{
-                "Entities": [],
-                "Runic Inscriptions":[],
-                "GnT":[],
-                "Artifacts":[],
-                "Misc":[],
-                "Campaign":[]
             },
             "Docs":{
                 "Wiki [ip]":["DGA [ip]","Mastery [ip]"]

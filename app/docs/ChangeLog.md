@@ -2,7 +2,10 @@
 
 ---
 
-> [v0.3.0](#v0.3.0)
+> 
+
+> [v0.3.0](#v0.3.0) |
+> [v0.3.1](#v0.3.1)
 
 > [v0.2.0](#v0.2.0) |
 > [v0.2.4](#v0.2.4)
@@ -24,6 +27,29 @@
 
 ---
 
+---
+
+<a name="v0.3.1"></a>
+## v0.3.1
+<a name="v0.3.1-filewatcher"></a>
+### File Watcher
+* File Watcher trial, loading Markdown files and reloading if changes happen, either by creating a new file, deleting one or updating the text (more in <a href="v0.3.1-mdbbcode">this Section</a>)
+
+<a name="v0.3.1-mastery"></a>
+### Mastery Tools
+* Mastery Config will now show Vanilla tags even if the tag file has not been loaded
+  * only the Base Tags are saved (Soldier, Demolitionist, etc) not their Combo Tags, but the field can be left empty the game is still using the vanilla tags (unless there was a value inside that field before and you deleted it, in that case you'll have to remove the empty tag)
+
+<a name="v0.3.1-mdbbcode"></a>
+### Markdown and BBCode
+* reworked the editor by using an external program
+* file watcher will update the loaded file if necessary
+* file can be opened with a button, executing the CLI for the file using its default program to load
+* .md and .txt files in listed mod folders are added (for readme)
+  * you can add aditional paths in the Settings
+
+
+---
 <a name="v0.3.0"></a>
 ## v0.3.0
 

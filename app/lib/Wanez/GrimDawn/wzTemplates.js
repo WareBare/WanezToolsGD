@@ -16,8 +16,7 @@ module.exports = {
     
     loader($relFilePath){
         //let wantedData = this.aData[$relFilePath];
-        $relFilePath = $relFilePath.replace(/\\/g,`/`).toLowerCase();
-        
+        $relFilePath = $relFilePath.replace(/\\/g,`/`).toLowerCase().replace(`%template_dir%`,``);
         
         if(!this.aData[$relFilePath]){
             try{

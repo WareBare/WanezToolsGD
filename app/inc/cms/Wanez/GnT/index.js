@@ -285,11 +285,10 @@ module.exports = {
     cur_wzGear: false,
     curData: false,
     mergedGearAssets: false,
-    _tagsGear: wzStorageGD.load(`Text_EN/modtags_wanezGen-gear.txt`,{parser: `Tags`}),
+    //_tagsGear: wzStorageGD.__get(`Text_EN/modtags_wanez_gifts_generated.txt`,{parser: `Tags`}), // Text_EN/modtags_wanezGen-gear.txt
     
     affixesConfig: new eConfig({name: `wz-affixes`}),
     gearConfig: new eConfig({name: `wz-gear`}),
-    //_tagsGear: new WZ.GrimDawn.cData('C:/Program Files (x86)/Steam/SteamApps/common/Grim Dawn/mods/dev_Wanez/source/Text_EN/modtags_wanezGen-gear.txt',new WZ.GrimDawn.Parser.cTags()),
     
     /**
      * Prepare Affix combinations (dynamically, if a position inside the .items array changes it will change the file as well)
@@ -414,8 +413,6 @@ module.exports = {
                 }
             }
         }
-        //console.log(aBlueprints);
-        //console.log(aLootTables);
         
         this.curData = {
             "Armor": aArmor,
@@ -426,38 +423,36 @@ module.exports = {
     },
     
     saveCurrentData: function(){
-        //console.log(this.curData);
-        //return true;
         
         // SAVE affixes / only save new & changed files
         for( let $_Type in this.curData["Affixes"] ){
             // cAffixes => SAVE
-            this.curData["Affixes"][$_Type].saveAffixes([this._tagsGear]);
+            this.curData["Affixes"][$_Type].saveAffixes([this.Base._tagsGifts]);
         }
         
         // SAVE items / only save new & changed files
         for( let $_Type in this.curData["Armor"] ){
             // cArmor => SAVE
-            this.curData["Armor"][$_Type].saveArmor([this._tagsGear]);
+            this.curData["Armor"][$_Type].saveArmor([this.Base._tagsGifts]);
         }
         
         // SAVE BluePrints
         for( let $_Type in this.curData["BluePrints"] ){
             // cBlueprint => SAVE
-            this.curData["BluePrints"][$_Type].saveDBR([this._tagsGear],true);
+            this.curData["BluePrints"][$_Type].saveDBR([this.Base._tagsGifts],true);
             this.curData["BluePrints"][$_Type].saveRandomArtifactFile();
         }
         
         // SAVE lootTables
         for( let $_Type in this.curData["LootTables"] ){
             // cLootTable => SAVE
-            this.curData["LootTables"][$_Type].saveDBR([this._tagsGear],true);
+            this.curData["LootTables"][$_Type].saveDBR([this.Base._tagsGifts],true);
         }
         
         //this.saveTags();
     },
     saveTags: function(){
-        this._tagsGear.saveData();
+        this.Base._tagsGifts.saveData();
     },
     
     iniArmorDefault: function(){

@@ -15,8 +15,13 @@ module.exports = class mProxies extends libWZ.GrimDawn.cModule{
         this.pathProxies = `records/proxies`;
         this.aProxyFolders = [
             `area001`,
+            `areae`,
+            `areaf`,
+            `areavoid`,
             `boss&quest`,
-            `factionspawns`
+            `boss&questgdx1`,
+            `factionspawns`,
+            `factionspawnsgdx1`
         ];
         
         this.aProxies = [];

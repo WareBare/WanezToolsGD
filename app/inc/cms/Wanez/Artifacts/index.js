@@ -12,17 +12,17 @@ module.exports = {
     
     _mModule: false,
     
-    _tagsGear: wzStorageGD.load(`Text_EN/modtags_wanezGen-gear.txt`,{parser: `Tags`}),
+    //_tagsGear: wzStorageGD.load(`Text_EN/modtags_wanezGen-gear.txt`,{parser: `Tags`}),
     affixesConfig: new eConfig({name: `wz-artifacts`}),
     
     saveCurrentData: function(){
         if(this._mModule){
-            this._mModule.saveModuleData([this._tagsGear,false,false]);
+            this._mModule.saveModuleData([this.Base._tagsGifts,false,false]);
         }
     },
     
     saveDataTags: function(){
-        this._tagsGear.saveData();
+        this.Base._tagsGifts.saveData();
     },
     
     saveLootTables: function(){

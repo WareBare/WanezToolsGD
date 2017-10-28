@@ -13,6 +13,8 @@ log.warn(`Program loaded using: v${app.getVersion()}`);
 
 appConfig = new eConfig({name: `settings-app`});
 
+//_watcher = false;
+
 /*
 MenuItem({
     prepend: (params, browserWindow) => [{
@@ -70,13 +72,13 @@ if(!appConfig.has('cms')){
 
 ExecuteProgramGD = function(InExecutable){
     if(appConfig.get(`GrimDawn.Paths.Game`)){
-        child_process(`${appConfig.get(`GrimDawn.Paths.Game`)}/${InExecutable}`, function(err, data) {
+        child_process.execFile(`${appConfig.get(`GrimDawn.Paths.Game`)}/${InExecutable}`, function(err, data) {
             if(err){
                 console.error(err);
                 return;
             }
         
-            console.log(data.toString());
+            //console.log(data.toString());
         });
     }
 };

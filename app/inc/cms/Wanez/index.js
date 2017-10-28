@@ -14,7 +14,8 @@ module.exports = {
         this.contentType = $contentType || this.contentType;
         
         let out_ = `WanezMod Tools`;
-        
+        //console.log(`${this.Base.PathToMods}/`);
+        //console.log(this.Base._tagsGifts);
         return `${out_}`;
     },
     
@@ -22,7 +23,7 @@ module.exports = {
         return [];
     },
     sidebarList_: function(){
-        return {}
+        return {};
     }
     
 };

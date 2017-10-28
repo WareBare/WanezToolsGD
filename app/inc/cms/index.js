@@ -12,6 +12,19 @@ _cms = false;
 wzCMS = function($optCMS,$formData){
     wzLoadingCMS(true);
     
+    if(JSON.stringify(appConfig.get('cms')) !== JSON.stringify($optCMS) || !_cms){
+        //console.log(`load new content`);
+        //console.log(_watcher);
+        if(_watcher){
+            _watcher.close();
+            //console.log(_cms._watcher);
+            _watcher = false;
+        }
+    }else{
+        //console.log(`reload old content`);
+        
+    }
+    
     $formData = $formData || false; // if form - loadForm will have all the form data
     const navClassInActive = 'navInActive',
         navClassActive = 'navActive';
@@ -165,4 +178,13 @@ wzLoadingCMS = function(bInStartLoading){
         
         document.body.removeChild(LoadingScreen);
     }
+};
+
+wzWatcherCMS = function($setTimeout){
+    $setTimeout = $setTimeout || 10;
+    
+    if(_cms.WatcherUpdate) wzReloadCMS($setTimeout);
+    
+    _cms.WatcherUpdate = false;
+    
 };

@@ -11,6 +11,8 @@
 
 libWZ = {};
 
+
+
 module.exports = {
     Core: libWZ.Core = require(`./Core`),
     GrimDawn: libWZ.GrimDawn = require(`./GrimDawn`)
@@ -131,6 +133,28 @@ String.prototype.wzOut = function($aRep,$el = false){
     }
     return newStr_;
 };
+
+/**
+ * String - Path
+ * returns the path without and extension and changes windows \ to /
+ * adding a base path will remove the base path from it as well
+ *
+ * @param InBasePath
+ * @return {String}
+ */
+String.prototype.wzGetFileFromPath = function(InBasePath){
+    let NewPath = this;
+    NewPath = NewPath.wzNormalizePath().replace(/\.[a-zA-Z]*$/, ``);
+    if(InBasePath){
+        NewPath = NewPath.replace(InBasePath, ``);
+    }
+    return NewPath;
+};
+
+String.prototype.wzNormalizePath = function(){
+    return this.replace(/\\/g,`/`);
+};
+
 wzMerge = function(target,source){
     Object.keys(source).forEach(function($_Key) { target[$_Key] = source[$_Key]; });
     //console.log(target);

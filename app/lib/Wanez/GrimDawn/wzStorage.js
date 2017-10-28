@@ -75,7 +75,7 @@ module.exports = {
             override: false,
             parser: false
         },$opt);
-        //let useParser = $opt.parser;
+        
         if(!this.objStorage[$relFilePath] || $opt.override){
             if(this.objStorage[$relFilePath] && !$opt.parser){
                 $opt.parser = this.objStorage[$relFilePath].parser;
@@ -94,17 +94,14 @@ module.exports = {
                 stats = fs.statSync(this.objStorage[$relFilePath].class.getFilePath());
                 if(this.objStorage[$relFilePath].time < stats.mtime.getTime()){
                     loadClass = true;
-                    //console.log(`reload: ${$relFilePath}`);
                 }
             }catch (err){}
         }else{
             loadClass = true;
-            //console.log(`load: ${$relFilePath}`);
         }
         
         if(loadClass){ //  || this.objStorage[$relFilePath].time < stats.mtime.getTime()
             this.load($relFilePath,{override: true,parser: $parser});
-            //console.log(`load: ${$relFilePath}`);
         }
         
         return this.objStorage[$relFilePath].class;
@@ -121,14 +118,11 @@ module.exports = {
             tempClass.saveData();
         }
         this.objStorage[$relFilePath].time = new Date().getTime() + 100;
-        //console.log(`set new time: ${this.objStorage[$relFilePath].time}`);
     },
     updateDBR($relFilePath,$opt,$useDefaultFileDescription = false){
-        //let tempClass = this.__get($relFilePath);
         
         this.__get($relFilePath).editDBR($opt,$useDefaultFileDescription);
         this.objStorage[$relFilePath].time = new Date().getTime() + 100;
-        //console.log(`set new time: ${$relFilePath} - ${new Date().getTime()}`);
     },
     
     reload(){
@@ -138,16 +132,12 @@ module.exports = {
     watch(){
         let storage = this.objStorage;
         for(let $_RelFilePath in storage){
-            //console.log(storage[$_RelFilePath].getFilePath());
             
             try{
-                //console.log(storage[$_RelFilePath].class.getFilePath());
                 fs.accessSync(`${storage[$_RelFilePath].class.getFilePath()}`); // check if file exists
                 fs.stat(storage[$_RelFilePath].class.getFilePath(), (err,stats) => {
-                    //console.log(`checking`);
                     if(storage[$_RelFilePath].time < stats.mtime.getTime()){
                         wzStorageGD.load($_RelFilePath,{override: true});
-                        //console.log(`reload: ${$_RelFilePath}`);
                     }
                 });
             }catch(err){
@@ -155,8 +145,6 @@ module.exports = {
             }
             
         }
-        
-        //this.lastCheck = new Date().getTime();
     }
     
 };

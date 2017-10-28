@@ -62,7 +62,7 @@ module.exports = {
                     aCombo.push({
                         tag: `tagSkillClassName${$data[$_Index01].str}${$data[$_Index02].str}`,
                         masteryEnums: tempOpt,
-                        masteryNames: `${this.Base._tagsClasses.__getField(`tagSkillClassName${$data[$_Index01].str}`) || ``} + ${this.Base._tagsClasses.__getField(`tagSkillClassName${$data[$_Index02].str}`) || ``}`
+                        masteryNames: `${this.Base._tagsClasses.__getField(`tagSkillClassName${$data[$_Index01].str}`) || `${this.TagsVanillaClasses[parseInt($_Index01) + 1] || `No Tag`}`} + ${this.Base._tagsClasses.__getField(`tagSkillClassName${$data[$_Index02].str}`) || `${this.TagsVanillaClasses[parseInt($_Index02) + 1] || `No Tag`}`}`
                     });
                 }
             }
@@ -72,7 +72,7 @@ module.exports = {
     },
     
     content_Config: function(){
-        let info_ = `Only tags are listed similar to the way Crate is using them:<p>tagSkillClassNameXX<br />tagSkillClassNameXXYY<br />tagSkillClassDescriptionXX<br />tagClassXXSkillName00<br />tagClassXXSkillDescription00</p>Future versions will have a merger and a tag export.`,
+        let info_ = `Only tags are listed similar to the way Crate is using them:<p>tagSkillClassNameXX<br />tagSkillClassNameXXYY<br />tagSkillClassDescriptionXX<br />tagClassXXSkillName00<br />tagClassXXSkillDescription00</p>Vanilla Combinations won't show up in here, but you can leave those fields empty, because the game will still load the Tags.`,
             itemsSwitch = {},
             itemsContent = {},
             curEnum_ = (`0${this.curSwitch}`).slice(-2),

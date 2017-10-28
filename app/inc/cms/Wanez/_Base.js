@@ -10,10 +10,10 @@
 module.exports = {
     tplContent: {},
     
-    _tagsDGA: wzStorageGD.load(`Text_EN/modtags_wanezGen-dga.txt`,{parser: `Tags`}),
-    _tagsGlobal: wzStorageGD.load(`Text_EN/modtags_wanezGen-global.txt`,{parser: `Tags`}),
-    _luaFnDGA: wzStorageGD.load(`wanez/scripts/fn/gDGA.lua`,{parser: `LuaFN`}),
-    _luaNameToId: wzStorageGD.load(`wanez/scripts/data/gNameToId.lua`,{parser: `Lua`}),
+    //_tagsDGA: wzStorageGD.__get(`Text_EN/modtags_wanez_dga_generated.txt`,{parser: `Tags`}), // Text_EN/modtags_wanezGen-dga.txt
+    //_tagsGlobal: wzStorageGD.__get(`Text_EN/modtags_wanez_global_generated.txt`,{parser: `Tags`}), // Text_EN/modtags_wanezGen-global.txt
+    //_luaFnDGA: wzStorageGD.__get(`wanez_dga/scripts/fn/gDGA.lua`,{parser: `LuaFN`}), // wanez/scripts/fn/gDGA.lua
+    //_luaNameToId: wzStorageGD.__get(`wanez_dga/scripts/data/gNameToId.lua`,{parser: `Lua`}), // wanez/scripts/data/gNameToId.lua
     
     //_wzAffixes: new WZ.Core.cData(wzDir.Config+'/wz-affixes.json',new WZ.Core.Parser.cJSON()),
     //_wzGear: new WZ.Core.cData(wzDir.Config+'/wz-gear.json',new WZ.Core.Parser.cJSON()),
@@ -72,6 +72,35 @@ module.exports = {
         
     },
     
+    saveCrafterPatron: function(InPathBlacksmith, InPathBlueprints){
+        InPathBlueprints = (Array.isArray(InPathBlueprints)) ? InPathBlueprints : [InPathBlueprints];
+    
+        let aBlueprints = [],
+            TempBlueprintPaths,
+            files = [],
+            TempClassBlacksmith;
+    
+        for(let $_Index in InPathBlueprints){
+            TempBlueprintPaths = fs.readdirSync(`${WZ.GrimDawn.tFn.getPaths().Mod}/${InPathBlueprints[$_Index]}`);
+            for(let $_Index2 in TempBlueprintPaths){
+                files.push(`${InPathBlueprints[$_Index]}/${TempBlueprintPaths[$_Index2]}`);
+            }
+        }
+        for( let $_Index in files ){
+            aBlueprints.push(`${files[$_Index]}`); //${$pathBlueprints}/
+        }
+        
+        for(let i = 1; i <= 5; i++){
+            TempClassBlacksmith = new WZ.GrimDawn.cData(InPathBlacksmith.wzReplace({
+                RANK: ( `0${i}` ).slice(-2)
+            }));
+            TempClassBlacksmith.editDBR({
+                defaultRecipes: aBlueprints
+            });
+            TempClassBlacksmith.saveDBR();
+        }
+        //console.log(TempClassBlacksmith);
+    },
     saveCrafter: function($classNPC,$pathBlueprints){
         $pathBlueprints = (Array.isArray($pathBlueprints)) ? $pathBlueprints : [$pathBlueprints];
         
@@ -128,11 +157,58 @@ module.exports = {
         $class.saveDBR()
     },
     saveGearBlacksmith: function(){
+        this.saveCrafterPatron(`/mod_wanez/_gear/creatures/npcs/blacksmith_leveling{RANK}.dbr`,[`mod_wanez/_gear/items/leveling/blueprints`,`mod_wanez/_gear/exchange/blueprints`,`mod_wanez/_gear/items/artifacts/blueprints`]);
+        
+        this.saveCrafterPatron(`/mod_wanez/_lc/creatures/npcs/blacksmith_vanilla{RANK}.dbr`,`mod_wanez/_lc/blueprints`)
+    },
+    saveGearBlacksmith_old: function(){
         this.saveCrafter(new WZ.GrimDawn.cData(`/mod_wanez/_gear/creatures/npcs/blacksmith_leveling01.dbr`),[`mod_wanez/_gear/items/leveling/blueprints`,`mod_wanez/_gear/exchange/blueprints`,`mod_wanez/_gear/items/artifacts/blueprints`]);
         this.saveCrafter(new WZ.GrimDawn.cData(`/mod_wanez/_gear/creatures/npcs/blacksmith_leveling02.dbr`),[`mod_wanez/_gear/items/leveling/blueprints`,`mod_wanez/_gear/exchange/blueprints`,`mod_wanez/_gear/items/artifacts/blueprints`]);
         this.saveCrafter(new WZ.GrimDawn.cData(`/mod_wanez/_gear/creatures/npcs/blacksmith_leveling03.dbr`),[`mod_wanez/_gear/items/leveling/blueprints`,`mod_wanez/_gear/exchange/blueprints`,`mod_wanez/_gear/items/artifacts/blueprints`]);
         this.saveCrafter(new WZ.GrimDawn.cData(`/mod_wanez/_gear/creatures/npcs/blacksmith_leveling04.dbr`),[`mod_wanez/_gear/items/leveling/blueprints`,`mod_wanez/_gear/exchange/blueprints`,`mod_wanez/_gear/items/artifacts/blueprints`]);
         this.saveCrafter(new WZ.GrimDawn.cData(`/mod_wanez/_gear/creatures/npcs/blacksmith_leveling05.dbr`),[`mod_wanez/_gear/items/leveling/blueprints`,`mod_wanez/_gear/exchange/blueprints`,`mod_wanez/_gear/items/artifacts/blueprints`]);
+    
+        this.saveCrafter(new WZ.GrimDawn.cData(`/mod_wanez/_lc/creatures/npcs/blacksmith_vanilla01.dbr`),[`mod_wanez/_lc/blueprints`]);
+        this.saveCrafter(new WZ.GrimDawn.cData(`/mod_wanez/_lc/creatures/npcs/blacksmith_vanilla02.dbr`),[`mod_wanez/_lc/blueprints`]);
+        this.saveCrafter(new WZ.GrimDawn.cData(`/mod_wanez/_lc/creatures/npcs/blacksmith_vanilla03.dbr`),[`mod_wanez/_lc/blueprints`]);
+        this.saveCrafter(new WZ.GrimDawn.cData(`/mod_wanez/_lc/creatures/npcs/blacksmith_vanilla04.dbr`),[`mod_wanez/_lc/blueprints`]);
+        this.saveCrafter(new WZ.GrimDawn.cData(`/mod_wanez/_lc/creatures/npcs/blacksmith_vanilla05.dbr`),[`mod_wanez/_lc/blueprints`]);
+    },
+    
+    DefinePaths: function(){
+        this.PathToMods = `${appConfig.get(`GrimDawn.Paths.Working`).wzNormalizePath()}/mods`;
+        
+        this.PathToCompilation = `${this.PathToMods}/dev_Wanez`; // _Compilation
+        
+        //this.PathToGifts = `${this.PathToMods}/dev_Wanez_Gifts`;
+        //this.PathToDGA = `${this.PathToMods}/dev_Wanez_DGA`;
+        //this.PathToRunes = `${this.PathToMods}/dev_Wanez_Runes`;
+    },
+    LoadData: function(){
+    
+        this._tagsGifts = new WZ.GrimDawn.cData(`${this.PathToCompilation}/source/text_en/modtags_wanez_gifts_generated.txt`,`Tags`);
+        this._tagsDGA = new WZ.GrimDawn.cData(`${this.PathToCompilation}/source/text_en/modtags_wanez_dga_generated.txt`,`Tags`);
+        this._tagsGlobal =  new WZ.GrimDawn.cData(`${this.PathToCompilation}/source/text_en/modtags_wanez_global_generated.txt`, `Tags`);
+        this._luaFnDGA =  new WZ.GrimDawn.cData(`${this.PathToCompilation}/source/wanez/scripts/fn/gDGA.lua`, `LuaFN`);
+        this._luaNameToId =  new WZ.GrimDawn.cData(`${this.PathToCompilation}/source/wanez/scripts/data/gNameToId.lua`, `Lua`);
+        this._luaEnemies = new WZ.GrimDawn.cData(`${this.PathToCompilation}/source/wanez/scripts/data/gEnemies.lua`, `Lua`);
+    
+        this._tagsRunes = new WZ.GrimDawn.cData(`${this.PathToCompilation}/source/text_en/modtags_wanez_runes_items_generated.txt`, `Tags`);
+        this._tagsStones = new WZ.GrimDawn.cData(`${this.PathToCompilation}/source/text_en/modtags_wanez_runes_stones_generated.txt`, `Tags`);
+        this._luaRunes = new WZ.GrimDawn.cData(`${this.PathToCompilation}/source/wanez/scripts/data/gInscriptions.lua`, `Lua`);
+        this._luaFnStones = new WZ.GrimDawn.cData(`${this.PathToCompilation}/source/wanez/scripts/fn/gRuneStones.lua`, `LuaFN`);
+        this._luaFnRunes = new WZ.GrimDawn.cData(`${this.PathToCompilation}/source/wanez/scripts/fn/gRunes.lua`, `LuaFN`);
+        
+    },
+    
+    ini: function(){
+        if(!this.bLoadData){
+            this.DefinePaths();
+            this.LoadData();
+            
+            this.bLoadData = true;
+        }
+        
     },
     
     content_: function(){

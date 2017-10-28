@@ -10,18 +10,18 @@
 module.exports = {
     tplContent: {},
     
-    luaRunes: wzStorageGD.load(`wanez/scripts/data/gInscriptions.lua`,{parser: `Lua`}),
-    luaRunesFN: wzStorageGD.load(`wanez/scripts/fn/gRunes.lua`,{parser: `LuaFN`}),
-    tagsRunes: wzStorageGD.load(`Text_EN/modtags_wanezGen-runes_items.txt`,{parser: `Tags`}),
-    luaStonesFN: wzStorageGD.load(`wanez/scripts/fn/gRuneStones.lua`,{parser: `LuaFN`}),
-    tagsStones: wzStorageGD.load(`Text_EN/modtags_wanezGen-runes_stones.txt`,{parser: `Tags`}),
+    //luaRunes: wzStorageGD.load(`wanez/scripts/data/gInscriptions.lua`,{parser: `Lua`}),
+    //luaRunesFN: wzStorageGD.load(`wanez/scripts/fn/gRunes.lua`,{parser: `LuaFN`}),
+    //tagsRunes: wzStorageGD.load(`Text_EN/modtags_wanezGen-runes_items.txt`,{parser: `Tags`}),
+    //luaStonesFN: wzStorageGD.load(`wanez/scripts/fn/gRuneStones.lua`,{parser: `LuaFN`}),
+    //tagsStones: wzStorageGD.load(`Text_EN/modtags_wanezGen-runes_stones.txt`,{parser: `Tags`}),
     
     saveRuneStones: function(){
         for( let $_Slot in this.gearSlotToStone ){
             this.gearSlotToStone[$_Slot].saveStones();
         }
-        this.luaStonesFN.saveData();
-        this.tagsStones.saveData();
+        this.Base._luaFnStones.saveData();
+        this.Base._tagsStones.saveData();
     },
     saveRunicInscriptions: function(){
         this._mModule.saveRunicInscriptions();
@@ -31,19 +31,19 @@ module.exports = {
         let data = this._mModule.getDataMisc();
         
         for( let $_Key in data.LuaData ){
-            this.luaRunes.editData([this.runeType,$_Key],data.LuaData[$_Key]);
+            this.Base._luaRunes.editData([this.runeType,$_Key],data.LuaData[$_Key]);
         }
         for( let $_Key in data.LuaFN ){
-            this.luaRunesFN.editData($_Key,data.LuaFN[$_Key]);
+            this.Base._luaFnRunes.editData($_Key,data.LuaFN[$_Key]);
         }
         for( let $_Key in data.Tags ){
-            this.tagsRunes.editData($_Key,data.Tags[$_Key]);
+            this.Base._tagsRunes.editData($_Key,data.Tags[$_Key]);
         }
         
         // SAVE
-        this.luaRunesFN.saveData();
-        this.tagsRunes.saveData();
-        this.luaRunes.saveData();
+        this.Base._luaFnRunes.saveData();
+        this.Base._tagsRunes.saveData();
+        this.Base._luaRunes.saveData();
         
         //this.fnLog();
     },
@@ -197,7 +197,7 @@ module.exports = {
         }
         //console.log(aLore);
         this.Base._mDBR = new WZ.GrimDawn.Assets.dbrModule(aLore,`mod_wanez/_runes/items/lore`);
-        this.Base.setCurrentDataMisc(this.tagsRunes);
+        this.Base.setCurrentDataMisc(this.Base._tagsRunes);
     },
     
     iniRuneStones: function(){
@@ -208,10 +208,10 @@ module.exports = {
         
         for( let $_Type in gearTypes ){
             //this.gearSlotToStone[$_Type+'_Generic'] = new WZ.GrimDawn.Wanez.cRuneStone(this.runeConfig,[$_Type,'Generic']);
-            //this.gearSlotToStone[$_Type+'_Generic'].editDataMisc(this.luaStonesFN,this.tagsStones);
+            //this.gearSlotToStone[$_Type+'_Generic'].editDataMisc(this.Base._luaFnStones,this.Base._tagsStones);
             for( let $_Key in gearTypes[$_Type] ){
                 this.gearSlotToStone[gearTypes[$_Type][$_Key].toLowerCase()] = new WZ.GrimDawn.Wanez.cRuneStone(this.runeConfig,[$_Type,gearTypes[$_Type][$_Key]]);
-                this.gearSlotToStone[gearTypes[$_Type][$_Key].toLowerCase()].editDataMisc(this.luaStonesFN,this.tagsStones);
+                this.gearSlotToStone[gearTypes[$_Type][$_Key].toLowerCase()].editDataMisc(this.Base._luaFnStones,this.Base._tagsStones);
                 //luaStonesFN.editData();
             }
         }

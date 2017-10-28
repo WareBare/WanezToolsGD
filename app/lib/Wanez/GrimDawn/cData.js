@@ -19,7 +19,12 @@ module.exports = class cData extends libWZ.Core.cData{
                 $parser = new libWZ.GrimDawn.Parser.cLuaFN();
                 break;
             case `Lua`:
-                temp = $filePath.replace(`.lua`,``).replace(`scripts/`,``).replace(/\//g,`.`).replace(/\\/g,`.`).replace(/^\./,``);
+                if($filePath.includes(`/source/`)){
+                    temp = $filePath.split(`/source/`)[1].replace(`.lua`,``).replace(`scripts/`,``).replace(/\//g,`.`).replace(/\\/g,`.`).replace(/^\./,``);
+                }else{
+                    temp = $filePath.replace(`.lua`,``).replace(`scripts/`,``).replace(/\//g,`.`).replace(/\\/g,`.`).replace(/^\./,``);
+                }
+                
                 //console.log(temp);
                 $parser = new libWZ.GrimDawn.Parser.cLua(temp);
                 break;

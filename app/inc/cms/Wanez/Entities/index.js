@@ -16,19 +16,19 @@ module.exports = {
     containersConfig: new eConfig({name: `wz-containers`}),
     _wzControllers: new WZ.GrimDawn.Wanez.mControllers(),
     //_luaEnemies: new WZ.GrimDawn.cData('C:/Program Files (x86)/Steam/SteamApps/common/Grim Dawn/mods/dev_Wanez/source/wanez/scripts/data/gEnemies.lua',new WZ.GrimDawn.Parser.cLua(`wanez.data.gEnemies`)),
-    _luaEnemies: wzStorageGD.load(`wanez/scripts/data/gEnemies.lua`,{parser: `Lua`}),
+    //_luaEnemies: wzStorageGD.load(`wanez/scripts/data/gEnemies.lua`,{parser: `Lua`}),
     
     
     loadEnemies: function($enemyType){
         this._wzEnemiesDGA = new WZ.GrimDawn.Wanez.mEnemies($enemyType,this._wzEnemiesCore.getEnemies());
         //console.log($enemyType);
-        console.log([this._luaEnemies,this.Base._luaNameToId]);
+        console.log([this.Base._luaEnemies,this.Base._luaNameToId]);
     },
     
     saveCurrentData: function(){
         switch (this.contentType){
             case 'Enemies-DGA':
-                this._wzEnemiesDGA.saveEnemies([this._luaEnemies,this.Base._luaNameToId]);
+                this._wzEnemiesDGA.saveEnemies([this.Base._luaEnemies,this.Base._luaNameToId]);
                 break;
             case 'Containers':
                 this._wzContainersDGA.saveModuleData([this.Base._tagsDGA]);
@@ -39,9 +39,9 @@ module.exports = {
     },
     
     saveDataMisc: function(){
-        this._luaEnemies.saveData();
+        this.Base._luaEnemies.saveData();
         this.Base._luaNameToId.saveData();
-        //console.log([this._luaEnemies,this.Base._luaNameToId]);
+        //console.log([this.Base._luaEnemies,this.Base._luaNameToId]);
     },
     
     saveControllers: function(){
@@ -52,14 +52,27 @@ module.exports = {
         if(!this._wzEnemiesCore) this._wzEnemiesCore = new WZ.GrimDawn.Wanez.mEnemies("core");
         
         let out_ = "",
+            mOnlyUseButtons = {
+                'a_epic_default': true,
+                'a_epic_normal': true,
+                'a_heroic_default': true,
+                'a_heroic_normal': true,
+                'b_epic_default': true,
+                'b_epic_normal': true,
+                'b_heroic_default': true,
+                'b_heroic_normal': true
+            },
             folders = fs.readdirSync(`${WZ.GrimDawn.tFn.getPaths().Mod}/mod_wanez/_dga/difficulties`),
             tempBtns = [];
         
         for(let $_Index in this.Base.aDifficultiesDGA){
-            tempBtns.push({
-                "ONCLICK": `_cms.loadEnemies('${this.Base.aDifficultiesDGA[$_Index].name}');`,
-                "TEXT": this.Base.aDifficultiesDGA[$_Index].name
-            });
+            if(mOnlyUseButtons[this.Base.aDifficultiesDGA[$_Index].name]){
+                tempBtns.push({
+                    "ONCLICK": `_cms.loadEnemies('${this.Base.aDifficultiesDGA[$_Index].name}');`,
+                    "TEXT": this.Base.aDifficultiesDGA[$_Index].name
+                });
+            }
+            
         }
         
         out_ = appData.tpl.Buttons.Default.wzParseTPL(tempBtns);
@@ -79,14 +92,26 @@ module.exports = {
         
     },
     contentContainersDGA: function(){
-        let tempBtns = [],out_ = ``;
+        let tempBtns = [],
+            mOnlyUseButtons = {
+                'a_epic_default': true,
+                'a_epic_normal': true,
+                'a_heroic_default': true,
+                'a_heroic_normal': true,
+                'b_epic_default': true,
+                'b_epic_normal': true,
+                'b_heroic_default': true,
+                'b_heroic_normal': true
+            },out_ = ``;
         
         
         for(let $_Index in this.Base.aDifficultiesDGA){
-            tempBtns.push({
-                "ONCLICK": `_cms.loadContainersDGA('${this.Base.aDifficultiesDGA[$_Index].name}','${this.Base.aDifficultiesDGA[$_Index].difficultyId}','${this.Base.aDifficultiesDGA[$_Index].modeId}');`,
-                "TEXT": this.Base.aDifficultiesDGA[$_Index].name
-            });
+            if(mOnlyUseButtons[this.Base.aDifficultiesDGA[$_Index].name]){
+                tempBtns.push({
+                    "ONCLICK": `_cms.loadContainersDGA('${this.Base.aDifficultiesDGA[$_Index].name}','${this.Base.aDifficultiesDGA[$_Index].difficultyId}','${this.Base.aDifficultiesDGA[$_Index].modeId}');`,
+                    "TEXT": this.Base.aDifficultiesDGA[$_Index].name
+                });
+            }
         }
         
         out_ = appData.tpl.Buttons.Default.wzParseTPL(tempBtns);
