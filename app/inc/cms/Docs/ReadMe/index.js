@@ -26,9 +26,27 @@ module.exports = {
         return `<div id="md_changelog" class="md">${out_}</div>`;
     },
     
+    OpenFile: function(){
+        child_process.exec(`${dirBase}/docs/ReadMe.md`, function(err, data) {
+            if(err){
+                console.error(err);
+                return;
+            }
+        });
+    },
+    
     sidebarBtns_: function(){
-        return [
+        let OpenFileBTN = {};
         
+        if(app.getName() === `Electron`){
+            OpenFileBTN = {
+                "ONCLICK": "_cms.OpenFile()",
+                "TEXT": "Open File"
+            };
+        }
+        
+        return [
+            OpenFileBTN
         ];
     },
     sidebarList_: function(){

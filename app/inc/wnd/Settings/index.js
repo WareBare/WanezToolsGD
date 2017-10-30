@@ -26,7 +26,8 @@ module.exports = {
             `Mastery`,
             `Items`,
             `Merger`,
-            `Mods (Wanez)`
+            `Mods (Wanez)`,
+            `Auto Sync`
         ];
     }
     

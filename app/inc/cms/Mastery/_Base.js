@@ -123,6 +123,100 @@ module.exports = {
         //if(!this._tagsSkills) this.loadTags();
         this.loadTags();
         if(!this.masteryUI) this.masteryUI = this.getMasteries();
+    
+        if(appConfig.get(`GrimDawn.Mastery.PSSource`) && appConfig.get(`GrimDawn.Mastery.PSTarget`) && appConfig.get(`GrimDawn.Mastery.PSSource`).length === appConfig.get(`GrimDawn.Mastery.PSTarget`).length && !_watcherPS){
+            //Log(`_watcherPS`);
+            //console.log(WZ.GrimDawn.tFn.getPaths());
+            let aWatcherPaths = [],
+                mWatcherReplacements = {},
+                BasePathSourcePFX = `${appConfig.get(`GrimDawn.Paths.Working`)}/source/`;
+            for(let iRelPath in appConfig.get(`GrimDawn.Mastery.PSSource`)){
+                aWatcherPaths.push(`${BasePathSourcePFX}${appConfig.get(`GrimDawn.Mastery.PSSource`)[iRelPath]}`);
+                mWatcherReplacements[appConfig.get(`GrimDawn.Mastery.PSSource`)[iRelPath]] = appConfig.get(`GrimDawn.Mastery.PSTarget`)[iRelPath];
+            }
+    
+            _watcherPS = chokidar.watch(aWatcherPaths, {
+                ignored: /(^|[\/\\])\../,
+                //ignored: /^[^.]+$|\.(?!(txt|md)$)([^.]+$)/,
+                persistent: true,
+                disableGlobbing: true
+            });
+            _watcherPS
+                .on('add', (InPath, InStats) => {
+                    let RelPathToPFX = InPath.wzNormalizePath().replace(BasePathSourcePFX.wzNormalizePath(), ``),
+                        bUpdatePFX = false;
+    
+                    for(let kSource in mWatcherReplacements){
+                        if(RelPathToPFX.startsWith(`${kSource.wzNormalizePath()}`)){
+                            RelPathToPFX = RelPathToPFX.replace(kSource.wzNormalizePath(), mWatcherReplacements[kSource].wzNormalizePath());
+                            RelPathToPFX = `${WZ.GrimDawn.tFn.getPaths().Source}/${RelPathToPFX}`;
+                        }
+                    }
+                    try{
+                        //fs.accessSync(`${RelPathToPFX}`); // check if file exists
+                        let stats = fs.statSync(`${RelPathToPFX}`);
+                        //console.log(stats.mtime.getTime());
+                        //Log(InStats.mtime.getTime());
+                        if(stats.mtime.getTime() < InStats.mtime.getTime()){
+                            bUpdatePFX = true;
+                        }
+                    }catch (err){
+                        bUpdatePFX = true;
+                    }
+                    
+                    if(bUpdatePFX){
+                        try{
+                            fs.copySync(`${InPath}`, `${RelPathToPFX}`);
+                            wzNotify.info(`Particle System updated at: ${RelPathToPFX}`,`PFX Updated`);
+                        }catch(err){
+                            Log(err);
+                        }
+                    }
+                    
+                    //Log(InPath);
+                })
+                .on('change', InPath => {
+                    let RelPathToPFX = InPath.wzNormalizePath().replace(BasePathSourcePFX.wzNormalizePath(), ``);
+                    for(let kSource in mWatcherReplacements){
+                        if(RelPathToPFX.startsWith(`${kSource.wzNormalizePath()}`)){
+                            RelPathToPFX = RelPathToPFX.replace(kSource.wzNormalizePath(), mWatcherReplacements[kSource].wzNormalizePath());
+                            RelPathToPFX = `${WZ.GrimDawn.tFn.getPaths().Source}/${RelPathToPFX}`;
+                        }
+                    }
+                    try{
+                        fs.copySync(`${InPath}`, `${RelPathToPFX}`);
+                        wzNotify.info(`Particle System updated at: ${RelPathToPFX}`,`PFX Updated`);
+                    }catch(err){
+                        Log(err);
+                    }
+                })
+                .on('unlink', InPath => {
+                    
+                    if(!appConfig.get(`GrimDawn.AutoSync.BlockDeletion`)){
+                        let RelPathToPFX = InPath.wzNormalizePath().replace(BasePathSourcePFX.wzNormalizePath(), ``);
+    
+                        for(let kSource in mWatcherReplacements){
+                            if(RelPathToPFX.startsWith(`${kSource.wzNormalizePath()}`)){
+                                RelPathToPFX = RelPathToPFX.replace(kSource.wzNormalizePath(), mWatcherReplacements[kSource].wzNormalizePath());
+                                RelPathToPFX = `${WZ.GrimDawn.tFn.getPaths().Source}/${RelPathToPFX}`;
+                            }
+                        }
+    
+                        try{
+                            fs.removeSync(`${RelPathToPFX}`);
+                            wzNotify.info(`Particle System removed at: ${RelPathToPFX}`,`PFX Removed`);
+                        }catch(err){
+                            Log(err);
+                        }
+                    }
+                    
+                })
+                .on('ready', () => {
+                    wzNotify.info(`Filewatcher is done finding all files for "Particle Systems (PFX)"`,`Auto Sync is ready`);
+                });
+        }
+        
+        
         /*
         let aStats = [15.0,22.0,29.0,36.0,44.0,52.0,61.0,70.0,79.0,88.0,97.0,106.0,116.0,126.0,136.0,148.0,159.0,170.0,181.0,192.0,203.0,215.0,227.0,242.0,257.0,280.0],
             aStats4 = wzMathGD.genValues({

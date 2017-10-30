@@ -178,7 +178,7 @@ module.exports = {
     DefinePaths: function(){
         this.PathToMods = `${appConfig.get(`GrimDawn.Paths.Working`).wzNormalizePath()}/mods`;
         
-        this.PathToCompilation = `${this.PathToMods}/dev_Wanez`; // _Compilation
+        this.PathToCompilation = `${this.PathToMods}/dev_WanezModGD`; // _Compilation
         
         //this.PathToGifts = `${this.PathToMods}/dev_Wanez_Gifts`;
         //this.PathToDGA = `${this.PathToMods}/dev_Wanez_DGA`;

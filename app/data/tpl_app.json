@@ -19,7 +19,8 @@
                 "Materia": []
             },
             ".WanezMods": {
-                "Legendary Crafter":[]
+                "Legendary Crafter":[],
+                "Legendary Notify":[]
             },
             ".Merger":{
                 "Mastery Merger": [],

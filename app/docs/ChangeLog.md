@@ -34,11 +34,18 @@
 <a name="v0.3.1-filewatcher"></a>
 ### File Watcher
 * File Watcher trial, loading Markdown files and reloading if changes happen, either by creating a new file, deleting one or updating the text (more in <a href="v0.3.1-mdbbcode">this Section</a>)
+* [Particle System updater](#v0.3.1-mastery-pfx)
 
 <a name="v0.3.1-mastery"></a>
 ### Mastery Tools
 * Mastery Config will now show Vanilla tags even if the tag file has not been loaded
   * only the Base Tags are saved (Soldier, Demolitionist, etc) not their Combo Tags, but the field can be left empty the game is still using the vanilla tags (unless there was a value inside that field before and you deleted it, in that case you'll have to remove the empty tag)
+  
+<a name="v0.3.1-mastery-pfx"></a>
+#### Particle Systems Updater (PFX)
+* In the settings you can add paths these should be relativ paths to the source folder and the target folder, subfolders will be created when there is a file inside
+
+![Auto-Sync Settings for PFX](https://user-images.githubusercontent.com/20875155/32149550-6fd303a8-bd06-11e7-9dc3-3d11dfeacb02.png "Auto-Sync Settings for PFX")
 
 <a name="v0.3.1-mdbbcode"></a>
 ### Markdown and BBCode

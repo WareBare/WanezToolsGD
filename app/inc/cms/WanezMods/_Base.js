@@ -45,13 +45,25 @@ module.exports = {
             let tempClass;
             let addFile = true;
             let aFiles;
+            let aFilesMod;
+            let aFilesCore;
             let aDirs = appConfig.get(`GrimDawn.Items.Directories`) || [];
             aDirs = aDirs.concat(this.aDirsVanillaItems);
             for( let $_Index in aDirs ){
                 if(aDirs[$_Index] !== ``){
                     // add items to array
                     //wzStorageGD.load(`records/creatures/pc/femalepc01.dbr`),
-                    aFiles = wzIO.dir_get_contentsSync(`${WZ.GrimDawn.tFn.getPaths().Core}/${aDirs[$_Index]}`);
+                    //aFiles = wzIO.dir_get_contentsSync(`${WZ.GrimDawn.tFn.getPaths().Core}/${aDirs[$_Index]}`);
+                    aFilesMod = {};
+                    aFilesCore = {};
+                    try{
+                        aFilesMod = wzIO.dir_get_contentsSync(`${WZ.GrimDawn.tFn.getPaths().Mod}/${aDirs[$_Index]}`) || {};
+                    }catch(err){console.log(err);}
+                    try{
+                        aFilesCore = wzIO.dir_get_contentsSync(`${WZ.GrimDawn.tFn.getPaths().Core}/${aDirs[$_Index]}`) || {};
+                    }catch(err){console.log(err);}
+                    
+                    aFiles = Object.assign(aFilesCore, JSON.parse(JSON.stringify( aFilesMod )));
                     //console.log(aFiles);
                     for( let $_FileIndex in aFiles ){
                         if(!addAllFiles){
@@ -59,6 +71,7 @@ module.exports = {
                         }
                         if(addFile){
                             tempClass = wzStorageGD.__get(aFiles[$_FileIndex].split(`/database/`)[1]);
+                            //tempClass = new WZ.GrimDawn.cData(aFiles[$_FileIndex].split(`/database/`)[1]);
                             //wzStorageGD.__get(aFiles[$_FileIndex].split(`/database/`)[1]);
                             let classification = tempClass.__getField(`itemClassification`);
                             if(classification === (appConfig.get(`WanezMods.LegendaryCrafter.excludeEpic`) ? `Legendary` : `Epic`) || classification === `Legendary`){
