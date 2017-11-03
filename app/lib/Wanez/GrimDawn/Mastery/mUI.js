@@ -7,6 +7,8 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
     constructor($dir,$path,$aGenderPC01,$tags,$currentSkill,$objBackups){
         super();
         
+        this.SkillsConfig = new eConfig({name: `gd-skills`});
+        this.SkillsToLink = this.SkillsConfig.get(`linkedSkills`);
         //console.log(`${$path}/${$dir}`);
         this.iDir = $dir;
         this.iPath = $path;
@@ -14,6 +16,16 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
         this.iTags = $tags;
         this.iCurrentSkill = $currentSkill;
         this.iBackups = $objBackups;
+        this.mBonusCoords = {
+            360: {
+                25: true,
+                95: true,
+                165: true
+            }//[`5`,`85`,`165`]
+        };
+        this.mBonusCoords_old = {
+            '165,360': [165, 360]
+        };
         
         this.aSkills = [];
         this.aSkillFiles = false;
@@ -26,7 +38,7 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
         this.uiInfo = `Drag Skill into the slot where you want to move them, moving skills into the container ↑ will make them "unused" and remove them from /classtable.dbr and skilltree after pressing the "Save DBR" button.`;
         this.tpl = {
             "Main": `<div id="appGD_UI">{SKILL_WINDOW}</div>`, // <canvas id="canvas" width="400" height="400">No canvas support</canvas>
-            "SkillWindow": "<div class='skillWindow'><div class='skillConnectors'>{SKILL_CONNECTORS}</div><div class='skillConnectors skillConnectors2'>{SKILL_CONNECTORS2}</div><div class='skillPositions'>{SKILL_POSITIONS}</div><div class='skillPicker'>{SKILL_PICKER}</div></div><img src='img/skills_classbackgroundimage.png' />", // target | skills_classbackgroundimage
+            "SkillWindow": "<div class='skillWindow'><div class='skillConnectors'>{SKILL_CONNECTORS}</div><div class='skillConnectors skillConnectors2'>{SKILL_CONNECTORS2}</div><div class='skillPositions'>{SKILL_POSITIONS}</div><div class='skillLeftPane'><div class='skillPicker'>{SKILL_PICKER}</div><div class='skillBonusLeft'>{SKILL_BONUS_LEFT}</div></div></div><img src='img/skills_classbackgroundimage.png' />", // target | skills_classbackgroundimage
             "SkillPicker": `<div ondrop="_cms.skillDropUnused(event)" ondragover="_cms.skillAllowDrop(event)">{UNUSED}</div><div id="uiBackUps">{BACKUPS}</div>`, //{USED}
             //"SkillBTN": "<div wz-mode='{MODE}' class='skillCell'>{ICON}<wztip>{INFO}</wztip></div>"
             "SkillBTN": `<div wz-mode="{MODE}" id="btn_{COORDS}" ondrop="_cms.skillDrop(event)" ondragover="_cms.skillAllowDrop(event)" ondragstart="_cms.skillDrag(event)" draggable="true" wz-coords="{COORDS}" wz-id="{ID}" wz-tier="{TIER}" class="skillCell{CLASS_CIRCULAR}" onclick="_cms.setSkill({ID});" ondblclick="_cms.Base.goToEditSkill();"><span>{ICON}</span>{INFO}</div>`, // <wztip>{INFO}</wztip> |  ondblclick="_cms.setSkillConnector({ID});"
@@ -284,8 +296,25 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
                 }
             }
         }
-        
-        //const pathUI = this._modDBR_DS.getDataPath(this.aMastery.Paths.UI);
+        // todo DEV
+        if(app.getName() === `Electron`){
+            let mBonusCoords = this.mBonusCoords, iCounter = 50;
+            for(let kY in mBonusCoords){
+                for(let kX in mBonusCoords[kY]){
+            
+                    aSkills[`${kX},${kY}`] = {
+                        "isUsed": false,
+                        "Tier": 9,
+                        "Line": iCounter,
+                        "Connected": false,
+                        "hasConnector": false,
+                        "isCircular": false,
+                        "Parent": false
+                    };
+                }
+                iCounter++;
+            }
+        }
         
         for(let $_SkillID in this.aSkills){
             tempCoords = this.aSkills[$_SkillID].getCoordsStr();
@@ -319,45 +348,6 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
             }
             
         }
-        /*
-        for( let $_Coords in this.objSkills ){
-            fileUI = pathUI[$_Index];
-            
-            if(fileUI.getTemplate() && fileUI.getTemplate() == 'database/templates/ingameui/skillbutton.tpl' && $_Index != 'classtraining.dbr'){
-                let coords = fileUI.getData().bitmapPositionX+','+fileUI.getData().bitmapPositionY;
-                
-                fileData = this.loopBuff(this._modDBR_DS.getDataPath(fileUI.getData().skillName));
-                
-                if(aSkills[coords]){
-                    if(fileData.getData().skillConnectionOn && fileData.getData().skillConnectionOn != ''){
-                        let conCoords = {};
-                        for( let i = 1; i <= fileData.getData().skillConnectionOn.length; i++ ){
-                            // type of connection (fileData.getData().skillConnectionOn[i])
-                            conCoords[this._tplApp.UI.SkillSlots.X[(aSkills[coords].Tier + i)-2] + ',' + this._tplApp.UI.SkillSlots.Y[aSkills[coords].Line]] = 'app/img/'+fileData.getData().skillConnectionOn[i-1].replace(/^.*[\\\/]/, '').replace(/\.tex/,'.png');
-                            //conCoords.push();
-                        }
-                        aConnector.push([
-                            fileData,
-                            conCoords
-                        ]);
-                    }
-                    aSkills[coords].isUsed = true;
-                    aSkills[coords]._UI = fileUI;
-                    aSkills[coords]._Data = fileData;
-                    aSkills[coords].Icon = fileData.getSkillIcon(wzGD_dataSet.PathsDS.Mod.Source);
-                }else{
-                    //console.log('Unused Skill');
-                    unusedSkills.push({
-                        "_UI": fileUI,
-                        "_Data": fileData,
-                        "Icon": ""
-                    });
-                }
-            
-            }
-            
-        }
-        */
     
         let tempObj = false,aGroups = false,tempGrp;
         for( let $_Index in aConnector ){
@@ -400,17 +390,47 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
                 
             }
         }
-        
+        //let TempLinkedModifierClass;
+        /*
+         ,
+         "linkedSkills": {
+         "mod_wanez/_mastery/ui/misc02/skill08": {
+         "mod_wanez/_mastery/ui/misc02/skill01": true,
+         "mod_wanez/_mastery/ui/misc02/skill03": true,
+         "mod_wanez/_mastery/ui/misc02/skill02": true
+         }
+         }
+         */
         for(let $_Coords in aSkills){
             if(aSkills[$_Coords].hasGroup){
             
-            }else if(aSkills[$_Coords] && aSkills[$_Coords].mSkill && aSkills[$_Coords].isUsed){
+            }else if(aSkills[$_Coords] && aSkills[$_Coords].mSkill && aSkills[$_Coords].isUsed && this.SkillsToLink && !this.SkillsToLink[ aSkills[$_Coords].mSkill.getSkillPaths().filePathModifierConfig ]){
                 aGroups = aGroups || [];
                 aGroups[aSkills[$_Coords].mSkill.getSkillId()] = [aSkills[$_Coords].mSkill];
                 
                 aSkills[$_Coords].hasGroup = true;
             }
+            
+            if(aSkills[$_Coords] && aSkills[$_Coords].mSkill && this.SkillsToLink && this.SkillsToLink[ aSkills[$_Coords].mSkill.getSkillPaths().filePathModifierConfig ]){
+                //Log(aSkills[$_Coords].mSkill.getSkillPaths().filePathModifierConfig);
+                //console.log(`we are here!`);
+                for(let $_Coords2 in aSkills){
+                    if(aSkills[$_Coords2] && aSkills[$_Coords2].mSkill && aSkills[$_Coords2].isUsed){
+                        if(this.SkillsToLink[ aSkills[$_Coords].mSkill.getSkillPaths().filePathModifierConfig ][ aSkills[$_Coords2].mSkill.getSkillPaths().filePathModifierConfig ]){
+    
+                            aGroups[ aSkills[$_Coords2].mSkill.getSkillId() ] =
+                                aGroups[ aSkills[$_Coords2].mSkill.getSkillId() ] ||
+                                [ aSkills[$_Coords2].mSkill ];
+                            aGroups[ aSkills[$_Coords2].mSkill.getSkillId() ].push(aSkills[$_Coords].mSkill);
+    
+                            aSkills[$_Coords2].hasGroup = true;
+                        }
+                    }
+                }
+            }
         }
+        
+        
         
         this.aGroups = aGroups;
         //console.log(aGroups);
@@ -418,7 +438,7 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
     }
     
     genOutput($currentSkill){ // CONTENT_
-        let out_ = '',pos_='',con_='',con2_=``,picker_='',pUnused_='',pUsed_='',
+        let out_ = '',pos_='',bonus_=``,con_='',con2_=``,picker_='',pUnused_='',pUsed_='',
             tmpIcon = '<img draggable="false" src="{0}" />',
             tmpAlt = '{0}';
         const aSkills = this.genLayout(),
@@ -504,8 +524,15 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
                 aRep.CLASS_CIRCULAR += ` isCircular`;
             }
             
+            //Log(aSkills[0][$_Coords].Line);
+            if(aSkills[0][$_Coords].Line >= 50){
+                // todo lines
+                //Log(aSkills[0][$_Coords].Line);
+                bonus_ += this.tpl.SkillBTN.wzOut(aRep);
+            }else{
+                pos_ += this.tpl.SkillBTN.wzOut(aRep);
+            }
             
-            pos_ += this.tpl.SkillBTN.wzOut(aRep);
             if(aSkills[0][$_Coords].Line & 1){
                 con2_ += this.tpl.Connector.wzOut(aConnector);
             }else {
@@ -527,9 +554,10 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
             "SKILL_POSITIONS": pos_,
             "SKILL_CONNECTORS": con_,
             "SKILL_CONNECTORS2": `<br />${con2_}`,
-            "SKILL_PICKER": picker_
+            "SKILL_PICKER": picker_,
+            "SKILL_BONUS_LEFT": bonus_
         });
-        
+        //Log(aSkills);
         return this.tpl.Main.wzOut({
             'SKILL_WINDOW': out_
         });

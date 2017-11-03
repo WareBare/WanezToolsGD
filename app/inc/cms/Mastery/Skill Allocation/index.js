@@ -313,8 +313,8 @@ module.exports = {
             setConnector,
             remConnector,
             newUI,
-            createBackup,
-            syncPFX
+            //syncPFX,
+            createBackup
         ];
     },
     sidebarList_: function(){

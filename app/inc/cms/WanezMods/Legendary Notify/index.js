@@ -21,7 +21,7 @@ module.exports = {
     content_: function($contentType){
         this.contentType = $contentType || `Main`; // this.contentType
         
-        let out_ = `Legendary Notify`;
+        let out_ = `Legendary Notify - WARNING: Assets are still missing, because this is not yet finished! Unless you have a working Mod with Wanez: Legendary Notify, the dbr changes won't do a thing.`;
         this.Base.LoadLegendaryItems();
         
         if(this.contentType){
@@ -47,7 +47,7 @@ module.exports = {
                 TempClass.__setField(`onRemoveFromWorld`, `wanez.LN.OnPickUp_Epic`);
             }
     
-            TempClass.saveDBR();
+            if(TempClass.__getField(`FileDescription`) !== `BLANK`) TempClass.saveDBR();
             //Log(TempClass);
         }
     },

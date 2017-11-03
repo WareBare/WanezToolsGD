@@ -19,11 +19,53 @@ module.exports = {
         let fileName = `${this._mSkill.getField(`UI`,`FileDescription`)}.dbr`,
             pathSkillIcon = `${this._mUI.getLogicPath().replace(WZ.GrimDawn.tFn.getPaths().MasterySkills,`${WZ.GrimDawn.tFn.getPaths().MasteryIcons}`)}`,
             newFile = new WZ.GrimDawn.Assets[`aSkill_${$type}`](`${this._mUI.getLogicPath()}/${fileName}`);
-        console.log(`${pathSkillIcon}/skillicon_${this._mSkill.getField(`UI`,`FileDescription`)}_down.tex`);
+        //console.log(`${pathSkillIcon}/skillicon_${this._mSkill.getField(`UI`,`FileDescription`)}_down.tex`);
         
+        let ToolDefault,
+            SkillIconUp = `${pathSkillIcon}/skillicon_${this._mSkill.getField(`UI`,`FileDescription`)}_up.tex`,
+            SkillIconDown = `${pathSkillIcon}/skillicon_${this._mSkill.getField(`UI`,`FileDescription`)}_down.tex`,
+            SkillDisplayName = ``,
+            SkillBaseDescription = ``,
+            MasteryName = pathSkillIcon.split('/').pop().trim().toUpperCase(),
+            SkillFileName = this._mSkill.getField(`UI`,`FileDescription`).wzCapitalize().replace(`_`, ``);
+        
+        if(app.getName() === `Electron`){
+            // todo DEV make public if this becomes a thing
+            switch ($type){
+                case `Modifier`:
+                    ToolDefault = `waneztools/icons/skillicon_modifier_{TYPE}.tex`;
+                    break;
+                case `Transmuter`:
+                    ToolDefault = `waneztools/icons/skillicon_transmuter_{TYPE}.tex`;
+                    break;
+                case `Passive`:
+                    ToolDefault = `waneztools/icons/skillicon_passive_{TYPE}.tex`;
+                    break;
+                case `Converter`:
+                    ToolDefault = `waneztools/icons/skillicon_converter_{TYPE}.tex`;
+                    break;
+                default:
+                    ToolDefault = false;
+                    break;
+            }
+            SkillDisplayName = `tagWzMastery_${MasteryName}_SkillName_${SkillFileName}`;
+            SkillBaseDescription = `tagWzMastery_${MasteryName}_SkillDescription_${SkillFileName}`;
+        }
+        //Log(SkillBaseDescription);
+        
+        if(ToolDefault){
+            SkillIconUp = ToolDefault.wzReplace({
+                TYPE: `up`
+            });
+            SkillIconDown = ToolDefault.wzReplace({
+                TYPE: `down`
+            });
+        }
         newFile.editDBR({
-            skillDownBitmapName: `${pathSkillIcon}/skillicon_${this._mSkill.getField(`UI`,`FileDescription`)}_down.tex`,
-            skillUpBitmapName: `${pathSkillIcon}/skillicon_${this._mSkill.getField(`UI`,`FileDescription`)}_up.tex`
+            skillDownBitmapName: SkillIconDown,
+            skillUpBitmapName: SkillIconUp,
+            skillDisplayName: SkillDisplayName,
+            skillBaseDescription: SkillBaseDescription
         },true);
         
         newFile.saveDBR();

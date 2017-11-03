@@ -25,6 +25,8 @@ module.exports = {
         if(_cms.Base._mSkill){
             this._mSkill = _cms.Base._mSkill;
             _cms.Base._mSkill = false;
+            
+            this.bLoadFX = true;
         }else{
             this._mSkill = this._mUI.getSkillPerId(this._mSkill.getSkillId());
         }
@@ -44,8 +46,10 @@ module.exports = {
             `${(this._mSkill.getField(`UI`,`skillName`)) ? `` : `.`}Files`,
             `${(this._mSkill.getField(`UI`,`skillName`)) ? `` : `.`}Config`,
             `${(this._mSkill.getField(`UI`,`skillName`)) ? `` : `.`}Tags`,
+            //`${(this._mSkill.getField(`UI`,`skillName`)) ? `` : `.`}FX`,
             `${(this._mSkill.getField(`UI`,`skillName`)) ? `` : `.`}Properties`,
-            `${(this._mSkill.getField(`logic`,`spawnObjects`)) ? `` : `.`}Pet Properties`
+            `${(this._mSkill.getField(`logic`,`spawnObjects`)) ? `` : `.`}Spawn Objects`,
+            `${(this._mSkill.getField(`UI`,`skillName`)) ? `` : `.`}Open File`
         ];
     }
     

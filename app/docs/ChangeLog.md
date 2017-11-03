@@ -2,10 +2,9 @@
 
 ---
 
-> 
+> [v0.4.0](#v0.4.0)
 
-> [v0.3.0](#v0.3.0) |
-> [v0.3.1](#v0.3.1)
+> [v0.3.0](#v0.3.0)
 
 > [v0.2.0](#v0.2.0) |
 > [v0.2.4](#v0.2.4)
@@ -29,32 +28,56 @@
 
 ---
 
-<a name="v0.3.1"></a>
-## v0.3.1
-<a name="v0.3.1-filewatcher"></a>
+<a name="v0.4.0"></a>
+## v0.4.0
+<a name="v0.4.0-filewatcher"></a>
 ### File Watcher
-* File Watcher trial, loading Markdown files and reloading if changes happen, either by creating a new file, deleting one or updating the text (more in <a href="v0.3.1-mdbbcode">this Section</a>)
-* [Particle System updater](#v0.3.1-mastery-pfx)
+* File Watcher trial, syncing .pfx
+* the old copy PFX features have been removed (Settings and Button), there is no need to press a button it will automatically save the updated .pfx to the Target
+  * [Particle System updater](#v0.4.0-mastery-pfx)
 
-<a name="v0.3.1-mastery"></a>
+<a name="v0.4.0-mastery"></a>
 ### Mastery Tools
 * Mastery Config will now show Vanilla tags even if the tag file has not been loaded
-  * only the Base Tags are saved (Soldier, Demolitionist, etc) not their Combo Tags, but the field can be left empty the game is still using the vanilla tags (unless there was a value inside that field before and you deleted it, in that case you'll have to remove the empty tag)
+  * only the Base Tags are saved (Soldier, Demolitionist, etc) not their Combo Tags, but the field can be left empty the game is still using the vanilla tags (unless there was a value inside that field before and you deleted it, in that case you'll have to remove the empty tag inside the .txt yourself)
+* you can now add Modifiers to skills without connectors and they will be added after each skill they are linked to in the SkillTree (Demolitionist and Inquisitor have that kind of Modifier)
+  * Modifiers have under Files in the Skill Edit window a list of skills that are not Modifiers, Transmuters or Passives.
+* you can now open DBR Files from inside the Skill Edit Window (Open File), it will open the DBR Editor with the DBR loaded
+  * skillProjectileName, projectileFragmentsName, radiusEffectName, spawnObjects (1-4 pets) - are currently the only records being checked
+    * spawnObjects will only show the value for at the first key of the array, a new button was created to delete all files but the one you can edit and will create all other files again based on those changes
+  * it also checks if it is leading to an existing file in the Mod Directory, if not it will not show up
+  * need to click on ***Open File*** again after changing a DBR to refresh the window
+* ***Pets***
+  * *Open File*
+    * you can open pet files (spawnObjectX the file to the first index in the Array)
+  * *Files*
+    * updated and now shows all spawnObjects
+	* added a button to fill in remaining Array indexies up to skillUltimateLevel (/pets/mypet_01.dbr is used to continue the line and fill in /pets/mypet_02.dbr)
+  * *Pet Properties* renamed to *Spawn Objects*
+    * a new button is shown that will delete all other files but the first
+	* after using the button and deleting the files the window will refresh to prepare the creation of the new Pet files, click again on Pet Properties to finsih the process
+	* Pet files have been created based on the first Pet Level (up to the skillUltimateLevel)
+	* this increments the skilllevel with a 1 inside, if you want to prevent this for a skill use something like (1) since the skillLevel is using an equation it is totally fine to do that
+	* still only supports the first spawnObjects, if you are using more than one use the Files tab to switch the spawnObjects2 to spawnObjects and create the pet files that way (the reason for that is ease of use and a better view, it would just clutter the window too much)
+  * *Properties*
+    * the first spawnObjects' dbr is parsed for its skillName, if the file exists inside the Mod it will show up in a new list
+	* by clicking on a list item the pet's skills can be edited
   
-<a name="v0.3.1-mastery-pfx"></a>
+<a name="v0.4.0-mastery-pfx"></a>
 #### Particle Systems Updater (PFX)
-* In the settings you can add paths these should be relativ paths to the source folder and the target folder, subfolders will be created when there is a file inside
+* In the settings you can add paths. These paths should be relativ paths to the source directory and target directory. Subdirectories will be created when there is a new or updated file inside one of the source's Subdirectories.
 
 ![Auto-Sync Settings for PFX](https://user-images.githubusercontent.com/20875155/32149550-6fd303a8-bd06-11e7-9dc3-3d11dfeacb02.png "Auto-Sync Settings for PFX")
 
-<a name="v0.3.1-mdbbcode"></a>
-### Markdown and BBCode
-* reworked the editor by using an external program
-* file watcher will update the loaded file if necessary
-* file can be opened with a button, executing the CLI for the file using its default program to load
-* .md and .txt files in listed mod folders are added (for readme)
-  * you can add aditional paths in the Settings
-
+* .pfx from PFX Sources are copied into the PFX Targets
+* for this to work you have to keep the Program open with any of the Mastery Sections, you will see a quick Info Notification at the top when it starts syncing
+  * when the Filewatcher adds files it checks whether the target files are older than the source files and updates them if they are
+* the list reflects an array, Source position 1 is going to be copied to Target at position 1
+* to the Picture above:
+  * I have my .pfx source in /dev/mastery/someclass/fancy_particle.pfx
+  * when I use the Save function inside the PSEditor, WanezToolsGD will copy that file to: /wanez/mastery/fx/particlesystems/someclass/fancy_particle.pfx
+  * creating a new file will copy that new .pfx to the target, I just need create a new Asset for it
+  * if all your Particle Systems have the same folder structure you only need one entry, if you have another for item skills or something else... you can add as many paths as you like, they just have to have the same position
 
 ---
 <a name="v0.3.0"></a>

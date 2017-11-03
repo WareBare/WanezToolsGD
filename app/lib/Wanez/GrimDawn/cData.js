@@ -197,6 +197,9 @@ module.exports = class cData extends libWZ.Core.cData{
             skillConnectionOff: true,
             skillConnectionOn: true,
             spawnObjects: true,
+            spawnObjects2: true,
+            spawnObjects3: true,
+            spawnObjects4: true,
             charFxPakOtherNames: true,
             ragDollDirection: true,
             ragDollEffect: true,
@@ -207,7 +210,8 @@ module.exports = class cData extends libWZ.Core.cData{
             charBuffFxType: true,
             skillProjectileName: true,
             targetingMode: true,
-            fxChanges: true
+            fxChanges: true,
+            skillTemplates: true
         };
         
         retValue = {};

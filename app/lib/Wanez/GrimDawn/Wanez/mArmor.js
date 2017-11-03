@@ -36,7 +36,7 @@ module.exports = class mArmor extends libWZ.GrimDawn.cModule{
                         //console.log(tempParams);
                         tempClass = new libWZ.GrimDawn.Wanez.cItem([$_Type,$_Slot,this.iIndex],arrVariation[$_Index],$lvl,this.iSettings.itemFile,this.iTier,tempParams);
                         tempClass.editDBR({
-                            itemClassification: ($lvl >= 50) ? `Legendary` : (($lvl >= 25) ? `Epic` : `Rare`)
+                            itemClassification: ($lvl >= 71) ? `Legendary` : (($lvl >= 26) ? `Epic` : `Rare`)
                         });
                         //console.log(arrVariation[$_Index]);
                         aArmor[tempArmorKey].push(tempClass);

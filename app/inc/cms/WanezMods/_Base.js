@@ -10,6 +10,12 @@
 module.exports = {
     tplContent: {},
     aLegendaryItemsClasses: false,
+    aAutoLootItemsClasses: false,
+    
+    aDirsVanillaItemsForAutoLoot: [
+        `records/items/materia`,
+        `records/items/crafting/materials`
+    ],
     aDirsVanillaItems: [
         `records/items/gearaccessories/medals`,
         `records/items/gearaccessories/necklaces`,
@@ -29,11 +35,70 @@ module.exports = {
         `records/items/gearweapons/guns2h`,
         `records/items/gearweapons/melee2h`,
         `records/items/gearweapons/shields`,
-        `records/items/gearweapons/swords1h`
+        `records/items/gearweapons/swords1h`,
+        `records/items/upgraded/gearaccessories/medals`,
+        `records/items/upgraded/gearaccessories/necklaces`,
+        `records/items/upgraded/gearaccessories/rings`,
+        `records/items/upgraded/gearaccessories/waist`,
+        `records/items/upgraded/gearfeet`,
+        `records/items/upgraded/gearhands`,
+        `records/items/upgraded/gearhead`,
+        `records/items/upgraded/gearlegs`,
+        `records/items/upgraded/gearshoulders`,
+        `records/items/upgraded/geartorso`,
+        `records/items/upgraded/gearweapons/axe1h`,
+        `records/items/upgraded/gearweapons/blunt1h`,
+        `records/items/upgraded/gearweapons/caster`,
+        `records/items/upgraded/gearweapons/focus`,
+        `records/items/upgraded/gearweapons/guns1h`,
+        `records/items/upgraded/gearweapons/guns2h`,
+        `records/items/upgraded/gearweapons/melee2h`,
+        `records/items/upgraded/gearweapons/shields`,
+        `records/items/upgraded/gearweapons/swords1h`,
     ],
     
     AddLegendaryItem: function(ItemClass){
     
+    },
+    
+    LoadAutoLootItems: function(){
+        if(!this.aAutoLootItemsClasses){
+            this.aAutoLootItemsClasses = this.aAutoLootItemsClasses || [];
+            
+            let TempClass,
+                aFiles,
+                aFilesMod,
+                aFilesCore,
+                aDirs = appConfig.get(`WanezMods.AutoLoot.Directories`) || [];
+    
+            aDirs = aDirs.concat(this.aDirsVanillaItemsForAutoLoot);
+            for( let $_Index in aDirs ){
+                aFilesMod = {};
+                aFilesCore = {};
+                
+                try{
+                    aFilesMod = wzIO.dir_get_contentsSync(`${WZ.GrimDawn.tFn.getPaths().Mod}/${aDirs[$_Index]}`) || {};
+                }catch(err){console.log(err);}
+                try{
+                    aFilesCore = wzIO.dir_get_contentsSync(`${WZ.GrimDawn.tFn.getPaths().Core}/${aDirs[$_Index]}`) || {};
+                }catch(err){console.log(err);}
+    
+                aFiles = Object.assign(aFilesCore, JSON.parse(JSON.stringify( aFilesMod )));
+    
+                for( let $_FileIndex in aFiles ){
+                    
+                    TempClass = wzStorageGD.__get(aFiles[$_FileIndex].split(`/database/`)[1]);
+    
+                    this.aAutoLootItemsClasses.push(TempClass);
+                    
+                }
+            }
+            TempClass = wzStorageGD.__get(`records/items/questitems/scrapmetal.dbr`);
+            this.aAutoLootItemsClasses.push(TempClass);
+    
+            TempClass = wzStorageGD.__get(`records/items/questitems/quest_dynamite.dbr`);
+            this.aAutoLootItemsClasses.push(TempClass);
+        }
     },
     
     LoadLegendaryItems: function(){

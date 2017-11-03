@@ -155,6 +155,10 @@ String.prototype.wzNormalizePath = function(){
     return this.replace(/\\/g,`/`);
 };
 
+String.prototype.wzCapitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+};
+
 wzMerge = function(target,source){
     Object.keys(source).forEach(function($_Key) { target[$_Key] = source[$_Key]; });
     //console.log(target);
@@ -188,4 +192,17 @@ String.prototype.wzParseTPL = function($aButtons){
         if($aButtons[$_Index].TEXT) btns_ += this.wzOut($aButtons[$_Index]);
     }
     return btns_;
+};
+
+wzOpenModFile = function(InFilePath){
+    //WZ.GrimDawn.tFn.getPaths().Source
+    //Log(`${appConfig.get(`GrimDawn.Paths.Mods`)[appConfig.get(`GrimDawn.activeMod`)]}`);
+    // C:\Program Files (x86)\Steam\steamapps\common\Grim Dawn\database\records\game
+    child_process.exec(`"${appConfig.get(`GrimDawn.Paths.Game`)}/DBREditor.exe" "${appConfig.get(`GrimDawn.Paths.Working`)}" "${appConfig.get(`GrimDawn.Paths.Game`)}" "${appConfig.get(`GrimDawn.Paths.Mods`)[appConfig.get(`GrimDawn.activeMod`)]}" "${WZ.GrimDawn.tFn.getPaths().Mod}/${InFilePath}"`, function(err, data) {
+        if(err){
+            wzNotify.err(`File does not exists, make sure the file in question is in your Mod!`, `File not found!`);
+            console.error(err);
+            return;
+        }
+    });
 };

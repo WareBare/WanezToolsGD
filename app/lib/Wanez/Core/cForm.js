@@ -45,7 +45,8 @@ module.exports = class cFrom extends libWZ.Core.cBase{
                 textArea: `<label><span>{LABEL}</span><textarea name="{NAME}" wzReload="{RELOAD}" wzType="{WZ_TYPE}" onkeydown="wzOnFormEnter(event);"onchange="{EVENT_ONCHANGE}"{SINGLE_ATTRIBUTES}>{VALUE}</textarea></label>`,
                 comboBox: `<label><span>{LABEL}</span><select{SIZE} onkeydown="wzOnFormEnter(event);" wzType="{WZ_TYPE}" wzReload="{RELOAD}" name="{NAME}" {EVENT_TYPE}="{EVENT_ONCHANGE}"{SINGLE_ATTRIBUTES}>{VALUE}</select></label>`, //  class="comboBox" size="5"  onmousedown="if(this.options.length>4){this.size=4;}" onchange="this.size=0;{EVENT_ONCHANGE}"
                 comboBoxItem: `<option value="{VALUE}"{SELECTED}>{TEXT}</option>`,
-                checkBox: `<label><span>{LABEL}</span><input type="{TYPE}" tabindex="-1" name="{NAME}" wzReload="{RELOAD}" wzType="{WZ_TYPE}" value="{VALUE}" onchange="{EVENT_ONCHANGE}"{SINGLE_ATTRIBUTES}></label>`
+                checkBox: `<label><span>{LABEL}</span><input type="{TYPE}" tabindex="-1" name="{NAME}" wzReload="{RELOAD}" wzType="{WZ_TYPE}" value="{VALUE}" onchange="{EVENT_ONCHANGE}"{SINGLE_ATTRIBUTES}></label>`,
+                dataList: `<label><span>{LABEL}</span><input type="text" oninput="wzOnChangeDataList(this)" /><select{SIZE} onkeydown="wzOnFormEnter(event);" wzType="{WZ_TYPE}" wzReload="{RELOAD}" name="{NAME}" {EVENT_TYPE}="{EVENT_ONCHANGE}"{SINGLE_ATTRIBUTES}>{VALUE}</select></label>`
             }
         };
     
@@ -72,14 +73,15 @@ module.exports = class cFrom extends libWZ.Core.cBase{
     
     getValue($tempValue,$tempItem){
         let retValue = ``,tempArray,tempValue;
-    
+        //Log($tempValue);
+        //Log($tempItem);
         if( Array.isArray($tempValue) ){
             tempArray = $tempValue;
             for(let $_Index in tempArray){
                 if(retValue !== ``) retValue += `\n`;
                 retValue += `${tempArray[$_Index]}`;
             }
-        }else if($tempItem.type.includes(`comboBox`) || $tempItem.type === `listBox` || $tempItem.type === `listBoxLarge`) {
+        }else if($tempItem.type.includes(`comboBox`) || $tempItem.type === `listBox` || $tempItem.type === `listBoxLarge` || $tempItem.type === `dataList`) {
             for (let $_Value in $tempItem.data) {
                 tempValue = ($tempItem.dataUseValue) ? $_Value : $tempItem.data[$_Value];
                 //tempValue = ($tempItem.dataUseKey) ? $tempItem.data[$_Value] : $_Value;
@@ -142,6 +144,9 @@ module.exports = class cFrom extends libWZ.Core.cBase{
                 listAreaLarge: this.tplForm.fields.list.wzOut({
                     WZ_TYPE: `ListAreaLarge`
                 }),
+                listAreaWide: this.tplForm.fields.list.wzOut({
+                    WZ_TYPE: `ListAreaWide`
+                }),
                 comboBox: this.tplForm.fields.comboBox.wzOut({
                     WZ_TYPE: `ComboBox`,
                     SIZE: ``,
@@ -181,6 +186,11 @@ module.exports = class cFrom extends libWZ.Core.cBase{
                     WZ_TYPE: `NumberDefault`,
                     EVENT_TYPE: `onChange`,
                     SPECIAL: ` step="{STEP}"`
+                }),
+                dataList: this.tplForm.fields.dataList.wzOut({
+                    WZ_TYPE: `ListBoxLarge`,
+                    SIZE: ` size="10"`,
+                    EVENT_TYPE: `onBlur`
                 })
             };
         
@@ -348,8 +358,51 @@ module.exports = class cFrom extends libWZ.Core.cBase{
     
 };
 
-wzOnFormEnter = function(e){
+wzOnFormEnter = function(e, InWndId, InFormId){
     if (e.keyCode === 13) {
         document.activeElement.blur();
     }
+};
+
+wzOnChangeDataList = function(el){
+    let mList = el.nextSibling, TempLetter, bTempFieldHasLetter,
+        aToCheck = el.value.split(/(?=[A-Z])/);
+    //Log(el.value);
+    
+    //Log(el.nextSibling[0].style.display = `none`);
+    
+    for(let kFieldName in mList){
+        bTempFieldHasLetter = true;
+        if(mList[kFieldName] && mList[kFieldName].value && mList[kFieldName].value !== ``){
+            //Log(mList[kFieldName].value);
+            for(let iValue in aToCheck){
+                TempLetter = aToCheck[iValue];
+                if(typeof TempLetter === `string`) {
+                    //Log(TempLetter);
+                    if(parseInt(iValue) === 0 && mList[kFieldName].value.startsWith(TempLetter)){
+                        //Log(TempLetter);
+                    }
+                    else{
+                        if(bTempFieldHasLetter && mList[kFieldName].value.includes(TempLetter)){
+        
+                        }else{
+                            bTempFieldHasLetter = false;
+                        }
+                    }
+                    
+                }
+            }
+            
+            if(bTempFieldHasLetter){
+                mList[kFieldName].style.display = `block`;
+                //mList[kFieldName].hidden = "false";
+            }else{
+                mList[kFieldName].style.display = `none`;
+                //mList[kFieldName].hidden = "true";
+            }
+        }
+        
+    }
+    
+    //wzWND(InWndId).__getContent().forms[InFormId]
 };

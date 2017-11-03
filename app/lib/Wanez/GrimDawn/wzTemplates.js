@@ -166,6 +166,15 @@ module.exports = {
         }
         
         return objData;
+    },
+    
+    hasField: function(InTemplatePath,InFieldName){
+        let bHasField = false,
+            mTemplateData = this.__getDBR(InTemplatePath);
+        
+        if(mTemplateData[InFieldName] || mTemplateData[InFieldName] === ``) bHasField = true;
+        
+        return bHasField;
     }
     
 };

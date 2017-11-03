@@ -191,6 +191,7 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
                 'database/templates/skill_buffradius.tpl': true,
                 'database/templates/skill_attackbuffradius.tpl': true,
                 'database/templates/skillsecondary_buffradius.tpl': true,
+                'database/templates/skillsecondary_buffselfduration.tpl': true,
                 'database/templates/skillsecondary_petmodifier.tpl': true
             };
         
@@ -458,14 +459,18 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
     getSkillPaths(){
         let aSkillLogic = wzStorageGD.__get(this.aSkills.logic),
             aSkillBuff = (this.aSkills.buff) ? wzStorageGD.__get(this.aSkills.buff[0]) : false,
-            logicRelFilePath = (aSkillBuff) ? aSkillBuff.getFilePath().split(`/database/`)[1] : ( (aSkillLogic) ? aSkillLogic.getFilePath().split(`/database/`)[1] : `` ),aPaths = {
-            'relPath': this.iFilePath.split(`/database/`)[1].replace(`/${this.iFileName}`,``),
-            'relFilePath': this.iFilePath.split(`/database/`)[1],
-            'filePath': this.iFilePath,
-            'fileName': this.iFileName,
-            'logicRelFilePath': logicRelFilePath,
-            'logicRelPath': logicRelFilePath.substring(0, logicRelFilePath.lastIndexOf("/"))
-        };
+            logicRelFilePath = (aSkillBuff) ? aSkillBuff.getFilePath().split(`/database/`)[1] : ( (aSkillLogic) ? aSkillLogic.getFilePath().split(`/database/`)[1] : `` ),
+            logicRelBuffFilePath = (aSkillLogic) ? aSkillLogic.getFilePath().split(`/database/`)[1] : `` ,
+            aPaths = {
+                'relPath': this.iFilePath.split(`/database/`)[1].replace(`/${this.iFileName}`,``),
+                'relFilePath': this.iFilePath.split(`/database/`)[1],
+                'filePath': this.iFilePath,
+                'fileName': this.iFileName,
+                'logicRelFilePath': logicRelFilePath,
+                'logicRelPath': logicRelFilePath.substring(0, logicRelFilePath.lastIndexOf("/")),
+                'logicRelBuffFilePath': logicRelBuffFilePath,
+                'filePathModifierConfig': this.iFilePath.split(`/database/`)[1].replace(`.dbr`,``).replace(`.`, `-`)
+            };
         return aPaths;
     }
     
@@ -483,27 +488,40 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
         }
     }
     
-    getField($type,$field){
-        let aKeys = $type.split(`.`),
-            tempArray = this.aSkills;
-        
-        for(let $_Index in aKeys){
-            tempArray = tempArray[aKeys[$_Index]];
-        }
-        
-        return (tempArray) ? wzStorageGD.__get(tempArray).getFieldValue($field) : ``;
-    }
-    setField($type,$opt,$dataMisc){
-        let aKeys = $type.split(`.`),tempArray = this.aSkills;
+    getField(InType,$field){
+        let TempArray = this.aSkills,
+            StorageDBR = false;
+        if(InType.endsWith(`.dbr`)){
+            StorageDBR = InType;
+        }else{
+            let aKeys = InType.split(`.`);
     
-        for(let $_Index in aKeys){
-            tempArray = tempArray[aKeys[$_Index]];
+            for(let $_Index in aKeys){
+                TempArray = TempArray[aKeys[$_Index]];
+            }
+            StorageDBR = TempArray;
         }
-        
-        if(tempArray) wzStorageGD.update(tempArray,$opt,$dataMisc,true);//.editDBR($opt,true);
+    
+        return (StorageDBR) ? wzStorageGD.__get(StorageDBR).getFieldValue($field) : ``;
     }
-    getScalableFields(){
-        let aSkillLogic = wzStorageGD.__get(this.aSkills.logic),
+    setField(InType,$opt,$dataMisc){
+        let TempArray = this.aSkills,
+            StorageDBR = false;
+        if(InType.endsWith(`.dbr`)){
+            StorageDBR = InType;
+        }else{
+            let aKeys = InType.split(`.`);
+    
+            for(let $_Index in aKeys){
+                TempArray = TempArray[aKeys[$_Index]];
+            }
+            StorageDBR = TempArray;
+        }
+    
+        if(StorageDBR) wzStorageGD.update(StorageDBR,$opt,$dataMisc,true);//.editDBR($opt,true);
+    }
+    getScalableFields(InDBR = false){
+        let aSkillLogic = wzStorageGD.__get( ( (InDBR) ? InDBR : this.aSkills.logic ) ),
             retValue = false;
         if(aSkillLogic){
             retValue = aSkillLogic.getScalableFields();

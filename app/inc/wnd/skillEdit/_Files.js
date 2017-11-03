@@ -17,6 +17,39 @@ module.exports = {
         //console.log(`custom submit: ${$el.value}`);
     //},
     
+    OnChangeSkillLinkCheckBox: function(el){
+        let ConfigKey = `linkedSkills.${this._mSkill.getSkillPaths().filePathModifierConfig}`;
+        
+        if(el.checked){
+            this.skillConfig.set(`${ConfigKey}.${el.value}`, true)
+        }else{
+            this.skillConfig.delete(`${ConfigKey}.${el.value}`);
+        }
+    },
+    
+    FillRemainingObjects: function(){
+        
+        let TempObjectStr, TempPetDBR, TempFileName, TempMap;
+        for(let i=1; i <= 4; i++){
+            TempObjectStr = `spawnObjects${(i>1) ? i : ``}`;
+            if(this._mSkill.getField(`logic`, TempObjectStr) && (TempPetDBR = (Array.isArray(this._mSkill.getField(`logic`, TempObjectStr))) ? this._mSkill.getField(`logic`, TempObjectStr)[0] : this._mSkill.getField(`logic`, TempObjectStr) ) ){
+                //Log(TempObjectStr);
+                TempMap = {};
+                TempMap[TempObjectStr] = [TempPetDBR];
+                for(let j=2; j <= parseInt(this._mSkill.getField(`logic`, `skillUltimateLevel`)); j++){
+                    TempFileName = TempPetDBR.split(`/`).pop();
+                    //Log(TempPetDBR.split(`/`).pop().replace(`01`,`${(`0${j}`).slice(-2)}`));
+                    //Log(TempPetDBR.replace(TempFileName, `${TempFileName.replace(`01`,`${(`0${j}`).slice(-2)}`)}`));
+    
+                    TempMap[TempObjectStr].push( TempPetDBR.replace(TempFileName, `${TempFileName.replace(`01`,`${(`0${j}`).slice(-2)}`)}`) );
+                }
+            }
+            this._mSkill.setField(`logic`, TempMap);
+        }
+        
+        wzWND(this.wndId).refresh();
+    },
+    
     content_: function(){
         let out_ = ``,tempFormId,tempOpt,tempItems,fieldName;
         
@@ -56,7 +89,14 @@ module.exports = {
                 out_ += this.forms[tempFormId].create();
             }
         }
-        if(this._mSkill.aSkills.logic && (this._mSkill.getField(`logic`,`Class`).includes(`Pet`) || this._mSkill.getField(`logic`,`Class`).includes(`pet`) || this._mSkill.getField(`logic`,`spawnObjects`)) ){
+        //if(this._mSkill.aSkills.logic && (this._mSkill.getField(`logic`,`Class`).includes(`Pet`) || this._mSkill.getField(`logic`,`Class`).includes(`pet`) || this._mSkill.getField(`logic`,`spawnObjects`)) ){
+        if(wzTemplates.hasField(this._mSkill.getField(`logic`,`templateName`), `spawnObjects`) || wzTemplates.hasField(this._mSkill.getField(`logic`,`templateName`), `spawnObjects2`) || wzTemplates.hasField(this._mSkill.getField(`logic`,`templateName`), `spawnObjects3`) || wzTemplates.hasField(this._mSkill.getField(`logic`,`templateName`), `spawnObjects4`)){
+            
+            let spawnObjects = {},
+                spawnObjects2 = {},
+                spawnObjects3 = {},
+                spawnObjects4 = {};
+            
             this.forms.main_form = new WZ.Core.cForm({
                 id: 'main_form',
                 isWnd: this.wndId,
@@ -66,10 +106,31 @@ module.exports = {
                     //custom: `submitForm(this)`
                 },
                 items: {
-                    'Main File': {
+                    'Pet - spawnObjects': {
                         'logic::spawnObjects': {
                             label: `spawnObjects`,
-                            type: `listAreaLarge`,
+                            type: `listAreaWide`,
+                            data: Object.assign({'':``},this._mUI.getSkillFiles(true)),
+                            dataUseValue: true,
+                            dataPath: this._mUI.getLogicPath()
+                        },
+                        'logic::spawnObjects2': {
+                            label: `spawnObjects2`,
+                            type: `listAreaWide`,
+                            data: Object.assign({'':``},this._mUI.getSkillFiles(true)),
+                            dataUseValue: true,
+                            dataPath: this._mUI.getLogicPath()
+                        },
+                        'logic::spawnObjects3': {
+                            label: `spawnObjects3`,
+                            type: `listAreaWide`,
+                            data: Object.assign({'':``},this._mUI.getSkillFiles(true)),
+                            dataUseValue: true,
+                            dataPath: this._mUI.getLogicPath()
+                        },
+                        'logic::spawnObjects4': {
+                            label: `spawnObjects4`,
+                            type: `listAreaWide`,
                             data: Object.assign({'':``},this._mUI.getSkillFiles(true)),
                             dataUseValue: true,
                             dataPath: this._mUI.getLogicPath()
@@ -77,9 +138,41 @@ module.exports = {
                     }
                 }
             });
-            out_ += this.forms.main_form.create();
+            out_ += `<span class="formBTN" title="dbr file name must contain exactly one 01; Continues the counter /pets/mypet_01.dbr adds /mypet_02.dbr to the array up to the Ultimate Skill Rank - for all spawnObjects" onclick="wzWND('${this.wndId}').__getContent().FillRemainingObjects();">Fill Remaining Objects</span>${this.forms.main_form.create()}`;
         }
         
+        if(this._mSkill.aSkills.logic && (this._mSkill.getField(`logic`,`templateName`) === `database/templates/skill_modifier.tpl` ) ){
+            let ConfigKey = `linkedSkills.${this._mSkill.getSkillPaths().filePathModifierConfig}`,
+                LinkedSkills = this.skillConfig.get(ConfigKey),
+                LinkToSkill_ = ``, TempSkillClass,
+                LinkToSkillItems_ = ``, mIgnoreTemplatesForLinking = {
+                    'database/templates/skill_modifier.tpl': true,
+                    'database/templates/skill_transmuter.tpl': true,
+                    'database/templates/skill_passive.tpl': true
+                },
+                tplFrame = `<fieldset><legend>Link to Skill</legend>{ITEMS}</fieldset>`,
+                tplItem = `<label><input type="checkbox" value="{VALUE}" onchange="wzWND('${this.wndId}').__getContent().OnChangeSkillLinkCheckBox(this);" {STATE} /><span>{TEXT}</span></label>`;
+    
+            //console.log(this._mUI.aSkills);
+            // todo finish checkbox default output
+            for(let iId in this._mUI.aSkills){
+                TempSkillClass = this._mUI.aSkills[iId];
+                if(!mIgnoreTemplatesForLinking[TempSkillClass.getField(`logic`,`templateName`)]){
+                    console.log(TempSkillClass);
+                    LinkToSkillItems_ += tplItem.wzReplace({
+                        STATE: ( LinkedSkills && LinkedSkills[ TempSkillClass.getSkillPaths().filePathModifierConfig ] ) ? ` checked` : ``,
+                        VALUE: TempSkillClass.getSkillPaths().filePathModifierConfig,
+                        TEXT: `${TempSkillClass.getSkillName()}`
+                    });
+                }
+            }
+            
+            LinkToSkill_ = tplFrame.wzReplace({
+                ITEMS: LinkToSkillItems_
+            });
+            
+            out_ += `<div class="wndMasterySkillEdit">${LinkToSkill_}</div>`;
+        }
         
         //out_ = ``;
         

@@ -13,23 +13,38 @@ module.exports = {
     titlePage: `Properties`,
     //curSwitch: ``,
     
+    //ActiveFile: false,
+    
     forms: {},
     
-    submitNewField($el){
+    submitNewField($el){ // OLD
         //console.log($el.value);
         let tempOpt = {};
     
         tempOpt[$el.value] = [1,2];
-        this._mSkill.setField(`logic`,tempOpt);
+        this._mSkill.setField(this.ActiveFile || `logic`,tempOpt);
         this.curSwitch = $el.value;
         
         wzWND(this.wndId).refresh();
     },
+    
+    AddNewField($el){
+        let tempOpt = {};
+    
+        tempOpt[$el.value] = [1,2];
+        this._mSkill.setField(this.ActiveFile || `logic`,tempOpt);
+        this.curSwitch = $el.value;
+    
+        wzWND(this.wndId).refresh();
+        
+        Log(tempOpt);
+    },
+    
     deleteProperty(){
         let tempOpt = {};
     
         tempOpt[this.curSwitch] = ``;
-        this._mSkill.setField(`logic`,tempOpt);
+        this._mSkill.setField(this.ActiveFile || `logic`,tempOpt);
         this.curSwitch = false;
     
         wzWND(this.wndId).refresh();
@@ -38,28 +53,12 @@ module.exports = {
     submitSwitch: function($el){
         this.curSwitch = $el.value;
         
-        //console.log(this.curSwitch);
+        wzWND(this.wndId).refresh();
     
-        wzWND(this.wndId).refresh();
-        //console.log(this.curSwitch);
+        setTimeout(() => {
+            window.location = `#wnd-values-form`;
+        },10);
     },
-    /*
-    submitCustomForm: function($el){
-        let field = $el.name.split(`::`);
-        
-        //console.log(this.ignoreTag);
-        if(field[0] === `ignoreSkill`){
-            this.ignoreLvL[parseInt(field[1])] = $el.checked;
-        }else if(field[0] === `ignoreTag`){
-            this.ignoreTag = $el.checked;
-            //console.log(this.ignoreTag);
-            //console.log($el.checked);
-        }
-        //console.log(`${$el.checked}`);
-        wzWND(this.wndId).refresh();
-        //console.log(this.ignoreTag);
-    },
-    */
     onChange: function($el){
         //console.log(`${$el.value}`);
         let type = ($el) ? $el.name.split(`::`)[1] : false,tempOpt = {},
@@ -74,8 +73,6 @@ module.exports = {
                 end: 6
             };
     
-        //this.newData = this.newData || [0,0,1.0];
-    
         if(type) {
             this.newData[typeToIndex[type]] = parseFloat($el.value);
         }
@@ -83,7 +80,7 @@ module.exports = {
         this.newValues = wzMathGD.genValues({
             dec: 1,
             mul: this.newData[2],
-            max: parseInt(this._mSkill.getField(`logic`,`skillUltimateLevel`)) + 10,
+            max: parseInt(this._mSkill.getField(this.ActiveFile || `logic`,`skillUltimateLevel`)) + 10,
             start: this.newData[0],
             number: this.newData[1],
             incInc: this.newData[4],
@@ -91,8 +88,6 @@ module.exports = {
             incOnceEvery: this.newData[5],
             numberMax: this.newData[6]
         });
-        
-        //console.log(`${this.newValues}`);
         
         for(let $_Index in this.newValues){
             //if(oldValues_ !== ``) oldValues_ += ``
@@ -105,14 +100,14 @@ module.exports = {
         //console.log(`save`);
         if(this.newValues){
             //console.log();
-            this.skillConfig.set(`editProperties.${this._mSkill.getSkillPaths().logicRelFilePath.replace(`.dbr`,``)}.${this.curSwitch}`,this.newData);
+            this.skillConfig.set(`editProperties.${(this.ActiveFile) ? this.ActiveFile.replace(`.dbr`, ``) : this._mSkill.getSkillPaths().logicRelFilePath.replace(`.dbr`,``)}.${this.curSwitch}`,this.newData);
             
             let tempOpt = {};
             //this._mSkill.setField(`logic`,tempOpt);
             tempOpt[this.curSwitch] = this.newValues;
             //tempOpt[`toolMath${this.curSwitch}`] = this.newData;
-            this._mSkill.setField(`logic`,tempOpt);
-            this._mSkill.saveModuleData();
+            this._mSkill.setField(this.ActiveFile || `logic`,tempOpt);
+            //this._mSkill.saveModuleData();
             setTimeout(() => {
                 wzCMS(appConfig.get('cms'));
                 wzWND(`skillEdit`).refresh();
@@ -122,14 +117,32 @@ module.exports = {
         }
     },
     
+    SetActiveFile: function(el){
+        //Log(el.value);
+        if(el.checked) this.ActiveFile = (el.value === `0`) ? false : el.value;
+    
+        wzWND(this.wndId).refresh();
+        
+        setTimeout(() => {
+            window.location = `#wnd-active-field`;
+        },10);
+    },
+    
     content_: function(){
         let out_,itemsSwitch = {},content_ = `Choose a Property you wish to edit.`,newField = ``,
-            scalableFields = this._mSkill.getScalableFields(),
+            scalableFields = this._mSkill.getScalableFields(this.ActiveFile),
             oldValues_ = `<h3>Old</h3>`,
             newValues_ = `<h3>New</h3>`,
             lvl_ = `<h3>LvL</h3>`,
+            ActiveFile_ = ``,
+            ActiveFileItems_ = ``,
+            ActiveField_ = ``,
+            ActiveFieldItems_ = ``,
+            tplFieldset = `<fieldset><legend>{TITLE}</legend>{ITEMS}</fieldset>`,
+            tplActiveFileItem = `<label><input type="checkbox" value="{VALUE}" onchange="wzWND('${this.wndId}').__getContent().SetActiveFile(this);"{STATE} /><span>{TEXT}</span></label>`,
+            tplActiveFieldItem = `<label><input type="checkbox" value="{VALUE}" onchange="wzWND('${this.wndId}').__getContent().submitSwitch(this);"{STATE} /><span>{TEXT}</span></label>`,
             tplContent = `<div class="form">{FORM}{BUTTON}</div><div class="propValues"><div class="propLevels">{LEVELS}</div><div class="left">{OLD_VALUES}</div><div id="skillProperies_newValues" class="right">{NEW_VALUES}</div></div>`,
-            tpl = `<div id="wndGD_SkillProperties"><div class="dataSelection">{CUSTOM}</div><div class="dataValues">{FORM}</div><div class="dataNewField">{NEW_FIELD}</div></div>`;
+            tpl = `<div id="wndGD_SkillProperties"><div class="wndMasterySkillEdit">{ACTIVE_FILE}</div><a name="wnd-active-field"></a><div class="dataSelection wndMasterySkillEdit">{CUSTOM}</div><a name="wnd-values-form"></a><div class="dataValues">{FORM}</div><div class="dataNewField">{NEW_FIELD}</div></div>`;
             /*curStats = scalableFields[this.curSwitch] || [0,0,0],
             v1 = parseFloat(curStats[1]) - parseFloat(curStats[0]),
             v2 = parseFloat(curStats[2]) - parseFloat(curStats[1]),
@@ -140,6 +153,42 @@ module.exports = {
         
         //console.log(scalableFields[this.curSwitch]);
         //console.log(`${v1 + curStats[0]} - ${(curStats[0] * parseFloat(perc)) % 1} = ${dif} (${perc}) -> ${p1} --- ${((v1 + curStats[0] - curStats[0] * parseFloat(perc)) % 1) * 10} ---- ${(v1 + parseFloat(curStats[0]) - parseFloat(curStats[0]) * parseFloat(perc)) % 1}`);
+    
+        if(this._mSkill.getField(`logic`, `spawnObjects`)){
+            let SpawnObject = (Array.isArray(this._mSkill.getField(`logic`, `spawnObjects`))) ? this._mSkill.getField(`logic`, `spawnObjects`)[0] : this._mSkill.getField(`logic`, `spawnObjects`),
+                SpawnObjectClass = wzStorageGD.__get(SpawnObject),
+                TempSkillFile;
+    
+            for(let i=1; i<=17; i++){
+                if( SpawnObjectClass.__getField(`skillName${i}`) && SpawnObjectClass.__getField(`skillName${i}`) !== ``){
+                    try{
+                        fs.accessSync(`${WZ.GrimDawn.tFn.getPaths().Mod}/${SpawnObjectClass.__getField(`skillName${i}`)}`);
+                        ActiveFileItems_ += tplActiveFileItem.wzReplace({
+                            VALUE: `${SpawnObjectClass.__getField(`skillName${i}`)}`,
+                            STATE: (SpawnObjectClass.__getField(`skillName${i}`) === this.ActiveFile) ? ` checked` : ``,
+                            TEXT: `${SpawnObjectClass.__getField(`skillName${i}`)}`
+                        });
+                    }catch(err){}
+                    
+                }
+                
+                
+            }
+            if(ActiveFileItems_ !== ``){
+                ActiveFileItems_ = tplActiveFileItem.wzReplace({
+                    VALUE: 0,
+                    STATE: (this.ActiveFile) ? `` : ` checked`,
+                    TEXT: `Main Skill`
+                }) + ActiveFileItems_;
+            }
+            ActiveFile_ = tplFieldset.wzReplace({
+                TITLE: `Skill File`,
+                ITEMS: ActiveFileItems_
+            });
+        }
+        
+        
+        
         
         //this.formTags = _cms.Base._tagsSkills;
         //this.newData = this.newData || [0,0,1.0];
@@ -147,12 +196,13 @@ module.exports = {
         //this.newData = [curStats[0],p1,perc];
         if(this.curSwitch) {
             //this.newData = this._mSkill.getField(`logic`,`toolMath${this.curSwitch}`) || this.newData;
-            this.newData = this.skillConfig.get(`editProperties.${this._mSkill.getSkillPaths().logicRelFilePath.replace(`.dbr`,``)}.${this.curSwitch}`) || this.newData;
+            this.newData = this.skillConfig.get(`editProperties.${(this.ActiveFile) ? this.ActiveFile.replace(`.dbr`,``) : this._mSkill.getSkillPaths().logicRelFilePath.replace(`.dbr`,``)}.${this.curSwitch}`) || this.newData;
             this.onChange();
         }
         
         itemsSwitch[`Show Property`] = itemsSwitch[`Show Property`] || {};
         
+        /*
         for(let $_FieldName in scalableFields){
             itemsSwitch[`Show Property`][`show::${$_FieldName}`] = {
                 label: `${$_FieldName}`,
@@ -171,25 +221,39 @@ module.exports = {
             },
             items: itemsSwitch
         });
+        */
+        for(let kFieldName in scalableFields){
+            
+            ActiveFieldItems_ += tplActiveFieldItem.wzReplace({
+                VALUE: kFieldName,
+                STATE: (this.curSwitch === kFieldName) ? ` checked` : ``,
+                TEXT: kFieldName
+            });
+        }
+        ActiveField_ = tplFieldset.wzReplace({
+            TITLE: `DBR Field`,
+            ITEMS: ActiveFieldItems_
+        });
     
-        let availFields = wzTemplates.__getGroupFields(this._mSkill.getField(`logic`,`templateName`),[`Offensive Parameters`,`Defensive Parameters`,`Retaliation Parameters`,`Character Parameters`,`Skill Parameters`,`Modifiers`,`Projectile Config`,`Spawn Config`,`Spark Config`]);
+        let availFields = wzTemplates.__getGroupFields(this._mSkill.getField(this.ActiveFile || `logic`,`templateName`),[`Offensive Parameters`,`Defensive Parameters`,`Retaliation Parameters`,`Character Parameters`,`Skill Parameters`,`Modifiers`,`Projectile Config`,`Spawn Config`,`Spark Config`]);
         //console.log(availFields);
     
         for(let $_FieldName in availFields){
             newField += $_FieldName;
         }
+        
         this.forms.newfield_form = new WZ.Core.cForm({
             id: 'newfield_form',
             isWnd: this.wndId,
             isConfig: false,
             onChange: {
-                custom: `submitNewField(this)`
+                custom: `AddNewField(this)`
             },
             items: {
-                'New Field': {
+                'New DBR Field': {
                     'newField::start': {
-                        label: `Select a new Field`,
-                        type: `listBoxLarge`,
+                        label: `Use the Text Field to make the search easier, this is case-sensitive and you may skip letters. e.g. defPrC would show defensiveProtectionChance`,
+                        type: `dataList`,
                         data: Object.assign({weaponDamagePct: ``},availFields),
                         dataUseValue: true,
                         //value: curStats[0],
@@ -198,8 +262,6 @@ module.exports = {
                 }
             }
         });
-        
-        
         
         this.forms.main_form = new WZ.Core.cForm({
             id: 'main_form',
@@ -292,8 +354,9 @@ module.exports = {
     
         
         out_ = tpl.wzOut({
+            ACTIVE_FILE: ActiveFile_,
             NEW_FIELD: this.forms.newfield_form.create(),
-            CUSTOM: this.forms.switch_form.create(),
+            CUSTOM: ActiveField_, //this.forms.switch_form.create(),
             FORM: (this.curSwitch) ? tplContent.wzOut({
                 FORM: this.forms.main_form.create(),
                 BUTTON: `<span class="formBTN" onclick="wzWND('${this.wndId}').__getContent().saveProperties();">Save</span><span class="formBTN" onclick="wzWND('${this.wndId}').__getContent().deleteProperty();">Delete</span>`,

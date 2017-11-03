@@ -108,6 +108,13 @@ form{
             width: 568px;
             height:150px;
         }
+        &[wzType="ListAreaWide"]{
+            height:50px;
+            width: 548px;
+            & option{
+                width: 528px;
+            }
+        }
         &[wzType="CheckDefault"]{
             cursor: pointer;
             //display: inline-block;

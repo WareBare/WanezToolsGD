@@ -11,7 +11,13 @@ module.exports = {
     tplContent: {},
     
     OnCreateBlueprints: function(){
-        let tempClass, tempClassification, tempLevel, aBlueprints = [];
+        let tempClass, tempClassification, tempLevel, aBlueprints = [], LevelMalus, LevelBonus, LevelMul,
+            /** Material Cost - Legendary Essence */
+            ItemCost,
+            /** Item Price - Iron Bits */
+            ItemPrice,
+            /** Instead of using the Level, using this and Multiply a base value - ceil(Level/10) - 10: 1, 90: 9 */
+            ItemLevelMul;
     
         let tplObj = {
             "wzAsset": "aBlueprint",
@@ -34,25 +40,40 @@ module.exports = {
     
         for( let $_Index in this.Base.aLegendaryItemsClasses ){
             tempClass = this.Base.aLegendaryItemsClasses[$_Index];
-        
-            tempClassification = (tempClass.__getField(`itemClassification`) === `Legendary`) ? `d` : `c`;
-            tempLevel = tempClass.__getField(`levelRequirement`);
             
-            // INDEX \\
-            tplObj.replace.INDEX = [ [
-                $_Index,
-                tempClassification,
-                tempClass.getFilePath().split(`/database/`)[1]
-            ] ];
-            // VALUE \\
-            // fix the cost for low level epics
-            tempLevel = (parseInt(tempLevel) <= 25) ? 16 : tempLevel;
-            tplObj.replace.VALUE = [ [
-                ((parseInt(tempLevel) - 25) * 1000 * 5) * ( (tempClassification === `d`) ? 1 : 0.5 ),
-                ((parseInt(tempLevel) - 25) * 5 + 50) * ( (tempClassification === `d`) ? 1 : 0.5 )
-            ] ];
+            if(tempClass.__getField(`FileDescription`) !== `BLANK`){
+                tempClassification = (tempClass.__getField(`itemClassification`) === `Legendary`) ? `d` : `c`;
+                tempLevel = tempClass.__getField(`levelRequirement`);
+                ItemCost = 0;
+                ItemPrice = 1234;
+                LevelMul = 1;
+                LevelMalus = -50;
+                ItemLevelMul = (parseInt(tempLevel) >= 30) ?  Math.ceil(parseInt(tempLevel) / 10) : 2;
+                //Log(ItemLevelMul);
+                ItemCost = (parseInt(tempLevel) >= 30) ?  (ItemLevelMul * (ItemLevelMul * 3) - 26) * 2 : 2;
+                ItemPrice = (parseInt(tempLevel) >= 30) ?  (ItemPrice * ( (ItemLevelMul * (ItemLevelMul * 2) - 15) * 2 )) * 3: 1000;
+                
+                if(tempClass.__getField(`itemClassification`) !== `Legendary`){
+                    ItemCost = ItemCost / 2;
+                    ItemPrice = ItemPrice / 2;
+                }
+                // INDEX \\
+                tplObj.replace.INDEX = [ [
+                    $_Index,
+                    tempClassification,
+                    tempClass.getFilePath().split(`/database/`)[1]
+                ] ];
+                // VALUE \\
+                // fix the cost for low level epics
+                tempLevel = (parseInt(tempLevel) <= 25) ? 16 : tempLevel;
+                tplObj.replace.VALUE = [ [
+                    ItemPrice,
+                    ItemCost
+                ] ];
     
-            aBlueprints.push(JSON.parse(JSON.stringify(tplObj)));
+                //Log(`${tempClassification} - ${tempLevel} - ${ItemCost} : ${ItemPrice}`);
+                aBlueprints.push(JSON.parse(JSON.stringify(tplObj)));
+            }
         }
         //console.log(aBlueprints);
         let _mDBR = new WZ.GrimDawn.Assets.dbrModule(aBlueprints,`mod_wanez/_lc/blueprints`);

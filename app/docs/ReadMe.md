@@ -1,4 +1,4 @@
-# WanezToolsGD (v0.3.0)
+# WanezToolsGD (v0.4.0)
 
 *Unofficial addition to the official Grim Dawn - Modding Tools*
 

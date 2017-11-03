@@ -33,9 +33,20 @@ module.exports = {
         //console.log(this.ignoreTag);
     },
     
+    DeleteOldPetFiles: function(){
+        //console.log(this._mSkill.aSkills.spawnObjects[1]);
+        for(let kPetLevel in this._mSkill.aSkills.spawnObjects){
+            if(parseInt(kPetLevel) > 1){
+                //Log(`${WZ.GrimDawn.tFn.getPaths().Mod}/${this._mSkill.aSkills.spawnObjects[kPetLevel]}`);
+                fs.removeSync(`${WZ.GrimDawn.tFn.getPaths().Mod}/${this._mSkill.aSkills.spawnObjects[kPetLevel]}`);
+            }
+        }
+        wzWND(this.wndId).refresh();
+    },
+    
     content_: function(){
         let out_,tempOpt = {},Items = {},ItemsCustom = {},tempPet,showExtraSkill,
-            tpl = `<div>{CUSTOM}</div><div>{FORM}</div>`;
+            tpl = `<div>{HEADER}</div><div>{CUSTOM}</div><div>{FORM}</div>`;
         //this.formTags = _cms.Base._tagsSkills;
         this._mSkill.iniSpawnObjects();
         if(typeof this.ignoreTag === `undefined`) this.ignoreTag = true;
@@ -132,6 +143,7 @@ module.exports = {
         });
         
         out_ = tpl.wzOut({
+            HEADER: `<span class="formBTN" onclick="wzWND('${this.wndId}').__getContent().DeleteOldPetFiles();">Generate Pet files based on Level 1</span>`,
             CUSTOM: this.forms.custom_form.create(),
             FORM: this.forms.main_form.create()
         });

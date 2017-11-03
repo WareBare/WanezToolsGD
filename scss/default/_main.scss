@@ -78,7 +78,7 @@ div.MergerDBRContainer{
     }
 }
 
-div.MergerDBR{
+div.MergerDBR, div.wndMasterySkillEdit{
     fieldset{
         display: block;
         border-width: 1px;
@@ -107,12 +107,14 @@ div.MergerDBR{
     label{
         display: block;
         cursor: pointer;
+        background-color: #2F2F2F;
+        border-width: 1px;
 
         span{
             display: block;
-            cursor: pointer;
+            cursor: pointer !important;
         }
-        input[type="checkbox"]{
+        input[type="checkbox"], input[type="radio"]{
             display: none;
             &:checked + span{
                 background-color: #5F9F5F;
@@ -120,7 +122,7 @@ div.MergerDBR{
             }
         }
         &:HOVER{
-            background-color: #4F4F4F;
+            background-color: #2F2F5F;
         }
 
         &.masteryMergerRadio{

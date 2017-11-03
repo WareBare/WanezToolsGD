@@ -43,6 +43,13 @@ module.exports = {
                         data: wzIO.dir_get_contentsSync(`${WZ.GrimDawn.tFn.getPaths().Source}/text_en`,true) || [],
                         dataUseValue: true
                     }
+                }/*,
+                'PFX': {
+                    'settings-app::GrimDawn.Mastery.RecordsPFX': {
+                        label: `DBR Directory for PFX - no class folder, class used from /records/skills/`,
+                        type: `text`,
+                        ph: `records/fx`
+                    }
                 },
                 'PFX [optional]': {
                     'settings-app::GrimDawn.Mastery.SourcePFX': {
@@ -55,7 +62,21 @@ module.exports = {
                         type: `textLarge`,
                         ph: `fx/particlesystems`
                     }
-                }
+                },
+                'Icon Defaults': {
+                    'settings-app::GrimDawn.Mastery.bUseIconModifier': {
+                        label: `Use Tool Modifier Icon`,
+                        type: `checkBox`
+                    },
+                    'settings-app::GrimDawn.Mastery.bUseIconPassive': {
+                        label: `Use Tool Passive Icon`,
+                        type: `checkBox`
+                    },
+                    'settings-app::GrimDawn.Mastery.bUseIconTransmuter': {
+                        label: `Use Tool Transmuter Icon`,
+                        type: `checkBox`
+                    }
+                }*/
             }
         });
     

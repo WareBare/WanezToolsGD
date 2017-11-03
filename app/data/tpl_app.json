@@ -8,8 +8,7 @@
         "CONTENT": "myNav",
         "Items":{
             "Home":{
-                "BBCode":[],
-                "BBCode_old":[]
+                "BBCode":[]
             },
             "Mastery":{
                 "Setup":[],
@@ -19,8 +18,7 @@
                 "Materia": []
             },
             ".WanezMods": {
-                "Legendary Crafter":[],
-                "Legendary Notify":[]
+                "Legendary Crafter":[]
             },
             ".Merger":{
                 "Mastery Merger": [],
@@ -32,7 +30,8 @@
                 "GnT":[],
                 "Artifacts":[],
                 "Misc":[],
-                "Campaign":[]
+                "Campaign":[],
+                "BBCode":[]
             },
             "Docs":{
                 "ReadMe": [],
@@ -45,6 +44,10 @@
                 "Equipment":[],
                 "Sets":[],
                 "Runes":[]
+            },
+            "WanezMods": {
+                "Legendary Notify":[],
+                "Autoloot":[]
             },
             "Docs":{
                 "Wiki [ip]":["DGA [ip]","Mastery [ip]"]
