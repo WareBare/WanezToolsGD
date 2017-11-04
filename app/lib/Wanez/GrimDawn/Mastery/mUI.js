@@ -372,7 +372,7 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
                     //console.log(tempGrp);
                     if( tempGrp[0] ){
                         if(!aGroups[aConnector[$_Index][0].getSkillId()][0]){
-                            if(aSkills[tempGrp[1]].mSkill.getField(`logic`,`templateName`) === `database/templates/skill_transmuter.tpl` || aSkills[tempGrp[1]].mSkill.getField(`logic`,`templateName`) === `database/templates/skill_modifier.tpl`){
+                            if(aSkills[tempGrp[1]].mSkill.getField(`logic`,`templateName`) === `database/templates/skill_transmuter.tpl` || aSkills[tempGrp[1]].mSkill.getField(`logic`,`templateName`) === `database/templates/skill_projectiletransmuter.tpl` || aSkills[tempGrp[1]].mSkill.getField(`logic`,`templateName`) === `database/templates/skill_modifier.tpl`|| aSkills[tempGrp[1]].mSkill.getField(`logic`,`templateName`) === `database/templates/skill_projectilemodifier.tpl`){
                                 aGroups[aConnector[$_Index][0].getSkillId()].push(aSkills[tempGrp[1]].mSkill); // .getSkillPaths().logicRelPath
                             }else{
                                 aGroups[aConnector[$_Index][0].getSkillId()][0] = aSkills[tempGrp[1]].mSkill; // .getSkillPaths().logicRelPath

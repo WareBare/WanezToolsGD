@@ -211,7 +211,8 @@ module.exports = class cData extends libWZ.Core.cData{
             skillProjectileName: true,
             targetingMode: true,
             fxChanges: true,
-            skillTemplates: true
+            skillTemplates: true,
+            radiusEffectName: true
         };
         
         retValue = {};

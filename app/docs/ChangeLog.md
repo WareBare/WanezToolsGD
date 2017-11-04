@@ -2,7 +2,8 @@
 
 ---
 
-> [v0.4.0](#v0.4.0)
+> [v0.4.0](#v0.4.0) |
+> [v0.4.1](#v0.4.1)
 
 > [v0.3.0](#v0.3.0)
 
@@ -27,6 +28,11 @@
 ---
 
 ---
+<a name="v0.4.1"></a>
+## v0.4.1
+<a name="v0.4.0-bugfixes"></a>
+### Bug Fixes
+* added skill_projectiletransmuter.tpl and skill_projectilemodifier.tpl to the various transmuter and modifier features
 
 <a name="v0.4.0"></a>
 ## v0.4.0

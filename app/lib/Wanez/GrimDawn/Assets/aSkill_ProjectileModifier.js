@@ -1,13 +1,13 @@
 /**
- * Created by WareBare on 5/1/2017.
+ * Created by Ware on 11/4/2017.
  *
- * @author WareBare (Daniel Kamp)
+ * @author Ware (Daniel Kamp)
  * @license MIT
  * @website https://github.com/WareBare
  *
  */
 
-module.exports = class aSkill_Modifier extends libWZ.GrimDawn.Assets.cAsset{
+module.exports = class aSkill_ProjectileModifier extends libWZ.GrimDawn.Assets.cAsset{
     
     constructor($saveFilePath){
         super($saveFilePath);
@@ -18,7 +18,7 @@ module.exports = class aSkill_Modifier extends libWZ.GrimDawn.Assets.cAsset{
             skillUltimateLevel: `22`
         };
         
-        this.fetchTemplate(`database/templates/skill_modifier.tpl`);
+        this.fetchTemplate(`database/templates/skill_projectilemodifier.tpl`);
         this.editDBR(this.opt);
     }
     

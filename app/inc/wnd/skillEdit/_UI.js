@@ -35,7 +35,13 @@ module.exports = {
                 case `Modifier`:
                     ToolDefault = `waneztools/icons/skillicon_modifier_{TYPE}.tex`;
                     break;
+                case `ProjectileModifier`:
+                    ToolDefault = `waneztools/icons/skillicon_modifier_{TYPE}.tex`;
+                    break;
                 case `Transmuter`:
+                    ToolDefault = `waneztools/icons/skillicon_transmuter_{TYPE}.tex`;
+                    break;
+                case `ProjectileTransmuter`:
                     ToolDefault = `waneztools/icons/skillicon_transmuter_{TYPE}.tex`;
                     break;
                 case `Passive`:
@@ -113,15 +119,18 @@ module.exports = {
                 let fileName = `${this._mSkill.getField(`UI`,`FileDescription`)}.dbr`;
                 fs.accessSync(`${this._mUI.getLogicPath()}/${fileName}`, fs.F_OK);
             }catch(err){
-                button = `<span class="formBTN" onclick="wzWND('${this.wndId}').__getContent().createNewSkillFile('Modifier');">New Modifier File</span>`;
-                button += `<span class="formBTN" onclick="wzWND('${this.wndId}').__getContent().createNewSkillFile('Transmuter');">New Transmuter File</span>`;
-                button += `<span class="formBTN" onclick="wzWND('${this.wndId}').__getContent().createNewSkillFile('Passive');">New Passive File</span>`;
+                button = `Creating new files will use the FileDescription for the filename. File Extension (*.dbr) is added.<br />`;
+                button += `<span class="formBTN" onclick="wzWND('${this.wndId}').__getContent().createNewSkillFile('Modifier');">Modifier</span>`;
+                button += `<span class="formBTN" onclick="wzWND('${this.wndId}').__getContent().createNewSkillFile('ProjectileModifier');">Proj. Modifier</span>`;
+                button += `<span class="formBTN" onclick="wzWND('${this.wndId}').__getContent().createNewSkillFile('Transmuter');">Transmuter</span>`;
+                button += `<span class="formBTN" onclick="wzWND('${this.wndId}').__getContent().createNewSkillFile('ProjectileTransmuter');">Proj. Transmuter</span>`;
+                button += `<span class="formBTN" onclick="wzWND('${this.wndId}').__getContent().createNewSkillFile('Passive');">Passive</span>`;
             }
             
         }
         
         
-        out_ = `Creating new files will use the FileDescription the the name, if no button show up you need to enter a FileDescription or the file exists! File Extension (*.dbr) is added.<br />${button}${this.forms.main_form.create()}`;
+        out_ = `${button}${this.forms.main_form.create()}`;
         //console.log(`${WZ.GrimDawn.tFn.getPaths().Mod}/${this._mSkill.getSkillPaths().logicRelPath}`);
         
         return out_;

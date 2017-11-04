@@ -70,7 +70,9 @@ module.exports = {
                 incEvery: 3,
                 incInc: 4,
                 incOnceEvery: 5,
-                end: 6
+                end: 6,
+                parabola: 7,
+                parabolaStr: 8
             };
     
         if(type) {
@@ -86,7 +88,9 @@ module.exports = {
             incInc: this.newData[4],
             incEvery: this.newData[3],
             incOnceEvery: this.newData[5],
-            numberMax: this.newData[6]
+            numberMax: this.newData[6],
+            parabola: this.newData[7],
+            parabolaStr: this.newData[8]
         });
         
         for(let $_Index in this.newValues){
@@ -304,6 +308,23 @@ module.exports = {
                         //step: `0.1`,
                         //value: p1,
                         value: this.newData[5],
+                        newLine: true
+                    },
+                    'newValue::parabola': {
+                        label: `Special Scale at`,
+                        type: `numberOnChange`,
+                        reload: false,
+                        //step: `1`,
+                        //value: perc,
+                        value: this.newData[7] || 0
+                    },
+                    'newValue::parabolaStr': {
+                        label: `Special Scale strength`,
+                        type: `numberOnChange`,
+                        reload: false,
+                        step: `0.001`,
+                        //value: perc,
+                        value: this.newData[8],
                         newLine: true
                     },
                     'newValue::mul': {

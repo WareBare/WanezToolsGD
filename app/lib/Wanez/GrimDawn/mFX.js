@@ -24,14 +24,14 @@ module.exports = class mFX extends libWZ.GrimDawn.cModule {
         for(let kSkillRank in this.InPathFX){
             if(!this.mFXClasses[this.InPathFX[kSkillRank]]) {
                 try{
-                    fs.accessSync(`${WZ.GrimDawn.tFn.getPaths().Mod}/${this.InPathFX[kSkillRank]}`);
+                    fs.accessSync(`${WZ.GrimDawn.tFn.getPaths().Mod}/${this.InPathFX[kSkillRank]}`, fs.F_OK);
                     this.mFXClasses[this.InPathFX[kSkillRank]] = new libWZ.GrimDawn.cData(`/${this.InPathFX[kSkillRank]}`);
                     //Log(this.mFXClasses[this.InPathFX[kSkillRank]].aData);
                     this.mFiles[this.InPathFX[kSkillRank]] = {};
     
                     for(let kFieldName in this.mFXClasses[this.InPathFX[kSkillRank]].aData){
                         try{
-                            fs.accessSync(`${WZ.GrimDawn.tFn.getPaths().Mod}/${this.mFXClasses[this.InPathFX[kSkillRank]].aData[kFieldName]}`);
+                            fs.accessSync(`${WZ.GrimDawn.tFn.getPaths().Mod}/${this.mFXClasses[this.InPathFX[kSkillRank]].aData[kFieldName]}`, fs.F_OK);
                             if(this.mFXClasses[this.InPathFX[kSkillRank]].aData[kFieldName].endsWith(`.dbr`)){
                                 //this.mFXClasses[`${kFieldName}_${this.InPathFX[kSkillRank]}`] = new libWZ.GrimDawn.cData(`/${this.mFXClasses[this.InPathFX[kSkillRank]].aData[kFieldName]}`);
         
