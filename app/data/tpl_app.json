@@ -8,7 +8,8 @@
         "CONTENT": "myNav",
         "Items":{
             "Home":{
-                "BBCode":[]
+                "BBCode":[],
+                "Filter": []
             },
             "Mastery":{
                 "Setup":[],
@@ -26,6 +27,7 @@
             },
             ".Wanez":{
                 "Entities": [],
+                "Events":[],
                 "Runic Inscriptions":[],
                 "GnT":[],
                 "Artifacts":[],
@@ -43,7 +45,8 @@
             "Items":{
                 "Equipment":[],
                 "Sets":[],
-                "Runes":[]
+                "Runes":[],
+                "Gear": []
             },
             "WanezMods": {
                 "Legendary Notify":[],

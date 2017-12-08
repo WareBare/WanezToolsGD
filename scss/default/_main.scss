@@ -480,6 +480,9 @@ div.MergerDBR, div.wndMasterySkillEdit{
         //color: green;
         margin: 0 0 0 20px;
     }
+    ol{
+        margin: 0 0 0 20px;
+    }
     a{
         color: #AFAFFF;
         cursor: pointer;
@@ -509,6 +512,76 @@ div.MergerDBR, div.wndMasterySkillEdit{
             //border-width: 1px;
             //border-color: #5f5f5f;
             padding: 2px 5px 2px 5px;
+        }
+    }
+}
+
+form.Filter{
+    fieldset.collapsible{
+
+    }
+
+    .collapsibleBTN{
+        cursor: pointer;
+        display: inline-block;
+        border-width: 1px;
+        text-align: center;
+        height: 15px;
+        width: 15px;
+
+        &:HOVER{
+            background-color: #5FAF5F;
+            color: #000000;
+            border-color: #AFAFAF;
+        }
+    }
+
+    fieldset{
+        padding:2px;
+        margin:5px 2px 2px 2px;
+        display: block;
+        legend{
+            font-size: 1em;
+            padding: 1px 2px 1px 2px;
+        }
+
+        fieldset{
+            display: inline-block;
+        }
+    }
+    .colorPicker{
+        background-color: #0D0D0F; // 353631
+        padding: 2px 5px 2px 5px;
+        label{
+            padding: 2px;
+            cursor: pointer;
+            border-width: 1px;
+            border-color: #5F5F5F;
+            margin-left: 1px;
+            margin-right: 1px;
+            span{
+                margin: 10px 0 0 0;
+                display: block;
+                height: 10px;
+                width: 15px;
+                border-color: #000000;
+            }
+            input[type="radio"]{
+                display: none;
+                border-color: #000000;
+            }
+            input[type="radio"]:CHECKED{
+                border-color: #FFFFFF;
+            }
+            input[type="radio"]:CHECKED + span{
+                border-color: #AFAFAF;
+                margin-bottom: 0;
+                margin-top: 0;
+            }
+            &:HOVER > span{
+                margin-bottom: 10px;
+                margin-top: 0;
+            }
         }
     }
 }

@@ -22,6 +22,7 @@ module.exports = {
     aSkill_ProjectileModifier: libWZ.GrimDawn.Assets.aSkill_ProjectileModifier = require(`./aSkill_ProjectileModifier`),
     aSkill_Transmuter: libWZ.GrimDawn.Assets.aSkill_Transmuter = require(`./aSkill_Transmuter`),
     aSkill_ProjectileTransmuter: libWZ.GrimDawn.Assets.aSkill_ProjectileTransmuter = require(`./aSkill_ProjectileTransmuter`),
+    aSkill_PetModifier: libWZ.GrimDawn.Assets.aSkill_PetModifier = require(`./aSkill_PetModifier`),
     aSkill_Passive: libWZ.GrimDawn.Assets.aSkill_Passive = require(`./aSkill_Passive`),
     aSkillBuff_passive: libWZ.GrimDawn.Assets.aSkillBuff_passive = require(`./aSkillBuff_passive`),
     aContainer_Destructible: libWZ.GrimDawn.Assets.aContainer_Destructible = require(`./aContainer_Destructible`),
@@ -39,6 +40,7 @@ module.exports = {
     aLootTdyn: libWZ.GrimDawn.Assets.aLootTdyn = require(`./aLootTdyn`),
     aLootMT: libWZ.GrimDawn.Assets.aLootMT = require(`./aLootMT`),
     aLore: libWZ.GrimDawn.Assets.aLore = require(`./aLore`),
+    aSetBonus: libWZ.GrimDawn.Assets.aSetBonus = require(`./aSetBonus`),
     dbrData: libWZ.GrimDawn.Assets.dbrData = require(`./dbrData`),
     dbrModule: libWZ.GrimDawn.Assets.dbrModule = require(`./dbrModule`)
 };

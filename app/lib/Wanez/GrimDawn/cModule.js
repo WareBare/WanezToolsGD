@@ -85,6 +85,37 @@ class cModule extends libWZ.GrimDawn.cBase{
         this.saveModuleData($dataMisc,$alwaysSave);
     }
     
+    /**
+     *
+     * @param {String} InPathToTdyn - used for cData (= relative Path with leading / tries Mod first)
+     * @param {Array} InData
+     * @return {class} TDYN
+     * @constructor
+     */
+    EditTdyn(InPathToTdyn, InData){
+        let cTdyn = false, TempData;
+        
+        try{
+            cTdyn = new libWZ.GrimDawn.cData(InPathToTdyn);
+            
+            for(let kIndex in InData){
+                TempData = Array.isArray(InData[kIndex]) ? InData[kIndex] : [InData[kIndex], 100];
+    
+                //Log(parseInt(kIndex) + 1);
+                cTdyn.__setField(`lootName${parseInt(kIndex) + 1}`, TempData[0]);
+                cTdyn.__setField(`lootWeight${parseInt(kIndex) + 1}`, TempData[1]);
+            }
+            for(let i = InData.length + 1; i <= 80; i++ ){
+                cTdyn.__setField(`lootName${i}`, ``);
+                cTdyn.__setField(`lootWeight${i}`, ``);
+            }
+        }catch(err){console.log(err);}
+        
+        if(!cTdyn) console.warn(`An Error Has Occurred at cModule:EditTdyn()`);
+        
+        return cTdyn;
+    }
+    
 }
 
 module.exports = cModule;

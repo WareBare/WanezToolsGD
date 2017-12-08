@@ -12,7 +12,7 @@ module.exports = {
     
     _mModule: false,
     
-    saveProxies: function(){
+    saveCampaignData: function(){
         this._mModule.saveModuleData();
         console.log(this._mModule);
     },
@@ -36,7 +36,7 @@ module.exports = {
     content_: function($contentType){
         this.contentType = $contentType || this.contentType;
         
-        let out_ = `WanezMod Tools`;
+        let out_ = `WanezMod Tools - Campaign Tools`;
     
         switch(this.contentType){
             case `Proxy`:
@@ -44,6 +44,7 @@ module.exports = {
                 break;
             case `Enemies`:
                 out_ = this.content_Enemies();
+                break;
             default:
                 break;
         }
@@ -52,24 +53,17 @@ module.exports = {
     },
     
     sidebarBtns_: function(){
-        let saveProxy = false, saveEnemies = false;
+        let saveCampaignDataBTN = {};
         
-        if(this.contentType === `Proxy`){
-            saveProxy = {
-                "ONCLICK": "_cms.saveProxies()",
-                "TEXT": "Save Proxies"
-            };
-        }else if(this.contentType === `Enemies`){
-            saveEnemies = {
-                "ONCLICK": "_cms.saveProxies()",
+        if(this.contentType){
+            saveCampaignDataBTN = {
+                "ONCLICK": "_cms.saveCampaignData()",
                 "TEXT": "Save Enemies"
             };
         }
         
-        
         return [
-            saveProxy,
-            saveEnemies
+            saveCampaignDataBTN
         ];
     },
     sidebarList_: function(){

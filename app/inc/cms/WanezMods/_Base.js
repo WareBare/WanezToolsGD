@@ -77,7 +77,7 @@ module.exports = {
                 aFilesCore = {};
                 
                 try{
-                    aFilesMod = wzIO.dir_get_contentsSync(`${WZ.GrimDawn.tFn.getPaths().Mod}/${aDirs[$_Index]}`) || {};
+                    //aFilesMod = wzIO.dir_get_contentsSync(`${WZ.GrimDawn.tFn.getPaths().Mod}/${aDirs[$_Index]}`) || {};
                 }catch(err){console.log(err);}
                 try{
                     aFilesCore = wzIO.dir_get_contentsSync(`${WZ.GrimDawn.tFn.getPaths().Core}/${aDirs[$_Index]}`) || {};
@@ -93,11 +93,11 @@ module.exports = {
                     
                 }
             }
-            TempClass = wzStorageGD.__get(`records/items/questitems/scrapmetal.dbr`);
-            this.aAutoLootItemsClasses.push(TempClass);
+            //TempClass = wzStorageGD.__get(`records/items/questitems/scrapmetal.dbr`);
+            this.aAutoLootItemsClasses.push(wzStorageGD.__get(`records/items/questitems/scrapmetal.dbr`));
     
-            TempClass = wzStorageGD.__get(`records/items/questitems/quest_dynamite.dbr`);
-            this.aAutoLootItemsClasses.push(TempClass);
+            //TempClass = wzStorageGD.__get(`records/items/questitems/quest_dynamite.dbr`);
+            this.aAutoLootItemsClasses.push(wzStorageGD.__get(`records/items/questitems/quest_dynamite.dbr`));
         }
     },
     
@@ -122,7 +122,7 @@ module.exports = {
                     aFilesMod = {};
                     aFilesCore = {};
                     try{
-                        aFilesMod = wzIO.dir_get_contentsSync(`${WZ.GrimDawn.tFn.getPaths().Mod}/${aDirs[$_Index]}`) || {};
+                        //aFilesMod = wzIO.dir_get_contentsSync(`${WZ.GrimDawn.tFn.getPaths().Mod}/${aDirs[$_Index]}`) || {};
                     }catch(err){console.log(err);}
                     try{
                         aFilesCore = wzIO.dir_get_contentsSync(`${WZ.GrimDawn.tFn.getPaths().Core}/${aDirs[$_Index]}`) || {};

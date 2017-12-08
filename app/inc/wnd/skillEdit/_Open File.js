@@ -34,30 +34,42 @@ module.exports = {
             tplItem = `<label onclick="wzOpenModFile('{PATH_TO_OPEN_FILE}')"><span><b>{FIELD_NAME}:</b> <i>{PATH_TO_OPEN_FILE}</i></span></label>`;
         
         //if(this.bLoadFX){
-            this.mFiles = {};
-            if(wzTemplates.hasField(dbr_templateName, `skillProjectileName`) && (File = this._mSkill.getField(`logic`, `skillProjectileName`)) ){
-                // Array
-                this.FXskillProjectileName = new WZ.GrimDawn.mFX(File);
-                this.mFiles[`skillProjectileName`] = this.FXskillProjectileName.mFiles;
-            }
-            
-            if(wzTemplates.hasField(dbr_templateName, `projectileFragmentsName`) && (File = this._mSkill.getField(`logic`, `projectileFragmentsName`)) ){
-                // Variable
-                this.FXprojectileFragmentsName = new WZ.GrimDawn.mFX(File);
-                this.mFiles[`projectileFragmentsName`] = this.FXprojectileFragmentsName.mFiles;
-            }
-            
-            if(wzTemplates.hasField(dbr_templateName, `radiusEffectName`) && (File = this._mSkill.getField(`logic`, `radiusEffectName`)) ){
-                // Array
-                this.FXradiusEffectName = new WZ.GrimDawn.mFX(File);
-                this.mFiles[`radiusEffectName`] = this.FXradiusEffectName.mFiles;
-            }
-    
-            if(wzTemplates.hasField(dbr_templateName, `fxChanges`) && (File = this._mSkill.getField(`logic`, `fxChanges`)) ){
-                // Array
-                this.FXchangesEffectName = new WZ.GrimDawn.mFX(File);
-                this.mFiles[`fxChanges`] = this.FXchangesEffectName.mFiles;
-            }
+        this.mFiles = {};
+        if(wzTemplates.hasField(dbr_templateName, `skillProjectileName`) && (File = this._mSkill.getField(`logic`, `skillProjectileName`)) ){
+            // Array
+            this.FXskillProjectileName = new WZ.GrimDawn.mFX(File);
+            this.mFiles[`skillProjectileName`] = this.FXskillProjectileName.mFiles;
+        }
+        
+        if(wzTemplates.hasField(dbr_templateName, `projectileFragmentsName`) && (File = this._mSkill.getField(`logic`, `projectileFragmentsName`)) ){
+            // Variable
+            this.FXprojectileFragmentsName = new WZ.GrimDawn.mFX(File);
+            this.mFiles[`projectileFragmentsName`] = this.FXprojectileFragmentsName.mFiles;
+        }
+        
+        if(wzTemplates.hasField(dbr_templateName, `radiusEffectName`) && (File = this._mSkill.getField(`logic`, `radiusEffectName`)) ){
+            // Array
+            this.FXradiusEffectName = new WZ.GrimDawn.mFX(File);
+            this.mFiles[`radiusEffectName`] = this.FXradiusEffectName.mFiles;
+        }
+
+        if(wzTemplates.hasField(dbr_templateName, `fxChanges`) && (File = this._mSkill.getField(`logic`, `fxChanges`)) ){
+            // Array
+            this.FXchangesEffectName = new WZ.GrimDawn.mFX(File);
+            this.mFiles[`fxChanges`] = this.FXchangesEffectName.mFiles;
+        }
+
+        if(wzTemplates.hasField(dbr_templateName, `lightningName`) && (File = this._mSkill.getField(`logic`, `lightningName`)) ){
+            // Array
+            this.FXlightningName = new WZ.GrimDawn.mFX(File);
+            this.mFiles[`lightningName`] = this.FXlightningName.mFiles;
+        }
+
+        if(wzTemplates.hasField(dbr_templateName, `petBonusName`) && (File = this._mSkill.getField(`logic`, `petBonusName`)) ){
+            // Array
+            this.petBonusName = new WZ.GrimDawn.mFX(File);
+            this.mFiles[`petBonusName`] = this.petBonusName.mFiles;
+        }
             
             //this.bLoadFX = false;
         //}
@@ -110,6 +122,18 @@ module.exports = {
                                         // Array
                                         this.FXchangesEffectName = new WZ.GrimDawn.mFX(File);
                                         this.mFiles[`fxChanges`] = this.FXchangesEffectName.mFiles;
+                                    }
+    
+                                    if(wzTemplates.hasField(TempClass2.__getField(`templateName`), `lightningName`) && (File = TempClass2.__getField(`lightningName`)) ){
+                                        // Array
+                                        this.FXlightningName = new WZ.GrimDawn.mFX(File);
+                                        this.mFiles[`lightningName`] = this.FXlightningName.mFiles;
+                                    }
+    
+                                    if(wzTemplates.hasField(TempClass2.__getField(`templateName`), `petBonusName`) && (File = TempClass2.__getField(`petBonusName`)) ){
+                                        // Array
+                                        this.petBonusName = new WZ.GrimDawn.mFX(File); // todo fix loading time
+                                        this.mFiles[`petBonusName`] = this.petBonusName.mFiles;
                                     }
                                 }catch (err){}
                             }

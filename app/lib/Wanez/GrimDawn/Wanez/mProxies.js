@@ -49,21 +49,34 @@ module.exports = class mProxies extends libWZ.GrimDawn.cModule{
                     tempClass = new libWZ.GrimDawn.cData(`${this.fn.getPaths().Core}/${tempPath}/${$_FileName}`);
                     if( (tempClass.__getField(`Class`) === `Proxy` || tempClass.__getField(`Class`) === `ProxyAmbush`) && tempClass.__getField(`delayedRun`) === `0`){
     
+                        //Log(tempPath);
+                        //if(tempClass.__getField(`onSpawn`)) Log(tempClass.__getField(`onSpawn`));
                         tempClass.changeFilePath(`${this.fn.getPaths().Mod}/${tempPath}/${$_FileName}`);
-                        tempClass.editDBR({
-                            onAddToWorld: `wanez.gd.cloneProxy`
+                        tempClass.editDBR({ //  && tempClass.__getField(`Class`) !== `ProxyAmbush`
+                            difficultyLimitsFile: `records/proxies/limit_unlimited.dbr`,
+                            onAddToWorld: (tempClass.__getField(`onAddToWorld`)) ? tempClass.__getField(`onAddToWorld`) : ( (tempPath.includes(`boss&quest`)) ? `wanez.Campaign.Proxy_OnAddToWorld` : `` ),
+                            //onRemoveFromWorld: `wanez.Campaign.Proxy_OnRemoveFromWorld`,
+                            onSpawn: (tempClass.__getField(`onSpawn`)) ? `` : `wanez.Campaign.Proxy_OnSpawn`
+                            //onDestroy: `wanez.Campaign.Proxy_OnDestroy`
+                            //onAddToWorld: `wanez.gd.cloneProxy`
+                            //onDestroy: `wanez.gd.ProxyOnDestroy`,
+                            //onSpawn: `wanez.gd.ProxyOnSpawn`,
+                            //onRemoveFromWorld: `wanez.gd.ProxyOnRemoveFromWorld`
                             //delayedRun: `1`
                         });
                         //console.log(tempClass);
                         this.aProxies.push(tempClass);
         
-                        tempClass = new libWZ.GrimDawn.cData(`${this.fn.getPaths().Core}/${tempPath}/${$_FileName}`);
-                        tempClass.changeFilePath(`${this.fn.getPaths().Mod}/${tempPath}/${$_FileName.replace(`.dbr`,`_clone.dbr`)}`);
-                        tempClass.editDBR({
-                            onAddToWorld: `wanez.gd.clonedProxy`,
-                            difficultyLimitsFile: `records/proxies/limit_area001.dbr`
-                        });
-                        this.aProxies.push(tempClass);
+                        if( tempClass.__getField(`onAddToWorld`) === `wanez.Campaign.Proxy_OnAddToWorld` ){
+                            tempClass = new libWZ.GrimDawn.cData(`${this.fn.getPaths().Core}/${tempPath}/${$_FileName}`);
+                            tempClass.changeFilePath(`${this.fn.getPaths().Mod}/${tempPath}/${$_FileName.replace(`.dbr`,`_clone.dbr`)}`);
+                            tempClass.editDBR({
+                                difficultyLimitsFile: `records/proxies/limit_unlimited.dbr`,
+                                onSpawn: (tempClass.__getField(`onSpawn`)) ? `` : `wanez.Campaign.Proxy_OnSpawn`
+                                //onAddToWorld: `wanez.gd.clonedProxy`
+                            });
+                            this.aProxies.push(tempClass);
+                        }
                         //console.log(tempClass);
                     }
                 //}

@@ -10,6 +10,7 @@
 libWZ.GrimDawn.Items = {};
 
 module.exports = {
-    mMateria: libWZ.GrimDawn.Items.mMateria = require(`./mMateria`)
+    mMateria: libWZ.GrimDawn.Items.mMateria = require(`./mMateria`),
+    mGear: libWZ.GrimDawn.Items.mGear = require(`./mGear`)
 };
 

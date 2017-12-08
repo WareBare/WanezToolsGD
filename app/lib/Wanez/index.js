@@ -177,6 +177,22 @@ wzTest = function(){
     console.log(wzGD_dataSet.getData().stuff);
 };
 
+wzGetMapValue = function(InMap, InKeyString){
+    let Value = InMap,
+        aMapKeys = InKeyString.split(`.`);
+    
+    try{
+        for(let kIndex in aMapKeys){
+            Value = Value[aMapKeys[kIndex]];
+        }
+    }catch(err){
+        Value = false;
+    }
+    
+    
+    return Value;
+};
+
 /**
  * small fn to speed up button creation with an array. Using wzOut($aRep) to parse the template - same tpl for every button
  *

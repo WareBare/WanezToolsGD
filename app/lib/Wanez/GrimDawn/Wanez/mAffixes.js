@@ -25,7 +25,7 @@ module.exports = class mAffixes extends libWZ.GrimDawn.cModule{
             aRarities = ["0","a","b","c","d"];
         
         for( let $_Index in $affixCombinations){
-            // todo cAffix
+            // cAffix
             tempClass = new libWZ.GrimDawn.Wanez.cAffix($affixCombinations[$_Index],$lvl,this.iSettings.affixFile,this.iTier);
             aAffixes.push(tempClass);
             

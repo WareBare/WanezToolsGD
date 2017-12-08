@@ -2,6 +2,8 @@
 
 ---
 
+> [v0.5.0](#v0.5.0)
+
 > [v0.4.0](#v0.4.0)
 
 > [v0.3.0](#v0.3.0)
@@ -27,7 +29,35 @@
 ---
 
 ---
+<a name="v0.5.0"></a>
+## v0.5.0
+### Filter (ColorCoding) Tool
+* [check the wiki](https://github.com/WareBare/WanezToolsGD/wiki/Filter-(ColorCoding)-Tools) for information.
 
+<a name="v0.5.0-mastery"></a>
+### Mastery Tool
+* right click can now the Skill Edit window (double click and the button are still there, too), I wanted to open a (context)menu with right click, but it still hasn't happened yet, so opening the window is gonna take its place for now
+* it is now possible to also create a new /skillsecondary_petmodifier DBR and Modifier/Transmuter/Passives for said pet by changing the text box again to the name of the file, it will be placed in /pets/ and attached to the petmodifier directly
+  * it still needs to be added to the pet's skilltree manually, would be too much going on and presuming you actually want to auto-create all pets again
+* increased the size of the textbox for UI-File FileDescription because pet modifiers can get quite long (petskill_mypet_passive_01)
+* *Files*
+  * pet modifiers can be linked to a skill (they still have to be entered into the pet's skilltree manually)
+* *Properties*
+  * added new Fields for a special scaling, they can be used to reduce the increment getting closer to set Scaling point and increase it past it
+  * the idea behind this was to make the first few levels of a skill important, then each additional skill point becomes less impactful up until the skill's Max Level. Ultimate Levels become much more important after that
+  * **Scaling at** determines the center of the scale, the lowest point
+  * **Scaling Strength** is a percentage minimum
+  * at 16 0.2: lowers increment up until 16 - increases increment after 16
+
+<a name="v0.5.0-bugfixes"></a>
+### Bug Fixes
+* added skill_projectiletransmuter.tpl and skill_projectilemodifier.tpl to the various transmuter and modifier features
+* various bug fixes to ignoring templates
+* various bug fixes to Open File (adding a few more fields to check for FX)
+
+---
+
+---
 <a name="v0.4.0"></a>
 ## v0.4.0
 <a name="v0.4.0-filewatcher"></a>

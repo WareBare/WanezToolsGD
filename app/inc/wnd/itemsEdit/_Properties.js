@@ -29,7 +29,7 @@ module.exports = {
     
     content_: function(){
         let out_,
-            _materia = this._mMateria.getMateriaById(this.currentMateria),
+            _materia = this._mItems.getMateriaById(this.currentItemId),
             objItems = {},
             aIgnoreQualifier = {characterBaseAttackSpeedTag: true},
             qualifiersTPL = wzTemplates.__getGroupFields(`database/templates/itemrelic.tpl`,[`Offensive Parameters`,`Defensive Parameters`,`Retaliation Parameters`,`Character Parameters`,`Skill Parameters`,`Conversion Parameters`,`Skill Augment`,`Skill Modifiers`]);
@@ -39,7 +39,7 @@ module.exports = {
         //console.log(this.currentMateria);
         for(let $_Index in qualifiersTPL){
             if(this.checkIfViableField(_materia.__getField($_Index)) && !aIgnoreQualifier[$_Index]) {
-                objItems[`Qualifiers`][`${this.currentMateria}::${$_Index}`] = {
+                objItems[`Qualifiers`][`${this.currentItemId}::${$_Index}`] = {
                     label: $_Index,
                     type: (Array.isArray(_materia.__getField($_Index))) ? `listArea` : `textLarge`
                 };
@@ -50,7 +50,7 @@ module.exports = {
             id: 'main_form',
             isWnd: this.wndId,
             fieldSetStyle: `width: 300px;`,
-            isModule: this._mMateria,
+            isModule: this._mItems,
             onChange: {
                 //custom: `formOnChange(this)`
             },

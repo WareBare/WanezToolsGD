@@ -84,6 +84,9 @@ form{
                 width: 540px;
             }
         }
+        &[wzType="TextMedium"]{
+            width: 260px;
+        }
         &[wzType="TextLarge"], &[wzType="ComboBoxLarge"]{
             width: 300px;
         }
@@ -105,7 +108,7 @@ form{
             }
         }
         &[wzType="ListAreaLarge"]{
-            width: 568px;
+            width: 528px;
             height:150px;
         }
         &[wzType="ListAreaWide"]{

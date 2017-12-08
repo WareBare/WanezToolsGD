@@ -14,10 +14,10 @@ class cTags extends libWZ.Core.cBase{
      */
     parseData($fileContents){
         let parsedData = {},parts,tempCounter = 0,
-            fileLines = $fileContents.split('\r\n');
+            fileLines = $fileContents.split('\n'); // \r
         
         for( let $_Index in fileLines ){
-            parts = fileLines[$_Index].split('=');
+            parts = fileLines[$_Index].replace(`\r`,``).split('=');
     
             if(parts[1]){
                 parsedData[parts[0]] = parts[1] || ``;

@@ -53,7 +53,7 @@ module.exports = class cItem extends libWZ.GrimDawn.cData{
             if(typeof tempAffix.field === 'string') tempArr = [tempAffix.field];
             
             for( let $_i in tempArr){
-                
+                //Log(tempArr[$_i]);
                 if(tempAffix.isPet){
                     petBonuses = petBonuses || {};
                     petBonuses[tempArr[$_i]] = Math.ceil(this.mathStatValue(tempArr[$_i],$lvl,1) * tempAffix.mul);

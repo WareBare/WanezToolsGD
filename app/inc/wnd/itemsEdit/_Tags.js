@@ -30,7 +30,7 @@ module.exports = {
     content_: function(){
         let out_,objItems = {};
     
-        if(this._tagsMateria){
+        if(this._tagsItems){
             objItems[`Tags`] = {};
             /*
              objItems[`Tags`][`${this.currentMateria}::description`] = {
@@ -38,11 +38,11 @@ module.exports = {
              type: `textLarge`
              };
              */
-            objItems[`Tags`][`materia::${this._mMateria.getMateriaById(this.currentMateria).__getField("description")}`] = {
+            objItems[`Tags`][`item::${this._mItems.getMateriaById(this.currentItemId).__getField("description")}`] = {
                 label: `Name`,
                 type: `textLarge`
             };
-            objItems[`Tags`][`materia::${this._mMateria.getMateriaById(this.currentMateria).__getField("itemText")}`] = {
+            objItems[`Tags`][`item::${this._mItems.getMateriaById(this.currentItemId).__getField("itemText")}`] = {
                 label: `Text`,
                 type: `textArea`
             };
@@ -54,7 +54,7 @@ module.exports = {
                 //isModule: this._mMateria,
                 _tags: {
                     //skills: this._tagsSkills
-                    materia: `text_en/${appConfig.get(`GrimDawn.Items.TagsMateria`)}`
+                    item: `text_en/${appConfig.get(`GrimDawn.Items.TagsItems`)}`
                 },
                 onChange: {
                     //custom: `formOnChange(this)`

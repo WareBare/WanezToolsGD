@@ -31,7 +31,11 @@ module.exports = class mEnemiesCampaign extends libWZ.GrimDawn.cModule{
             ignoreFolders = {
                 anm: true,
                 bios: true,
-                special: true
+                special: true,
+                faction: true,
+                waveevents: true,
+                bounties: true,
+                'boss&quest': true
             },tempClass,
             onDie = {
                 Common: `wanez.gd.onDieCommon`,
@@ -40,28 +44,30 @@ module.exports = class mEnemiesCampaign extends libWZ.GrimDawn.cModule{
             aFiles = wzIO.dir_get_contentsSync(path);
         
         for(let $_FileName in aFiles){
-            if($_FileName.endsWith(`.dbr`) && !$_FileName.startsWith(`trap_`)){
+            if($_FileName.endsWith(`.dbr`) && !$_FileName.startsWith(`trap_`) && !$_FileName.endsWith(`summon.dbr`)){
                 tempClass = new libWZ.GrimDawn.cData(aFiles[$_FileName]);
                 tempClass.changeFilePath(aFiles[$_FileName].replace(this.fn.getPaths().Core,this.fn.getPaths().Mod));
                 if(!tempClass.__getField(`onDie`) || tempClass.__getField(`onDie`) === ``) {
-                    tempClass.__setField(`onDie`,`wanez.gd.onDie${tempClass.__getField(`monsterClassification`)}`);
+                    tempClass.__setField(`onDie`,`wanez.Campaign.Enemy.OnDie_${tempClass.__getField(`monsterClassification`)}`);
                 }else{
                     tempClass.__setField(`onDie`,tempClass.__getField(`onDie`));
                 }
                 
                 this.aEnemies.push( tempClass );
             }else if(!$_FileName.endsWith(`.dbr`) && !ignoreFolders[$_FileName]){
+                
                 for(let $_subFileName in aFiles[$_FileName]){
                     tempClass = new libWZ.GrimDawn.cData(aFiles[$_FileName][$_subFileName]);
                     tempClass.changeFilePath(aFiles[$_FileName][$_subFileName].replace(this.fn.getPaths().Core,this.fn.getPaths().Mod));
                     if(!tempClass.__getField(`onDie`) || tempClass.__getField(`onDie`) === ``) {
-                        tempClass.__setField(`onDie`,`wanez.gd.onDie${tempClass.__getField(`monsterClassification`)}`);
+                        tempClass.__setField(`onDie`,`wanez.Campaign.Enemy.OnDie_${tempClass.__getField(`monsterClassification`)}`);
                     }else{
                         tempClass.__setField(`onDie`,tempClass.__getField(`onDie`));
                     }
     
                     this.aEnemies.push( tempClass );
                 }
+                
             }
         }
         

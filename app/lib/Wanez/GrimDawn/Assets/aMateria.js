@@ -18,7 +18,7 @@ module.exports = class aMateria extends libWZ.GrimDawn.Assets.cAsset{
         
         this.opt = {
             completedRelicLevel: `1`,
-            bonusTableName: `records/items/lootaffixes/completion/completionbonus_a001_armor.dbr`,
+            bonusTableName: ``, // records/items/lootaffixes/completion/completionbonus_a001_armor.dbr
             relicToRelicSound: `records/sounds/items/spak_itemcraftingpartcombine.dbr`,
             relicCompleteSound: `records/sounds/items/spak_itemcraftingpartcompletion.dbr`,
             relicToItemSound: `records/sounds/items/spak_itemcraftingpartattach.dbr`,

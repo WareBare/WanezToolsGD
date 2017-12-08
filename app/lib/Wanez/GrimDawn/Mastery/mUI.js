@@ -41,7 +41,7 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
             "SkillWindow": "<div class='skillWindow'><div class='skillConnectors'>{SKILL_CONNECTORS}</div><div class='skillConnectors skillConnectors2'>{SKILL_CONNECTORS2}</div><div class='skillPositions'>{SKILL_POSITIONS}</div><div class='skillLeftPane'><div class='skillPicker'>{SKILL_PICKER}</div><div class='skillBonusLeft'>{SKILL_BONUS_LEFT}</div></div></div><img src='img/skills_classbackgroundimage.png' />", // target | skills_classbackgroundimage
             "SkillPicker": `<div ondrop="_cms.skillDropUnused(event)" ondragover="_cms.skillAllowDrop(event)">{UNUSED}</div><div id="uiBackUps">{BACKUPS}</div>`, //{USED}
             //"SkillBTN": "<div wz-mode='{MODE}' class='skillCell'>{ICON}<wztip>{INFO}</wztip></div>"
-            "SkillBTN": `<div wz-mode="{MODE}" id="btn_{COORDS}" ondrop="_cms.skillDrop(event)" ondragover="_cms.skillAllowDrop(event)" ondragstart="_cms.skillDrag(event)" draggable="true" wz-coords="{COORDS}" wz-id="{ID}" wz-tier="{TIER}" class="skillCell{CLASS_CIRCULAR}" onclick="_cms.setSkill({ID});" ondblclick="_cms.Base.goToEditSkill();"><span>{ICON}</span>{INFO}</div>`, // <wztip>{INFO}</wztip> |  ondblclick="_cms.setSkillConnector({ID});"
+            "SkillBTN": `<div wz-mode="{MODE}" id="btn_{COORDS}" ondrop="_cms.skillDrop(event)" ondragover="_cms.skillAllowDrop(event)" ondragstart="_cms.skillDrag(event)" draggable="true" wz-coords="{COORDS}" wz-id="{ID}" wz-tier="{TIER}" class="skillCell{CLASS_CIRCULAR}" onclick="_cms.setSkill({ID});" ondblclick="_cms.Base.goToEditSkill();" oncontextmenu="_cms.setSkill({ID});_cms.Base.goToEditSkill();"><span>{ICON}</span>{INFO}</div>`, // <wztip>{INFO}</wztip> |  ondblclick="_cms.setSkillConnector({ID});"
             SkillToolTip: `<wztip><h1>{SKILL_NAME}</h1>{COORDS_X}, {COORDS_Y}<br />isCircular: {IS_CIRCULAR}<br />Has Connector: {HAS_CONNECTOR}<br />Tier: {TIER}<br />Ranks: {RANK_MAX} / {RANK_ULTIMATE}</wztip>`,
             "Connector": "<img wz-mode='{MODE}' src='{IMG}' alt='!' />",
             "SkillSlots": this.appData.tpl_gd.UI.SkillSlots,
@@ -216,7 +216,73 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
         
     }
     
+    // $aConnector,$coordKey,$aSkills - InConnectorsArray,InCoordsKey,InSkillsArray
     checkConnectorGroup($aConnector,$coordKey,$aSkills){ // aConnector[$_Index][1],$_CoordKey,aSkills
+        
+        let tempCoords, currentCoords,isGroup = false,
+            objChecks = {
+                transmuterUp: {
+                    'img/skills_connectoronbranchup.png': true,
+                    'img/skills_connectoronbranchboth.png': true,
+                    'img/skills_connectorontransmuterup.png': true,
+                    'img/skills_connectorontransmuterboth.png': true,
+                    test: true
+                },
+                transmuterDown: {
+                    'img/skills_connectoronbranchdown.png': true,
+                    'img/skills_connectoronbranchboth.png': true,
+                    'img/skills_connectorontransmuterdown.png': true,
+                    'img/skills_connectorontransmuterboth.png': true,
+                    'img/skill_down_on.png': true,
+                    'img/skill_bottom_on.png': true,
+                    test: false
+                },
+                modifier: {
+                    'img/skills_connectoroncenter.png': true,
+                    'img/skills_connectoronbranchup.png': true,
+                    'img/skills_connectoronbranchdown.png': true,
+                    'img/skills_connectoronbranchboth.png': true,
+                    'img/skill_down_on.png': false,
+                    'img/skill_bottom_on.png': false,
+                    'img/skill_up_on.png': true
+                }
+            };
+    
+        tempCoords = $coordKey.split(`,`);
+        for(let $_Type in objChecks){
+            
+            
+            if(typeof objChecks[$_Type][$aConnector[$coordKey]] !== `undefined`){ //
+                if($_Type === `modifier`) currentCoords = `${parseInt(tempCoords[0]) + 80},${tempCoords[1]}`;
+                if($_Type === `transmuterUp`) {
+                    currentCoords = `${parseInt(tempCoords[0]) + 80},${parseInt(tempCoords[1]) - 38}`;
+                    if($aSkills[currentCoords] && $aSkills[currentCoords].mSkill){
+                    
+                    }else{
+                        currentCoords = `${parseInt(tempCoords[0]) + 80},${parseInt(tempCoords[1]) - 32}`;
+                    }
+                }
+                if($_Type === `transmuterDown`) {
+                    currentCoords = `${parseInt(tempCoords[0]) + 80},${parseInt(tempCoords[1]) + 32}`;
+                    if($aSkills[currentCoords] && $aSkills[currentCoords].mSkill){
+                    
+                    }else{
+                        currentCoords = `${parseInt(tempCoords[0]) + 80},${parseInt(tempCoords[1]) + 38}`;
+                    }
+                }
+                if($aSkills[currentCoords] && $aSkills[currentCoords].mSkill){
+                    if(objChecks[$_Type][$aConnector[$coordKey]]) {
+                        isGroup = [true, currentCoords];
+                    }else if(objChecks[$_Type][$aConnector[$coordKey]] === false){
+                        isGroup = [false, currentCoords];
+                    }
+                }
+            }
+        }
+        
+        return isGroup;
+    
+        /*
         let tempCoords,isGroup = false,
             objChecks = {
                 transmuterUp: {
@@ -245,20 +311,8 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
                     'img/skill_up_on.png': true
                 }
             };
-        
+    
         for(let $_Type in objChecks){
-            /*
-            if(objChecks[$_Type].test){
-                console.log(`true - working`);
-            }else if(objChecks[$_Type].test === false){
-                console.log(`false - working`);
-            }else if(typeof objChecks[$_Type].test === `undefined`){
-                console.log(`undefined - working`);
-            }
-            if(typeof objChecks[$_Type].test !== `undefined`){
-                console.log(`!undefined - working`);
-            }
-            */
             if(typeof objChecks[$_Type][$aConnector[$coordKey]] !== `undefined`){ //
                 tempCoords = $coordKey.split(`,`);
                 if($_Type === `modifier`) tempCoords = `${parseInt(tempCoords[0]) + 80},${tempCoords[1]}`;
@@ -273,8 +327,109 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
                 }
             }
         }
+    
+        return isGroup;*/
         
-        return isGroup;
+        /*
+        let aGroupData = false,
+            TempCoordsArray, TempCoords, whileWrongCoords = true,
+            aConnectors = [
+                `skill_bottom_on.png`,
+                `skill_down_on.png`,
+                `skill_up_on.png`,
+                `skills_connectoronbranchboth.png`,
+                `skills_connectoronbranchdown.png`,
+                `skills_connectoronbranchup.png`,
+                `skills_connectoroncenter.png`,
+                `skills_connectorontransmuterboth.png`,
+                `skills_connectorontransmuterdown.png`,
+                `skills_connectorontransmuterup.png`
+            ],
+            aCoords = [
+                [0, `middle`],
+                [-32, `top`],
+                [-38, `top`],
+                [38, `bottom`],
+                [32, `bottom`]
+            ],
+            mConnectors = {
+                skill_bottom_on: {
+                    top: false,
+                    middle: false,
+                    bottom: true
+                },
+                skill_down_on: {
+                    top: false,
+                    middle: false,
+                    bottom: true
+                },
+                skill_up_on: {
+                    top: false,
+                    middle: true,
+                    bottom: false
+                },
+                skills_connectoronbranchboth: {
+                    top: true,
+                    middle: true,
+                    bottom: true
+                },
+                skills_connectoronbranchdown: {
+                    top: false,
+                    middle: true,
+                    bottom: true
+                },
+                skills_connectoronbranchup: {
+                    top: true,
+                    middle: true,
+                    bottom: false
+                },
+                skills_connectoroncenter: {
+                    top: false,
+                    middle: true,
+                    bottom: false
+                },
+                skills_connectorontransmuterboth: {
+                    top: true,
+                    middle: false,
+                    bottom: true
+                },
+                skills_connectorontransmuterdown: {
+                    top: false,
+                    middle: false,
+                    bottom: true
+                },
+                skills_connectorontransmuterup: {
+                    top: true,
+                    middle: false,
+                    bottom: false
+                }
+            };
+        
+        for(let kConnector in mConnectors){
+            
+            if(`img/${kConnector}.png` === InConnectorsArray[InCoordsKey]){
+                TempCoordsArray = InCoordsKey.split(`,`);
+                Log(InCoordsKey);
+                let i = 0;
+                while(!aGroupData && aCoords[i]){
+    
+                    Log(kConnector);
+                    TempCoords = `${parseInt(TempCoordsArray[0]) + 80},${parseInt(TempCoordsArray[1]) + aCoords[i][0]}`;
+                    if(InSkillsArray[TempCoords] && InSkillsArray[TempCoords].mSkill){
+                        if(mConnectors[kConnector][aCoords[i][1]]) {
+                            aGroupData = [true, TempCoords];
+                        }else{
+                            aGroupData = [false, TempCoords];
+                        }
+                    }
+                    i++;
+                    Log(TempCoords);
+                }
+            }
+        }
+        
+        return aGroupData;
+        */
     }
     
     genLayout(){
@@ -580,7 +735,7 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
     getLogicPath(){
         let tempPath = this.objMiscUI.classtraining.getFieldValue(`skillName`);
         tempPath = tempPath.substring(0, tempPath.lastIndexOf("/"));
-        
+        //Log(tempPath);
         return tempPath;
     }
     

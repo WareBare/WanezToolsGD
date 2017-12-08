@@ -10,23 +10,27 @@
 module.exports = {
     tplContent: {},
     
-    _mMateria: false,
-    _tagsMateria: false,
+    _mItems: false,
+    _mGear: false,
+    _tagsItems: false,
     
-    iniMateria: function(){
-        this._mMateria = new WZ.GrimDawn.Items.mMateria(`records/items/materia`);
+    iniMateria: function(InPath){
+        this._mItems = new WZ.GrimDawn.Items.mMateria(InPath || `records/items/materia`);
+    },
+    iniGear: function(InPath){
+        this._mGear = new WZ.GrimDawn.Items.mGear(InPath);
     },
     
     showMateriaEdit: function($materia){
-        this.currentMateria = $materia;
+        this.currentItemId = $materia;
         
-        wzWND('materiaEdit').refresh();
+        wzWND('itemsEdit').refresh();
     },
     
     loadTags(){
     
         if(appConfig.get(`GrimDawn.Items.TagsMateria`)){
-            this._tagsMateria = wzStorageGD.__get(`text_en/${appConfig.get(`GrimDawn.Items.TagsMateria`)}`,`Tags`);
+            this._tagsItems = wzStorageGD.__get(`text_en/${appConfig.get(`GrimDawn.Items.TagsMateria`)}`,`Tags`);
         }
         
     },

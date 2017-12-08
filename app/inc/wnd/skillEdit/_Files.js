@@ -18,12 +18,34 @@ module.exports = {
     //},
     
     OnChangeSkillLinkCheckBox: function(el){
-        let ConfigKey = `linkedSkills.${this._mSkill.getSkillPaths().filePathModifierConfig}`;
+        let ConfigKey = `linkedSkills.${this._mSkill.getSkillPaths().filePathModifierConfig}`,
+            _Tags = wzStorageGD.__get(`text_en/${appConfig.get(`GrimDawn.Mastery.TagsSkills`)}`,`Tags`),
+            TagText_, TagSkills_ = ``, TempSkillName_;
         
         if(el.checked){
-            this.skillConfig.set(`${ConfigKey}.${el.value}`, true)
+            this.skillConfig.set(`${ConfigKey}.${el.value}`, true);
         }else{
             this.skillConfig.delete(`${ConfigKey}.${el.value}`);
+        }
+    
+        // todo DEV enable when it becomes a thing
+        if(app.getName() === `Electron`){
+            //Log(_Tags.__getField(this._mSkill.getField(`logic`,`skillBaseDescription`)));
+            TagText_ = _Tags.__getField(this._mSkill.getField(`logic`,`skillBaseDescription`)).split(`{^n^`)[0];
+            
+            for(let kSkillName in this.skillConfig.get(ConfigKey)){
+                if(TagSkills_ !== ``) TagSkills_ += ` ^n `;
+                for(let kSkillId in this._mUI.aSkills){
+                    if(this._mUI.aSkills[kSkillId].getSkillPaths().filePathModifierConfig === kSkillName){
+                        TempSkillName_ = this._mUI.aSkills[kSkillId].getSkillName();
+                    }
+                }
+                TagSkills_ += `- ${TempSkillName_}`;
+            }
+            TagText_ = `${TagText_}{^n^t}${TagSkills_}`;
+            //Log(TagText_);
+            _Tags.__setField(this._mSkill.getField(`logic`,`skillBaseDescription`), TagText_);
+            _Tags.saveData();
         }
     },
     
@@ -141,13 +163,16 @@ module.exports = {
             out_ += `<span class="formBTN" title="dbr file name must contain exactly one 01; Continues the counter /pets/mypet_01.dbr adds /mypet_02.dbr to the array up to the Ultimate Skill Rank - for all spawnObjects" onclick="wzWND('${this.wndId}').__getContent().FillRemainingObjects();">Fill Remaining Objects</span>${this.forms.main_form.create()}`;
         }
         
-        if(this._mSkill.aSkills.logic && (this._mSkill.getField(`logic`,`templateName`) === `database/templates/skill_modifier.tpl` ) ){
+        if(this._mSkill.aSkills.logic && ( (this._mSkill.getField(`logic`,`templateName`) === `database/templates/skill_modifier.tpl` ) || (this._mSkill.getField(`logic`,`templateName`) === `database/templates/skill_projectilemodifier.tpl` ) ||
+            ( this._mSkill.aSkills.buff && (wzStorageGD.__get(this._mSkill.aSkills.buff[0]).__getField(`templateName`).includes(`pet`))) ) ){
             let ConfigKey = `linkedSkills.${this._mSkill.getSkillPaths().filePathModifierConfig}`,
                 LinkedSkills = this.skillConfig.get(ConfigKey),
                 LinkToSkill_ = ``, TempSkillClass,
                 LinkToSkillItems_ = ``, mIgnoreTemplatesForLinking = {
                     'database/templates/skill_modifier.tpl': true,
+                    'database/templates/skill_projectilemodifier.tpl': true,
                     'database/templates/skill_transmuter.tpl': true,
+                    'database/templates/skill_projectiletransmuter.tpl': true,
                     'database/templates/skill_passive.tpl': true
                 },
                 tplFrame = `<fieldset><legend>Link to Skill</legend>{ITEMS}</fieldset>`,
@@ -158,7 +183,7 @@ module.exports = {
             for(let iId in this._mUI.aSkills){
                 TempSkillClass = this._mUI.aSkills[iId];
                 if(!mIgnoreTemplatesForLinking[TempSkillClass.getField(`logic`,`templateName`)]){
-                    console.log(TempSkillClass);
+                    //console.log(TempSkillClass);
                     LinkToSkillItems_ += tplItem.wzReplace({
                         STATE: ( LinkedSkills && LinkedSkills[ TempSkillClass.getSkillPaths().filePathModifierConfig ] ) ? ` checked` : ``,
                         VALUE: TempSkillClass.getSkillPaths().filePathModifierConfig,

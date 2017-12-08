@@ -198,7 +198,8 @@ module.exports = {
         this._luaRunes = new WZ.GrimDawn.cData(`${this.PathToCompilation}/source/wanez/scripts/data/gInscriptions.lua`, `Lua`);
         this._luaFnStones = new WZ.GrimDawn.cData(`${this.PathToCompilation}/source/wanez/scripts/fn/gRuneStones.lua`, `LuaFN`);
         this._luaFnRunes = new WZ.GrimDawn.cData(`${this.PathToCompilation}/source/wanez/scripts/fn/gRunes.lua`, `LuaFN`);
-        
+    
+        this._tagsEvents = new WZ.GrimDawn.cData(`${this.PathToCompilation}/source/text_en/modtags_wanez_events_generated.txt`,`Tags`);
     },
     
     ini: function(){

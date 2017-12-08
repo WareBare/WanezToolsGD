@@ -116,6 +116,12 @@ module.exports = class cFrom extends libWZ.Core.cBase{
                     EVENT_TYPE: `onChange`,
                     SPECIAL: ``
                 }),
+                textMedium: this.tplForm.fields.input.wzOut({
+                    TYPE: `text`,
+                    WZ_TYPE: `TextMedium`,
+                    EVENT_TYPE: `onChange`,
+                    SPECIAL: ``
+                }),
                 textLarge: this.tplForm.fields.input.wzOut({
                     TYPE: `text`,
                     WZ_TYPE: `TextLarge`,

@@ -32,6 +32,7 @@ module.exports = {
             TempClass.__setField(`onAddToWorld`, `wanez.AutoPickUp.OnAddToWorld`);
             TempClass.__setField(`onDestroy`, `wanez.AutoPickUp.OnDestroy`);
             
+            //console.log(TempClass);
             TempClass.saveDBR();
         }
     },

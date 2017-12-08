@@ -9,13 +9,13 @@
 
 module.exports = class mMateria extends libWZ.GrimDawn.cModule{
     
-    constructor($path){
+    constructor(InPath){
         super();
-        
+    
         this.aMateria = [];
         //this.objProperties = {};
     
-        if($path) this.iniMateria($path);
+        if(InPath) this.iniMateria(InPath);
     
     
         this.aSlotTagsCombo = {
@@ -60,17 +60,19 @@ module.exports = class mMateria extends libWZ.GrimDawn.cModule{
         //console.log(wzStorageGD.getClass(this.aMateria[0]));
     }
     
-    iniMateria($path){
+    iniMateria(InPath){
         let tempPath,tempClass,objFiles = {};
         try{
-            objFiles = wzIO.dir_get_contentsSync(`${this.fn.getPaths().Core}/${$path}`);
+            objFiles = wzIO.dir_get_contentsSync(`${this.fn.getPaths().Core}/${InPath}`);
         }catch(err){} try{
-            Object.assign(objFiles,wzIO.dir_get_contentsSync(`${this.fn.getPaths().Mod}/${$path}`));
-        }catch(err){}
+            objFiles = objFiles || {};
+            Object.assign(objFiles,wzIO.dir_get_contentsSync(`${this.fn.getPaths().Mod}/${InPath}`));
+            Log(`Using Mod Component: ${InPath}`);
+        }catch(err){console.log(err)}
         
         for(let $_FileName in objFiles){
-            tempPath = `${$path}/${$_FileName}`;
-            tempClass = wzStorageGD.load(`${$path}/${$_FileName}`);
+            tempPath = `${InPath}/${$_FileName}`;
+            tempClass = wzStorageGD.load(`${InPath}/${$_FileName}`);
             if(tempClass.__getField(`templateName`) === `database/templates/itemrelic.tpl`) this.aMateria.push(tempPath);
         }
     }
