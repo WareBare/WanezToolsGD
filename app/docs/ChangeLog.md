@@ -2,7 +2,8 @@
 
 ---
 
-> [v0.5.0](#v0.5.0)
+> [v0.5.0](#v0.5.0) |
+> [v0.5.1](#v0.5.1)
 
 > [v0.4.0](#v0.4.0) |
 > [v0.4.1](#v0.4.1)
@@ -28,6 +29,12 @@
 > [v0.0.1](#v0.0.1)
 
 ---
+
+---
+<a name="v0.5.1"></a>
+## v0.5.1
+### Filter (ColorCoding) Tool
+* fixed an issue for russian localization
 
 ---
 <a name="v0.5.0"></a>

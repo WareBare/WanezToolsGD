@@ -543,7 +543,12 @@ module.exports = {
                                         if(_mTags[kIndexTags].__getField(TempGroupItem[kIndex]).includes(`{^E}`)) {
                                             _mTags[kIndexTags].__setField(TempGroupItem[kIndex], `${_mTags[kIndexTags].__getField(TempGroupItem[kIndex]).replace(`{^E}`, TempColorCode)}`);
                                         }else{
-                                            _mTags[kIndexTags].__setField(TempGroupItem[kIndex], `${TempColorCode}${_mTags[kIndexTags].__getField(TempGroupItem[kIndex])}{^E}`);
+                                            if(_mTags[kIndexTags].__getField(TempGroupItem[kIndex]).startsWith(`[`)){
+                                                _mTags[kIndexTags].__setField(TempGroupItem[kIndex], `${TempColorCode}${_mTags[kIndexTags].__getField(TempGroupItem[kIndex])}{^E}`);
+                                            }else{
+                                                _mTags[kIndexTags].__setField(TempGroupItem[kIndex], `${TempColorCode}${_mTags[kIndexTags].__getField(TempGroupItem[kIndex])}{^E}`);
+                                            }
+                                            
                                         }
                                         
                                         //Log(_mTags[kIndexTags].__getField(TempGroupItem[kIndex]).replace(`{^E}`, TempColorCode));
@@ -561,9 +566,19 @@ module.exports = {
                                             TempTagValue = `${_mTags[kIndex].__getField(kTag).replace(/{\^[A-Za-z]}/g, TempColorCode)}`
                                         }
                                         
-                                        if(TempGroupItem[kTag].bIsSet){
-                                            TempTagValue = `(S) ${TempTagValue}`;
+                                        if(_mTags[kIndex].__getField(kTag).startsWith(`[`)){
+                                            if(TempGroupItem[kTag].bIsSet){
+                                                TempTagValue = _mTags[kIndex].__getField(kTag).replace(/(\[[a-zA-Z]+])/g, `$1(S) ${TempColorCode}`);
+                                            }else{
+                                                TempTagValue = _mTags[kIndex].__getField(kTag).replace(/(\[[a-zA-Z]+])/g, `$1${TempColorCode}`);
+                                            }
+                                        }else{
+                                            if(TempGroupItem[kTag].bIsSet){
+                                                TempTagValue = `(S) ${TempTagValue}`;
+                                            }
                                         }
+    
+                                        //Log(TempTagValue);
                                         _mTags[kIndex].__setField(kTag, `${TempTagValue}`);
                                     }
                                 }
