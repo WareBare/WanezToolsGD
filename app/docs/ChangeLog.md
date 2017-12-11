@@ -4,6 +4,7 @@
 
 > [v0.5.0](#v0.5.0) |
 > [v0.5.1](#v0.5.1)
+> [v0.5.2](#v0.5.2)
 
 > [v0.4.0](#v0.4.0) |
 > [v0.4.1](#v0.4.1)
@@ -29,6 +30,13 @@
 > [v0.0.1](#v0.0.1)
 
 ---
+
+---
+<a name="v0.5.2"></a>
+## v0.5.2
+### Filter (ColorCoding) Tool
+* added support for DoT duration stats
+* added MI ***Basilisk Mark***
 
 ---
 <a name="v0.5.1"></a>

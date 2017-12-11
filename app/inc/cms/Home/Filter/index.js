@@ -217,6 +217,7 @@ module.exports = {
         'tagMedalB003': `Rare`,
         'tagMedalB005': `Rare`,
         'tagGDX1MedalB101': `Rare`,
+        'tagGDX1MedalB102': `Rare`,
         'tagGDX1MedalB103': `Rare`,
         'tagGDX1MedalB104': `Rare`,
         'tagGDX1MedalB105': `Rare`,
@@ -347,13 +348,13 @@ module.exports = {
         'Elemental': [`DamageElemental`, `DamageModifierElemental`, `DamageModifierElementalR`, `RetaliationElemental`, `RetaliationModifierElemental`, `DefenseElementalResistance`, `DefenseElementalResistanceR`, `DefenseElementalModifier`, `DefenseElementalMaxResist`, `DefenseElementalMaxResistR`, `tagConversionElemental`, `DamageDurationElemental`],
         
         // DoT
-        'Frostburn': [`DamageDurationCold`, `DamageDurationModifierCold`, `RetaliationDurationCold`, `RetaliationDurationModifierCold`, `DefenseColdDurationModifier`],
-        'Burn': [`DamageDurationFire`, `DamageDurationModifierFire`, `RetaliationDurationFire`, `RetaliationDurationModifierFire`, `DefenseFireDurationModifier`],
-        'Electrocute': [`DamageDurationLightning`, `DamageDurationModifierLightning`, `RetaliationDurationLightning`, `RetaliationDurationModifierLightning`, `DefenseLightningDurationModifier`],
-        'Poison': [`DamageDurationPoison`, `DamageDurationModifierPoison`, `RetaliationDurationPoison`, `RetaliationDurationModifierPoison`, `DefensePoisonDurationModifier`],
-        'Decay': [`DamageDurationLife`, `DamageDurationModifierLife`, `RetaliationDurationLife`, `RetaliationDurationModifierLife`, `DefenseLifeDurationModifier`],
-        'Trauma': [`DamageDurationPhysical`, `DamageDurationModifierPhysical`, `RetaliationDurationPhysical`, `RetaliationDurationModifierPhysical`, `DefensePhysicalDurationModifier`],
-        'Bleeding': [`DamageDurationBleeding`, `DamageDurationModifierBleeding`, `RetaliationDurationBleeding`, `RetaliationDurationModifierBleeding`, `DefenseBleeding`, `DefenseBleedingR`, `DefenseBleedingModifier`, `DefenseBleedingMaxResist`, `DefenseBleedingMaxResistR`],
+        'Frostburn': [`DamageDurationCold`, `DamageDurationModifierCold`, `RetaliationDurationCold`, `RetaliationDurationModifierCold`, `DefenseColdDurationModifier`, `DefenseColdDuration`],
+        'Burn': [`DamageDurationFire`, `DamageDurationModifierFire`, `RetaliationDurationFire`, `RetaliationDurationModifierFire`, `DefenseFireDurationModifier`, `DefenseFireDuration`],
+        'Electrocute': [`DamageDurationLightning`, `DamageDurationModifierLightning`, `RetaliationDurationLightning`, `RetaliationDurationModifierLightning`, `DefenseLightningDurationModifier`, `DefenseLightningDuration`],
+        'Poison': [`DamageDurationPoison`, `DamageDurationModifierPoison`, `RetaliationDurationPoison`, `RetaliationDurationModifierPoison`, `DefensePoisonDurationModifier`, `DefensePoisonDuration`],
+        'Decay': [`DamageDurationLife`, `DamageDurationModifierLife`, `RetaliationDurationLife`, `RetaliationDurationModifierLife`, `DefenseLifeDurationModifier`, `DefenseLifeDuration`],
+        'Trauma': [`DamageDurationPhysical`, `DamageDurationModifierPhysical`, `RetaliationDurationPhysical`, `RetaliationDurationModifierPhysical`, `DefensePhysicalDurationModifier`, `DefensePhysicalDuration`],
+        'Bleeding': [`DamageDurationBleeding`, `DamageDurationModifierBleeding`, `RetaliationDurationBleeding`, `RetaliationDurationModifierBleeding`, `DefenseBleeding`, `DefenseBleedingR`, `DefenseBleedingModifier`, `DefenseBleedingMaxResist`, `DefenseBleedingMaxResistR`, `DefenseBleedingDuration`],
         
         'Attributes': [`tagCharAttribute01R`, `tagCharAttribute02R`, `tagCharAttribute03R`, `tagCharAttribute04R`, `tagCharAttribute05R`, `tagCharAttribute01ModifierR`, `tagCharAttribute02ModifierR`, `tagCharAttribute03ModifierR`, `tagCharAttribute04ModifierR`, `tagCharAttribute05ModifierR`, `tagCharAttribute01`, `tagCharAttribute02`, `tagCharAttribute03`, `tagCharAttribute04`, `tagCharAttribute05`, `tagCharAttribute01Modifier`, `tagCharAttribute02Modifier`, `tagCharAttribute03Modifier`, `tagCharAttribute04Modifier`, `tagCharAttribute05Modifier`],
         'Special': [`tagDamageModifierTotalDamage`, `tagDamageModifierCritDamage`, `tagDamageModifierCritDamageR`, `tagCharOffensiveAbilityR`, `tagCharDefensiveAbilityR`, `tagCharOffensiveAbilityModifierR`, `tagCharDefensiveAbilityModifierR`, `tagCharIncreasedExperienceR`, `tagCharRunSpeedR`, `tagCharSpellCastSpeedR`, `tagCharAttackSpeedR`, `tagCharTotalSpeedModifierR`, `tagCharRunSpeedModifierR`, `tagCharSpellCastSpeedModifierR`, `tagCharAttackSpeedModifierR`, `tagCharOffensiveAbility`, `tagCharDefensiveAbility`, `tagCharOffensiveAbilityModifier`, `tagCharDefensiveAbilityModifier`, `tagCharIncreasedExperience`, `tagCharRunSpeed`, `tagCharSpellCastSpeed`, `tagCharAttackSpeed`, `tagCharTotalSpeedModifier`, `tagCharRunSpeedModifier`, `tagCharSpellCastSpeedModifier`, `tagCharAttackSpeedModifier`, `ItemMasteryIncrement`, `ItemAllSkillIncrement`, `tagRetaliationModifierTotalDamage`]
