@@ -889,8 +889,8 @@ module.exports = {
                 `records/items/lootaffixes/suffix`
             ],
             mData = {},
-            aIndexToAffix = [`Prefix`,`Suffix`];
-            AffixData = this.AffixData;
+            aIndexToAffix = [`Prefix`,`Suffix`],
+            AffixData = new eConfig({name: `tag-data-affixes`}); //this.AffixData;
         
         // lootRandomizerName (tagX)
         // itemClassification (Magical/Rare)

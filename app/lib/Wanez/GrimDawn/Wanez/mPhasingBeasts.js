@@ -102,19 +102,22 @@ module.exports = class mPhasingBeasts extends libWZ.GrimDawn.cModule{
         this.aMateria =[];
         this.aItemsConcept = [];
         this.aItemsGear = [];
+        this.aItemsAffixes = [];
         // monsterClassification
         
         //this.iniBeasts();
-        //this.iniMateria();
-        //this.iniItemsConcept();
+        this.iniMateria();
+        this.iniItemsConcept();
         this.iniItemsGear();
+        this.iniItemsAffixes();
         
         this.aModuleData = [
             this.aBeasts,
             this.aProxies,
             this.aMateria,
             this.aItemsConcept,
-            this.aItemsGear
+            this.aItemsGear,
+            this.aItemsAffixes
         ];
     }
     
@@ -564,6 +567,12 @@ module.exports = class mPhasingBeasts extends libWZ.GrimDawn.cModule{
                     'mesh': `items/gearaccessories/rings/ring.msh`
                 }
             },
+            aRecipes = [],
+            TempSetMemberPath,
+            TempRecipePath,
+            TempLoottablePath,
+            aTempLoottableItems,
+            cTempLootTable,
             FileNameTPL = `{TYPE}_{MASTERY_ENUM}{SLOT_NAME}_{FILE_PREFIX}{VARIATION}`,
             TagNameTPL = `tagWzEvents_PhasingItemsGear_{MASTERY_ENUM}_{SLOT_NAME}_{TYPE}`,
             mTempItemData,
@@ -573,22 +582,11 @@ module.exports = class mPhasingBeasts extends libWZ.GrimDawn.cModule{
             TempItemClass,
             TempRecipeClass,
             TempSetBonusClass,
+            TempBlacksmithClass,
             TempFileName,
             TempPassiveDBR,
             TempSetBonusFileName,
             aTempSetMembers;
-    
-        // set_cleric_c01_torso.dbr
-        // set_cleric_d01_torso.dbr
-        
-        // itemNameTag
-        // itemStyleTag (Cleric's)
-        // itemClassification
-        
-        // itemSetName
-        
-        // levelRequirement
-        // itemLevel
         
         // 20_armorchest_c01.dbr
         for(let kRankId in mGearDataSettings.mItemRanks){
@@ -602,7 +600,16 @@ module.exports = class mPhasingBeasts extends libWZ.GrimDawn.cModule{
             
             // SetId == MasteryEnumeration
             for(let kSetId in aGearDataItems){
+    
+                aTempLoottableItems = [];
+                if(mGearDataSettings.mItemRanks[kRankId].UpgradeIndex){
                 
+                }else{
+                    cTempLootTable = new libWZ.GrimDawn.cData(`${dirAssets}/wzEvents/tdyn_${mGearDataSettings.mItemRanks[kRankId].FilePrefix}00.dbr`);
+                    
+                    cTempLootTable.editDBR(aGearDataItems[kSetId].tdyn_DBR);
+                    cTempLootTable.changeFilePath(`${libWZ.GrimDawn.tFn.getPaths().Mod}/${Path}/loottables/tdyn_${mGearDataSettings.mItemRanks[kRankId].FilePrefix}${kSetId}.dbr`);
+                }
                 // VARIATION \\
                 for(let kVariationId in aGearDataItems[kSetId].aSetNames){
                     TempVariationTag = TagNameTPL.wzReplace({
@@ -623,14 +630,15 @@ module.exports = class mPhasingBeasts extends libWZ.GrimDawn.cModule{
                     aTempSetMembers = [];
                     // SLOTS / PIECES \\
                     for(let kSlotName in mDefaultSlotFields){
-                        // todo Item
-                        TempItemClass = new libWZ.GrimDawn.Assets.aGear(`${Path}/${FileNameTPL.wzReplace({
+                        // Item
+                        TempSetMemberPath = `${Path}/${FileNameTPL.wzReplace({
                             TYPE: `item`,
                             MASTERY_ENUM: kSetId,
                             SLOT_NAME: `_${kSlotName.toLowerCase()}`,
                             FILE_PREFIX: mGearDataSettings.mItemRanks[kRankId].FilePrefix,
                             VARIATION: (`0${parseInt(kVariationId)+1}`).slice(-2)
-                        })}.dbr`, kSlotName);
+                        })}.dbr`;
+                        TempItemClass = new libWZ.GrimDawn.Assets.aGear(TempSetMemberPath, kSlotName);
                         
                         TempItemClass.editDBR(mDefaultSlotFields[kSlotName]);
                         TempItemClass.editDBR(aGearDataItems[kSetId].DBR);
@@ -641,14 +649,13 @@ module.exports = class mPhasingBeasts extends libWZ.GrimDawn.cModule{
                         TempItemClass.__setField(`itemSetName`, TempSetBonusFileName);
                         TempItemClass.__setField(`itemLevel`, mGearDataSettings.mItemRanks[kRankId].CharacterLevel);
                         TempItemClass.__setField(`levelRequirement`, mGearDataSettings.mItemRanks[kRankId].CharacterLevel);
-                        if(kSlotName.includes(`Armor`)) TempItemClass.__setField(`itemClassification`, mGearDataSettings.mItemRanks[kRankId].ItemClassificationName);
+                        if(kSlotName.includes(`Armor`)) TempItemClass.__setField(`armorClassification`, aGearDataItems[kSetId].ArmorClassificationName);
+                        TempItemClass.__setField(`itemClassification`, mGearDataSettings.mItemRanks[kRankId].ItemClassificationName);
                         
                         // PASSIVES \\
-                        for(let kPassiveId in aGearDataItems[kSetId].Passives){
-                            TempPassiveDBR = aGearDataItems[kSetId].Passives[kPassiveId];
-    
-                            TempItemClass.__setField(`augmentSkillName${parseInt(kPassiveId) + 1}`, TempPassiveDBR);
-                            TempItemClass.__setField(`augmentSkillLevel${parseInt(kPassiveId) + 1}`, mGearDataSettings.mItemRanks[kRankId].SkillLevel);
+                        for(let kAugmentIndex in mGearDataSettings.aPassives){
+                            TempItemClass.__setField(`augmentSkillName${parseInt(kAugmentIndex) + 1}`, `${aGearDataItems[kSetId].ClassDirectory}/wz/${mGearDataSettings.aPassives[kAugmentIndex]}`);
+                            TempItemClass.__setField(`augmentSkillLevel${parseInt(kAugmentIndex) + 1}`, mGearDataSettings.mItemRanks[kRankId].SkillLevel);
                         }
                         
                         // TAG \\
@@ -661,28 +668,55 @@ module.exports = class mPhasingBeasts extends libWZ.GrimDawn.cModule{
                         });
                         this._Tags.__setField(TempTagName, `${aGearDataItems[kSetId].ItemName} ${aGearDataItems[kSetId].Slots[kSlotName].Name}`);
                         TempItemClass.__setField(`itemNameTag`, TempTagName);
-                        
-                        
+    
+                        aTempSetMembers.push(TempSetMemberPath);
                         this.aItemsGear.push(TempItemClass);
                         
+                        // mod_wanez/_events/phasing/items/gear/affixes/affixtable_x{ENUM}.dbr [prefixTableName1]
                         if(mGearDataSettings.mItemRanks[kRankId].UpgradeIndex){
                             // mGearDataSettings.mItemRanks[ mGearDataSettings.mItemRanks[kRankId].UpgradeIndex ].FilePrefix
     
-                            TempRecipeClass = new libWZ.GrimDawn.Assets.aBlueprint(`${Path}/blueprints/${FileNameTPL.wzReplace({
+                            TempRecipePath = `${Path}/blueprints/${FileNameTPL.wzReplace({
                                 TYPE: `blueprint`,
                                 MASTERY_ENUM: kSetId,
                                 SLOT_NAME: `_${kSlotName.toLowerCase()}`,
                                 FILE_PREFIX: mGearDataSettings.mItemRanks[kRankId].FilePrefix,
                                 VARIATION: (`0${parseInt(kVariationId)+1}`).slice(-2)
-                            })}.dbr`, kSlotName);
+                            })}.dbr`;
+                            TempRecipeClass = new libWZ.GrimDawn.Assets.aBlueprint(TempRecipePath, kSlotName);
     
+                            aRecipes.push(TempRecipePath);
                             // mod_wanez/_events/phasing/items/craft_phasingessence.dbr
                             
+                            // loottable (for Blueprints)
+                            cTempLootTable = new libWZ.GrimDawn.cData(`${dirAssets}/wzEvents/tdyn_${mGearDataSettings.mItemRanks[kRankId].FilePrefix}00.dbr`);
+    
+                            TempLoottablePath = `${Path}/loottables/tdyn_${mGearDataSettings.mItemRanks[kRankId].FilePrefix}${kSetId}_${kSlotName.toLowerCase()}_${mGearDataSettings.mItemRanks[kRankId].FilePrefix}${(`0${parseInt(kVariationId)+1}`).slice(-2)}.dbr`;
+                            cTempLootTable.changeFilePath(`${libWZ.GrimDawn.tFn.getPaths().Mod}/${TempLoottablePath}`);
+                            cTempLootTable.editDBR(aGearDataItems[kSetId].tdyn_DBR);
+                            
+                            // records/items/questitems/scrapmetal.dbr
+                            // use in blueprint: TempLoottablePath
+                            TempRecipeClass.__setField(`artifactName`,TempLoottablePath);
+                            TempRecipeClass.__setField(`forcedRandomArtifactName`,TempSetMemberPath);
+                            TempRecipeClass.__setField(`artifactCreateQuantity`,`1`);
+                            TempRecipeClass.__setField(`artifactCreationCost`,`100000`);
+                            TempRecipeClass.__setField(`reagentBaseBaseName`,TempSetMemberPath);
+                            TempRecipeClass.__setField(`reagentBaseQuantity`,`1`);
+                            TempRecipeClass.__setField(`reagent1BaseName`,`mod_wanez/_events/phasing/items/craft_phasingessence.dbr`);
+                            TempRecipeClass.__setField(`reagent1Quantity`,`1`);
+                            
+                            this.aItemsGear.push(this.EditTdyn(cTempLootTable, [TempSetMemberPath]));
+                            cTempLootTable = false;
+                            
                             this.aItemsGear.push(TempRecipeClass);
+                        }else{
+                            // loottable (for drop)
+                            aTempLoottableItems.push(TempSetMemberPath);
                         }
                     }
     
-                    // todo SetBonus
+                    // SetBonus
                     TempSetBonusClass = new libWZ.GrimDawn.Assets.aSetBonus(`${TempSetBonusFileName}`);
                     TempSetBonusClass.__setField(`setMembers`, aTempSetMembers);
                     
@@ -701,32 +735,93 @@ module.exports = class mPhasingBeasts extends libWZ.GrimDawn.cModule{
                         TYPE: `DESC`
                     });
                     this._Tags.__setField(TempTagName, aGearDataItems[kSetId].SetDescription);
+                    
                     TempSetBonusClass.__setField(`setDescription`, TempTagName);
+    
+                    let TempSetIndexBonusValues;
+                    // mGearDataSettings.aSetBonus
+                    // aGearDataItems[kSetId].SetBonus
+                    
+                    // kRankId
+                    // kVariationId
+                    // aGearDataItems[kSetId].ClassTraining
+                    // aGearDataItems[kSetId].ClassDirectory
+                    for(let kKeyword in mGearDataSettings.SetBonusDBRReplace[kRankId]){
+                        TempSetIndexBonusValues = mGearDataSettings.SetBonusDBRReplace[kRankId][kKeyword];
+                        
+                        if(kKeyword === `augmentMastery`){
+                            TempSetBonusClass.__setField(`augmentMasteryName1`, `${aGearDataItems[kSetId].ClassDirectory}/${aGearDataItems[kSetId].ClassTraining}`);
+                            TempSetBonusClass.__setField(`augmentMasteryLevel1`, TempSetIndexBonusValues);
+                        }else if(kKeyword === `augmentSkill`){
+                            for(let kAugmentIndex in mGearDataSettings.aModifiers[kVariationId]){
+                                TempSetBonusClass.__setField(`augmentSkillName${parseInt(kAugmentIndex) + 1}`, `${aGearDataItems[kSetId].ClassDirectory}/wz/${mGearDataSettings.aModifiers[kVariationId][kAugmentIndex]}`);
+                                TempSetBonusClass.__setField(`augmentSkillLevel${parseInt(kAugmentIndex) + 1}`, TempSetIndexBonusValues);
+                            }
+                        }else if(kKeyword === `augmentAllLevel`){
+                            TempSetBonusClass.__setField(`augmentAllLevel`, TempSetIndexBonusValues);
+                        }
+                    }
                     
                     this.aItemsGear.push(TempSetBonusClass);
                 }
+                
+                if(cTempLootTable){
+                    this.aItemsGear.push(this.EditTdyn(cTempLootTable, aTempLoottableItems));
+                }
             }
             
-            /*
-            for(let kSetId in aGearDataItems){
-                TempFileName = ``;
-                mTempItemData = aGearDataItems[kSetId];
-                aTempSetMembers = [];
-                // todo items
-                for(let kAssetTypeName in mTempItemData){
-                    mTempItemData[kAssetTypeName]
-                    TempSetBonusClass = new libWZ.GrimDawn.Assets.aGear(`${Path}/setbonus_${kSetId}.dbr`, kAssetTypeName);
-                }
-        
-                // todo set bonus
-                TempSetBonusClass = new libWZ.GrimDawn.Assets.aSetBonus(`${Path}/setbonus_${kSetId}.dbr`);
-                TempSetBonusClass.__setField(`setMembers`, aTempSetMembers);
-            }
-            */
         }
+        
+        //Log(this.aItemsGear);
+        //Log(this._Tags);
+    }
+    iniItemsAffixes(){
+        let mAffixData = this.ePhasingConfig.get(`Affixes`),
+            mModifiersData = mAffixData.Modifiers,
+            TempAffixFileName,
+            aTempMasteryData,
+            aTempAffixPaths,
+            cTempAffixClass,
+            cTempAffixTableClass;
+        
+        // todo MODIFIERS \\
+        for(let kMasteryEnum in mModifiersData.Items){
+            cTempAffixTableClass = new libWZ.GrimDawn.Assets.aLootRandomizerTable(`${mModifiersData.Path}/${mModifiersData.AffixTableFileTPL.wzReplace({
+                ENUM: kMasteryEnum
+            })}`);
+            aTempAffixPaths = [];
+            for(let kIndex in mModifiersData.Items[kMasteryEnum]){
+                aTempMasteryData = mModifiersData.Items[kMasteryEnum][kIndex];
     
-        Log(this.aItemsGear);
-        Log(this._Tags);
+                for(let kCount in aTempMasteryData[kIndex].modifierSkillName){
+                    TempAffixFileName = mModifiersData.AffixFileTPL.wzReplace({
+                        ENUM: kMasteryEnum,
+                        INDEX: (`0${kIndex}`).slice(-2),
+                        COUNT: (`0${kCount}`).slice(-2)
+                    });
+                    cTempAffixClass = new libWZ.GrimDawn.Assets.aLootRandomizer(`${mModifiersData.Path}/modifiers/${TempAffixFileName}`);
+                    aTempAffixPaths.push(`${mModifiersData.Path}/modifiers/${TempAffixFileName}`);
+    
+                    cTempAffixClass.__setField(`modifiedSkillName1`, aTempMasteryData[kIndex].modifiedSkillName);
+                    cTempAffixClass.__setField(`modifierSkillName1`, aTempMasteryData[kIndex].modifierSkillName[kCount]);
+                    
+                    this.aItemsAffixes.push(cTempAffixClass);
+                }
+                
+            }
+            this.aItemsAffixes.push(this.editAffixTable(cTempAffixTableClass, aTempAffixPaths));
+        }
+        
+        let mSkillsData = mAffixData.Skills,
+            TempRankPrefix;
+        
+        // todo SKILLS \\
+        for(let kIndex in mSkillsData.Items){
+            
+            for(let kRankId in mSkillsData.Settings.aRankPrefixes){
+            
+            }
+        }
     }
     
     GenerateItemsConcept(InType, InData, InId){
@@ -798,5 +893,6 @@ module.exports = class mPhasingBeasts extends libWZ.GrimDawn.cModule{
         
         return aItemsDBR;
     }
+    
     
 };

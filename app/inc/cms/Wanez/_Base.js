@@ -159,7 +159,9 @@ module.exports = {
     saveGearBlacksmith: function(){
         this.saveCrafterPatron(`/mod_wanez/_gear/creatures/npcs/blacksmith_leveling{RANK}.dbr`,[`mod_wanez/_gear/items/leveling/blueprints`,`mod_wanez/_gear/exchange/blueprints`,`mod_wanez/_gear/items/artifacts/blueprints`]);
         
-        this.saveCrafterPatron(`/mod_wanez/_lc/creatures/npcs/blacksmith_vanilla{RANK}.dbr`,`mod_wanez/_lc/blueprints`)
+        this.saveCrafterPatron(`/mod_wanez/_lc/creatures/npcs/blacksmith_vanilla{RANK}.dbr`,`mod_wanez/_lc/blueprints`);
+    
+        this.saveCrafterPatron(`/mod_wanez/_events/phasing/creatures/npcs/blacksmith_gear{RANK}.dbr`,[`mod_wanez/_events/phasing/items/gear/blueprints`,`mod_wanez/_events/phasing/items/converter/blueprints`,`mod_wanez/_events/phasing/items/modifier/blueprints`]);
     },
     saveGearBlacksmith_old: function(){
         this.saveCrafter(new WZ.GrimDawn.cData(`/mod_wanez/_gear/creatures/npcs/blacksmith_leveling01.dbr`),[`mod_wanez/_gear/items/leveling/blueprints`,`mod_wanez/_gear/exchange/blueprints`,`mod_wanez/_gear/items/artifacts/blueprints`]);
@@ -200,6 +202,7 @@ module.exports = {
         this._luaFnRunes = new WZ.GrimDawn.cData(`${this.PathToCompilation}/source/wanez/scripts/fn/gRunes.lua`, `LuaFN`);
     
         this._tagsEvents = new WZ.GrimDawn.cData(`${this.PathToCompilation}/source/text_en/modtags_wanez_events_generated.txt`,`Tags`);
+        this._tagsMastery = new WZ.GrimDawn.cData(`${this.PathToCompilation}/source/text_en/modtags_wanez_mastery.txt`,`Tags`);
     },
     
     ini: function(){

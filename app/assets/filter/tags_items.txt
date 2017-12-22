@@ -1073,6 +1073,8 @@ tagShoulderB022=Zantarin's Mantle
 tagShoulderB023=Zantarin's Shoulderguard
 tagShoulderB024=Fabius' Shoulderguard
 tagShoulderB025=Fabius' Pauldron
+tagShoulderB026=Loghorrean's Corruption
+tagShoulderB026_Desc="Still writhing with void corruption."
 
 tagShoulderC001=Razorback's Spined Mantle
 tagShoulderC001Desc="Stitched together from the carcass of Razorback."
@@ -3760,6 +3762,7 @@ tagPrefixAO010=Sapping
 tagPrefixAO011=Corrosive
 tagPrefixAO012=Warped
 tagPrefixAO013=Void-Touched
+tagPrefixAO014=Decaying
 
 tagPrefixB001_WpnMelee1h_A=Tyrant's
 tagPrefixB002_WpnMelee1h_A=Relentless

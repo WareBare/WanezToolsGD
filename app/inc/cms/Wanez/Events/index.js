@@ -19,12 +19,28 @@ module.exports = {
         this.Base._tagsEvents.saveData();
     },
     
+    saveMasteryData: function(){
+        this._mModule.saveModuleData([this.Base._tagsMastery, false, false]);
+        console.log(this._mModule);
+        Log(this.Base._tagsMastery);
+        this.Base._tagsMastery.saveData();
+    },
+    
     Content_PhasingBeasts(){
         let out_;
     
         this._mModule = new WZ.GrimDawn.Wanez.mPhasingBeasts(this.Base._tagsEvents);
         
         out_ = `Phasing Beasts have been generated, ready to save!`;
+    
+        return out_;
+    },
+    Content_Mastery(){
+        let out_;
+    
+        this._mModule = new WZ.GrimDawn.Wanez.mMastery(this.Base._tagsMastery);
+    
+        out_ = `Mastery Passives, Converters and Modifiers have been generated, ready to save!`;
     
         return out_;
     },
@@ -38,6 +54,9 @@ module.exports = {
             case `Phasing Beasts`:
                 out_ = this.Content_PhasingBeasts();
                 break;
+            case `Mastery`:
+                out_ = this.Content_Mastery();
+                break;
             default:
                 break;
         }
@@ -48,7 +67,12 @@ module.exports = {
     sidebarBtns_: function(){
         let saveEventsDataBTN = {};
         
-        if(this.contentType){
+        if(this.contentType === `Mastery`){
+            saveEventsDataBTN = {
+                "ONCLICK": "_cms.saveMasteryData()",
+                "TEXT": "Save"
+            };
+        }else if(this.contentType){
             saveEventsDataBTN = {
                 "ONCLICK": "_cms.saveEventsData()",
                 "TEXT": "Save"
@@ -56,12 +80,16 @@ module.exports = {
         }
         
         return [
-            saveEventsDataBTN
+            saveEventsDataBTN, {
+                "ONCLICK": "_cms.Base.saveGearBlacksmith()",
+                "TEXT": "Save BS Lvl"
+            }
         ];
     },
     sidebarList_: function(){
         return {
-            'Phasing Beasts':[]
+            'Phasing Beasts':[],
+            'Mastery': []
         }
     }
     

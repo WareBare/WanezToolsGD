@@ -96,7 +96,11 @@ class cModule extends libWZ.GrimDawn.cBase{
         let cTdyn = false, TempData;
         
         try{
-            cTdyn = new libWZ.GrimDawn.cData(InPathToTdyn);
+            if(typeof InPathToTdyn === `string`){
+                cTdyn = new libWZ.GrimDawn.cData(InPathToTdyn);
+            }else{
+                cTdyn = InPathToTdyn;
+            }
             
             for(let kIndex in InData){
                 TempData = Array.isArray(InData[kIndex]) ? InData[kIndex] : [InData[kIndex], 100];
@@ -114,6 +118,38 @@ class cModule extends libWZ.GrimDawn.cBase{
         if(!cTdyn) console.warn(`An Error Has Occurred at cModule:EditTdyn()`);
         
         return cTdyn;
+    }
+    
+    
+    EditAffixTable(InPathToAffixTable, InData){
+        let cAffixTable = false, TempData;
+        
+        try{
+            if(typeof InPathToAffixTable === `string`){
+                cAffixTable = new libWZ.GrimDawn.cData(InPathToAffixTable);
+            }else{
+                cAffixTable = InPathToAffixTable;
+            }
+            
+            for(let kIndex in InData){
+                TempData = Array.isArray(InData[kIndex]) ? InData[kIndex] : [InData[kIndex], 1, 250, 100];
+                
+                cAffixTable.__setField(`randomizerName${parseInt(kIndex) + 1}`, TempData[0]);
+                cAffixTable.__setField(`randomizerLevelMin${parseInt(kIndex) + 1}`, TempData[1]);
+                cAffixTable.__setField(`randomizerLevelMax${parseInt(kIndex) + 1}`, TempData[2]);
+                cAffixTable.__setField(`randomizerWeight${parseInt(kIndex) + 1}`, TempData[3]);
+            }
+            for(let i = InData.length + 1; i <= 80; i++ ){
+                cAffixTable.__setField(`randomizerName${i}`, ``);
+                cAffixTable.__setField(`randomizerLevelMin${i}`, ``);
+                cAffixTable.__setField(`randomizerLevelMax${i}`, ``);
+                cAffixTable.__setField(`randomizerWeight${i}`, ``);
+            }
+        }catch(err){console.log(err);}
+        
+        if(!cAffixTable) console.warn(`An Error Has Occurred at cModule:EditAffixTable()`);
+        
+        return cAffixTable;
     }
     
 }

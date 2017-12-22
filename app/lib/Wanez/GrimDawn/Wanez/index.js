@@ -29,6 +29,7 @@ module.exports = {
     mControllers: libWZ.GrimDawn.Wanez.mControllers = require(`./mControllers`),
     mEnemies: libWZ.GrimDawn.Wanez.mEnemies = require(`./mEnemies`),
     mEnemiesCampaign: libWZ.GrimDawn.Wanez.mEnemiesCampaign = require(`./mEnemiesCampaign`),
-    mPhasingBeasts: libWZ.GrimDawn.Wanez.mPhasingBeasts = require(`./mPhasingBeasts`)
+    mPhasingBeasts: libWZ.GrimDawn.Wanez.mPhasingBeasts = require(`./mPhasingBeasts`),
+    mMastery: libWZ.GrimDawn.Wanez.mMastery = require(`./mMastery`)
 };
 

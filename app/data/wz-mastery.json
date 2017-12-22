@@ -1,0 +1,618 @@
+{
+    "Settings": {
+        "MasteryNames": {
+            "misc02": "Cleric",
+            "misc03": "Heretic",
+            "dga01": "Warrior",
+            "dga02": "Gunslinger",
+            "dga03": "Conjurer",
+            "dga04": "Shadowblade",
+            "dga05": "Eldritch"
+        }
+    },
+    "aValues": {
+        "wzConverters": [
+             1.0,   2.0,   3.0,   4.0,   5.0 ,   6.0,   7.0,   8.0,   9.0,  10.0,
+            12.0,  14.0,  16.0,  18.0,  20.0 ,  22.0,  24.0,  26.0,  28.0,  30.0,
+            33.0,  36.0,  39.0,  42.0,  45.0 ,  48.0,  51.0,  54.0,  57.0,  60.0,
+            64.0,  68.0,  72.0,  76.0,  80.0 ,  84.0,  88.0,  92.0,  96.0, 100.0
+        ],
+        "wzPassiveDamageMin": [
+             2.0,  3.0,  4.0,  4.0,  5.0 ,  6.0,  7.0,  8.0,  8.0,  9.0,
+             9.0, 10.0, 10.0, 11.0, 11.0 , 11.0, 12.0, 12.0, 12.0, 12.0,
+            12.0, 13.0, 14.0, 15.0, 16.0 , 18.0, 19.0, 20.0, 21.0, 23.0,
+            24.0, 26.0, 27.0, 29.0, 31.0 , 32.0, 34.0, 36.0, 38.0, 40.0
+        ],
+        "wzPassiveDamageMax": [
+             5.0,  7.0,  8.0, 10.0,  12.0 , 14.0, 15.0, 16.0, 18.0, 19.0,
+            20.0, 21.0, 22.0, 23.0,  23.0 , 24.0, 25.0, 25.0, 25.0, 25.0,
+            26.0, 28.0, 30.0, 32.0,  34.0 , 37.0, 39.0, 42.0, 44.0, 47.0,
+            50.0, 53.0, 56.0, 59.0,  63.0 , 66.0, 70.0, 73.0, 77.0, 81.0
+        ],
+        "wzPassiveDamageSlowMin": [
+            2.0,  3.0,  4.0,  4.0,  5.0 ,  6.0,  7.0,  8.0,  8.0,  9.0,
+            9.0, 10.0, 10.0, 11.0, 11.0 , 11.0, 12.0, 12.0, 12.0, 12.0,
+            12.0, 13.0, 14.0, 15.0, 16.0 , 18.0, 19.0, 20.0, 21.0, 23.0,
+            24.0, 26.0, 27.0, 29.0, 31.0 , 32.0, 34.0, 36.0, 38.0, 40.0
+        ],
+        "wzPassiveDamageSlowMax": [
+            5.0,  7.0,  8.0, 10.0,  12.0 , 14.0, 15.0, 16.0, 18.0, 19.0,
+            20.0, 21.0, 22.0, 23.0,  23.0 , 24.0, 25.0, 25.0, 25.0, 25.0,
+            26.0, 28.0, 30.0, 32.0,  34.0 , 37.0, 39.0, 42.0, 44.0, 47.0,
+            50.0, 53.0, 56.0, 59.0,  63.0 , 66.0, 70.0, 73.0, 77.0, 81.0
+        ],
+        "wzPassiveDamageModifier": [
+             5.0,  8.0, 10.0, 13.0, 16.0 , 18.0,  20.0,  22.0,  24.0,  26.0,
+            28.0, 29.0, 31.0, 32.0, 33.0 , 34.0,  35.0,  35.0,  36.0,  36.0,
+            36.0, 39.0, 42.0, 45.0, 49.0 , 53.0,  56.0,  60.0,  64.0,  68.0,
+            73.0, 77.0, 82.0, 87.0, 92.0 , 97.0, 102.0, 107.0, 113.0, 119.0
+        ],
+        "wzPassiveDurationModifier": [
+            5.0,  8.0, 10.0, 13.0, 16.0 , 18.0,  20.0,  22.0,  24.0,  26.0,
+            28.0, 29.0, 31.0, 32.0, 33.0 , 34.0,  35.0,  35.0,  36.0,  36.0,
+            36.0, 39.0, 42.0, 45.0, 49.0 , 53.0,  56.0,  60.0,  64.0,  68.0,
+            73.0, 77.0, 82.0, 87.0, 92.0 , 97.0, 102.0, 107.0, 113.0, 119.0
+        ],
+        "wzPassiveResistance": [
+            10.0, 12.0, 13.0, 15.0, 17.0 , 19.0, 20.0, 21.0, 23.0, 24.0,
+            25.0, 26.0, 27.0, 28.0, 28.0 , 29.0, 30.0, 30.0, 30.0, 30.0,
+            31.0, 33.0, 35.0, 37.0, 39.0 , 42.0, 44.0, 47.0, 49.0, 52.0,
+            55.0, 58.0, 61.0, 64.0, 68.0 , 71.0, 75.0, 78.0, 82.0, 86.0
+        ],
+        "wzPassiveResistanceMax": [
+            1.0, 1.0, 1.0, 1.0, 1.0 , 1.0, 1.0, 1.0, 1.0, 1.0,
+            1.0, 1.0, 1.0, 1.0, 1.0 , 1.0, 1.0, 1.0, 1.0, 2.0,
+            2.0, 2.0, 2.0, 2.0, 2.0 , 2.0, 2.0, 2.0, 2.0, 2.0,
+            2.0, 2.0, 2.0, 2.0, 2.0 , 2.0, 2.0, 2.0, 2.0, 3.0
+        ],
+        "wzPassiveAttributeModifier": [
+             5.0,  7.0,  8.0, 10.0, 12.0 , 14.0, 15.0, 16.0, 18.0, 19.0,
+            20.0, 21.0, 22.0, 23.0, 23.0 , 24.0, 25.0, 25.0, 25.0, 25.0,
+            26.0, 28.0, 30.0, 32.0, 34.0 , 37.0, 39.0, 42.0, 44.0, 47.0,
+            50.0, 53.0, 56.0, 59.0, 63.0 , 66.0, 70.0, 73.0, 77.0, 81.0
+        ],
+        "wzPassiveAttackSpeedModifier": [
+             1.0,  2.0,  3.0,  4.0,  4.0 ,  5.0,  5.0,  6.0,  8.0, 10.0,
+            11.0, 12.0, 12.0, 13.0, 13.0 , 13.0, 14.0, 14.0, 14.0, 15.0,
+            16.0, 16.0, 16.0, 17.0, 17.0 , 17.0, 18.0, 18.0, 18.0, 19.0,
+            19.0, 19.0, 20.0, 20.0, 21.0 , 22.0, 24.0, 26.0, 28.0, 30.0
+        ],
+        "wzPassiveRunSpeedModifier": [
+             5.0,   5.0,  5.0,  5.0, 5.0 ,  5.0,  5.0,  5.0,  5.0,  5.0,
+            10.0, 10.0, 10.0, 10.0, 10.0 , 10.0, 10.0, 10.0, 10.0, 10.0,
+            15.0, 15.0, 15.0, 15.0, 15.0 , 15.0, 15.0, 15.0, 15.0, 15.0,
+            20.0, 20.0, 20.0, 20.0, 20.0 , 20.0, 20.0, 20.0, 20.0, 25.0
+        ],
+        "wzModifierAoE": [
+            1.0, 1.1, 1.2, 1.3, 1.4 , 1.4, 1.5, 1.5, 1.6, 1.6,
+            1.7, 1.7, 1.7, 1.8, 1.8 , 1.8, 1.9, 1.9, 1.9, 2.0,
+            2.1, 2.1, 2.1, 2.2, 2.2 , 2.2, 2.3, 2.3, 2.3, 2.4,
+            2.4, 2.5, 2.5, 2.6, 2.6 , 2.7, 2.8, 2.9, 3.0, 4.0
+        ],
+        "wzModifierAdditionalX": [
+            1.0, 1.0, 1.0, 1.0, 1.0 , 1.0, 1.0, 1.0, 1.0, 1.0,
+            1.0, 1.0, 1.0, 1.0, 1.0 , 1.0, 1.0, 1.0, 1.0, 1.0,
+            2.0, 2.0, 2.0, 2.0, 2.0 , 2.0, 2.0, 2.0, 2.0, 3.0,
+            3.0, 3.0, 3.0, 3.0, 3.0 , 3.0, 3.0, 3.0, 3.0, 4.0
+        ],
+        "wzModifierPierce": [
+            25.0, 28.0, 31.0, 33.0, 35.0 , 37.0, 38.0, 39.0, 40.0,  41.0,
+            42.0, 43.0, 44.0, 45.0, 46.0 , 47.0, 48.0, 49.0, 49.0,  50.0,
+            51.0, 51.0, 52.0, 53.0, 54.0 , 55.0, 56.0, 57.0, 58.0,  59.0,
+            60.0, 61.0, 62.0, 64.0, 66.0 , 68.0, 70.0, 72.0, 75.0, 100.0
+        ],
+        "wzModifierWeaponDamage": [
+            10.0, 11.0, 11.9, 12.8, 13.7 , 14.5, 15.3, 15.9, 16.6, 17.2,
+            17.8, 18.3, 18.7, 19.1, 19.4 , 19.8, 20.0, 20.2, 20.3, 20.4,
+            20.5, 21.5, 22.6, 23.7, 24.8 , 26.0, 27.3, 28.6, 29.9, 31.3,
+            32.8, 34.3, 35.8, 37.4, 39.0 , 40.8, 42.5, 44.3, 46.1, 50.0
+        ],
+        "wzModifierLeech": [
+             2.0,  2.5,  3.0,  3.4,  3.9 ,  4.3,  4.6,  5.0,  5.3,  5.6,
+             5.9,  6.1,  6.3,  6.5,  6.7 ,  6.9,  7.0,  7.1,  7.2,  7.2,
+             7.3,  7.8,  8.3,  8.8,  9.4 , 10.0, 10.6, 11.3, 12.0, 12.7,
+            13.4, 14.1, 14.9, 15.7, 16.5 , 17.4, 18.3, 19.2, 20.1, 21.0
+        ],
+        "wzModifierCooldownTime": [
+            -0.2, -0.3, -0.4, -0.5, -0.6 , -0.7, -0.8, -0.9, -1.0, -1.1,
+            -1.2, -1.3, -1.4, -1.5, -1.6 , -1.7, -1.8, -1.9, -2.0, -2.1,
+            -2.2, -2.3, -2.4, -2.5, -2.6 , -2.7, -2.8, -2.9, -3.0, -3.1,
+            -3.2, -3.3, -3.4, -3.5, -3.6 , -3.7, -3.8, -3.9, -4.0, -5.0
+        ],
+        "wzModifierCooldownReduction": [
+             5.0,  6.0,  7.0,  8.0,  9.0 , 10.0, 11.0, 12.0, 13.0, 14.0,
+            15.0, 16.0, 16.0, 17.0, 17.0 , 18.0, 18.0, 19.0, 19.0, 20.0,
+            21.0, 21.0, 22.0, 22.0, 23.0 , 23.0, 24.0, 24.0, 25.0, 26.0,
+            27.0, 28.0, 29.0, 30.0, 31.0 , 32.0, 33.0, 34.0, 35.0, 45.0
+        ],
+        "wzModifierDuration": [
+            0.2, 0.3, 0.4, 0.5, 0.6 , 0.7, 0.8, 0.9, 1.0, 1.1,
+            1.2, 1.3, 1.4, 1.5, 1.6 , 1.7, 1.8, 1.9, 2.0, 2.1,
+            2.2, 2.3, 2.4, 2.5, 2.6 , 2.7, 2.8, 2.9, 3.0, 3.1,
+            3.2, 3.3, 3.4, 3.5, 3.6 , 3.7, 3.8, 3.9, 4.0, 5.0
+        ],
+        "wzModifierTotalDamage": [
+            10.0,  15.0,  20.0,  25.0,  30.0 ,  35.0,  45.0,  49.0,  53.0,  57.0,
+            60.0,  63.0,  65.0,  67.0,  69.0 ,  71.0,  72.0,  73.0,  74.0,  75.0,
+            76.0,  77.0,  78.0,  79.0,  81.0 ,  83.0,  85.0,  87.0,  90.0,  93.0,
+            97.0, 101.0, 105.0, 110.0, 115.0 , 120.0, 125.0, 130.0, 135.0, 150.0
+        ]
+    },
+    "Items": {
+        "Converter": {
+            "Settings": {
+                "bHasPetBonus": true,
+                "Asset": "aSkill_Passive",
+                "aRanks": [20, 40]
+            },
+            "Default": {
+                "conversionPercentage": "wzConverters",
+                "conversionPercentage2": "wzConverters",
+                "skillUpBitmapName": "waneztools/icons/skillicon_converter_up.tex",
+                "skillDownBitmapName": "waneztools/icons/skillicon_converter_down.tex"
+            },
+            "aDefaults": [
+                {
+                    "Coords": [25, 360],
+                    "SkillTier": 9,
+                    "NameSuffix": "I"
+                },{
+                    "Coords": [95, 360],
+                    "SkillTier": 9,
+                    "NameSuffix": "II"
+                },{
+                    "Coords": [165, 360],
+                    "SkillTier": 9,
+                    "NameSuffix": "III"
+                }
+            ],
+            "Mastery": {
+                "misc02": [
+                    {
+                        "conversionInType": "",
+                        "conversionOutType": "Lightning",
+            
+                        "conversionInType2": "",
+                        "conversionOutType2": "Lightning"
+                    },{
+                        "conversionInType": "",
+                        "conversionOutType": "Lightning",
+            
+                        "conversionInType2": "",
+                        "conversionOutType2": "Lightning"
+                    },{
+                        "conversionInType": "",
+                        "conversionOutType": "Lightning",
+            
+                        "conversionInType2": "",
+                        "conversionOutType2": "Lightning"
+                    }
+                ],
+                "misc03": [
+                    {
+                        "conversionInType": "",
+                        "conversionOutType": "Life",
+            
+                        "conversionInType2": "",
+                        "conversionOutType2": "Life"
+                    },{
+                        "conversionInType": "",
+                        "conversionOutType": "Life",
+            
+                        "conversionInType2": "",
+                        "conversionOutType2": "Life"
+                    },{
+                        "conversionInType": "",
+                        "conversionOutType": "Life",
+            
+                        "conversionInType2": "",
+                        "conversionOutType2": "Life"
+                    }
+                ],
+                "dga01": [
+                    {
+                        "conversionInType": "",
+                        "conversionOutType": "Physical",
+            
+                        "conversionInType2": "",
+                        "conversionOutType2": "Physical"
+                    },{
+                        "conversionInType": "",
+                        "conversionOutType": "Physical",
+            
+                        "conversionInType2": "",
+                        "conversionOutType2": "Physical"
+                    },{
+                        "conversionInType": "",
+                        "conversionOutType": "Physical",
+            
+                        "conversionInType2": "",
+                        "conversionOutType2": "Physical"
+                    }
+                ],
+                "dga02": [
+                    {
+                        "conversionInType": "",
+                        "conversionOutType": "Pierce",
+        
+                        "conversionInType2": "",
+                        "conversionOutType2": "Pierce"
+                    },{
+                        "conversionInType": "",
+                        "conversionOutType": "Pierce",
+        
+                        "conversionInType2": "",
+                        "conversionOutType2": "Pierce"
+                    },{
+                        "conversionInType": "",
+                        "conversionOutType": "Pierce",
+        
+                        "conversionInType2": "",
+                        "conversionOutType2": "Pierce"
+                    }
+                ],
+                "dga03": [
+                    {
+                        "conversionInType": "Chaos",
+                        "conversionOutType": "Aether",
+            
+                        "conversionInType2": "Lightning",
+                        "conversionOutType2": "Aether"
+                    },{
+                        "conversionInType": "Fire",
+                        "conversionOutType": "Aether",
+            
+                        "conversionInType2": "Vitality",
+                        "conversionOutType2": "Aether"
+                    },{
+                        "conversionInType": "Cold",
+                        "conversionOutType": "Aether",
+            
+                        "conversionInType2": "Acid",
+                        "conversionOutType2": "Aether"
+                    }
+                ],
+                "dga04": [
+                    {
+                        "conversionInType": "Cold",
+                        "conversionOutType": "Acid",
+            
+                        "conversionInType2": "Fire",
+                        "conversionOutType2": "Acid"
+                    },{
+                        "conversionInType": "Chaos",
+                        "conversionOutType": "Acid",
+            
+                        "conversionInType2": "Aether",
+                        "conversionOutType2": "Acid"
+                    },{
+                        "conversionInType": "Vitality",
+                        "conversionOutType": "Acid",
+            
+                        "conversionInType2": "Lightning",
+                        "conversionOutType2": "Acid"
+                    }
+                ],
+                "dga05": [
+                    {
+                        "conversionInType": "",
+                        "conversionOutType": "Chaos",
+            
+                        "conversionInType2": "",
+                        "conversionOutType2": "Chaos"
+                    },{
+                        "conversionInType": "",
+                        "conversionOutType": "Chaos",
+            
+                        "conversionInType2": "",
+                        "conversionOutType2": "Chaos"
+                    },{
+                        "conversionInType": "",
+                        "conversionOutType": "Chaos",
+            
+                        "conversionInType2": "",
+                        "conversionOutType2": "Chaos"
+                    }
+                ]
+            }
+        },
+        "Passive": {
+            "Settings": {
+                "bHasPetBonus": true,
+                "Asset": "aSkill_Passive",
+                "aRanks": [20, 40]
+            },
+            "Default": {
+                "skillUpBitmapName": "waneztools/icons/skillicon_passive_up.tex",
+                "skillDownBitmapName": "waneztools/icons/skillicon_passive_down.tex"
+            },
+            "aDefaults": [
+                {
+                    "Coords": [245, 10],
+                    "SkillTier": 1,
+                    "NameSuffix": "I",
+                    "DBR": {}
+                },{
+                    "Coords": [245, 430],
+                    "SkillTier": 1,
+                    "NameSuffix": "II",
+                    "DBR": {}
+                },{
+                    "Coords": [885, 10],
+                    "SkillTier": 9,
+                    "NameSuffix": "III",
+                    "DBR": {
+                        "conversionPercentage": "wzConverters",
+                        "conversionPercentage2": "wzConverters"
+                    }
+                },{
+                    "Coords": [885, 430],
+                    "SkillTier": 9,
+                    "NameSuffix": "IV",
+                    "DBR": {}
+                }
+            ],
+            "Mastery": {
+                "misc02": [
+                    {
+                        "characterIntelligenceModifier": "wzPassiveAttributeModifier",
+                        "characterStrengthModifier": "wzPassiveAttributeModifier"
+                    },{
+                        "characterSpellCastSpeedModifier": "wzPassiveAttackSpeedModifier",
+                        "characterAttackSpeedModifier": "wzPassiveAttackSpeedModifier"
+                    },{
+                        "offensiveLightningMin": "wzPassiveDamageMin",
+                        "offensiveLightningMax": "wzPassiveDamageMax",
+                        "offensiveLightningModifier": "wzPassiveDamageModifier",
+                        "offensiveSlowLightningMin": "wzPassiveDamageSlowMin",
+                        "offensiveSlowLightningMax": "wzPassiveDamageSlowMax",
+                        "offensiveSlowLightningDurationMin": 3,
+                        "offensiveSlowLightningDurationModifier": "wzPassiveDurationModifier",
+                        "offensiveSlowLightningModifier": "wzPassiveDamageModifier",
+                        "conversionInType": "Physical",
+                        "conversionOutType": "Lightning",
+                        "conversionInType2": "Pierce",
+                        "conversionOutType2": "Lightning"
+                    },{
+                        "defensiveLightning": "wzPassiveResistance",
+                        "defensiveLightningMaxResist": "wzPassiveResistanceMax"
+                    }
+                ],
+                "misc03": [
+                    {
+                        "characterIntelligenceModifier": "wzPassiveAttributeModifier",
+                        "characterStrengthModifier": "wzPassiveAttributeModifier"
+                    },{
+                        "characterSpellCastSpeedModifier": "wzPassiveAttackSpeedModifier",
+                        "characterAttackSpeedModifier": "wzPassiveAttackSpeedModifier"
+                    },{
+                        "offensiveLifeMin": "wzPassiveDamageMin",
+                        "offensiveLifeMax": "wzPassiveDamageMax",
+                        "offensiveLifeModifier": "wzPassiveDamageModifier",
+                        "offensiveSlowLifeMin": "wzPassiveDamageSlowMin",
+                        "offensiveSlowLifeMax": "wzPassiveDamageSlowMax",
+                        "offensiveSlowLifeDurationMin": 3,
+                        "offensiveSlowLifeDurationModifier": "wzPassiveDurationModifier",
+                        "offensiveSlowLifeModifier": "wzPassiveDamageModifier",
+                        "conversionInType": "Physical",
+                        "conversionOutType": "Life",
+                        "conversionInType2": "Pierce",
+                        "conversionOutType2": "Life"
+                    },{
+                        "defensiveLife": "wzPassiveResistance",
+                        "defensiveLifeMaxResist": "wzPassiveResistanceMax"
+                    }
+                ],
+                "dga01": [
+                    {
+                        "characterDefensiveAbilityModifier": "wzPassiveAttributeModifier",
+                        "characterDexterityModifier": "wzPassiveAttributeModifier"
+                    },{
+                        "characterAttackSpeedModifier": "wzPassiveAttackSpeedModifier",
+                        "characterLifeRegenModifier": "wzPassiveRunSpeedModifier"
+                    },{
+                        "offensivePhysicalMin": "wzPassiveDamageMin",
+                        "offensivePhysicalMax": "wzPassiveDamageMax",
+                        "offensivePhysicalModifier": "wzPassiveDamageModifier",
+                        "offensiveSlowPhysicalMin": "wzPassiveDamageSlowMin",
+                        "offensiveSlowPhysicalMax": "wzPassiveDamageSlowMax",
+                        "offensiveSlowPhysicalDurationMin": 3,
+                        "offensiveSlowPhysicalDurationModifier": "wzPassiveDurationModifier",
+                        "offensiveSlowPhysicalModifier": "wzPassiveDamageModifier",
+                        "conversionInType": "Aether",
+                        "conversionOutType": "Physical",
+                        "conversionInType2": "Pierce",
+                        "conversionOutType2": "Physical"
+                    },{
+                        "defensivePhysical": "wzPassiveResistance",
+                        "defensivePhysicalMaxResist": "wzPassiveResistanceMax"
+                    }
+                ],
+                "dga02": [
+                    {
+                        "characterDexterityModifier": "wzPassiveAttributeModifier",
+                        "characterStrengthModifier": "wzPassiveAttributeModifier"
+                    },{
+                        "characterAttackSpeedModifier": "wzPassiveAttackSpeedModifier",
+                        "characterRunSpeedModifier": "wzPassiveRunSpeedModifier"
+                    },{
+                        "offensivePierceMin": "wzPassiveDamageMin",
+                        "offensivePierceMax": "wzPassiveDamageMax",
+                        "offensivePierceModifier": "wzPassiveDamageModifier",
+                        "offensiveSlowBleedingMin": "wzPassiveDamageSlowMin",
+                        "offensiveSlowBleedingMax": "wzPassiveDamageSlowMax",
+                        "offensiveSlowBleedingDurationMin": 3,
+                        "offensiveSlowBleedingDurationModifier": "wzPassiveDurationModifier",
+                        "offensiveSlowBleedingModifier": "wzPassiveDamageModifier",
+                        "conversionInType": "Physical",
+                        "conversionOutType": "Pierce",
+                        "conversionInType2": "Acid",
+                        "conversionOutType2": "Pierce"
+                    },{
+                        "defensivePierce": "wzPassiveResistance",
+                        "defensivePierceMaxResist": "wzPassiveResistanceMax",
+                        "defensiveBleeding": "wzPassiveResistance",
+                        "defensiveBleedingMaxResist": "wzPassiveResistanceMax"
+                    }
+                ],
+                "dga03": [
+                    {
+                        "characterIntelligenceModifier": "wzPassiveAttributeModifier",
+                        "characterStrengthModifier": "wzPassiveAttributeModifier"
+                    },{
+                        "characterSpellCastSpeedModifier": "wzPassiveAttackSpeedModifier",
+                        "skillManaCostReduction": "wzPassiveRunSpeedModifier"
+                    },{
+                        "offensiveAetherMin": "wzPassiveDamageMin",
+                        "offensiveAetherMax": "wzPassiveDamageMax",
+                        "offensiveAetherModifier": "wzPassiveDamageModifier",
+                        "conversionInType": "Physical",
+                        "conversionOutType": "Aether",
+                        "conversionInType2": "Pierce",
+                        "conversionOutType2": "Aether"
+                    },{
+                        "defensiveAether": "wzPassiveResistance",
+                        "defensiveAetherMaxResist": "wzPassiveResistanceMax"
+                    }
+                ],
+                "dga04": [
+                    {
+                        "characterIntelligenceModifier": "wzPassiveAttributeModifier",
+                        "characterOffensiveAbilityModifier": "wzPassiveAttributeModifier"
+                    },{
+                        "characterAttackSpeedModifier": "wzPassiveAttackSpeedModifier",
+                        "characterRunSpeedModifier": "wzPassiveRunSpeedModifier"
+                    },{
+                        "offensivePoisonMin": "wzPassiveDamageMin",
+                        "offensivePoisonMax": "wzPassiveDamageMax",
+                        "offensivePoisonModifier": "wzPassiveDamageModifier",
+                        "offensiveSlowPoisonMin": "wzPassiveDamageSlowMin",
+                        "offensiveSlowPoisonMax": "wzPassiveDamageSlowMax",
+                        "offensiveSlowPoisonDurationMin": 3,
+                        "offensiveSlowPoisonDurationModifier": "wzPassiveDurationModifier",
+                        "offensiveSlowPoisonModifier": "wzPassiveDamageModifier",
+                        "conversionInType": "Physical",
+                        "conversionOutType": "Poison",
+                        "conversionInType2": "Pierce",
+                        "conversionOutType2": "Poison"
+                    },{
+                        "defensivePoison": "wzPassiveResistance",
+                        "defensivePoisonMaxResist": "wzPassiveResistanceMax"
+                    }
+                ],
+                "dga05": [
+                    {
+                        "characterIntelligenceModifier": "wzPassiveAttributeModifier",
+                        "characterOffensiveAbilityModifier": "wzPassiveAttributeModifier"
+                    },{
+                        "characterSpellCastSpeedModifier": "wzPassiveAttackSpeedModifier",
+                        "skillCooldownReduction": "wzPassiveRunSpeedModifier"
+                    },{
+                        "offensiveChaosMin": "wzPassiveDamageMin",
+                        "offensiveChaosMax": "wzPassiveDamageMax",
+                        "offensiveChaosModifier": "wzPassiveDamageModifier",
+                        "conversionInType": "Physical",
+                        "conversionOutType": "Chaos",
+                        "conversionInType2": "Pierce",
+                        "conversionOutType2": "Chaos"
+                    },{
+                        "defensiveChaos": "wzPassiveResistance",
+                        "defensiveChaosMaxResist": "wzPassiveResistanceMax"
+                    }
+                ]
+            }
+        },
+        "Modifier": {
+            "Settings": {
+                "bHasPetBonus": false,
+                "Asset": "aSkill_Modifier",
+                "aRanks": [20, 40]
+            },
+            "Default": {
+                "skillUpBitmapName": "waneztools/icons/skillicon_modifier_up.tex",
+                "skillDownBitmapName": "waneztools/icons/skillicon_modifier_down.tex"
+            },
+            "aDefaults": [
+                {
+                    "Coords": [325, 10],
+                    "SkillTier": 2,
+                    "NameSuffix": "of Splitting",
+                    "DBR": {
+                        "offensiveTotalDamageModifier": "wzModifierTotalDamage",
+                        "projectileLaunchNumber": "wzModifierAdditionalX"
+                    }
+                },{
+                    "Coords": [325, 430],
+                    "SkillTier": 2,
+                    "NameSuffix": "of Enlargement",
+                    "DBR": {
+                        "offensiveTotalDamageModifier": "wzModifierTotalDamage",
+                        "skillTargetRadius": "wzModifierAoE",
+                        "explosionRadius": "wzModifierAoE"
+                    }
+                },{
+                    "Coords": [485, 10],
+                    "SkillTier": 4,
+                    "NameSuffix": "of Control",
+                    "DBR": {
+                        "offensiveTotalDamageModifier": "wzModifierTotalDamage",
+                        "petLimit": "wzModifierAdditionalX"
+                    }
+                },{
+                    "Coords": [485, 430],
+                    "SkillTier": 4,
+                    "NameSuffix": "of Imbuing",
+                    "DBR": {
+                        "offensiveTotalDamageModifier": "wzModifierTotalDamage",
+                        "projectilePiercing": "wzModifierPierce",
+                        "skillCooldownTime": "wzModifierCooldownTime"
+                    }
+                },{
+                    "Coords": [645, 10],
+                    "SkillTier": 6,
+                    "NameSuffix": "of Maximizing",
+                    "DBR": {
+                        "offensiveTotalDamageModifier": "wzModifierTotalDamage",
+                        "skillTargetNumber": "wzModifierAdditionalX",
+                        "sparkMaxNumber": "wzModifierAdditionalX",
+                        "sparkChance": 100
+                    }
+                },{
+                    "Coords": [645, 430],
+                    "SkillTier": 6,
+                    "NameSuffix": "of Empowerment",
+                    "DBR": {
+                        "offensiveTotalDamageModifier": "wzModifierTotalDamage",
+                        "weaponDamagePct": "wzModifierWeaponDamage",
+                        "offensiveLifeLeechMin": "wzModifierLeech"
+                    }
+                },{
+                    "Coords": [805, 10],
+                    "SkillTier": 8,
+                    "NameSuffix": "of Extend",
+                    "DBR": {
+                        "offensiveTotalDamageModifier": "wzModifierTotalDamage",
+                        "skillActiveDuration": "wzModifierDuration"
+                    }
+                },{
+                    "Coords": [805, 430],
+                    "SkillTier": 8,
+                    "NameSuffix": "of Quickening",
+                    "DBR": {
+                        "offensiveTotalDamageModifier": "wzModifierTotalDamage",
+                        "skillCooldownReduction": "wzModifierCooldownReduction"
+                    }
+                }
+            ],
+            "Mastery": {
+                "misc02": false,
+                "misc03": false,
+                "dga01": false,
+                "dga02": false,
+                "dga03": false,
+                "dga04": false,
+                "dga05": false
+            }
+        }
+    }
+}

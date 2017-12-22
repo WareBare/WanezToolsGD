@@ -41,6 +41,7 @@ module.exports = {
     aLootMT: libWZ.GrimDawn.Assets.aLootMT = require(`./aLootMT`),
     aLore: libWZ.GrimDawn.Assets.aLore = require(`./aLore`),
     aSetBonus: libWZ.GrimDawn.Assets.aSetBonus = require(`./aSetBonus`),
+    aSkillButton: libWZ.GrimDawn.Assets.aSkillButton = require(`./aSkillButton`),
     dbrData: libWZ.GrimDawn.Assets.dbrData = require(`./dbrData`),
     dbrModule: libWZ.GrimDawn.Assets.dbrModule = require(`./dbrModule`)
 };

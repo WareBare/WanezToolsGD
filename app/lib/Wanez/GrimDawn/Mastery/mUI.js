@@ -135,7 +135,7 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
             //skillName: `0`,
             skillOffsetX: `4`,
             skillOffsetY: `4`,
-            soundNameDown: `records/sounds/ui/spak_buttonskillincrement.dbr`,
+            soundNameDown: `records/sounds/ui/spak_buttonskillincrement.dbr`
         });
         
         newClass.saveDBR();

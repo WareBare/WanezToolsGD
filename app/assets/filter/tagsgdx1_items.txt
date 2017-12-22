@@ -74,8 +74,8 @@ tagGDX1WeaponGun1hC101=The Dissenter
 tagGDX1WeaponGun1hC101B=Dissenter
 tagGDX1WeaponGun1hC102=Aldur's Inquisition
 tagGDX1WeaponGun1hC102_Desc=Sidearm of Inquisitor Aldur, reknown hunter of heretics and slayer of Galbar'Thuul."
-tagGDX1WeaponGun1hC103=Core of Galgabor
-tagGDX1WeaponGun1hC103_Desc="The tainted core of Galgabor burns hotter than any flame."
+tagGDX1WeaponGun1hC103=Core of Gargabol
+tagGDX1WeaponGun1hC103_Desc="The tainted core of Gargabol burns hotter than any flame."
 tagGDX1WeaponGun1hC108=Stormlauncher of Ultos
 tagGDX1WeaponGun1hC110=Luminari Sidearm
 
@@ -93,7 +93,7 @@ tagGDX1WeaponGun1hD110_Desc="The barrels are runed on the inside to propel the b
 tagGDX1WeaponGun1hD111=Dagallon's Annihilator
 tagGDX1WeaponGun1hD112=Hagarradian Enforcer
 tagGDX1WeaponGun1hD112_Desc="The cylinder is loaded with a fragment of the original Rune of Hagarrad, infusing every shot with a bonechilling cold."
-tagGDX1WeaponGun1hD114=Corruption of Galgabor
+tagGDX1WeaponGun1hD114=Corruption of Gargabol
 tagGDX1WeaponGun1hD114_Desc="The once proud guardian of nature, forever marred by the corrupting touch of the Void."
 
 tagGDX1WeaponGun1hF101=Coven Handcannon
@@ -173,6 +173,8 @@ tagGDX1WeaponCaster1hB104=Ascendant Conduit
 tagGDX1WeaponCaster1hB105=Ascendant Source
 tagGDX1WeaponCaster1hB106=Rime-Rotten Wand
 tagGDX1WeaponCaster1hB107=Deathborne Scepter
+tagGDX1WeaponCaster1hB108=Heart of Theodin Marcell
+tagGDX1WeaponCaster1hB108_Desc="A fragment of its master's power still beats within."
 
 tagGDX1WeaponCaster1hC101=Ravager's Barb
 tagGDX1WeaponCaster1hC102=Jaravuuk's Bite
@@ -702,6 +704,8 @@ tagGDX1NecklaceA104=Preserver Pendant
 
 tagGDX1NecklaceB100=Sahdina's Memento
 tagGDX1NecklaceB100_Desc="A simple pendant, warded against evil. An inscription on it reads: The Web we weave carries with it the portents of Evil imagery. - Jay Peggins"
+tagGDX1NecklaceB101=Gulgazor's Heart
+tagGDX1NecklaceB102=Vilgazor's Heart
 
 tagGDX1NecklaceC101=Whispers of the Dead
 tagGDX1NecklaceC102=Dismember Stone
@@ -1021,7 +1025,7 @@ tagGDX1Blueprint_ArmorD158=Blueprint: Mythical Footpads of the Grey Magi
 tagGDX1Blueprint_ArmorD159=Blueprint: Mythical Wyrmbone Handguards
 tagGDX1Blueprint_ArmorD160=Blueprint: Mythical Iceskorn Talons
 tagGDX1Blueprint_ArmorD161=Blueprint: Mythical Arcane Harmony Leggings
-tagGDX1Blueprint_ArmorD162=Blueprint: Mythical Pretty Great Pants
+tagGDX1Blueprint_ArmorD162=Blueprint: Really Great Pants
 tagGDX1Blueprint_ArmorD163=Blueprint: Mythical Titan Pauldrons
 tagGDX1Blueprint_ArmorD164=Blueprint: Mythical Vileblood Mantle
 tagGDX1Blueprint_ArmorD165=Blueprint: Mythical Dread Armor of Azragor
@@ -1067,7 +1071,7 @@ tagGDX1Blueprint_AccessoryD113=Blueprint: Mythical Hammerfall Girdle
 tagGDX1Blueprint_AccessoryD114=Blueprint: Mythical Sash of the Immortal Sage
 tagGDX1Blueprint_AccessoryD115=Blueprint: Mythical Mark of Dark Dreams
 tagGDX1Blueprint_AccessoryD116=Blueprint: Mythical Mark of Anathema
-tagGDX1Blueprint_AccessoryD117=Blueprint: Mythical Glyph of Kalphat'Zoth
+tagGDX1Blueprint_AccessoryD117=Blueprint: Mythical Glyph of Kelphat'Zoth
 tagGDX1Blueprint_AccessoryD118=Blueprint: Mythical Time-Flux Band
 tagGDX1Blueprint_AccessoryD119=Blueprint: Mythical Band of the Eternal Haunt
 tagGDX1Blueprint_AccessoryD120=Blueprint: Cataclysm's Pact
@@ -1792,6 +1796,9 @@ tagGDX1Chest_KatrineCorpse=Katrine's Remains
 tagGDX1Chest_RenochCorpse=Renoch's Remains
 tagGDX1Chest_UnknownCorpse=Rotting Corpse
 
+tagGDX1ChestGauntletChestD01=Lost Reliquary
+
+
 #Interactive Objects
 
 tagGDX1DoorWendigoLocked= {^R} ~ Locked by Scorv Egdenor
@@ -1829,8 +1836,11 @@ tagGDX1DoorOvergrownCave=Overgrown Cave Entrance
 tagGDX1DoorLighthouse=Lighthouse Entrance
 tagGDX1CarraxusDoor=Den of Carraxus
 
+tagGDX1DoorOneWayAncientGrove=Escape the Grove
+tagGDX1EpicDoor_AncientGrove=Ancient Grove Gate
+tagGDX1EpicDoor_AncientGroveLocked= {^R} ~ Sealed by Mogdrogen (Requires a Skeleton Key)
+
 #Doors
 tagGDX1Door_Vine=Vines
 tagGDX1Door_Flesh=Living Flesh Door
 tagGDX1Door_Puppetmaster=Living Flesh Door
-oor
