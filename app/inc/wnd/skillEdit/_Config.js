@@ -26,21 +26,22 @@ module.exports = {
         Magical: `magical`,
         Shield: `shields`,
         Offhand: `focus`,
-        Ranged1h: `pistols`,
-        Ranged2h: `shotguns`,
-        dualWieldOnly: `dual wield`,
-        dualRangedOnly: `dual guns`,
-        dualRangedOrRanged2hOnly: `dual guns and two-handed guns`,
-        shieldNoRanged: `shield with melee weapon`,
+        Ranged1h: `one-handed ranged weapon`,
+        Ranged2h: `two-handed ranged weapon`,
+        dualWieldOnly: `^o[This is a melee dual-wielding technique. Also enables the ability to dual wield melee weapons.]`,
+        dualRangedOnly: `^o[This is a ranged dual-wielding technique. Also enables the ability to dual wield ranged weapons.]`,
+        dualRangedOrAllRangedOnly: `^o[This is a ranged technique. Also enables the ability to dual wield ranged weapons.]`,
+        dualRangedOrRanged2hOnly: `^o[This is a ranged technique. Also enables the ability to dual wield ranged weapons.] (Does not work with Shields)`,
+        shieldNoRanged: `^o[This is a melee technique using shields.]`,
         unarmedOnly: `unarmed`
     },
     mQualifierGroups: {
-        'all weapons': [`Sword`, `Axe`, `Mace`, `Dagger`, `Scepter`, `Axe2h`, `Sword2h`, `Mace2h`, `Spear`, `Staff`, `Ranged1h`, `Ranged2h`],
-        'all melee weapons': [`Sword`, `Axe`, `Mace`, `Dagger`, `Axe2h`, `Sword2h`, `Mace2h`, `Spear`],
-        'all one-handed melee weapons': [`Sword`, `Axe`, `Mace`, `Dagger`, `Spear`],
-        'all two-handed melee weapons': [`Axe2h`, `Sword2h`, `Mace2h`]/*,
-        'all guns': [`Ranged1h`, `Ranged2h`],
-        'all caster weapons': [`Scepter`, `Staff`]*/
+        '^n^o[Requires a weapon]': [`Sword`, `Axe`, `Mace`, `Dagger`, `Scepter`, `Axe2h`, `Sword2h`, `Mace2h`, `Spear`, `Staff`, `Ranged1h`, `Ranged2h`],
+        '^n^o[Requires a melee weapon]': [`Sword`, `Axe`, `Mace`, `Dagger`, `Axe2h`, `Sword2h`, `Mace2h`, `Spear`],
+        '^n^o[Requires a one-handed melee weapon]': [`Sword`, `Axe`, `Mace`, `Dagger`, `Spear`],
+        '^n^o[Requires a two-handed melee weapon]': [`Axe2h`, `Sword2h`, `Mace2h`],
+        '^n^o[Requires a ranged weapon]': [`Ranged1h`, `Ranged2h`],
+        '^n^o[Requires a caster weapon]': [`Scepter`, `Staff`]
     },
     
     forms: {
@@ -76,20 +77,20 @@ module.exports = {
                     bFoundMatch = false;
                 }
             }
-            if(kGroupText === `all melee weapons`){
-                if(mMatches[`all weapons`]){
+            if(kGroupText === `^n^o[Requires a melee weapon]`){
+                if(mMatches[`^n^o[Requires a weapon]`]){
                     bFoundMatch = false;
                 }
-            }else if(kGroupText === `all one-handed melee weapons` || kGroupText === `all two-handed melee weapons`){
-                if(mMatches[`all weapons`] || mMatches[`all melee weapons`]){
+            }else if(kGroupText === `^n^o[Requires a one-handed melee weapon]` || kGroupText === `^n^o[Requires a two-handed melee weapon]`){
+                if(mMatches[`^n^o[Requires a weapon]`] || mMatches[`^n^o[Requires a melee weapon]`]){
                     bFoundMatch = false;
                 }
-            }else if(kGroupText === `all guns`){
-                if(mMatches[`all weapons`]){
+            }else if(kGroupText === `^n^o[Requires a ranged weapon]`){
+                if(mMatches[`^n^o[Requires a weapon]`]){
                     bFoundMatch = false;
                 }
-            }else if(kGroupText === `all caster weapons`){
-                if(mMatches[`all weapons`]){
+            }else if(kGroupText === `^n^o[Requires a caster weapon]`){
+                if(mMatches[`^n^o[Requires a weapon]`]){
                     bFoundMatch = false;
                 }
             }
@@ -98,7 +99,7 @@ module.exports = {
                 mUsedQualifiers = Object.assign(mUsedQualifiers, JSON.parse(JSON.stringify( TempQualifiers )));
             }
         }
-        Log(mUsedQualifiers);
+        
         for(let kFieldName in this.mQualifiers){
             if( parseInt(this._mSkill.getField(`logic`, kFieldName)) && !mUsedQualifiers[kFieldName] ){
                 mMatches[ this.mQualifiers[kFieldName] ] = true;
@@ -107,25 +108,32 @@ module.exports = {
         }
         
         for(let kOutput_ in mMatches){
-            QualifierTagItems_ += `^n- ${kOutput_}`;
+            //QualifierTagItems_ += `^n- ${kOutput_}`;
+            //QualifierTagItems_ += `^n${kOutput_}`;
+            if(kOutput_.startsWith(`^`)){
+                QualifierTagItems_ += `^n${kOutput_}`;
+            }else{
+                QualifierTagItems_ += `^nRequires ${kOutput_}`;
+            }
         }
         if(parseInt(this._mSkill.getField(`logic`, `dualWieldOnly`))){
-            QualifierTagItems_ += `^nEnables to dual-wield melee weapons, also requires you to dual-wield.`;
+            //QualifierTagItems_ += `^n^o[This is a melee dual-wielding technique. Also enables the ability to dual wield melee weapons.]`;
         }
         if(parseInt(this._mSkill.getField(`logic`, `dualRangedOnly`))){
-            QualifierTagItems_ += `^nEnables to dual-wield pistols, also requires you to dual-wield guns.`;
+            //QualifierTagItems_ += `^n^o[This is a ranged dual-wielding technique. Also enables the ability to dual wield ranged weapons.]`;
         }
         if(parseInt(this._mSkill.getField(`logic`, `dualRangedOrRanged2hOnly`))){
-            QualifierTagItems_ += `^nEnables to dual-wield pistols, also requires you to dual-wield pistols or using shotgun.`;
+            //QualifierTagItems_ += `^n^o[This is a ranged technique. Also enables the ability to dual wield ranged weapons.] (Does not work with Shields)`;
         }
         if(parseInt(this._mSkill.getField(`logic`, `dualRangedOrAllRangedOnly`))){
-            QualifierTagItems_ += `^nEnables to dual-wield pistols.`;
+            //QualifierTagItems_ += `^n^o[This is a ranged technique. Also enables the ability to dual wield ranged weapons.]`;
         }
         if(parseInt(this._mSkill.getField(`logic`, `shieldNoRanged`))){
-            QualifierTagItems_ += `^nRequires a shield, but you cannot use guns.`;
+            //QualifierTagItems_ += `^n^o[This is a melee technique using shields.]`;
         }
     
-        QualifierTag_ = `{^fRequires the use of one of these:${QualifierTagItems_}}`;
+        //QualifierTag_ = `{^fRequires the use of one of these:${QualifierTagItems_}}`;
+        QualifierTag_ = `{^f${QualifierTagItems_}}`;
     
         if(_Tags.__getField(skillBaseDescription)){
             _Tags.__setField(skillBaseDescription, `${_Tags.__getField(skillBaseDescription).replace(/{\^f.*}/g, QualifierTag_)}`);

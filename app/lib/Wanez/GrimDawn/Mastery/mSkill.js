@@ -192,7 +192,9 @@ module.exports = class mSkill extends libWZ.GrimDawn.cModule{
                 'database/templates/skill_attackbuffradius.tpl': true,
                 'database/templates/skillsecondary_buffradius.tpl': true,
                 'database/templates/skillsecondary_buffselfduration.tpl': true,
-                'database/templates/skillsecondary_petmodifier.tpl': true
+                'database/templates/skillsecondary_petmodifier.tpl': true,
+                'database/templates/skill_attackprojectiledebuf.tpl': true,
+                'database/templates/skill_attackbuff.tpl': true
             };
         
         temp = $dbr.getFieldValue(`buffSkillName`) || $dbr.getFieldValue(`petSkillName`);

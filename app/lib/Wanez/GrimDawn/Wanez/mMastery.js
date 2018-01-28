@@ -55,7 +55,10 @@ module.exports = class mMastery extends libWZ.GrimDawn.cModule {
             TempTypeData,
             TempMasteryData,
             TempDBR,
+            TempTempDBR,
             TempClass,
+            TempClassPetMod,
+            TempClassBuff,
             TempTag;
         
         for(let kType in this.mData.Items){
@@ -65,8 +68,42 @@ module.exports = class mMastery extends libWZ.GrimDawn.cModule {
                 TempMasteryData = TempTypeData.Mastery[kMasteryFolder];
                 
                 for(let kFileId in TempTypeData.aDefaults){ // TempMasteryData
-                    TempDBR = Object.assign({}, TempTypeData.Default, TempTypeData.aDefaults[kFileId].DBR, TempMasteryData[kFileId] || {});
-                    
+                    TempTempDBR = Object.assign({}, TempTypeData.Default, TempTypeData.aDefaults[kFileId].DBR, TempMasteryData[kFileId] || {});
+                    TempDBR = {};
+                    for(let kTempKeyword in TempTempDBR){
+                        //Log(TempTempDBR[kTempKeyword]);
+                        TempDBR[kTempKeyword.wzReplace({
+                            DAMAGE_TYPE_00: this.mData.Settings.mMasteryDamageTypes[kMasteryFolder][0][0],
+                            DAMAGE_TYPE_00_SLOW: this.mData.Settings.mMasteryDamageTypes[kMasteryFolder][0][1],
+                            DAMAGE_TYPE_00_ALT: this.mData.Settings.mMasteryDamageTypes[kMasteryFolder][0][2],
+                            DAMAGE_TYPE_00_ALT2: this.mData.Settings.mMasteryDamageTypes[kMasteryFolder][0][3],
+                            DAMAGE_TYPE_01: this.mData.Settings.mMasteryDamageTypes[kMasteryFolder][1][0],
+                            DAMAGE_TYPE_01_SLOW: this.mData.Settings.mMasteryDamageTypes[kMasteryFolder][1][1],
+                            DAMAGE_TYPE_01_ALT: this.mData.Settings.mMasteryDamageTypes[kMasteryFolder][1][2],
+                            DAMAGE_TYPE_02: this.mData.Settings.mMasteryDamageTypes[kMasteryFolder][2][0],
+                            DAMAGE_TYPE_02_SLOW: this.mData.Settings.mMasteryDamageTypes[kMasteryFolder][2][1],
+                            DAMAGE_TYPE_02_ALT: this.mData.Settings.mMasteryDamageTypes[kMasteryFolder][2][2],
+                            DAMAGE_TYPE_03: this.mData.Settings.mMasteryDamageTypes[kMasteryFolder][3][0],
+                            DAMAGE_TYPE_03_SLOW: this.mData.Settings.mMasteryDamageTypes[kMasteryFolder][3][1],
+                            DAMAGE_TYPE_03_ALT: this.mData.Settings.mMasteryDamageTypes[kMasteryFolder][3][2]
+                        })] = (typeof TempTempDBR[kTempKeyword] === `string`) ? TempTempDBR[kTempKeyword].wzReplace({
+                            DAMAGE_TYPE_00: this.mData.Settings.mMasteryDamageTypes[kMasteryFolder][0][0],
+                            DAMAGE_TYPE_00_SLOW: this.mData.Settings.mMasteryDamageTypes[kMasteryFolder][0][1],
+                            DAMAGE_TYPE_00_ALT: this.mData.Settings.mMasteryDamageTypes[kMasteryFolder][0][2],
+                            DAMAGE_TYPE_00_ALT2: this.mData.Settings.mMasteryDamageTypes[kMasteryFolder][0][3],
+                            DAMAGE_TYPE_01: this.mData.Settings.mMasteryDamageTypes[kMasteryFolder][1][0],
+                            DAMAGE_TYPE_01_SLOW: this.mData.Settings.mMasteryDamageTypes[kMasteryFolder][1][1],
+                            DAMAGE_TYPE_01_ALT: this.mData.Settings.mMasteryDamageTypes[kMasteryFolder][1][2],
+                            DAMAGE_TYPE_02: this.mData.Settings.mMasteryDamageTypes[kMasteryFolder][2][0],
+                            DAMAGE_TYPE_02_SLOW: this.mData.Settings.mMasteryDamageTypes[kMasteryFolder][2][1],
+                            DAMAGE_TYPE_02_ALT: this.mData.Settings.mMasteryDamageTypes[kMasteryFolder][2][2],
+                            DAMAGE_TYPE_03: this.mData.Settings.mMasteryDamageTypes[kMasteryFolder][3][0],
+                            DAMAGE_TYPE_03_SLOW: this.mData.Settings.mMasteryDamageTypes[kMasteryFolder][3][1],
+                            DAMAGE_TYPE_03_ALT: this.mData.Settings.mMasteryDamageTypes[kMasteryFolder][3][2]
+                        }) : ``;
+                    }
+                    //Log(TempDBR);
+                    //Log(isNaN(kFileId));
                     for(let kKeyword in TempDBR){
                         if( this.mData.aValues[ TempDBR[kKeyword] ] ){
                             TempDBR[kKeyword] = this.mData.aValues[ TempDBR[kKeyword] ];
@@ -78,37 +115,64 @@ module.exports = class mMastery extends libWZ.GrimDawn.cModule {
                         BASE_FOLDER: `skills`,
                         SUB_DIRECTORY: `/wz`,
                         MASTERY_FOLDER: kMasteryFolder.toLowerCase()
-                    })}/${FileNameTPL.wzReplace({
+                    })}/${(isNaN(kFileId)) ? `${kFileId}.dbr` : FileNameTPL.wzReplace({
                         TYPE_NAME: kType.toLowerCase(),
                         TYPE_COUNT: (`0${parseInt(kFileId) + 1}`).slice(-2),
                         PREFIX: ``,
                         SUFFIX: ``
                     })}`;
                     
+                    // PetMod check
+                    TempClassPetMod = false;
+                    if(TempTypeData.aDefaults[kFileId].bIsPet){
+                        TempClassPetMod = new libWZ.GrimDawn.Assets.aSkill_PetModifier(TempFilePath.replace(`.dbr`, `_petmod.dbr`));
+                        TempClassPetMod.__setField(`petSkillName`, TempFilePath);
+                        this.aMasteryData.push(TempClassPetMod);
+                        //Log(TempClassPetMod);
+                    }
+                    // Buff check
+                    TempClassBuff = false;
+                    if(TempTypeData.Settings.Asset === `aSkillBuff_passive`){
+                        TempClassBuff = new libWZ.GrimDawn.Assets.aSkill_BuffRadius(TempFilePath.replace(`_buff.dbr`, `.dbr`));
+                        TempClassBuff.__setField(`buffSkillName`, TempFilePath);
+                        this.aMasteryData.push(TempClassBuff);
+                    }else if(TempTypeData.Settings.Asset === `aSkillBuff_Debuff`){
+                        if(kFileId === `buff_defensive_modifier2_buff`){
+                            //TempClassBuff = new libWZ.GrimDawn.Assets.aSkillSecondary_OnHitBuffRadius(TempFilePath.replace(`_buff.dbr`, `.dbr`));
+                        }else{
+                            //TempClassBuff = new libWZ.GrimDawn.Assets.aSkillSecondary_BuffRadius(TempFilePath.replace(`_buff.dbr`, `.dbr`));
+                        }
+                        TempClassBuff = new libWZ.GrimDawn.Assets.aSkillSecondary_OnHitBuffRadius(TempFilePath.replace(`_buff.dbr`, `.dbr`));
+                        TempClassBuff.__setField(`buffSkillName`, TempFilePath);
+                        this.aMasteryData.push(TempClassBuff);
+                    }
+                    
                     // UI FILE \\
                     TempClass = new libWZ.GrimDawn.Assets.aSkillButton(`${PathTPL.wzReplace({
                         BASE_FOLDER: `ui`,
                         SUB_DIRECTORY: ``,
                         MASTERY_FOLDER: kMasteryFolder.toLowerCase()
-                    })}/${FileNameTPL.wzReplace({
+                    })}/${(isNaN(kFileId)) ? `skill00_${kFileId}.dbr` : FileNameTPL.wzReplace({
                         TYPE_NAME: kType.toLowerCase(),
                         TYPE_COUNT: (`0${parseInt(kFileId) + 1}`).slice(-2),
                         PREFIX: `skill00_`,
                         SUFFIX: ``
                     })}`);
+                    Log(TempFilePath);
                     TempClass.__setField(`FileDescription`, `${kType.toLowerCase()}_${(`0${parseInt(kFileId) + 1}`).slice(-2)}`);
-                    TempClass.__setField(`isCircular`, `1`);
-                    TempClass.__setField(`bitmapNameUp`, `ui/skills/skillallocation/skills_buttonborderround01.tex`);
-                    TempClass.__setField(`bitmapNameDown`, `ui/skills/skillallocation/skills_buttonborderrounddown01.tex`);
-                    TempClass.__setField(`bitmapNameInFocus`, `ui/skills/skillallocation/skills_buttonborderroundover01.tex`);
+                    TempClass.__setField(`isCircular`, (TempTypeData.Settings.bIsSquare) ? `0` : `1` );
+                    TempClass.__setField(`bitmapNameUp`, (TempTypeData.Settings.bIsSquare) ? `ui/skills/skillallocation/skills_buttonborder01.tex` : `ui/skills/skillallocation/skills_buttonborderround01.tex`);
+                    TempClass.__setField(`bitmapNameDown`, (TempTypeData.Settings.bIsSquare) ? `ui/skills/skillallocation/skills_buttonborderdown01.tex` : `ui/skills/skillallocation/skills_buttonborderrounddown01.tex`);
+                    TempClass.__setField(`bitmapNameInFocus`, (TempTypeData.Settings.bIsSquare) ? `ui/skills/skillallocation/skills_buttonborderover01.tex` : `ui/skills/skillallocation/skills_buttonborderroundover01.tex`);
                     TempClass.__setField(`bitmapPositionX`, TempTypeData.aDefaults[kFileId].Coords[0]);
                     TempClass.__setField(`bitmapPositionY`, TempTypeData.aDefaults[kFileId].Coords[1]);
-                    TempClass.__setField(`skillName`, TempFilePath);
+                    TempClass.__setField(`skillName`, (TempClassPetMod) ? TempFilePath.replace(`.dbr`, `_petmod.dbr`) : ( (TempClassBuff) ? TempFilePath.replace(`_buff.dbr`, `.dbr`) : TempFilePath ));
                     // save class (SKILL BUTTON)
                     this.aMasteryData.push(TempClass);
                     
+                    // SKILL FILE \\
                     TempClass = new libWZ.GrimDawn.Assets[TempTypeData.Settings.Asset](TempFilePath);
-    
+                    
                     TempClass.editDBR(TempDBR);
                     TempClass.__setField(`skillMaxLevel`, TempTypeData.Settings.aRanks[0]);
                     TempClass.__setField(`skillUltimateLevel`, TempTypeData.Settings.aRanks[1]);
@@ -117,22 +181,34 @@ module.exports = class mMastery extends libWZ.GrimDawn.cModule {
                     // TAGS \\
                     TempTag = TagNameTPL.wzReplace({
                         MASTERY_FOLDER: kMasteryFolder.toUpperCase(),
-                        TYPE_NAME: kType,
-                        TYPE_COUNT: (`0${parseInt(kFileId) + 1}`).slice(-2)
+                        TYPE_NAME: (isNaN(kFileId)) ? `` : kType,
+                        TYPE_COUNT: (isNaN(kFileId)) ? kFileId : (`0${parseInt(kFileId) + 1}`).slice(-2)
                     });
-                    this._Tags.__setField(TempTag, SkillNameTPL.wzReplace({
-                        MASTERY_NAME: this.mData.Settings.MasteryNames[kMasteryFolder],
-                        TYPE_NAME: kType,
-                        SUFFIX: TempTypeData.aDefaults[kFileId].NameSuffix
-                    }));
+                    if(kType === `Buff_Active` || kType === `Buff_Modifier` ||  kType === `Buff_BuffSelfToggled` ||  kType === `Buff_DeBuff`){
+                        this._Tags.__setField(TempTag, `${this.mData.Settings.MasteryNames[kMasteryFolder]}'s ${TempTypeData.aDefaults[kFileId].NameSuffix}`);
+                        //Log( `${this.mData.Settings.MasteryNames[kMasteryFolder]}'s ${TempTypeData.aDefaults[kFileId].NameSuffix}` );
+                    }else{
+                        this._Tags.__setField(TempTag, SkillNameTPL.wzReplace({
+                            MASTERY_NAME: this.mData.Settings.MasteryNames[kMasteryFolder],
+                            TYPE_NAME: kType,
+                            SUFFIX: TempTypeData.aDefaults[kFileId].NameSuffix
+                        }));
+                    }
+                    
                     TempClass.__setField(`skillDisplayName`, TempTag);
-                    if(kType === `Modifier`){
+                    if(kType === `Modifier`) {
                         TempClass.__setField(`skillBaseDescription`, TagDescTPL.wzReplace({
                             MASTERY_FOLDER: kMasteryFolder.toUpperCase(),
                             TYPE_NAME: kType,
                             TYPE_COUNT: (`0${parseInt(kFileId) + 1}`).slice(-2)
                         }));
-                    }else{
+                    }/*else if(kType === `Buff_Active` || kType === `Buff_Modifier`){
+                        TempClass.__setField(`skillBaseDescription`, TagDescTPL.wzReplace({
+                            MASTERY_FOLDER: kMasteryFolder.toUpperCase(),
+                            TYPE_NAME: ``,
+                            TYPE_COUNT: kFileId
+                        }));
+                    }*/else{
                         TempClass.__setField(`skillBaseDescription`, TagDescTPL.wzReplace({
                             MASTERY_FOLDER: `X`,
                             TYPE_NAME: kType,

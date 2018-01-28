@@ -309,11 +309,11 @@ module.exports = {
                 "TEXT": "Reload Tags"
             },*/
             syncData,
-            editSkill,
+            newUI,
             setConnector,
             remConnector,
-            newUI,
             //syncPFX,
+            editSkill,
             createBackup
         ];
     },

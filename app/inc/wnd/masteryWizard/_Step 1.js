@@ -78,7 +78,7 @@ module.exports = {
         //this.dbr.femalepc01 = new WZ.GrimDawn.cData(`/records/creatures/pc/femalepc01.dbr`);
         //this.dbr.malepc01 = new WZ.GrimDawn.cData(`/records/creatures/pc/malepc01.dbr`);
         freeEnum.push(`Pick Enum`);
-        for(let i=1; i<=30; i++){
+        for(let i=1; i<=40; i++){
             tempField = this.dbr.malepc01.__getField(`skillTree${i}`) || false;
             //freeEnum[i] = !(tempField && tempField.includes(`.dbr`)); //  ? true : false
             if(tempField && tempField.includes(`.dbr`)) {}else{

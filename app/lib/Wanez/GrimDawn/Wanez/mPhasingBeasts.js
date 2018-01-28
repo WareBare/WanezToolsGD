@@ -105,7 +105,7 @@ module.exports = class mPhasingBeasts extends libWZ.GrimDawn.cModule{
         this.aItemsAffixes = [];
         // monsterClassification
         
-        //this.iniBeasts();
+        this.iniBeasts();
         this.iniMateria();
         this.iniItemsConcept();
         this.iniItemsGear();
@@ -462,17 +462,37 @@ module.exports = class mPhasingBeasts extends libWZ.GrimDawn.cModule{
             mModifiers = this.ePhasingConfig.get(`Modifiers`),
             aTdyn_Converters_01 = [],
             aTdyn_Modifiers_1120 = [],
-            aTdyn_Modifiers_2130 = [];
+            aTdyn_Modifiers_2130 = [],
+            aTdyn_Modifiers_3140 = [];
     
         // START GENERATION
-        aTdyn_Converters_01 = aTdyn_Converters_01.concat(this.GenerateItemsConcept(`converter`, mConverters[`20`], 20));
-        aTdyn_Modifiers_1120 = aTdyn_Modifiers_1120.concat(this.GenerateItemsConcept(`modifier`, mModifiers[`20`], 20));
+        //aTdyn_Converters_01 = aTdyn_Converters_01.concat(this.GenerateItemsConcept(`converter`, mConverters[`20`], 20));
+        //aTdyn_Modifiers_1120 = aTdyn_Modifiers_1120.concat(this.GenerateItemsConcept(`modifier`, mModifiers[`20`], 20));
+        for(let i = 11; i <= 20; i++){
+            if(mConverters[`${i}`]){
+                aTdyn_Converters_01 = aTdyn_Converters_01.concat(this.GenerateItemsConcept(`converter`, mConverters[`${i}`], i));
+                aTdyn_Modifiers_1120 = aTdyn_Modifiers_1120.concat(this.GenerateItemsConcept(`modifier`, mConverters[`${i}`], i));
+            }
+        }
+        for(let i = 21; i <= 30; i++){
+            if(mConverters[`${i}`]){
+                aTdyn_Converters_01 = aTdyn_Converters_01.concat(this.GenerateItemsConcept(`converter`, mConverters[`${i}`], i));
+                aTdyn_Modifiers_2130 = aTdyn_Modifiers_2130.concat(this.GenerateItemsConcept(`modifier`, mConverters[`${i}`], i));
+            }
+        }
+        for(let i = 31; i <= 40; i++){
+            if(mConverters[`${i}`]){
+                aTdyn_Converters_01 = aTdyn_Converters_01.concat(this.GenerateItemsConcept(`converter`, mConverters[`${i}`], i));
+                aTdyn_Modifiers_3140 = aTdyn_Modifiers_3140.concat(this.GenerateItemsConcept(`modifier`, mConverters[`${i}`], i));
+            }
+        }
     
         // TDYN
         this.aItemsConcept.push(this.EditTdyn(`/mod_wanez/_events/phasing/items/loottables/tdyn_converters_01.dbr`, aTdyn_Converters_01));
         this.aItemsConcept.push(this.EditTdyn(`/mod_wanez/_events/phasing/items/loottables/tdyn_modifiers_1120.dbr`, aTdyn_Modifiers_1120));
         this.aItemsConcept.push(this.EditTdyn(`/mod_wanez/_events/phasing/items/loottables/tdyn_modifiers_2130.dbr`, aTdyn_Modifiers_2130));
-        Log(this.aItemsConcept);
+        this.aItemsConcept.push(this.EditTdyn(`/mod_wanez/_events/phasing/items/loottables/tdyn_modifiers_3140.dbr`, aTdyn_Modifiers_3140));
+        //Log(this.aItemsConcept);
     }
     
     iniItemsGear(){
@@ -701,10 +721,20 @@ module.exports = class mPhasingBeasts extends libWZ.GrimDawn.cModule{
                             TempRecipeClass.__setField(`forcedRandomArtifactName`,TempSetMemberPath);
                             TempRecipeClass.__setField(`artifactCreateQuantity`,`1`);
                             TempRecipeClass.__setField(`artifactCreationCost`,`100000`);
-                            TempRecipeClass.__setField(`reagentBaseBaseName`,TempSetMemberPath);
+                            TempRecipeClass.__setField(`reagentBaseBaseName`,`${Path}/${FileNameTPL.wzReplace({
+                                TYPE: `item`,
+                                MASTERY_ENUM: kSetId,
+                                SLOT_NAME: `_${kSlotName.toLowerCase()}`,
+                                FILE_PREFIX: mGearDataSettings.mItemRanks[parseInt(kRankId) - 1].FilePrefix,
+                                VARIATION: (`0${parseInt(kVariationId)+1}`).slice(-2)
+                            })}.dbr`);
                             TempRecipeClass.__setField(`reagentBaseQuantity`,`1`);
-                            TempRecipeClass.__setField(`reagent1BaseName`,`mod_wanez/_events/phasing/items/craft_phasingessence.dbr`);
+                            TempRecipeClass.__setField(`reagent1BaseName`,`mod_wanez/_events/phasing/items/craft_phasingorb.dbr`);
                             TempRecipeClass.__setField(`reagent1Quantity`,`1`);
+                            TempRecipeClass.__setField(`reagent2BaseName`,`records/omega/items/questitems/omega_essence_legendary.dbr`);
+                            TempRecipeClass.__setField(`reagent2Quantity`,`100`);
+                            TempRecipeClass.__setField(`reagent3BaseName`,`mod_wanez/_gear/materials/a_001a.dbr`);
+                            TempRecipeClass.__setField(`reagent3Quantity`,`1000`);
                             
                             this.aItemsGear.push(this.EditTdyn(cTempLootTable, [TempSetMemberPath]));
                             cTempLootTable = false;
@@ -784,44 +814,71 @@ module.exports = class mPhasingBeasts extends libWZ.GrimDawn.cModule{
             cTempAffixClass,
             cTempAffixTableClass;
         
-        // todo MODIFIERS \\
+        // MODIFIERS \\
         for(let kMasteryEnum in mModifiersData.Items){
-            cTempAffixTableClass = new libWZ.GrimDawn.Assets.aLootRandomizerTable(`${mModifiersData.Path}/${mModifiersData.AffixTableFileTPL.wzReplace({
+            cTempAffixTableClass = new libWZ.GrimDawn.Assets.aLootRandomizerTable(`${mModifiersData.Settings.Path}/${mModifiersData.Settings.AffixTableFileTPL.wzReplace({
                 ENUM: kMasteryEnum
             })}`);
             aTempAffixPaths = [];
             for(let kIndex in mModifiersData.Items[kMasteryEnum]){
                 aTempMasteryData = mModifiersData.Items[kMasteryEnum][kIndex];
     
-                for(let kCount in aTempMasteryData[kIndex].modifierSkillName){
-                    TempAffixFileName = mModifiersData.AffixFileTPL.wzReplace({
+                for(let kCount in aTempMasteryData.modifierSkillName){
+                    TempAffixFileName = mModifiersData.Settings.AffixFileTPL.wzReplace({
                         ENUM: kMasteryEnum,
                         INDEX: (`0${kIndex}`).slice(-2),
                         COUNT: (`0${kCount}`).slice(-2)
                     });
-                    cTempAffixClass = new libWZ.GrimDawn.Assets.aLootRandomizer(`${mModifiersData.Path}/modifiers/${TempAffixFileName}`);
-                    aTempAffixPaths.push(`${mModifiersData.Path}/modifiers/${TempAffixFileName}`);
+                    cTempAffixClass = new libWZ.GrimDawn.Assets.aLootRandomizer(`${mModifiersData.Settings.Path}/modifiers/${TempAffixFileName}`);
+                    aTempAffixPaths.push(`${mModifiersData.Settings.Path}/modifiers/${TempAffixFileName}`);
     
-                    cTempAffixClass.__setField(`modifiedSkillName1`, aTempMasteryData[kIndex].modifiedSkillName);
-                    cTempAffixClass.__setField(`modifierSkillName1`, aTempMasteryData[kIndex].modifierSkillName[kCount]);
+                    cTempAffixClass.__setField(`modifiedSkillName1`, aTempMasteryData.modifiedSkillName);
+                    cTempAffixClass.__setField(`modifierSkillName1`, aTempMasteryData.modifierSkillName[kCount]);
                     
                     this.aItemsAffixes.push(cTempAffixClass);
                 }
                 
             }
-            this.aItemsAffixes.push(this.editAffixTable(cTempAffixTableClass, aTempAffixPaths));
+            this.aItemsAffixes.push(this.EditAffixTable(cTempAffixTableClass, aTempAffixPaths));
         }
         
         let mSkillsData = mAffixData.Skills,
-            TempRankPrefix;
+            TempCount_;
         
-        // todo SKILLS \\
+        aTempAffixPaths = {};
+        // SKILLS \\
         for(let kIndex in mSkillsData.Items){
+            TempCount_ = (`0${parseInt(kIndex) + 1}`).slice(-2);
             
-            for(let kRankId in mSkillsData.Settings.aRankPrefixes){
             
+            for(let kRankPrefix in mSkillsData.Settings.aRanks){
+                aTempAffixPaths[kRankPrefix] = aTempAffixPaths[kRankPrefix] || [];
+    
+                TempAffixFileName = `${mSkillsData.Settings.Path}/skills/${mSkillsData.Settings.AffixFileTPL.wzReplace({
+                    RANK_PREFIX: kRankPrefix,
+                    AFFIX_COUNT: TempCount_
+                })}`;
+    
+                cTempAffixClass = new libWZ.GrimDawn.Assets.aLootRandomizer(TempAffixFileName);
+                aTempAffixPaths[kRankPrefix].push(TempAffixFileName);
+    
+                cTempAffixClass.editDBR(mSkillsData.Items[kIndex].DBR);
+                cTempAffixClass.__setField(`itemSkillLevelEq`, mSkillsData.Settings.LevelEquations[mSkillsData.Items[kIndex].LevelEq || `NewSkill`][kRankPrefix]);
+                
+                this.aItemsAffixes.push(cTempAffixClass);
             }
         }
+    
+        for(let kRankPrefix in aTempAffixPaths){
+            cTempAffixTableClass = new libWZ.GrimDawn.Assets.aLootRandomizerTable(`${mSkillsData.Settings.Path}/${mSkillsData.Settings.AffixTableFileTPL.wzReplace({
+                RANK_PREFIX: kRankPrefix,
+                TABLE_COUNT: `01`
+            })}`);
+            
+            this.aItemsAffixes.push(this.EditAffixTable(cTempAffixTableClass, aTempAffixPaths[kRankPrefix]));
+        }
+        //Log(aTempAffixPaths);
+        //Log(this.aItemsAffixes);
     }
     
     GenerateItemsConcept(InType, InData, InId){
@@ -835,7 +892,6 @@ module.exports = class mPhasingBeasts extends libWZ.GrimDawn.cModule{
                     'medal': `1`,
                     'waist': `1`,
                     'relicBitmap': `wanez/items/materia/component_converter_b.tex`,
-                    'description': `tagWzItems_PhasingConcept_Converter_NAME`,
                     'itemText': `tagWzItems_PhasingConcept_Converter_DESC`
                 },
                 'modifier': {
@@ -847,33 +903,79 @@ module.exports = class mPhasingBeasts extends libWZ.GrimDawn.cModule{
                     'legs': `1`,
                     'feet': `1`,
                     'relicBitmap': `wanez/items/materia/component_modifier_b.tex`,
-                    'description': `tagWzItems_PhasingConcept_Modifier_NAME`,
                     'itemText': `tagWzItems_PhasingConcept_Modifier_DESC`
+                }
+            },
+            mSetFilesForType = {
+                'converter': {
+                    'converter_01': "(I)",
+                    'converter_02': "(II)",
+                    'converter_03': "(III)",
+                    'converter_04': "(IV)"
+                },
+                'modifier': {
+                    'modifier_01': `of Splitting`,
+                    'modifier_02': `of Enlargement`,
+                    'modifier_03': `of Control`,
+                    'modifier_04': `of Domination`,
+                    'modifier_05': `of Empowerment`,
+                    'modifier_06': `of Maximizing`,
+                    'modifier_07': `of Extend`,
+                    'modifier_08': `of Quickening`
+                }
+            },
+            mSetTags = {
+                'converter': {
+                    'NameTag': `tagWzItems_PhasingConcept_Converter_{ENUM}_{COUNT_ID}_NAME`,
+                    'NameName': `{CLASS_NAME} - {^E}Converter {COUNT_TAG}`
+                },
+                'modifier': {
+                    'NameTag': `tagWzItems_PhasingConcept_Modifier_{ENUM}_{COUNT_ID}_NAME`,
+                    'NameName': `{CLASS_NAME} - {^Z}Modifier {COUNT_TAG}`
                 }
             },
             aItemsDBR = [],
             TempItemClass,
+            iCounter = 0,
+            TempTagTag,
+            TempTagName,
             TempItemName;
         
-        for(let kIndex in InData){
-            TempItemName = `${InType}_${InId}_${(`0${kIndex}`).slice(-2)}.dbr`;
+        for(let kFileName in mSetFilesForType[InType]){
+            TempItemName = `${InType}_${InId}_${(`0${iCounter}`).slice(-2)}.dbr`;
             aItemsDBR.push([`${Path}/comp_${TempItemName}`, 100]);
             
             // BASE ITEM \\
             TempItemClass = new libWZ.GrimDawn.Assets.aMateria(`${Path}/comp_${TempItemName}`);
-            TempItemClass.__setField(`augmentSkillName1`, InData[kIndex]);
+            TempItemClass.__setField(`augmentSkillName1`, `${InData.Path}/${kFileName}.dbr`);
             TempItemClass.__setField(`augmentSkillLevel1`, SkillLevelRegular);
             TempItemClass.__setField(`itemClassification`, `Epic`);
             TempItemClass.editDBR(mSetDBRForType[InType]);
-            // todo TAGS with custom name
+            // TAG (NAME)
+            TempTagTag = mSetTags[InType].NameTag.wzReplace({
+                ENUM: (`0${InId}`).slice(-2),
+                COUNT_ID: (`0${iCounter}`).slice(-2)
+            });
+            TempTagName = mSetTags[InType].NameName.wzReplace({
+                CLASS_NAME: InData.ClassName,
+                COUNT_TAG: mSetFilesForType[InType][kFileName]
+            });
+            TempItemClass.__setField(`description`, `${TempTagTag}`);
+            this._Tags.__setField(`${TempTagTag}`, `${TempTagName}`);
+            //Log(TempTagTag);
+            //Log(TempTagName);
             this.aItemsConcept.push(TempItemClass);
             
             // UPGRADE \\
             TempItemClass = new libWZ.GrimDawn.Assets.aMateria(`${Path}/${FolderUpgraded}/comp_${TempItemName}`);
-            TempItemClass.__setField(`augmentSkillName1`, InData[kIndex]);
+            TempItemClass.__setField(`augmentSkillName1`, `${InData.Path}/${kFileName}.dbr`);
             TempItemClass.__setField(`augmentSkillLevel1`, SkillLevelUpgraded);
             TempItemClass.__setField(`itemClassification`, `Legendary`);
             TempItemClass.editDBR(mSetDBRForType[InType]);
+            // TAG (NAME)
+            TempItemClass.__setField(`description`, `${TempTagTag}`);
+            this._Tags.__setField(`${TempTagTag}`, `${TempTagName}`);
+            
             this.aItemsConcept.push(TempItemClass);
     
             // BLUEPRINT \\
@@ -881,13 +983,21 @@ module.exports = class mPhasingBeasts extends libWZ.GrimDawn.cModule{
             TempItemClass.__setField(`artifactName`, `${Path}/${FolderUpgraded}/comp_${TempItemName}`);
             TempItemClass.__setField(`artifactCreateQuantity`, `1`);
             TempItemClass.__setField(`artifactCreationCost`, `100000`);
-            // REAGENT - BASE ITEM
+            // REAGENT - Planar Scraps
             TempItemClass.__setField(`reagentBaseBaseName`, `${Path}/comp_${TempItemName}`);
             TempItemClass.__setField(`reagentBaseQuantity`, `1`);
-            // REAGENT - ESSENCE
-            TempItemClass.__setField(`reagent1BaseName`, `mod_wanez/_events/phasing/items/craft_phasingessence.dbr`);
+            // REAGENT - PHASING ORB
+            TempItemClass.__setField(`reagent1BaseName`, `mod_wanez/_events/phasing/items/craft_phasingorb.dbr`);
             TempItemClass.__setField(`reagent1Quantity`, `1`);
+            // REAGENT - LEGENDARY ESSENCE (OMEGA)
+            TempItemClass.__setField(`reagent2BaseName`, `records/omega/items/questitems/omega_essence_legendary.dbr`);
+            TempItemClass.__setField(`reagent2Quantity`, `10`);
+            // REAGENT - BASE ITEM
+            TempItemClass.__setField(`reagent3BaseName`, `mod_wanez/_gear/materials/a_001a.dbr`);
+            TempItemClass.__setField(`reagent3Quantity`, `100`);
             this.aItemsConcept.push(TempItemClass);
+    
+            iCounter++;
             
         }
         

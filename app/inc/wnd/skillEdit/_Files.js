@@ -34,13 +34,16 @@ module.exports = {
             TagText_ = _Tags.__getField(this._mSkill.getField(`logic`,`skillBaseDescription`)).split(`{^n^`)[0];
             
             for(let kSkillName in this.skillConfig.get(ConfigKey)){
-                if(TagSkills_ !== ``) TagSkills_ += ` ^n `;
+                if(TagSkills_ !== ``) TagSkills_ += `{^n}`;
                 for(let kSkillId in this._mUI.aSkills){
                     if(this._mUI.aSkills[kSkillId].getSkillPaths().filePathModifierConfig === kSkillName){
                         TempSkillName_ = this._mUI.aSkills[kSkillId].getSkillName();
                     }
                 }
                 TagSkills_ += `- ${TempSkillName_}`;
+            }
+            if(TagText_ === ``) {
+                TagText_ = `-{^n}{^o}[Affects the following skills and requires one to unlock]`;
             }
             TagText_ = `${TagText_}{^n^t}${TagSkills_}`;
             //Log(TagText_);

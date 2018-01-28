@@ -18,9 +18,10 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
         this.iBackups = $objBackups;
         this.mBonusCoords = {
             360: {
-                25: true,
-                95: true,
-                165: true
+                20: true,
+                75: true,
+                130: true,
+                185: true
             }//[`5`,`85`,`165`]
         };
         this.mBonusCoords_old = {
@@ -281,155 +282,6 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
         }
         
         return isGroup;
-    
-        /*
-        let tempCoords,isGroup = false,
-            objChecks = {
-                transmuterUp: {
-                    'img/skills_connectoronbranchup.png': true,
-                    'img/skills_connectoronbranchboth.png': true,
-                    'img/skills_connectorontransmuterup.png': true,
-                    'img/skills_connectorontransmuterboth.png': true,
-                    test: true
-                },
-                transmuterDown: {
-                    'img/skills_connectoronbranchdown.png': true,
-                    'img/skills_connectoronbranchboth.png': true,
-                    'img/skills_connectorontransmuterdown.png': true,
-                    'img/skills_connectorontransmuterboth.png': true,
-                    'img/skill_down_on.png': true,
-                    'img/skill_bottom_on.png': true,
-                    test: false
-                },
-                modifier: {
-                    'img/skills_connectoroncenter.png': true,
-                    'img/skills_connectoronbranchup.png': true,
-                    'img/skills_connectoronbranchdown.png': true,
-                    'img/skills_connectoronbranchboth.png': true,
-                    'img/skill_down_on.png': false,
-                    'img/skill_bottom_on.png': false,
-                    'img/skill_up_on.png': true
-                }
-            };
-    
-        for(let $_Type in objChecks){
-            if(typeof objChecks[$_Type][$aConnector[$coordKey]] !== `undefined`){ //
-                tempCoords = $coordKey.split(`,`);
-                if($_Type === `modifier`) tempCoords = `${parseInt(tempCoords[0]) + 80},${tempCoords[1]}`;
-                if($_Type === `transmuterUp`) tempCoords = `${parseInt(tempCoords[0]) + 80},${parseInt(tempCoords[1]) - 38}`;
-                if($_Type === `transmuterDown`) tempCoords = `${parseInt(tempCoords[0]) + 80},${parseInt(tempCoords[1]) + 32}`;
-                if($aSkills[tempCoords] && $aSkills[tempCoords].mSkill){
-                    if(objChecks[$_Type][$aConnector[$coordKey]]) {
-                        isGroup = [true, tempCoords];
-                    }else if(objChecks[$_Type][$aConnector[$coordKey]] === false){
-                        isGroup = [false, tempCoords];
-                    }
-                }
-            }
-        }
-    
-        return isGroup;*/
-        
-        /*
-        let aGroupData = false,
-            TempCoordsArray, TempCoords, whileWrongCoords = true,
-            aConnectors = [
-                `skill_bottom_on.png`,
-                `skill_down_on.png`,
-                `skill_up_on.png`,
-                `skills_connectoronbranchboth.png`,
-                `skills_connectoronbranchdown.png`,
-                `skills_connectoronbranchup.png`,
-                `skills_connectoroncenter.png`,
-                `skills_connectorontransmuterboth.png`,
-                `skills_connectorontransmuterdown.png`,
-                `skills_connectorontransmuterup.png`
-            ],
-            aCoords = [
-                [0, `middle`],
-                [-32, `top`],
-                [-38, `top`],
-                [38, `bottom`],
-                [32, `bottom`]
-            ],
-            mConnectors = {
-                skill_bottom_on: {
-                    top: false,
-                    middle: false,
-                    bottom: true
-                },
-                skill_down_on: {
-                    top: false,
-                    middle: false,
-                    bottom: true
-                },
-                skill_up_on: {
-                    top: false,
-                    middle: true,
-                    bottom: false
-                },
-                skills_connectoronbranchboth: {
-                    top: true,
-                    middle: true,
-                    bottom: true
-                },
-                skills_connectoronbranchdown: {
-                    top: false,
-                    middle: true,
-                    bottom: true
-                },
-                skills_connectoronbranchup: {
-                    top: true,
-                    middle: true,
-                    bottom: false
-                },
-                skills_connectoroncenter: {
-                    top: false,
-                    middle: true,
-                    bottom: false
-                },
-                skills_connectorontransmuterboth: {
-                    top: true,
-                    middle: false,
-                    bottom: true
-                },
-                skills_connectorontransmuterdown: {
-                    top: false,
-                    middle: false,
-                    bottom: true
-                },
-                skills_connectorontransmuterup: {
-                    top: true,
-                    middle: false,
-                    bottom: false
-                }
-            };
-        
-        for(let kConnector in mConnectors){
-            
-            if(`img/${kConnector}.png` === InConnectorsArray[InCoordsKey]){
-                TempCoordsArray = InCoordsKey.split(`,`);
-                Log(InCoordsKey);
-                let i = 0;
-                while(!aGroupData && aCoords[i]){
-    
-                    Log(kConnector);
-                    TempCoords = `${parseInt(TempCoordsArray[0]) + 80},${parseInt(TempCoordsArray[1]) + aCoords[i][0]}`;
-                    if(InSkillsArray[TempCoords] && InSkillsArray[TempCoords].mSkill){
-                        if(mConnectors[kConnector][aCoords[i][1]]) {
-                            aGroupData = [true, TempCoords];
-                        }else{
-                            aGroupData = [false, TempCoords];
-                        }
-                    }
-                    i++;
-                    Log(TempCoords);
-                }
-            }
-        }
-        
-        return aGroupData;
-        */
     }
     
     genLayout(){
@@ -566,6 +418,7 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
                 aSkills[$_Coords].hasGroup = true;
             }
             
+            //Log(this.SkillsToLink);
             if(aSkills[$_Coords] && aSkills[$_Coords].mSkill && this.SkillsToLink && this.SkillsToLink[ aSkills[$_Coords].mSkill.getSkillPaths().filePathModifierConfig ]){
                 //Log(aSkills[$_Coords].mSkill.getSkillPaths().filePathModifierConfig);
                 //console.log(`we are here!`);
@@ -573,6 +426,8 @@ module.exports = class mUI extends libWZ.GrimDawn.cModule{
                     if(aSkills[$_Coords2] && aSkills[$_Coords2].mSkill && aSkills[$_Coords2].isUsed){
                         if(this.SkillsToLink[ aSkills[$_Coords].mSkill.getSkillPaths().filePathModifierConfig ][ aSkills[$_Coords2].mSkill.getSkillPaths().filePathModifierConfig ]){
     
+                            //Log(aSkills[$_Coords].mSkill.getSkillPaths().filePathModifierConfig);
+                            
                             aGroups[ aSkills[$_Coords2].mSkill.getSkillId() ] =
                                 aGroups[ aSkills[$_Coords2].mSkill.getSkillId() ] ||
                                 [ aSkills[$_Coords2].mSkill ];
