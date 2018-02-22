@@ -73,9 +73,9 @@ tagWeaponGun1hC013B=Mediator
 tagGDX1WeaponGun1hC101=The Dissenter
 tagGDX1WeaponGun1hC101B=Dissenter
 tagGDX1WeaponGun1hC102=Aldur's Inquisition
-tagGDX1WeaponGun1hC102_Desc=Sidearm of Inquisitor Aldur, reknown hunter of heretics and slayer of Galbar'Thuul."
+tagGDX1WeaponGun1hC102_Desc=Sidearm of Inquisitor Aldur, renowned hunter of heretics and slayer of Galbar'Thuul."
 tagGDX1WeaponGun1hC103=Core of Gargabol
-tagGDX1WeaponGun1hC103_Desc="The tainted core of Gargabol burns hotter than any flame."
+tagGDX1WeaponGun1hC103_Desc="A flicker of the once mighty guardian's flame still glows within its core."
 tagGDX1WeaponGun1hC108=Stormlauncher of Ultos
 tagGDX1WeaponGun1hC110=Luminari Sidearm
 
@@ -190,7 +190,7 @@ tagGDX1WeaponCaster1hC116=Scepter of Malmouth
 tagGDX1WeaponCaster1hC116_Desc="Visions of the fallen city of Port Valbury flood your mind."
 
 tagGDX1WeaponCaster1hD101=Dreadfire
-tagGDX1WeaponCaster1hD102=Valepiercer
+tagGDX1WeaponCaster1hD102=Veilpiercer
 tagGDX1WeaponCaster1hD102_Desc="The blade slips between realities with strange ease, as if a key fitting into its lock."
 tagGDX1WeaponCaster1hD103=Dreadweaver
 tagGDX1WeaponCaster1hD104=Chillflame Evoker
@@ -779,6 +779,8 @@ tagGDX1MedalB106=Wendigo Gaze
 tagGDX1MedalB106_Desc="The bloodshot eye bewilders any lesser creature that gazes upon it."
 tagGDX1MedalB107=Nimble Crest
 tagGDX1MedalB108=Watcher Crest
+tagGDX1MedalB109=Slathsarr's Crest
+tagGDX1MedalB109_Desc="The fangs drip with aetherwarped venom."
 
 tagGDX1MedalC101=Solemn Mark
 tagGDX1MedalC102=Mark of Impurity
@@ -840,6 +842,7 @@ tagGDX1Blueprint_RelicD110=Blueprint: Relic - Massacre
 tagGDX1Blueprint_RelicD111=Blueprint: Relic - Uroboruuk's Reaping
 tagGDX1Blueprint_RelicD112=Blueprint: Relic - Ignaffar's Combustion
 tagGDX1Blueprint_RelicD113=Blueprint: Relic - Mogdrogen's Ardor
+tagGDX1Blueprint_RelicD114=Blueprint: Relic - Deathstalker
 
 
 tagGDX1Blueprint_ComponentA101=Blueprint: Seal of Might
@@ -1058,9 +1061,9 @@ tagGDX1Blueprint_AccessoryC115=Blueprint: Mythical Sapphire of Elemental Balance
 tagGDX1Blueprint_AccessoryD101=Blueprint: Mythical Stormseer Sapphire
 tagGDX1Blueprint_AccessoryD102=Blueprint: Mythical Pack of Treacherous Means
 tagGDX1Blueprint_AccessoryD103=Blueprint: Cinderplate Girdle
-tagGDX1Blueprint_AccessoryD104=Blueprint: Mark of Kalastor
+tagGDX1Blueprint_AccessoryD104=Blueprint: Mythical Mark of Kalastor
 tagGDX1Blueprint_AccessoryD105=Blueprint: Mark of Consumption
-tagGDX1Blueprint_AccessoryD106=Blueprint: Reign of Ice and Fire
+tagGDX1Blueprint_AccessoryD106=Blueprint: Mythical Reign of Ice and Fire
 tagGDX1Blueprint_AccessoryD107=Blueprint: Stoneguard Girdle
 tagGDX1Blueprint_AccessoryD108=Blueprint: Aegis Waistguard
 tagGDX1Blueprint_AccessoryD109=Blueprint: Mythical Avatar of Mercy
@@ -1134,6 +1137,8 @@ tagGDX1RelicD112=Ignaffar's Combustion
 tagGDX1RelicD112Desc="The Stone of Ignaffar was not the only artifact recovered by the Luminari from an ancient burial and later purified."
 tagGDX1RelicD113=Mogdrogen's Ardor
 tagGDX1RelicD113Desc="The lonely wolf dies, the pack survives."
+tagGDX1RelicD114=Deathstalker
+tagGDX1RelicD114Desc="A vicious spirit yearns to be free"
 
 
 #Crafting

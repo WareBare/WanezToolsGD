@@ -1860,22 +1860,22 @@ DamageModifierFreezeR={%+.0f0}-{%.0f1}% {^E}Freeze Duration
 DamageModifierPetrify={%+.0f0}% {^E}Petrify Duration
 DamageModifierPetrifyR={%+.0f0}-{%.0f1}% {^E}Petrify Duration
 
-DamageDurationModifierPhysical={%+.0f0}% {^E}Internal Trauma Damage 
-DamageDurationModifierBleeding={%+.0f0}% {^E}Bleeding Damage 
-DamageDurationModifierCold={%+.0f0}% {^E}Frostburn Damage 
-DamageDurationModifierFire={%+.0f0}% {^E}Burn Damage 
-DamageDurationModifierPoison={%+.0f0}% {^E}Poison Damage 
-DamageDurationModifierLightning={%+.0f0}% {^E}Electrocute Damage 
-DamageDurationModifierLife={%+.0f0}% {^E}Vitality Decay 
-DamageDurationModifierAttackSpeed={%+.0f0}% {^E}Slow Attack 
-DamageDurationModifierSpellCastSpeed={%+.0f0}% {^E}Slow Casting 
-DamageDurationModifierRunSpeed={%+.0f0}% {^E}Slow Movement 
+DamageDurationModifierPhysical={%+.0f0}% {^E}Internal Trauma Damage
+DamageDurationModifierBleeding={%+.0f0}% {^E}Bleeding Damage
+DamageDurationModifierCold={%+.0f0}% {^E}Frostburn Damage
+DamageDurationModifierFire={%+.0f0}% {^E}Burn Damage
+DamageDurationModifierPoison={%+.0f0}% {^E}Poison Damage
+DamageDurationModifierLightning={%+.0f0}% {^E}Electrocute Damage
+DamageDurationModifierLife={%+.0f0}% {^E}Vitality Decay
+DamageDurationModifierAttackSpeed={%+.0f0}% {^E}Slow Attack
+DamageDurationModifierSpellCastSpeed={%+.0f0}% {^E}Slow Casting
+DamageDurationModifierRunSpeed={%+.0f0}% {^E}Slow Movement
 DamageDurationModifierLifeLeach={%+.0f0}% {^E}Life Leech Damage
-DamageDurationModifierManaLeach={%+.0f0}% {^E}Energy Leech 
+DamageDurationModifierManaLeach={%+.0f0}% {^E}Energy Leech
 DamageDurationModifierOffensiveAbility={%+.0f0}% {^E}Reduction in Target's Offensive Ability
 DamageDurationModifierDefensiveAbility={%+.0f0}% {^E}Reduction in Target's Defensive Ability
-DamageDurationModifierOffensiveReduction={%+.0f0}% {^E}Reduced target Physical Damage 
-ImprovedTimeFormat={^E}with {^H}{%+.0f0}% {^E}Increased Duration
+DamageDurationModifierOffensiveReduction={%+.0f0}% {^E}Reduced target Physical Damage
+ImprovedTimeFormat= {^E}with {^H}{%+.0f0}% {^E}Increased Duration
 ImprovedTimeFormatR= {^E}with {^H}{%+.0f0}-{%.0f1}% {^E}Increased Duration
 IncreasedDuration={^H}{%+.0f0}% {^E}Increased{%s1} Duration
 
@@ -2257,5 +2257,8 @@ tagChatCommandShort03=r
 tagChatCommandShort04=t
 tagChatCommandShort05=m
 tagChatCommandShort06=u
+
+
+t06=u
 
 

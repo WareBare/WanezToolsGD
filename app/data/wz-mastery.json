@@ -783,8 +783,7 @@
                         "weaponDamagePct": "wzModifierWeaponDamage",
                         "skillTargetRadius": "wzModifierAoE",
                         "explosionRadius": "wzModifierAoE",
-                        "projectilePiercing": "wzModifierPierce",
-                        "skillCooldownReduction": "wzModifierCooldownReduction"
+                        "projectilePiercing": "wzModifierPierce"
                     }
                 },{
                     "Coords": [485, 430],

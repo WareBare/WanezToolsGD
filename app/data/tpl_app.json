@@ -19,8 +19,6 @@
                 "Materia": []
             },
             ".WanezMods": {
-                "Legendary Crafter":[],
-                "Legendary Notify":[],
                 "Autoloot":[]
             },
             ".Merger":{
@@ -51,8 +49,9 @@
                 "Gear": []
             },
             "WanezMods": {
-                "Legendary Notify":[],
-                "Autoloot":[]
+                "Autoloot":[],
+                "Legendary Crafter":[],
+                "Legendary Notify":[]
             },
             "Docs":{
                 "Wiki [ip]":["DGA [ip]","Mastery [ip]"]

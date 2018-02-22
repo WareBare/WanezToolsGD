@@ -916,8 +916,8 @@ module.exports = class mPhasingBeasts extends libWZ.GrimDawn.cModule{
                 'modifier': {
                     'modifier_01': `of Splitting`,
                     'modifier_02': `of Enlargement`,
-                    'modifier_03': `of Control`,
-                    'modifier_04': `of Domination`,
+                    'modifier_03_petmod': `of Control`,
+                    'modifier_04_petmod': `of Domination`,
                     'modifier_05': `of Empowerment`,
                     'modifier_06': `of Maximizing`,
                     'modifier_07': `of Extend`,
